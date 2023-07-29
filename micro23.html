@@ -8,37 +8,44 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
                                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>ASPLOS 2023 Tutorial</title>
+        <title>MICRO 2023 Tutorial</title>
     </head>
     <body class="container" style="max-width:920px">
       <!-- Title -->
       <div>
-        <div class='row mt-4 mb-2'>
+        <div class='row my-4'>
             <div class='col text-center'>
-                <p class="h3 font-weight-bold">Visual Computing for Computer Architects: Imaging, Computing, and Human Perception</p>
+                <p class="h3 font-weight-bold">Visual Computing for Computer Architects</p>
+                <p class="h4 fs-3">First Principles and Research Challenges</p>
             </div>
         </div>
-        <div class='row mt-2 mb-4'>
+        <div class='row my-4'>
           <div class='col text-center'>
-              <p class="h4 font-weight-normal">Tutorial Co-located with <a href="https://www.asplos-conference.org/asplos2023/">ASPLOS 2023</a></p>
-              <p class="h4 font-weight-normal">9:00 AM &#8212; 12:00 AM, March 26, 2023, Junior AB</p>
+              <p class="h4 font-weight-normal">Tutorial Co-located with <a href="https://microarch.org/micro56/">MICRO 2023</a></p>
+              <p class="h4 font-weight-normal">Time and Room TBD</p>
           </div>
         </div>             
         <!-- authors -->
         <div class='row text-center'>
-          <div class="col-md-6 col-sm-6 col-xs-6 text-center h5 font-weight mb-1">
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center h5 font-weight mb-1">
             <a href="http://www.horizon-lab.org/">Yuhao Zhu</a>
           </div>
-          <div class="col-md-6 col-sm-6 col-xs-6 text-center h5 font-weight mb-1">
-            <a href="https://www.immersivecomputinglab.org/">Qi Sun</a>
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center h5 font-weight mb-1">
+            <a href="https://www.cs.rochester.edu/u/yfeng28/">Yu Feng</a>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center h5 font-weight mb-1">
+            <a href="">Tianrui Ma</a>
           </div>
         </div>
         <div class='row text-center'>
-          <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center">
             University of Rochester
           </div>
-          <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-            New York University
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center">
+            University of Rochester
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 text-center">
+            Washington University in St. Louis
           </div>
         </div>
       </div>             
@@ -55,13 +62,15 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <p class="h3 font-weight-bold ">Why This Tutorial?</p>
                 <p style="line-height:1.4;">
-Over the past two decades, computer architecture research has moved from <i>general-purpose</i> computing toward <i>domain-specific</i> accelerators. The field is on the cusp of a new revolution &#8212; <b>human-centric architectures</b> &#8212; driven by emerging visual computing platforms such as Augmented Reality, Virtual Reality, and autonomous machines that all intimately interact with humans.
+Emerging platforms such as Augmented Reality (AR), Virtual Reality (VR), and autonomous machines, while are of a computing nature, intimately interact with both the environment and humans. They must be built, from the ground up, with principled considerations of three main components: imaging, computer systems, and human perception.
                 </p>
                 <p style="line-height:1.4;">
-The goal of this tutorial is to set up computer systems and architecture researchers for the era of human-centered visual computing, both to build efficient systems guided by human cognition and to augment human cognition through computing technologies. Critically, this requires us to bridge the conventional <i>computing</i> domain with <i>imaging</i> and <i>human perception</i>, the two fundamental components that connect computing with humans.
+The goal of this tutorial is to set up computer systems and architecture researchers for the era of human-centered visual computing, both to leverage human perception for enhancing computing and imaging systems, while also developing imaging and computational tools that advance our understanding of human perceptions.
                 </p>
                 <p style="line-height:1.4;">
-To that end, this tutorial will 1) teach the fundamental principles behind visual computing, including imaging (e.g., optics, image sensors), computing (on visual content), and human perception and cognition, and 2) discuss potential research opportunities for the systems and architecture community.
+To that end, this tutorial will 1) teach the basics of visual computing from first principles, including imaging (e.g., optics, image sensors), computing (on visual content), displays, and human perception and cognition, and 2) discuss exciting research opportunities for the systems and architecture community.
+                </p>
+                <p style="line-height:1.4;">
 The tutorial is not tied to a specific benchmark or hardware platform. Instead, we focus on teaching the fundamental principles so that participants can walk away being able to design new algorithms, building new applications, and engineering systems and hardware for those algorithms and applications.
                 </p>
             </div>
@@ -73,34 +82,48 @@ The tutorial is not tied to a specific benchmark or hardware platform. Instead, 
                 <p class="h3 font-weight-bold ">Agenda</p>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="col-md-12 col-sm-12 col-xs-12 h4"><a href="https://drive.google.com/file/d/1D3Xf15cZjFwkmyf8YXaDSWDDC_ztNFZC/view?usp=share_link">Introduction</a></div>
-              <div class="col-md-12 col-sm-12 col-xs-12 h6">Yuhao Zhu (9:00 AM -- 9:10 AM)</div>
-              
-              <div  class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="https://drive.google.com/file/d/1AIniCaKzd2hYn9CtiO2pkjfChFvCHiM0/view?usp=share_link">Imaging Principles and Imaging-Computing Co-Design</a></div>
-              <div class="col-md-12 col-sm-12 col-xs-12 h6">Yuhao Zhu (9:10 AM -- 10:20 AM)</div>
+              <div class="col-md-12 col-sm-12 col-xs-12 h4"><a href="">Introduction</a></div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="">Human Perception and Displays</a></div>
+              <div class="mb-3">
+              <ul style="list-style-type: none;">
+              <li>Seeing eyes and thinking brain</li>
+              <li>Spatial/temporal/color vision</li>
+              <li>Light and dark adaptation</li>
+              <li>Computational models of human Vision</li>
+              <li>Principles of displays</li>
+              <li>Display power consumption and visual quality</li>
+              </ul>
+              </div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="">Fundamentals of Imaging</a></div>
               <div class="mb-3">
               <ul style="list-style-type: none;">
               <li>Fundamental principles of imaging</li>
               <li>Camera optics</li>
               <li>Modern CMOS image sensor architecture</li>
               <li>Camera image-signal processing and hardware</li>
-              <li>Imaging-computing interface</li>
-              <li>Computational image sensors</li>
               </ul>
               </div>
-              
-              <div  class="col-md-12 col-sm-12 col-xs-12 h4 mt-4">Coffer Break</div>
-              <div class="col-md-12 col-sm-12 col-xs-12 h6">10:20 AM -- 10:40 AM</div>
-              
-              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="https://drive.google.com/file/d/1axs6smiK8cNhaAblt0tAeo2xowW9Lmo3/view?usp=share_link">Human Perception and Human-Systems Co-Design</a></div>
-              <div class="col-md-12 col-sm-12 col-xs-12 h6">Qi Sun (10:40 AM -- 12:00 AM)</div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4">Coffer Break</div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="">Practices and Demos</a></div>
               <div class="mb-3">
               <ul style="list-style-type: none;">
-              <li>Basic facts of human vision: sptial/temporal/color vision</li>
-              <li>Computational models of human Vision</li>
-              <li>Computational holographic displays</li>
-              <li>Gaze-contingent rendering techniques</li>
-              <li>Neural rendering</li>
+              <li>Build a 5-pixel camera on a breadboard</li>
+              <li>CamJ tutorial, an energy modeling tool for in-image sensor visual computing</li>
+              <li>Color-guided energy optimization for VR, a demo</li>
+              </ul>
+              </div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12 h4 mt-4"><a href="">Research Directions</a></div>
+              <div class="mb-3">
+              <ul style="list-style-type: none;">
+              <li>Computational image sensors: co-designing image sensors and computer architectures</li>
+              <li>Deep optics</li>
+              <li>Human-systems co-optimization</li>
+              <li>Gaze-contingent rendering</li>
               </ul>
               </div>
 
@@ -112,8 +135,9 @@ The tutorial is not tied to a specific benchmark or hardware platform. Instead, 
             <div class="col-md-12 col-sm-12 col-xs-12">
               <p class="h3 font-weight-bold ">Reference Materials</p>
               <ul style="list-style-type: none; margin-left: -15px;">
+                <li><a href="/asplos23.html">ASPLOS 2023 iteration</a> of this tutorial</li>
                 <li><a href="https://www.cs.rochester.edu/courses/572/fall2022/index.html">Mobile Visual Computing</a>, CSC 292 taught at University of Rochester</li>
-                <li><a href="https://github.com/horizon-research/CamJ/">CamJ: An Energy Modeling and System-Level Exploration Framework for In-Sensor Visual Computing</a>, ISCA 2023</li>
+                <li><a href="https://horizon-lab.org/pubs/isca23-camj.pdf">CamJ: An Energy Modeling and System-Level Exploration Framework for In-Sensor Visual Computing</a>, ISCA 2023</li>
                 <li><a href="https://horizon-lab.org/pubs/vr22.pdf">Real-Time Gaze Tracking with Event-Driven Eye Segmentation</a>, IEEE VR 2022</li>
                 <li><a href="https://horizon-lab.org/pubs/isca18.pdf">Euphrates: Algorithm-SoC Co-Design for Low-Power Mobile Continuous Vision</a>, ISCA 2018</li>
                 <li><a href="https://horizon-lab.org/pubs/sa22.pdf">Color-Perception-Guided Display Power Reduction for Virtual Reality</a>, SIGGRAPH Asia 2022</li>
