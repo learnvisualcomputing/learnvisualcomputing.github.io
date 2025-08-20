@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Colorimetry – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./hvs-retcomp.html" rel="next">
+<link href="./hvs-color.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-colorimetry.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-hvs-cori-xyz" id="toc-sec-chpt-hvs-cori-xyz" class="nav-link active" data-scroll-target="#sec-chpt-hvs-cori-xyz"><span class="header-section-number">5.1</span> CIE 1931 XYZ Space</a></li>
+  <li><a href="#sec-chpt-hvs-cori-chro" id="toc-sec-chpt-hvs-cori-chro" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-chro"><span class="header-section-number">5.2</span> Chromaticity Diagram</a>
+  <ul class="collapse">
+  <li><a href="#chromaticity-is-the-result-of-a-perspective-projection" id="toc-chromaticity-is-the-result-of-a-perspective-projection" class="nav-link" data-scroll-target="#chromaticity-is-the-result-of-a-perspective-projection"><span class="header-section-number">5.2.1</span> Chromaticity is the Result of a Perspective Projection</a></li>
+  <li><a href="#xy-chromaticity-diagram-and-its-interpretation" id="toc-xy-chromaticity-diagram-and-its-interpretation" class="nav-link" data-scroll-target="#xy-chromaticity-diagram-and-its-interpretation"><span class="header-section-number">5.2.2</span> xy-Chromaticity Diagram and Its Interpretation</a></li>
+  <li><a href="#hvs-gamut" id="toc-hvs-gamut" class="nav-link" data-scroll-target="#hvs-gamut"><span class="header-section-number">5.2.3</span> HVS Gamut</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-cori-cube" id="toc-sec-chpt-hvs-cori-cube" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cube"><span class="header-section-number">5.3</span> Color Cube</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-cori-cube-step1" id="toc-sec-chpt-hvs-cori-cube-step1" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cube-step1"><span class="header-section-number">5.3.1</span> Step 1: A Linear Transformation From the XYZ Space</a></li>
+  <li><a href="#sec-chpt-hvs-cori-cube-step2" id="toc-sec-chpt-hvs-cori-cube-step2" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cube-step2"><span class="header-section-number">5.3.2</span> Step 2: Color Quantization and Gamma</a></li>
+  <li><a href="#rgb-color-spaces-are-linearly-related-in-luminance" id="toc-rgb-color-spaces-are-linearly-related-in-luminance" class="nav-link" data-scroll-target="#rgb-color-spaces-are-linearly-related-in-luminance"><span class="header-section-number">5.3.3</span> RGB Color Spaces are Linearly Related in Luminance</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-cori-hsv" id="toc-sec-chpt-hvs-cori-hsv" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-hsv"><span class="header-section-number">5.4</span> HSB/HSL/HSV Space</a></li>
+  <li><a href="#sec-chpt-hvs-cori-disp" id="toc-sec-chpt-hvs-cori-disp" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-disp"><span class="header-section-number">5.5</span> Display Native Gamut</a></li>
+  <li><a href="#sec-chpt-hvs-cori-cm" id="toc-sec-chpt-hvs-cori-cm" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cm"><span class="header-section-number">5.6</span> Color Management</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-cori-cm-cst" id="toc-sec-chpt-hvs-cori-cm-cst" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cm-cst"><span class="header-section-number">5.6.1</span> Color Space Transformation</a></li>
+  <li><a href="#converting-pixel-colors-to-drive-signals" id="toc-converting-pixel-colors-to-drive-signals" class="nav-link" data-scroll-target="#converting-pixel-colors-to-drive-signals"><span class="header-section-number">5.6.2</span> Converting Pixel Colors to Drive Signals</a></li>
+  <li><a href="#sec-chpt-hvs-cori-cm-gm" id="toc-sec-chpt-hvs-cori-cm-gm" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-cm-gm"><span class="header-section-number">5.6.3</span> Gamut Mapping</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-cori-diff" id="toc-sec-chpt-hvs-cori-diff" class="nav-link" data-scroll-target="#sec-chpt-hvs-cori-diff"><span class="header-section-number">5.7</span> Color Discrimination and Color Difference</a>
+  <ul class="collapse">
+  <li><a href="#color-discrimination" id="toc-color-discrimination" class="nav-link" data-scroll-target="#color-discrimination"><span class="header-section-number">5.7.1</span> Color Discrimination</a></li>
+  <li><a href="#adaptation-and-eccentricity-dependence" id="toc-adaptation-and-eccentricity-dependence" class="nav-link" data-scroll-target="#adaptation-and-eccentricity-dependence"><span class="header-section-number">5.7.2</span> Adaptation and Eccentricity Dependence</a></li>
+  <li><a href="#color-difference-and-perceptually-uniform-color-space" id="toc-color-difference-and-perceptually-uniform-color-space" class="nav-link" data-scroll-target="#color-difference-and-perceptually-uniform-color-space"><span class="header-section-number">5.7.3</span> Color Difference and Perceptually Uniform Color Space</a></li>
+  <li><a href="#science-vs.-engineering" id="toc-science-vs.-engineering" class="nav-link" data-scroll-target="#science-vs.-engineering"><span class="header-section-number">5.7.4</span> Science vs.&nbsp;Engineering</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-colorimetry.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-hvs-cori" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Colorimetry is concerned with quantitatively studying color, a subjective experience. Not until we can put our experience into numbers can we rigorously study colors. In <a href="hvs-color.html#sec-chpt-hvs-color-cme" class="quarto-xref"><span>Section 4.2</span></a>, we have seen two ways to geometrically interpret a color as a point in a three-dimensional space: the cone space and the CIE 1931 RGB space.</p>
+<p>The main goal of this chapter is to introduce other commonly used color space to quantitatively analyze colors. Some of these color spaces are device-independent, just like the LMS cone space, so they permit us to analyze all human visible colors. Other color spaces are device-dependent; they are concerned with colors that can physically be captured (by an imaging device) or produceed (by a display device). Studying device-dependent spaces allows us to appreciate many subtle but important issues in real-world color workflows.</p>
+<p>Classic colorimetry is concerned <em>only</em> with color matching under the same viewing condition. It tells us if two objects or light sources have the same color when viewed under exactly the same conditions (e.g., ambient illumination). It does not tell us 1) how different two colors are and 2) the actual appearance of a color, which depends on the viewing condition. Color difference will be discussed in <a href="#sec-chpt-hvs-cori-diff" class="quarto-xref"><span>Section 5.7</span></a>; <span class="citation" data-cites="fairchild2013color">Fairchild (<a href="references.html#ref-fairchild2013color" role="doc-biblioref">2013</a>)</span> is a classic reference on <em>color appearance</em> modeling, which we will touch upon in <a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-chroma" class="quarto-xref"><span>Section 7.3</span></a>.</p>
+<section id="sec-chpt-hvs-cori-xyz" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-chpt-hvs-cori-xyz"><span class="header-section-number">5.1</span> CIE 1931 XYZ Space</h2>
+<p>There are two slight inconveniences with the CIE 1931 RGB color space. First, it depends on the exact primary colors (and reference white) you choose. Second, there are also inevitably going to be colors that can be “produced” only by using negative amounts of the primaries, no matter what primaries you choose. While mathematically and physically rigorous, it is not quite intuitive. So CIE in 1931 wanted to standardize a color space that 1) can be used as a “common language” (without having to laboriously specify what the primaries are used every time you say “the RGB color space”) and that 2) all the human-visible colors are produced by mixing non-negative amounts of the primaries. That color space is called the <strong>CIE 1931 XYZ</strong> color space, sometimes referred to simply as the XYZ color space.</p>
+<p>You might be wondering: isn’t the LMS cone space already a color space that satisfies the two conditions above, and if so, why do we have to invent a new XYZ space? The cone space is tied intrinsically to the HVS, so it does not vary (significantly) in population. It is also a color space where all the colors are expressed using positive amounts of the primaries (cone responses). These are all true, but remember the cone fundamentals were not reliably available back in 1931 (<a href="hvs-receptor.html#sec-chpt-hvs-receptor-absorb" class="quarto-xref"><span>Section 3.2</span></a>).</p>
+<div id="fig-rgb_to_xyz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rgb_to_xyz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/rgb_to_xyz.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rgb_to_xyz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: The CIE 1931 XYZ color space (right) is constructed to be a linear transformation from the CIE 1931 RGB color space (left). Notice how a color, say, 600 <span class="math inline">\(\text{nm}\)</span> spectral light is represented differently in the two color spaces. This figure visualizes how the spectral locus and the CMFs are transformed. The exact coefficients of the transformation matrix <span class="math inline">\(T_{rgb2xyz}\)</span> are omitted here but are widely available online. The CIE 1931 RGB CMFs figure is adapted from <span class="citation" data-cites="cie1931rgbcmf">Marco Polo (<a href="references.html#ref-cie1931rgbcmf" role="doc-biblioref">2007</a>)</span>, and the XYZ CMFs figure is adapted from <span class="citation" data-cites="cie1931xyz">Acdx (<a href="references.html#ref-cie1931xyz" role="doc-biblioref">2009</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><span class="citation" data-cites="fairman1997cie">Fairman, Brill, and Hemmendinger (<a href="references.html#ref-fairman1997cie" role="doc-biblioref">1997</a>)</span>, <span class="citation" data-cites="brill1998cie">Brill (<a href="references.html#ref-brill1998cie" role="doc-biblioref">1998</a>)</span>, and <span class="citation" data-cites="service2016the">Service (<a href="references.html#ref-service2016the" role="doc-biblioref">2016, sec. 4</a>)</span> describe the process and the (sometimes rather arbitrary) design decisions that went into turning the CIE 1931 RGB space into the 1931 XYZ space. <span class="citation" data-cites="zhu2022xyz">Zhu (<a href="references.html#ref-zhu2022xyz" role="doc-biblioref">2022c</a>)</span> is an interactive tutorial that walks through the math.</p>
+<p>The bottom line is that the transformation from the CIE RGB to the XYZ space is <em>constructed</em> to be a linear transformation. <a href="#fig-rgb_to_xyz" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> shows how the spectral locus is transformed from the RGB to the XYZ space, governed by the matrix <span class="math inline">\(\mathbf{T}_{rgb2xyz}\)</span>. We can see that in the RGB space the spectral locus enters negative octants, but it stays entirely within the all-positive, first octant in the XYZ space. The transformation also gives a new set of CMFs in the XYZ space. The Y CMF is intentionally designed to match the CIE 1924 Luminous Efficiency Function (LEF), so that by looking at the Y value of a color, we can tell what its luminance is (refer to <a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a> for the definition of the LEF and its various caveats).</p>
+</section>
+<section id="sec-chpt-hvs-cori-chro" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-chpt-hvs-cori-chro"><span class="header-section-number">5.2</span> Chromaticity Diagram</h2>
+<p>How do a color that is mixed from 1:2:4 units of RGB primaries and a color that is mixed from 2:4:8 units of the primaries relate? The amount of a primary is directly proportional to the power of that primary, so the second color can be obtained by doubling the power of each primary in the first color. Similarly, halving the power of each primary in the second color gets us the first color. Intuitively, lights that have the same primary quantity ratio have the same “objective color quality” while differing in the intensity.</p>
+<section id="chromaticity-is-the-result-of-a-perspective-projection" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="chromaticity-is-the-result-of-a-perspective-projection"><span class="header-section-number">5.2.1</span> Chromaticity is the Result of a Perspective Projection</h3>
+<p>More formally, we can calculate the primary ratio <span class="math inline">\(r:g:b\)</span> of a color and then normalize the ratio such that <span class="math inline">\(r + g + b = 1\)</span> (100%). The so-calculated <span class="math inline">\(r\)</span>, <span class="math inline">\(g\)</span>, <span class="math inline">\(b\)</span> values of a color are called the (RGB) <strong>chromaticity</strong> values of that color. Mathematically, the chromaticity of a color defined in an RGB space is calculated from its absolute quantity by:</p>
+<p><span class="math display">\[
+\begin{align}
+    r = \frac{R}{R+G+B}\\
+    g = \frac{G}{R+G+B}\\
+    b = \frac{B}{R+G+B}
+\end{align}
+\]</span></p>
+<p>Geometrically, going from the RGB values of a color to the rgb chromaticity is equivalent to a <em>perspective projection</em>, where we project an [R, G, B] point through the origin to the <span class="math inline">\(r+g+b=1\)</span> plane. The left panel in <a href="#fig-chromaticity" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> visualizes this projection. Each line that goes through the origin is an “equi-chromaticity” line, in that all the colors on that line have the same chromaticity. The spectral locus is so projected to the <span class="math inline">\(r+g+b=1\)</span> plane. Since there are only two degrees of freedom in chromaticity, we can visualize the chromaticity in a two-dimensional space, and usually the <span class="math inline">\(r\)</span> and <span class="math inline">\(g\)</span> coordinates are used. The right panel in <a href="#fig-chromaticity" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> shows the spectral locus in the rg-chromaticity diagram.</p>
+<div id="fig-chromaticity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/chromaticity.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Visualization of the CIE 1931 RGB space and its rg-chromaticity diagram. Left: the transformation from an [R, G, B] color to its [r, g, b] chromaticity is a perspective projection to the <span class="math inline">\(r+g+b=1\)</span> plane. Each line that goes through the origin is an “equi-chromaticity” line, in that all the colors on that line have the same chromaticity. We use the CIE 1931 RGB color space for illustration here, but the same idea applies to other color spaces as well, e.g., the CIE 1931 XYZ space. From the interactive tutorial in <span class="citation" data-cites="zhu2022chromaticity">Zhu (<a href="references.html#ref-zhu2022chromaticity" role="doc-biblioref">2022b</a>)</span>. Right: visualization of the spectral locus in CIE 1931 RGB space; from <span class="citation" data-cites="fairman1997cie">Fairman, Brill, and Hemmendinger (<a href="references.html#ref-fairman1997cie" role="doc-biblioref">1997, fig. 2</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="xy-chromaticity-diagram-and-its-interpretation" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="xy-chromaticity-diagram-and-its-interpretation"><span class="header-section-number">5.2.2</span> xy-Chromaticity Diagram and Its Interpretation</h3>
+<p>Of course we can do the same if a color is defined in the XYZ space or the LMS cone space, and we omit the trivial math here. The left panel in <a href="#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> shows the xy-chromaticity diagram. It is obtained by first converting from the XYZ space to the xyz space and then plotting only the x and y axes (z is implicit in that <span class="math inline">\(x+y+z=1\)</span>). The horseshoe curve is the spectral locus. For the reference, we also show the three primary lights and the white point of the CIE 1931 RGB color space as well as the Planckian locus, which shows the chromaticities of the black-body radiation at different temperatures (<a href="hvs-color.html#fig-blackbody_colors" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>).</p>
+<div id="fig-xy_chromaticity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xy_chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/xy_chromaticity.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xy_chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Left: The gamut and spectral locus of the CIE 1931 RGB space visualized in the xy-chromaticity diagram; adapted from <span class="citation" data-cites="plankianlocus">PAR (<a href="references.html#ref-plankianlocus" role="doc-biblioref">2012</a>)</span>. The Planckian locus is shown for the reference too. A point outside the (convex) spectral locus is an imaginary color. Right: comparison of different color spaces in the xy-chromaticity diagram; from <span class="citation" data-cites="csinxy">Myndex (<a href="references.html#ref-csinxy" role="doc-biblioref">2022</a>)</span>. A color space’s chromaticity gamut is a triangle; a color outside the triangle cannot be physically produced in that color space.
+</figcaption>
+</figure>
+</div>
+<p>We can make a few general observations. First, the triangle in the diagram represents the chromaticity values of all the colors that can be produced by mixing different amounts of the three colors whose chromaticities are the vertices of the triangle. That is, given three colors <span class="math inline">\([R_1, G_1, B_1]\)</span>, <span class="math inline">\([R_2, G_2, B_2]\)</span>, <span class="math inline">\([R_3, G_3, B_3]\)</span> and their chromaticity coordinates <span class="math inline">\(\mathbf{c_1} = [\frac{R_1}{R_1+G_1+B_1}]\)</span>, <span class="math inline">\(\mathbf{c_2} = [\frac{R_2}{R_2+G_2+B_2}]\)</span>, and <span class="math inline">\(\mathbf{c_3} = [\frac{R_3}{R_3+G_3+B_3}]\)</span>, we can show if we mix these colors to form a color C, <span class="math inline">\([\alpha R_1 + \beta R_2 + \gamma R_3, \alpha G_1 + \beta G_2 + \gamma G_3, \alpha B_1 + \beta B_2 + \gamma B_3]\)</span> (<span class="math inline">\(\alpha, \beta, \gamma\)</span> are the contributions of the primary colors), C’s chromaticity is necessarily inside the triangle <span class="math inline">\(\bigtriangleup \mathbf{c_1}\mathbf{c_2}\mathbf{c_3}\)</span>. So the triangle <span class="math inline">\(\bigtriangleup \mathbf{R}\mathbf{G}\mathbf{B}\)</span> represents the chromaticities that can be physically produced by the CIE 1931 RGB primary lights. We call that the <strong>chromaticity gamut</strong> of the color space, or sometimes simply the gamut of the color space, but we should keep in mind that the actual gamut of a color space is always a three-dimensional concept.</p>
+<p>Second, we can extend from mixing three colors to mixing an arbitrary number of colors and show that the interior of the spectral locus represents the chromaticities of all the colors that humans can see, i.e., the gamut of the HVS. This is true because the shape of the spectral locus is convex, so connecting any two points (i.e., mixing two colors) on or inside the locus will never go beyond the locus. By extension, a positive linear combination of any points on or inside the locus will always stay inside the locus. A natural implication is that any point outside the spectral locus represents an imaginary color, since that point can never be constructed by a positive linear combination of points on or inside the spectral locus.</p>
+<p>Third, the right panel in <a href="#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> shows the gamut of a few common color spaces. The sRGB color space is the most commonly used color space; virtually every single display supports it, and images, by default, are encoded in the sRGB format. We will have more to say about displays and image encoding later. Observe how small the sRGB gamut is: it covers about 35% of the HVS gamut. P3 is a more wider gamut that is supported in many new displays. Rec.2020 is an even wider gamut that is yet to be widely supported; it is 72% larger than the sRGB gamut and 37% larger than the P3 gamut. ProPhotoRGB contains colors that are beyond the HVS gamut, so to produce all the real colors in the ProPhotoRGB space we will need more than three primary lights. It is mostly used in Adobe Lightroom and Adobe Camera RAW software. They both deal with RAW images before they are encoded in a format that is displayable. We will talk about RAW imaging and processing later in <a href="imaging-isp.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
+<p>Finally, no display can produce all the colors that humans can see. No matter where you choose to place the primary colors in the chromaticity diagram and how many primaries you choose, the resulting gamut will never completely cover the entire HVS gamut as long as the primary colors are real colors (i.e., on or inside the spectral locus) and you have a finite number of them. This is again because the spectral locus is convex. For this reason, do not trust the colors in any xy-chromaticity diagram: the undisplayable colors are approximated by in-gamut, displayable colors. This is called gamut mapping, which we will discuss in <a href="#sec-chpt-hvs-cori-cm-gm" class="quarto-xref"><span>Section 5.6.3</span></a>.</p>
+</section>
+<section id="hvs-gamut" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="hvs-gamut"><span class="header-section-number">5.2.3</span> HVS Gamut</h3>
+<p>We can systematically sample the chromaticities in the chromaticity diagram to visualize how the HVS gamut looks like. <a href="#fig-hvs_gamut" class="quarto-xref">Figure&nbsp;<span>5.4</span></a> visualizes the HVS gamut in both the XYZ space and the xy-chromaticity diagram. Comparing the two, you can see how a selected set of colors in the highlighted XYZ space map to a curve in the xy-chromaticity diagram.</p>
+<div id="fig-hvs_gamut" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hvs_gamut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/hvs_gamut.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hvs_gamut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: HVS gamut visualized in the XYZ space and in the xy-chromaticity diagram. We systematically sample the chromaticities in the chromaticity diagram using square pulses as the light SPDs (insets on the right). From the interactive tutorial in <span class="citation" data-cites="zhu2022gamut">Zhu (<a href="references.html#ref-zhu2022gamut" role="doc-biblioref">2022d</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>There are, of course, many ways you can sample the chromaticities to get good coverage of the HVS gamut, and <span class="citation" data-cites="zhu2022gamut">Zhu (<a href="references.html#ref-zhu2022gamut" role="doc-biblioref">2022d</a>)</span> is an interactive tutorial that talks about this in detail (you can also see what the HVS gamut looks like in different color spaces). A common way seems to be to generate SPDs that are square pulses with equal peaks (see the insets on the right), which will guarantee that you do not repeatedly sample the same chromaticity point. This is what the popular Python package Colour <span class="citation" data-cites="colourpython">(<a href="references.html#ref-colourpython" role="doc-biblioref">NumFOCUS n.d.</a>)</span> does, but nothing prevents you from using a different method, as explored in <span class="citation" data-cites="zhu2022gamut">Zhu (<a href="references.html#ref-zhu2022gamut" role="doc-biblioref">2022d</a>)</span>. Of course, the actual HVS gamut has no boundary: we can indefinitely grow the gamut by simply scaling up the light power.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-cori-cube" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cube"><span class="header-section-number">5.3</span> Color Cube</h2>
+<p>The various color spaces we have been discussing are great, but they do not seem to be the sort of color spaces we use in everyday software when specifying colors. By far the most common way in practical applications to specify colors is by using a <strong>color cube</strong>, where you can specify the primary values (usually R, G, and B) of a color, each an integer between 0 and 255. What exactly are the colors that can be represented by such a color cube? How is it related to the color gamut we have discussed, and how do we construct a color cube? These are questions explored in the interactive tutorial <span class="citation" data-cites="zhu2022gamut">(<a href="references.html#ref-zhu2022gamut" role="doc-biblioref">Zhu 2022d</a>)</span>, which you are invited to go through. <a href="#fig-color_cube" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> illustrates the idea, and we will give a brief summary of the main steps.</p>
+<div id="fig-color_cube" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-color_cube-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/color_cube.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-color_cube-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Pick the primary colors (which usually are termed R, G, and B, because they usually are red-ish, green-ish, and blue-ish) and the white point in the xy-chromaticity space (left panel) and then construct a color cube from them (right panel). Note how the spectral locus is now positioned in the constructed RGB space. From the interactive tutorial in <span class="citation" data-cites="zhu2022cube">Zhu (<a href="references.html#ref-zhu2022cube" role="doc-biblioref">2022a</a>)</span>, which we invite you to study, you can see that as you change the primary colors and/or the white point, the resulting color gamut and the color cube will change accordingly.
+</figcaption>
+</figure>
+</div>
+<section id="sec-chpt-hvs-cori-cube-step1" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cube-step1"><span class="header-section-number">5.3.1</span> Step 1: A Linear Transformation From the XYZ Space</h3>
+<ul>
+<li><p>We know that a color space is defined by its three primary colors <em>and</em> the white point, which you get to choose when building your own color cube. The left panel shows one such choice, which happens to be what is used by the sRGB color space.</p></li>
+<li><p>Knowing these four points uniquely defines the shape of a parallelepiped in the XYZ space (middle panel). The space inside the parallelepiped corresponds to actual colors that can be produced by using the primary colors.</p>
+<p>Note that at this point we know only the relative shape, but not the absolute scale, of the parallelepiped: we can uniformly scale the power of the primary colors and white point, which will not change their chromaticity values but will expand or shrink the parallelepiped. The convention is to set the Y value of white to be 1 and normalize everything else accordingly, but of course the actual luminance of white (and any other color) depends on the actual device used.</p></li>
+<li><p>Now we turn the parallelepiped to a cube that is positioned between [0, 1] in all three directions (right panel). The white point in the XYZ space will be [1, 1, 1] in the color cube, signifying that white is produced from equal units of the three primary colors. This amounts to a linear transformation from the XYZ space.</p>
+<p>Note also how the spectral locus is now positioned in the RGB space: part of the locus (and by extension the HVS gamut) is now outside the RGB cube, showing that there exist real colors (i.e., inside the HVS gamut) that cannot be produced by the choice of the primary colors. This is consistent with our gamut interpretation in the chromaticity diagram (<a href="#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>).</p></li>
+</ul>
+<p>What we have done so far is to construct a linear transformation matrix, <span class="math inline">\(T_{xyz2rgb}\)</span>, which transforms the parallelepiped (middle panel in <a href="#fig-color_cube" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>) to a cube (right panel in <a href="#fig-color_cube" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>). This transformation matrix will change if we change any primary color or the white point of our color space (the interactive tutorial in <span class="citation" data-cites="zhu2022cube">Zhu (<a href="references.html#ref-zhu2022cube" role="doc-biblioref">2022a</a>)</span> will allow you to do exactly that). Either way, the color cube we have built so far is luminance-linear: if we double the power of a light whose color is [R, G, B], we will get a color [2R, 2G, 2B]. This is because the XYZ space is luminance-linear, and the RGB cube we have so far is a linear transformation from the XYZ space.</p>
+</section>
+<section id="sec-chpt-hvs-cori-cube-step2" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cube-step2"><span class="header-section-number">5.3.2</span> Step 2: Color Quantization and Gamma</h3>
+<p>We get a cube now, but we are not done yet. The cube is a continuous solid between [0, 0, 0] and [1, 1, 1], but the digital representation of a color is discrete and finite, so we have to quantize the solid. Assuming we have, say, 8 bits (i.e., 256 discrete levels) to represent the contribution of each primary color, the question is how to allocate the 256 levels to the [0, 1] range.</p>
+<p>So far in our discussion, the contribution of a primary color is linearly correlated with the power of the primary: doubling the contribution of a primary requires doubling the power of the corresponding light. Therefore, a uniform allocation of the bits would mean uniformly quantizing the power range, which, however, is not ideal. As we have seen in <a href="hvs-receptor.html#sec-hvs-receptor-intensity-peak" class="quarto-xref"><span>Section 3.6.1</span></a>, the electrical response of a photoreceptor is not linearly proportional to the light power (even though the amount of photon absorption and pigment excitation are!); the response incrementally saturates as the light power increases. As a result, the perceptual brightness level also gradually saturates with the light power. Therefore, uniformly quantizing the power range would lead to a <em>non-uniform</em> quantization of the brightness range, leading to large quantization error <em>perceptually</em>.</p>
+<p>To best use the limited bit budget, therefore, we would ideally want to uniformly quantize the brightness range, not the power range. A common method is to first model the brightness level (<span class="math inline">\(B\)</span>) as a power-law function of the raw channel value (<span class="math inline">\(v \in [0, 1]\)</span>) by <span class="math inline">\(B=v^{1/2.2}\)</span> and then quantize <span class="math inline">\(B\)</span> uniformly. The constant factor <span class="math inline">\(2.2\)</span> is called the <strong>gamma</strong> of the system. For instance, a red-channel value of 0.5 would translate to <span class="math inline">\(\lfloor 0.5^{1/2.2} \times 255 \rfloor = 186\)</span> in an 8-bit encoding. The relationship between <span class="math inline">\(B\)</span> and <span class="math inline">\(v\)</span> is called the Opto-Electronic Transfer Function (<strong>OETF</strong>). OETF is usually performed by an imaging system such as a camera, which turns optical signals (luminance) into electrical signals (bits in a color space).</p>
+<p>The sRGB standard <span class="citation" data-cites="anderson1996proposal">(<a href="references.html#ref-anderson1996proposal" role="doc-biblioref">Anderson et al. 1996</a>)</span> essentially uses this approach with one slight tweak to avoid numerical issues when <span class="math inline">\(v\)</span> is small. In particular, the sRGB standard uses linear scaling when <span class="math inline">\(v\)</span> is very small (below 0.0031308). This makes sense given our understanding in <a href="hvs-receptor.html#sec-hvs-receptor-intensity-model" class="quarto-xref"><span>Section 3.6.3</span></a> that the receptor’s electrical response is approximately linear against the light luminance when the luminance is very low. The sRGB standard also adjusts the gamma to be 2.4 so that the overall quantization function approximates a uniform power-law function with a gamma of 2.2. As a result, the OETF used in sRGB is:</p>
+<p><span class="math display">\[
+B =
+\begin{cases}
+12.92 v, &amp; v \leq 0.0031308\\
+1.055 v^{1/2.4} - 0.055, &amp; v &gt; 0.0031308
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(v \in [0, 1]\)</span> is one of the three RGB channels, and an 8-bit quantization is applied to <span class="math inline">\(B \in [0, 1]\)</span> to bring each channel to an integer between 0 and 255.</p>
+<p>Note that the gamma-based OETF does not model the actual relationship between perceived brightness and light luminance, but it is a close engineering hack. The behavioral brightness perception is largely accounted for by the photoreceptor/RGC response to light intensity. As we discussed in <a href="hvs-receptor.html#sec-hvs-receptor-intensity-model" class="quarto-xref"><span>Section 3.6.3</span></a>, the relationship between the electrical response of a photoreceptor and the light intensity is usually modeled by a (generalized) Michaelis equation, which incrementally saturates and exhibits a diminishing return, the same characteristic that the power-law function also possess. <!-- %\footnote{Behavioral brightness perception is usually quantified by the amount of incremental intensity needed to evoke a just noticeable brightness change. The incremental intensity is linearly related to the current intensity. This relationship is called the Weber's law, and is the natural result if the photoreceptor response to light intensity is modeled by the Michaelis equation. We will discuss this in detail in the adaptation lecture.}.
+% there is no way to directly measure brightness vs. luminance, so we can only measure TVI. see my note on Weber’s Law and Sensitivity in Psychophysics vs. Physiology.
+%https://analyticsartist.wordpress.com/2015/03/08/advertising-diminishing-returns-saturation/ --></p>
+<p>There are two caveats here. First, <span class="math inline">\(v\)</span> is <em>proportional</em> to luminance <span class="math inline">\(L\)</span>, but is <em>not</em> exactly <span class="math inline">\(L\)</span>, so the same <span class="math inline">\(v\)</span> will result in different <span class="math inline">\(L\)</span>s on different displays that differ in their peak luminance. So encoding <span class="math inline">\(B\)</span> as a power-law function of <span class="math inline">\(v\)</span> does not mean the OETF actually models the correct relationship between <span class="math inline">\(B\)</span> and <span class="math inline">\(L\)</span>. That is why the sRGB standard specifies the peak luminance of the display (white point) as 80 cd/m<span class="math inline">\(^2\)</span>. Presumably this means that at this particular luminance range (0 to 80 cd/m<span class="math inline">\(^2\)</span>), the relationship between <span class="math inline">\(B\)</span> and <span class="math inline">\(L\)</span> roughly follows the power law. Second, light adaptation (<a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-light" class="quarto-xref"><span>Section 7.1</span></a>) will also play a role, since the HVS responds to contrasts over the mean illuminance, rather than absolute illuminance, and the mean illuminance varies largely across viewing environments. The sRGB standard also specifies that the mean illuminance level of the viewing environment to be 64 lux. When actually viewing an sRGB image, both conditions are rarely met, so take all these with a huge grain of salt.</p>
+</section>
+<section id="rgb-color-spaces-are-linearly-related-in-luminance" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="rgb-color-spaces-are-linearly-related-in-luminance"><span class="header-section-number">5.3.3</span> RGB Color Spaces are Linearly Related in Luminance</h3>
+<p>By “RGB color space”, we mean a color space that is defined by its three primary colors (and critically also the white point), which we call R, G, and B for simplicity, but they certainly do not have to look like red-ish, green-ish, and blue-ish. Different RGB color spaces might use different gammas and quantization schemes. In the end, the discrete RGB values are usually not linearly related to luminance. We can go back to a luminance-linear space from the discrete RGB values by inverting the gamma encoding process described above. For instance, in sRGB space, 186 would translate to 0.5 in the luminance-linear sRGB space.</p>
+<p>Once in a luminance-linear space, different color spaces are simply a linear transformation away from each other. The transformation matrix can be calculated based on the primary colors and the white point of the two color spaces. We will omit the math here, but to get an idea just go back to <a href="#fig-color_cube" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>. Two color spaces having different primary colors and white points will end up being two different parallelepipeds that are related by a transformation matrix. Another way to think about this is that each luminance-linear RGB color space is a linear transformation away from the XYZ space, so these RGB spaces must be linearly related too.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-cori-hsv" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-chpt-hvs-cori-hsv"><span class="header-section-number">5.4</span> HSB/HSL/HSV Space</h2>
+<p>A color cube is one way to represent an RGB color space. Another common way to represent an RGB color space is to use a cylindrical-coordinate representation. There are two such representations, HSL (Hue, Saturation, and Lightness) and HSV (Hue, Saturation, and Value), which is also called HSB (B for Brightness). These are not new color spaces; their gamut is identical to that of the corresponding RGB color space. They are just different ways to organize colors in a color space; instead of using three-dimensional coordinates to represent a color as in a color cube, they use cylindrical coordinates.</p>
+<div id="fig-hsv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/hsv.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hsv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: We can represent an RGB color cube (left) using cylindrical coordinates. One such representation is the HSL color space (right), where hue, saturation, and lightness have intuitive interpretations. Hue and saturation also have intuitive interpretations in the CIE 1931 xy-chromaticity diagram, which normalizes luminance so lightness information is absent. Left: from <span class="citation" data-cites="rgb">SharkD (<a href="references.html#ref-rgb" role="doc-biblioref">2010b</a>)</span>. Middle: adapted from <span class="citation" data-cites="hsl">SharkD (<a href="references.html#ref-hsl" role="doc-biblioref">2010a</a>)</span>. Right: from <span class="citation" data-cites="cie1931xy">BenRG (<a href="references.html#ref-cie1931xy" role="doc-biblioref">2009</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-hsv" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> compares a typical color cube (left) and its HSL representation (right). We omit the transformation math here, but one can imagine how we turn the white point in a color cube to the top plane, the black point to the bottom plane, and expand everything else so that a cube surface morphs into a cylindrical surface. The three dimensions in an HLS space are hue, saturation, and lightness. Very informally, hue represents subjectively different colors (red, orange, yellow, etc.), saturation represents how much white a color has (a color with a higher saturation means it is more “pure”), and lightness represents the brightness. In this sense, hue and saturation also find their interpretations in the CIE 1931 xy-chromaticity diagram (right), where a color closer to the spectral locus has a higher saturation (and colors closer to white-ish colors are <em>desaturated</em>), and the spectral locus cycles through different hues. Lightness is not concerned with in the chromaticity diagram, which normalizes the color intensity.</p>
+<p>You can imagine what the benefit of using an HSL/HSB color space is. It is more intuitive to pick colors in these color representations since the three dimensions have intuitive interpretations that better align with how we describe colors in our everyday language. So we can more easily reason about how a color will change if we vary a dimension. In contrast, it is sometimes hard to predict how a color will change when we, say, increase the red channel by 10. I almost exclusively use the HSL/HSB space when picking colors in graphing software.</p>
+</section>
+<section id="sec-chpt-hvs-cori-disp" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-chpt-hvs-cori-disp"><span class="header-section-number">5.5</span> Display Native Gamut</h2>
+<p>A display has a native color space. Each display pixel is implemented by (usually) three sub-pixels, each of which has an implementation-specific SPD and acts as a primary light. The retina then spatially integrates the lights from the three sub-pixels, i.e., mixing the three primary colors. We can individually control the luminance of each sub-pixel and, by extension, the actual color of the mixed pixel. The luminance can be controlled by 1) the duty cycle of a pixel through Pulse Width Modulation (PWM), 2) the current supply to each sub-pixel, or 3) the voltage supply to each sub-pixel. The luminance is strictly linear with respect to the drive signal in the first case, approximately linear in the second case, and non-linear in the third case <span class="citation" data-cites="miller2019color">(<a href="references.html#ref-miller2019color" role="doc-biblioref">Miller 2019, p. 112</a>)</span>. The mapping from the electrical drive signal strength to the luminance level is usually called the Electro-Optical Transfer Function (<strong>EOTF</strong>).</p>
+<p>The display’s native color space is most likely not exactly sRGB or any standard color space. The primary colors (and the white point) depend on the emission spectrum of each sub-pixel, which in turn depends on the material used. For instance, inorganic LEDs have a narrower emission spectra than the organic LEDs <span class="citation" data-cites="huang2020mini">(<a href="references.html#ref-huang2020mini" role="doc-biblioref">Huang et al. 2020</a>)</span>, so they tend to be able to generate more saturated colors and, thus, the resulting display gamut is wider. One has to balance multiple trade-offs in a display design, such as invariance of chromaticity vs.&nbsp;luminance, lifetime, power consumption, and cost, so it is difficult to tune the pixel spectra <em>just</em> so that the colors precisely match that of a standard.</p>
+<p>Field Sequential Displays (FSD) rely on the temporal integration of our visual system to create different colors. The most common example of an FSD is modern Digital Light Processing (DLP) projectors. We will not discuss specific display implementations; instead, we will focus on the color space of a display regardless of how the colors are produced.</p>
+<div id="fig-display_subpixels" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-display_subpixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/display_subpixels.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-display_subpixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: Microscope-magnified subpixel images of P3 green and sRGB green primary (both are [0, 255, 0] in their respective color spaces) on a 4th-generation iPad Pro taken from an iPhone 12 Pro (whose image signal processing chain introduces color inaccuracies; the red sub-pixel contributions to the sRGB green are not as strong when seen by naked eye). As a side note, you can also see that when the image is focused on the green sub-pixels, the red (and blue) sub-pixels are out of focus, a result of chromatic aberration.
+</figcaption>
+</figure>
+</div>
+<p>As an example, <a href="#fig-display_subpixels" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> shows the the sub-pixels images of the green primary colors in the P3 and sRGB color space as displayed on a 4th-generation iPad Pro. We can make a few observations. First, the emission patterns of P3 green and sRGB green are different. The P3 green is more “pure”, where the red and blue sub-pixels are contributing very little, whereas the sRGB green requires noticeable contribution from the red sub-pixels. This is not surprising because the P3 green is much more saturated (closer to spectral colors) than the sRGB green, as shown in the right figure in <a href="#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The actual contributions of red sub-pixels in sRGB green as seen by my eye are not as strong as seen in this iPhone-taken image; the image signal processing pipeline in the iPhone definitely has introduced its artifacts.</p>
+<p>Second, even for the P3 green, there are still some contributions from the red sub-pixels. This suggests that the native display gamut is different from (and larger than) P3. This makes sense: for a display to support a particular color space, say, the P3 space, the display’s native color space must be no smaller than the P3 space.</p>
+</section>
+<section id="sec-chpt-hvs-cori-cm" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cm"><span class="header-section-number">5.6</span> Color Management</h2>
+<p>An end-to-end workflow might involve multiple output media (e.g., displays, prints), and it is important to correctly translate colors between them to accurately reproduce the color appearance. There are a few issues that need our attention.</p>
+<p>First, you might edit a photo encoded in the P3 color space, save the photo in a file, and share it with your friend, who will view the image on a display that supports only the sRGB color space. Multiple color spaces are involved here. The image is first encoded in the P3 space and then will have to be reinterpreted in the sRGB space. A color, say, [10, 20, 30] encoded in the P3 color space is not the same color as the sRGB color [10, 20, 30], so we must correctly translate a color encoded in the source color space to the destination color space.</p>
+<p>Second, a potential issue in this transformation is that the P3 color space has a larger gamut than that of sRGB, so there will necessarily be colors in the photon that will never be accurately reproduced on your friend’s display — what do we do with these colors? Each display also has its own native color space, and an sRGB/P3 image will have to be transformed to the display’s native space. Fundamentally, if we want to display, say, a P3-encoded image, the display’s native gamut must be no smaller than P3.</p>
+<p>Finally, the viewer might be under a different viewing condition than the condition under which the photo was originally edited. The viewing condition could affect the actual appearance of a color, so we must account for this shift in viewing condition.</p>
+<p>Taking care of all these is part of <strong>color management</strong>, whose goal is to maintain a consistent color appearance throughout the workflow that might involve wildly different devices. It requires a collaboration between every single piece that touches color in the workflow: the image file must come with a <em>profile</em> that specifies what color space its pixel colors are encoded in and (an estimation of) the viewing condition under which the image was originally edited/viewed, the software that manipulates image content must correctly read and interpret the profile and perform the necessary transformation, potentially through APIs exposed by the Operating System (OS), and the display firmware and drive must communicate with the OS a similar profile of the display itself. <span class="citation" data-cites="giorgianni2009digital">Giorgianni and Madden (<a href="references.html#ref-giorgianni2009digital" role="doc-biblioref">2009</a>)</span> and <span class="citation" data-cites="sharma2018understanding">A. Sharma (<a href="references.html#ref-sharma2018understanding" role="doc-biblioref">2018</a>)</span> are two excellent references for color management. We will describe the key issues here.</p>
+<section id="sec-chpt-hvs-cori-cm-cst" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cm-cst"><span class="header-section-number">5.6.1</span> Color Space Transformation</h3>
+<p>When opening and viewing an image encoded in, say, sRGB on a display, a few transformations have to happen <span class="citation" data-cites="miller2019color">(<a href="references.html#ref-miller2019color" role="doc-biblioref">Miller 2019, chap. 7.1</a>)</span>. The display’s native color space is most likely not exactly sRGB or any standard color space; we must correctly translate a color encoded in the sRGB space to the display’s space. A color [10, 20, 30] encoded in sRGB is not the same color as [10, 20, 30] in the display’s color space. This transformation is done in two steps.</p>
+<p>First, the image file ideally has metadata that tells us what color space its pixel colors are encoded in or, better, the transformation matrix from the image’s color space to a device-independent color space, say the CIE XYZ space. The way to describe such information has been standardized by International Color Consortium (ICC) in what is called the <em>ICC profile</em> <span class="citation" data-cites="iccv2">(<a href="references.html#ref-iccv2" role="doc-biblioref">International Color Consortium 2019</a>)</span>. We can embed an ICC profile in common image file formats such as JPEG. Second, the display itself also has to report its native color space. To do that, modern displays usually come with an ICC profile that describes how to transform from the CIE XYZ space to the display’s native space. Now when the Operating System gets the image file, it would first transform the sRGB colors to the XYZ space using the ICC profile in the image and then transform the colors in the XYZ to the display’s native space using the display profile <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can see that the XYZ space here serves to connect the input color space and the output color space. ICC calls such a space a Profile Connection Space (PCS).</p>
+<p>The transformation from the XYZ space to the display’s native space is necessarily linear. To calculate the transformation matrix, we will first measure the chromaticity values of the display’s native primary colors and the white point offline <span class="citation" data-cites="balasubramanian2003device">(<a href="references.html#ref-balasubramanian2003device" role="doc-biblioref">Balasubramanian 2003</a>)</span>. Then we take the exact the same steps as described in <a href="#sec-chpt-hvs-cori-cube-step1" class="quarto-xref"><span>Section 5.3.1</span></a>: we are essentially creating a color cube for the display ([1, 1, 1] represents the display white point, i.e., when all the sub-pixels emit maximum luminance, etc.).</p>
+<!-- %``Display profiles are profiles that describe how a computer monitor or projector reproduces colours. Without them applications such as Photoshop would have no idea how the monitor displays colour. If you haven’t calibrated and profiled your monitor then your computer will be using a generic profile that does not reflect how your monitor works. It will be an approximation at best.''
+%https://www.permajet.com/blog/what-is-an-icc-profile-why-do-i-need-one/
+% miller2019color chap. 7.1 uses a somewhat weird example where he wants to pick 9000K as the adaptation white but the display white point is not 9000K. so after chromatic adaptation the input sRGB white will become [1, 1, 1] in the display native space, i.e., display white point, which, however, is not 9000K. he suggests a compensation method, but in reality the display profile would know its actual white point and supply the correct chromatic adaptation matrix accordingly. -->
+</section>
+<section id="converting-pixel-colors-to-drive-signals" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="converting-pixel-colors-to-drive-signals"><span class="header-section-number">5.6.2</span> Converting Pixel Colors to Drive Signals</h3>
+<p>After this transformation, we have obtained a set of luminance-linear, analog (between [0, 1]) color values in the display’s native color space. The next step is to turn the real-valued colors into discrete values (drive signals) that can be sent to the display to control the luminance of each sub-pixel. Ideally, we want 255 (assuming 8 bits) to produce maximum luminance and 0 to produce minimum luminance. Depending on how the display adjusts its luminance (by PWM, current, or voltage), the drive signal vs.&nbsp;luminance relationship, i.e., EOTF, may or may not be linear. Either way, we can offline calibrate an EOTF look-up table (or regress a function), from which we can then map a desired luminance level to a discrete value.</p>
+<p>What is the desired luminance level for a pixel? It would be <em>amazing</em> if your display could reproduce the scene luminance, but that is unlikely, because the real world has a much higher, orders of magnitude higher, dynamic range (DR) than that of a display. A main challenge in imaging and display, thus, is <strong>tone mapping</strong>, which is concerned with mapping a high-dynamic-range scene to a low-dynamic-range display. This mapping can be described by an Opto-Optical Transfer Function (<strong>OOTF</strong>). Both the OETF of an imaging system and the EOTF of a display participate in the OOTF, and if the product of OETF and EOTF is not the desired OOTF, one would need to implement an Electro-Electrical Transfer Function (<strong>EETF</strong>) as part of the image processing pipeline to reach the desired OOTF. Tone mapping is the focus of extensive research <span class="citation" data-cites="reinhard2010high mantiuk2015high">(<a href="references.html#ref-reinhard2010high" role="doc-biblioref">Reinhard 2010</a>; <a href="references.html#ref-mantiuk2015high" role="doc-biblioref">Mantiuk et al. 2015</a>)</span>.</p>
+</section>
+<section id="sec-chpt-hvs-cori-cm-gm" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="sec-chpt-hvs-cori-cm-gm"><span class="header-section-number">5.6.3</span> Gamut Mapping</h3>
+<p>When viewing a P3-encoded image on a display whose gamut is smaller, e.g., similar to that of sRGB, the colors might not be accurately reproduced. The best thing we can do is to approximate an out-of-gamut color with an in-gamut color to minimize the color error. This is called <strong>gamut mapping</strong>. <span class="citation" data-cites="morovivc2008color">Morovič (<a href="references.html#ref-morovivc2008color" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995, chap. 3.6</a>)</span> describe the basic algorithms, with the former being more recent and comprehensive.</p>
+<p>The simplest strategy would be to simply clamp out-of-range values, so a color of [12, 200, 300] would become [12, 200, 255]. Clearly, other than being extremely simple to implement, this strategy would introduce large color reproduction errors. ICC has defined four <strong>rendering intents</strong>, each of which corresponds to a gamut mapping algorithm (vaguely worded, and the implementation detail might vary). For instance, the <em>Absolute</em> rendering intent leaves all the in-gamut colors unchanged but maps the out-of-gamut colors to the boundary of the color gamut. The <em>Perceptual</em> rendering intent can be implemented by uniformly projecting all the colors to the white point so that all the colors are in-gamut. You can imagine that while this maintains the relative color appearance between colors (which the Absolute rendering intent fails at), but it would also change in-gamut colors that could have been accurately rendered!</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-cori-diff" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="sec-chpt-hvs-cori-diff"><span class="header-section-number">5.7</span> Color Discrimination and Color Difference</h2>
+<p>In many practical applications, we need to calculate color differences. For instance, an image synthesis algorithm might want to be minimize the color difference in the synthesized image and some form of “ground truth”; a display’s color reproduction might not be 100% accurate, so we want to quantitatively compare the quality of different displays by measuring the color difference (compared to the colors to be reproduced) each introduces.</p>
+<p>Fortunately, once we put colors into a three-dimensional coordinate system, calculating color differences becomes natural: the Enclidan distance between two colors gives a measure of the difference between the two colors. However, for the Euclidean distance to be a good measure, we must be sure that the distance is proportional to the perceptual color difference. How do we quantify the perceptual color difference?</p>
+<section id="color-discrimination" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="color-discrimination"><span class="header-section-number">5.7.1</span> Color Discrimination</h3>
+<p>Practically there are not many cases where we need to quantify large color differences. What is more important is to quantify small color differences. For a given reference color, we can use a threshold-detection psychophysical paradigm such as the one described in <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992</a>)</span> to estimate the set of colors that can just barely be discriminated from the reference color. These experiments are called <strong>color discrimination</strong> tests.</p>
+<p>Color discrimination experiments typically use a n-alternative forced choice (nAFC) paradigm <span class="citation" data-cites="krauskopf1992color hansen2009color duinkharjav2022color danilova2025effect hong2025comprehensive">(<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">Krauskopf and Karl 1992</a>; <a href="references.html#ref-hansen2009color" role="doc-biblioref">Hansen, Pracejus, and Gegenfurtner 2009</a>; <a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">Duinkharjav et al. 2022</a>; <a href="references.html#ref-danilova2025effect" role="doc-biblioref">Danilova and Mollon 2025</a>; <a href="references.html#ref-hong2025comprehensive" role="doc-biblioref">Hong et al. 2025</a>)</span>. <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (a) shows a 4AFC variant from <span class="citation" data-cites="duinkharjav2022color">Duinkharjav et al. (<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">2022</a>)</span>. The visual field consists of an adapting background and four color patches. The background controls the light and chromatic adaptation state of the participant, which is shown to have significant impact on the color discrimination results <span class="citation" data-cites="krauskopf1992color">(<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">Krauskopf and Karl 1992</a>)</span>. Among the four color patches, three have the same <em>reference</em> color whose discrimination contour we want to estimate. The other randomly placed color patch, the <em>test</em> patch, has a different color. A participant is instructed to identify which one of the 4 color disks appears different. The participant fixes their gaze on a crosshair at the center of the screen for the duration that the stimuli are shown; this makes sure that the four color patches are all placed at a given eccentricity.</p>
+<div id="fig-color_disc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-color_disc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/color_disc.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-color_disc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: (a): A 4AFC color discrimination trial; adapted from <span class="citation" data-cites="duinkharjav2022color">Duinkharjav et al. (<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">2022, fig. 2a</a>)</span>. (b): iso-luminance discrimination contours plotted in the DKL space <span class="citation" data-cites="derrington1984chromatic">(<a href="references.html#ref-derrington1984chromatic" role="doc-biblioref">Derrington, Krauskopf, and Lennie 1984</a>)</span>, where all the colors have the same luminance (L+M response); from <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992, fig. 14</a>)</span>. (c): MacAdam ellipses (measured at 2<span class="math inline">\(^{\circ}\)</span> eccentricity) plotted in the xy-chromaticity diagram (the ellipse sizes are magnified 10 times to be more visible); from <span class="citation" data-cites="macadam">Anonymous (<a href="references.html#ref-macadam" role="doc-biblioref">2009</a>)</span>. (d): iso-luminance discrimination contours in the DKL space similar to (b), but now the adapting field is the reference color itself; from <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992, fig. 8</a>)</span>. (e): contours corresponding to a <span class="math inline">\(\Delta E_{00}\)</span> = 1.0 in the <span class="math inline">\(a^*\)</span>-<span class="math inline">\(b^*\)</span> plane in the CIELAB space; from <span class="citation" data-cites="sharma2003color">G. Sharma (<a href="references.html#ref-sharma2003color" role="doc-biblioref">2003, fig. 1.18</a>)</span>. (f): discrimination contours under two different eccentricities (10<span class="math inline">\(^{\circ}\)</span> and 25<span class="math inline">\(^{\circ}\)</span>); from <span class="citation" data-cites="duinkharjav2022color">Duinkharjav et al. (<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">2022, fig. 4a</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Each trial uses a 1-up-2-down staircase procedure <span class="citation" data-cites="cornsweet1962staircase leek2001adaptive treutwein1995adaptive">(<a href="references.html#ref-cornsweet1962staircase" role="doc-biblioref">Cornsweet 1962</a>; <a href="references.html#ref-leek2001adaptive" role="doc-biblioref">Leek 2001</a>; <a href="references.html#ref-treutwein1995adaptive" role="doc-biblioref">Treutwein 1995</a>)</span> to adjust the color of the test patch: the test color is moved closer to the reference color (a harder trial) if the participant identifies the test patch correctly twice in a row, and moved farther away from the reference color (an easier trial) upon an incorrect response.</p>
+<p><a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (b) shows a set of discrimination contours obtained by <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992</a>)</span> plotted in the DKL space <span class="citation" data-cites="derrington1984chromatic">(<a href="references.html#ref-derrington1984chromatic" role="doc-biblioref">Derrington, Krauskopf, and Lennie 1984</a>)</span>, which we have discussed in <a href="hvs-color.html#sec-chpt-hvs-color-oppobasis-model" class="quarto-xref"><span>Section 4.4.3</span></a>. The individual discrimination thresholds of a reference color are fit with an ellipse to approximate the discrimination contour, where the reference color is placed at the center of the ellipse. In their experiments, the reference colors were all iso-luminant (i.e., identical L+M responses) and the test colors were all forced to be on the same iso-luminance plane. Of course, the actual discrimination contour would be 3D ellipsoid, and obtaining that data would be take a huge amount work: we would have to sample a 3D space for the reference colors and, for each reference color, sample another 3D space to obtain its discrimination thresholds. The results in <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (b) essentially simplifies the 6D sampling to 4D.</p>
+<p>We can see, from <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (b), that the discrimination contours are quite regularly placed in the DKL space. A striking feature is that the thresholds on one dimension do not change as the reference color changes along the other direction. For instance, the threshold along the S-(L+M) axis, i.e., the Yellow-Blue dimension, is roughly constant for the three reference color that differ only along the L-M axis, i.e., the Red-Green dimension. This seems to suggest that color discrimination might be independently mediated by the two opponent processes.</p>
+<p>The first set of color discrimination data was collected by David MacAdam in his seminar work <span class="citation" data-cites="macadam1942visual">MacAdam (<a href="references.html#ref-macadam1942visual" role="doc-biblioref">1942</a>)</span> and <span class="citation" data-cites="macadam1943specification">MacAdam (<a href="references.html#ref-macadam1943specification" role="doc-biblioref">1943</a>)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. MacAdam did not use the 4AFC strategy above, but indirectly estimated the thresholds using variations in color matching experiments. A modern rendition of his results is shown in <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (c) in the CIE 1931 xy-chromaticity space; the ellipse sizes are magnified ten times to be visible. A practical interpretation of a dicrimination contour is that with an ellipse all the colors are non-discriminable with respect to the center, reference color.</p>
+</section>
+<section id="adaptation-and-eccentricity-dependence" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="adaptation-and-eccentricity-dependence"><span class="header-section-number">5.7.2</span> Adaptation and Eccentricity Dependence</h3>
+<p>Discrimination contours depend on both the adaptation state and eccentricity. <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (d), also from <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992</a>)</span> shows, the discrimination contours when the background, adapting light is the reference color itself and the participant is fully adapted to that color. We will study chromatic adaptation later in <a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-chroma" class="quarto-xref"><span>Section 7.3</span></a>, but what this practically means is that, in this experiment, the background color is perceived as achromatic, even though it might not normally be considered so. We can see that the ellipses are wildy different from those in <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (b). In particular, it seems like the threshold along the L-M dimension does not change at all with the L-M response of the reference color.</p>
+<p>MacAdam’s original data were collected at 2<span class="math inline">\(^{\circ}\)</span> eccentricity. Given that the visual acuity reduces as the eccentricity increases, it is only natural that the discrimination contours expand in size as the eccentricity. <span class="citation" data-cites="duinkharjav2022color">Duinkharjav et al. (<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">2022</a>)</span> measures the ellipses under different eccentricities. <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (e) compares the results between 10<span class="math inline">\(^{\circ}\)</span> and 25<span class="math inline">\(^{\circ}\)</span>. Not surprisingly, the ellipses are larger in the latter. The qualitatively different contour shapes between <span class="citation" data-cites="duinkharjav2022color">Duinkharjav et al. (<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">2022</a>)</span> and <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992</a>)</span> is perhaps due to the differences in the measurement methodology, which warrants further investigations.</p>
+</section>
+<section id="color-difference-and-perceptually-uniform-color-space" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="color-difference-and-perceptually-uniform-color-space"><span class="header-section-number">5.7.3</span> Color Difference and Perceptually Uniform Color Space</h3>
+<p>The difference between the reference color and a color on its discrimination contour is called the <strong>Just Noticeable Difference</strong> (JND). A color space is said to be “perceptually uniform” if the JND measure is a constant anywhere in the color space along any direction. In such a color space, the Euclidean distance would be a measure of color difference.</p>
+<p>Unfortunately, no perceptually uniform color space has even been identified. Consider the results of <span class="citation" data-cites="krauskopf1992color">Krauskopf and Karl (<a href="references.html#ref-krauskopf1992color" role="doc-biblioref">1992</a>)</span> or MacAdam, the discrimination contours are ellipses (both in the DKL space and in the xy space), not circles, so the JND for a reference color varies angularly. Worse, the discrimination contour changes its shape as the reference color change, suggesting that the JND is also spatially varying.</p>
+<p>Quite a few attempts have been made to transform the XYZ space into a more perceptually uniform space. Among them, the two common ones are the CIE 1976 <span class="math inline">\(Lu^*v^*\)</span> (CIELUV) space and the (more widely used) CIE 1976 <span class="math inline">\(La^*b^*\)</span> (CIELAB) space, both of which are non-linear transformations from the XYZ space. The so-called CIE Delta E 1976 color difference metric (<span class="math inline">\(\Delta E_{ab}^*\)</span> ) is defined as the Euclidean distance in the CIELAB space. If CIELAB is truly perceptually uniform (as far as color discrimination is concerned), <span class="math inline">\(\Delta E_{ab}^*\)</span> being 1.0 would mean a JND. However, this is not true <span class="citation" data-cites="sharma2003color">(<a href="references.html#ref-sharma2003color" role="doc-biblioref">G. Sharma 2003, fig. 1.18</a>)</span>.</p>
+<p>CIE has since recommended a new, much more involved, and non-Euclidean measure in the CIELAB space, called the Delta E 2000 metric (<span class="math inline">\(\Delta E_{00}\)</span>), to achieve better perceptual uniformity <span class="citation" data-cites="sharma2005ciede2000">(<a href="references.html#ref-sharma2005ciede2000" role="doc-biblioref">G. Sharma, Wu, and Dalal 2005</a>)</span>. <a href="#fig-color_disc" class="quarto-xref">Figure&nbsp;<span>5.8</span></a> (f) shows iso-discrimination contours corresponding to <span class="math inline">\(\Delta E_{00}\)</span> = 1.0 in an <span class="math inline">\(a^*\)</span>-<span class="math inline">\(b^*\)</span> (iso-luminance) plane in the CIELAB space. If the <span class="math inline">\(\Delta E_{00}\)</span> is to be considered a perceptually uniform color difference metric, the CIELAB space itself must not be perceptually uniform given the varying contour shapes throughout the space. What if we construct a new space by transforming the CIELAB space using the <span class="math inline">\(\Delta E_{00}\)</span> metric — would that space be perceptually uniform? The answer is unlikely: the discrimination contours at the low <span class="math inline">\(b^*\)</span> end become weirdly non-convex, which is not a reflection of the human discrimination data but, rather, of the limitation of the <span class="math inline">\(\Delta E_{00}\)</span> metric itself. This mean there is no simple, true color difference measure in that space either — if we insist on defining a perceptual uniform space to be one where a simple Euclidean distance is proportional to perceptual difference.</p>
+</section>
+<section id="science-vs.-engineering" class="level3" data-number="5.7.4">
+<h3 data-number="5.7.4" class="anchored" data-anchor-id="science-vs.-engineering"><span class="header-section-number">5.7.4</span> Science vs.&nbsp;Engineering</h3>
+<p>I always feel that color discrimination is a topic that exemplifies the similarities and differences between engineering and science.</p>
+<p>From an engineering perspective, we would like to have a practical tool that allows us to quantify perceptual color differences, which have huge implications on capturing, storing, computing, and displaying colors. We want to make sure our workflow preserves the color fidelity as much as possible, and a quantitative metric is, just like any other engineering problem, a pre-requisite. Since the linear LMS/XYZ spaces and Euclidean distances are insufficient, we turn to non-linear spaces like CIELAB and non-Euclidean measures like <span class="math inline">\(\Delta E_{00}\)</span>. The goal is engineering convenience. It is fair to say that while they are not perfect, they have significantly improved color workflows in practice.</p>
+<p>Vision scientists approach this problem with a different goal. The retina has access to only the cone reponses but the cone space itself is not perceptually uniform, so a natural question to ask is: <em>how does color discrimination arise from cone reponses</em>? It is of course of practical value to figure out the mechanisms that mediate our ability to discriminate between two colors; at the very least, we can design better color difference metrics for engineering applications. But fundamentally, understanding color discrimination might provide new insights of human color vision as a whole, and that is the scientific value of studying this problem.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-cie1931xyz" class="csl-entry" role="listitem">
+Acdx. 2009. <span>“<span>CIE 1931 XYZ Color Matching Functions; CC BY-SA 4.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE_1931_XYZ_Color_Matching_Functions.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE_1931_XYZ_Color_Matching_Functions.svg</a>.
+</div>
+<div id="ref-anderson1996proposal" class="csl-entry" role="listitem">
+Anderson, Matthew, Ricardo Motta, Srinivasan Chandrasekar, and Michael Stokes. 1996. <span>“Proposal for a Standard Default Color Space for the Internet—Srgb.”</span> In <em>Color and Imaging Conference</em>, 4:238–45. Society of Imaging Science; Technology.
+</div>
+<div id="ref-macadam" class="csl-entry" role="listitem">
+Anonymous. 2009. <span>“<span class="nocase">MacAdam Ellipses in the CIE1931 xy chromaticity diagram; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIExy1931_MacAdam.png" class="uri">https://commons.wikimedia.org/wiki/File:CIExy1931_MacAdam.png</a>.
+</div>
+<div id="ref-balasubramanian2003device" class="csl-entry" role="listitem">
+Balasubramanian, Raja. 2003. <span>“Device Characterization.”</span> In <em>Digital Color Imaging Handbook</em>, edited by Gaurav Sharma, 269–384. CRC Press.
+</div>
+<div id="ref-cie1931xy" class="csl-entry" role="listitem">
+BenRG. 2009. <span>“<span class="nocase">CIE1931 xy chromaticity plot; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE1931xy_blank.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931xy_blank.svg</a>.
+</div>
+<div id="ref-brill1998cie" class="csl-entry" role="listitem">
+Brill, Michael H. 1998. <span>“Erratum: How the CIE 1931 Color-Matching Functions Were Derived from Wright-Guild Data.”</span> <em>Color Research &amp; Application</em> 23 (4): 259–59.
+</div>
+<div id="ref-cornsweet1962staircase" class="csl-entry" role="listitem">
+Cornsweet, Tom N. 1962. <span>“The Staircase-Method in Psychophysics.”</span> <em>The American Journal of Psychology</em> 75 (3): 485–91.
+</div>
+<div id="ref-danilova2025effect" class="csl-entry" role="listitem">
+Danilova, MV, and JD Mollon. 2025. <span>“Effect of Stimulus Size on Chromatic Discrimination.”</span> <em>Journal of the Optical Society of America A</em> 42 (5): B167–77.
+</div>
+<div id="ref-derrington1984chromatic" class="csl-entry" role="listitem">
+Derrington, Andrew M, John Krauskopf, and Peter Lennie. 1984. <span>“Chromatic Mechanisms in Lateral Geniculate Nucleus of Macaque.”</span> <em>The Journal of Physiology</em> 357 (1): 241–65.
+</div>
+<div id="ref-duinkharjav2022color" class="csl-entry" role="listitem">
+Duinkharjav, Budmonde, Kenneth Chen, Abhishek Tyagi, Jiayi He, Yuhao Zhu, and Qi Sun. 2022. <span>“Color-Perception-Guided Display Power Reduction for Virtual Reality.”</span> <em>ACM Transactions on Graphics (TOG)</em> 41 (6): 1–16.
+</div>
+<div id="ref-fairchild2013color" class="csl-entry" role="listitem">
+Fairchild, Mark D. 2013. <em>Color Appearance Models</em>. 3rd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-fairman1997cie" class="csl-entry" role="listitem">
+Fairman, Hugh S, Michael H Brill, and Henry Hemmendinger. 1997. <span>“How the CIE 1931 Color-Matching Functions Were Derived from Wright-Guild Data.”</span> <em>Color Research &amp; Application</em> 22 (1): 11–23.
+</div>
+<div id="ref-giorgianni2009digital" class="csl-entry" role="listitem">
+Giorgianni, Edward J, and Thomas E Madden. 2009. <em>Digital Color Management: Encoding Solutions</em>. Vol. 13. John Wiley &amp; Sons.
+</div>
+<div id="ref-glassner1995principles" class="csl-entry" role="listitem">
+Glassner, Andrew S. 1995. <em>Principles of Digital Image Synthesis</em>. Elsevier.
+</div>
+<div id="ref-hansen2009color" class="csl-entry" role="listitem">
+Hansen, Thorsten, Lars Pracejus, and Karl R Gegenfurtner. 2009. <span>“Color Perception in the Intermediate Periphery of the Visual Field.”</span> <em>Journal of Vision</em> 9 (4): 26–26.
+</div>
+<div id="ref-hong2025comprehensive" class="csl-entry" role="listitem">
+Hong, Fangfang, Ruby Bouhassira, Jason Chow, Craig Sanders, Michael Shvartsman, Phillip Guan, Alex H Williams, and David H Brainard. 2025. <span>“Comprehensive Characterization of Human Color Discrimination Thresholds.”</span> <em>bioRxiv</em>, 2025–07.
+</div>
+<div id="ref-huang2020mini" class="csl-entry" role="listitem">
+Huang, Yuge, En-Lin Hsiang, Ming-Yang Deng, and Shin-Tson Wu. 2020. <span>“Mini-LED, Micro-LED and OLED Displays: Present Status and Future Perspectives.”</span> <em>Light: Science &amp; Applications</em> 9 (1): 105.
+</div>
+<div id="ref-iccv2" class="csl-entry" role="listitem">
+International Color Consortium. 2019. <span>“<span class="nocase">Specification ICC.2:2019 (Profile version 5.0.0 - iccMAX)</span>.”</span> <a href="https://color.org/specification/ICC.2-2019.pdf" class="uri">https://color.org/specification/ICC.2-2019.pdf</a>.
+</div>
+<div id="ref-krauskopf1992color" class="csl-entry" role="listitem">
+Krauskopf, John, and Gegenfurtner Karl. 1992. <span>“Color Discrimination and Adaptation.”</span> <em>Vision Research</em> 32 (11): 2165–75.
+</div>
+<div id="ref-leek2001adaptive" class="csl-entry" role="listitem">
+Leek, Marjorie R. 2001. <span>“Adaptive Procedures in Psychophysical Research.”</span> <em>Perception &amp; Psychophysics</em> 63 (8): 1279–92.
+</div>
+<div id="ref-macadam1942visual" class="csl-entry" role="listitem">
+MacAdam, David L. 1942. <span>“Visual Sensitivities to Color Differences in Daylight.”</span> <em>Josa</em> 32 (5): 247–74.
+</div>
+<div id="ref-macadam1943specification" class="csl-entry" role="listitem">
+———. 1943. <span>“Specification of Small Chromaticity Differences.”</span> <em>Josa</em> 33 (1): 18–26.
+</div>
+<div id="ref-mantiuk2015high" class="csl-entry" role="listitem">
+Mantiuk, Rafał, Grzegorz Krawczyk, Dorota Zdrojewska, Radosław Mantiuk, Karol Myszkowski, and Hans-Peter Seidel. 2015. <span>“High Dynamic Range Imaging.”</span> In <em>Wiley Encyclopedia of Electrical and Electronics Engineering</em>. Wiley.
+</div>
+<div id="ref-cie1931rgbcmf" class="csl-entry" role="listitem">
+Marco Polo. 2007. <span>“<span class="nocase">CIE1931 RGB CMF; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE1931_RGBCMF.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931_RGBCMF.svg</a>.
+</div>
+<div id="ref-miller2019color" class="csl-entry" role="listitem">
+Miller, Michael E. 2019. <em>Color in Electronic Display Systems</em>. Springer.
+</div>
+<div id="ref-morovivc2008color" class="csl-entry" role="listitem">
+Morovič, Ján. 2008. <em>Color Gamut Mapping</em>. 2nd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-csinxy" class="csl-entry" role="listitem">
+Myndex. 2022. <span>“<span class="nocase">A comparison of RGB gamuts of sRGB, P3, Rec2020, etc. using the CIE1931 chromaticity diagram; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg</a>.
+</div>
+<div id="ref-colourpython" class="csl-entry" role="listitem">
+NumFOCUS. n.d. <span>“<span class="nocase">Colour: open-source Python package for colour science</span>.”</span> <a href="https://github.com/colour-science/colour" class="uri">https://github.com/colour-science/colour</a>.
+</div>
+<div id="ref-plankianlocus" class="csl-entry" role="listitem">
+PAR. 2012. <span>“<span class="nocase">Plankian locus; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:PlanckianLocus.png" class="uri">https://commons.wikimedia.org/wiki/File:PlanckianLocus.png</a>.
+</div>
+<div id="ref-reinhard2010high" class="csl-entry" role="listitem">
+Reinhard, Erik. 2010. <em>High Dynamic Range Imaging Acquisition, Display, and Image-Based Lighting</em>. 2nd ed. Morgan Kaufmann Publishers.
+</div>
+<div id="ref-service2016the" class="csl-entry" role="listitem">
+Service, Phil. 2016. <span>“The Wright – Guild Experiments and the Development of the CIE 1931 RGB and XYZ Color Spaces.”</span>
+</div>
+<div id="ref-hsl" class="csl-entry" role="listitem">
+SharkD. 2010a. <span>“<span class="nocase">HSL color solid cylinder; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder_saturation_gray.png" class="uri">https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder_saturation_gray.png</a>.
+</div>
+<div id="ref-rgb" class="csl-entry" role="listitem">
+———. 2010b. <span>“<span class="nocase">RGB Color Cube; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:RGB_Cube_Show_lowgamma_cutout_a.png" class="uri">https://commons.wikimedia.org/wiki/File:RGB_Cube_Show_lowgamma_cutout_a.png</a>.
+</div>
+<div id="ref-sharma2018understanding" class="csl-entry" role="listitem">
+Sharma, Abhay. 2018. <em>Understanding Color Management</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-sharma2003color" class="csl-entry" role="listitem">
+Sharma, Gaurav. 2003. <span>“Color Fundamentals for Digital Imaging.”</span> In <em>Digital Color Imaging Handbook</em>, edited by Gaurav Sharma, 14–127. CRC Press.
+</div>
+<div id="ref-sharma2005ciede2000" class="csl-entry" role="listitem">
+Sharma, Gaurav, Wencheng Wu, and Edul N Dalal. 2005. <span>“The CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary Test Data, and Mathematical Observations.”</span> <em>Color Research &amp; Application</em> 30 (1): 21–30.
+</div>
+<div id="ref-treutwein1995adaptive" class="csl-entry" role="listitem">
+Treutwein, Bernhard. 1995. <span>“Adaptive Psychophysical Procedures.”</span> <em>Vision Research</em> 35 (17): 2503–22.
+</div>
+<div id="ref-zhu2022cube" class="csl-entry" role="listitem">
+Zhu, Yuhao. 2022a. <span>“<span class="nocase">Interative Tutorial: Building a Color Cube</span>.”</span> <a href="https://horizon-lab.org/colorvis/colorcube.html" class="uri">https://horizon-lab.org/colorvis/colorcube.html</a>.
+</div>
+<div id="ref-zhu2022chromaticity" class="csl-entry" role="listitem">
+———. 2022b. <span>“<span class="nocase">Interative Tutorial: Chromaticity, Gamut, and the Scary World of Imaginary Colors</span>.”</span> <a href="https://horizon-lab.org/colorvis/chromaticity.html" class="uri">https://horizon-lab.org/colorvis/chromaticity.html</a>.
+</div>
+<div id="ref-zhu2022xyz" class="csl-entry" role="listitem">
+———. 2022c. <span>“<span>Interative Tutorial: CIE 1931 XYZ Color Space</span>.”</span> <a href="https://horizon-lab.org/colorvis/xyz.html" class="uri">https://horizon-lab.org/colorvis/xyz.html</a>.
+</div>
+<div id="ref-zhu2022gamut" class="csl-entry" role="listitem">
+———. 2022d. <span>“<span>Interative Tutorial: Visualizing Human Visual Gamut</span>.”</span> <a href="https://horizon-lab.org/colorvis/gamutvis.html" class="uri">https://horizon-lab.org/colorvis/gamutvis.html</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>While in the XYZ space, we usually perform an additional transformation so that sRGB white becomes the white point in the display space. This is called <em>chromatic adaptation</em>, which we will discuss later in <a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-chroma" class="quarto-xref"><span>Section 7.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>MacAdam did the work while working for Eastman Kodak at Rochester and he later was an adjunct professor at the Institute of Optics, University of Rochester.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./hvs-color.html" class="pagination-link" aria-label="Color Vision">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./hvs-retcomp.html" class="pagination-link" aria-label="Models for Retinal Computation">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

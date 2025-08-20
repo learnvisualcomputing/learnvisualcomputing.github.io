@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; From Light to Vision – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./hvs-receptor.html" rel="next">
+<link href="./hvs.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-hvs-percept-ov" id="toc-sec-chpt-hvs-percept-ov" class="nav-link active" data-scroll-target="#sec-chpt-hvs-percept-ov"><span class="header-section-number">2.1</span> The Big Picture</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-percept-ov-why" id="toc-sec-chpt-hvs-percept-ov-why" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-ov-why"><span class="header-section-number">2.1.1</span> Why Do We Study HVS?</a></li>
+  <li><a href="#sec-chpt-hvs-percept-ov-how" id="toc-sec-chpt-hvs-percept-ov-how" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-ov-how"><span class="header-section-number">2.1.2</span> How Do We Study HVS?</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-percept-optics" id="toc-sec-chpt-hvs-percept-optics" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-optics"><span class="header-section-number">2.2</span> Eye Optics</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-percept-optics-goal" id="toc-sec-chpt-hvs-percept-optics-goal" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-optics-goal"><span class="header-section-number">2.2.1</span> The Main Goal is to Focus Lights</a></li>
+  <li><a href="#sec-chpt-hvs-percept-absorb" id="toc-sec-chpt-hvs-percept-absorb" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-absorb"><span class="header-section-number">2.2.2</span> Ocular Media Absorb Light Selectively</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-percept-retina" id="toc-sec-chpt-hvs-percept-retina" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-retina"><span class="header-section-number">2.3</span> Retina: Basic Facts</a></li>
+  <li><a href="#sec-chpt-hvs-percept-retinafunc" id="toc-sec-chpt-hvs-percept-retinafunc" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-retinafunc"><span class="header-section-number">2.4</span> Retinal Structure and Functions</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-percept-retinafunc-rodcone" id="toc-sec-chpt-hvs-percept-retinafunc-rodcone" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-retinafunc-rodcone"><span class="header-section-number">2.4.1</span> Rod vs.&nbsp;Cone Specialization</a></li>
+  <li><a href="#sec-chpt-hvs-percept-retinafunc-contrast" id="toc-sec-chpt-hvs-percept-retinafunc-contrast" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-retinafunc-contrast"><span class="header-section-number">2.4.2</span> Contrast Detection</a></li>
+  <li><a href="#sec-chpt-hvs-percept-retinafunc-lightadapt" id="toc-sec-chpt-hvs-percept-retinafunc-lightadapt" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-retinafunc-lightadapt"><span class="header-section-number">2.4.3</span> Light Adaptation</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-percept-postretina" id="toc-sec-chpt-hvs-percept-postretina" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-postretina"><span class="header-section-number">2.5</span> Post Retinal Processing</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-percept-postretina-lgn" id="toc-sec-chpt-hvs-percept-postretina-lgn" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-postretina-lgn"><span class="header-section-number">2.5.1</span> Lateral Geniculate Nucleus</a></li>
+  <li><a href="#sec-chpt-hvs-percept-postretina-cortex" id="toc-sec-chpt-hvs-percept-postretina-cortex" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-postretina-cortex"><span class="header-section-number">2.5.2</span> Visual Cortex</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-hvs-percept" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter gives an overview of the human visual system. We start from eye optics, which direct light to the retina, where the optical-to-electrical signal transduction takes place. We describe a few basic facts about the retina, focusing on the structure and functions of retinal processing. We then briefly talk about processing that takes place after the retina, i.e., in the Lateral Geniculate Nucleus (LGN) and in the visual cortex.</p>
+<section id="sec-chpt-hvs-percept-ov" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-ov"><span class="header-section-number">2.1</span> The Big Picture</h2>
+<p>Before studying the HVS, it is useful to start by discussing why we care about the HVS at all — after all, if you are a computer science and/or engineering student, why would you care? We will then discuss the methodology we will use when studying the HVS.</p>
+<section id="sec-chpt-hvs-percept-ov-why" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-ov-why"><span class="header-section-number">2.1.1</span> Why Do We Study HVS?</h3>
+<p>Why do we care about studying the HVS? First and foremost, for the science itself — it is extremely satisfying to just understand “how stuff works”. Understanding the basics of the HVS will also allow us to investigate the unknowns of the HVS, and computer scientists have a lot to off. For instance, modern computational methods, especially deep (artificial) neural networks, have provided us a new toolbox to better understand the biological neural networks: if a signal representation or a learning paradigm is effective in deep neural networks, would it be possible that our HVS uses a similar representation or can learn based on similar representations?</p>
+<p>For computer scientists and engineers working on visual computing systems, there is another reason, which is already illustrated in <a href="intro.html#fig-codesign" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>. The psychological experiences of the users of a computing platform, be it an AR/VR headset or a smartphone, are what we want to influence, but we, for the most part, exert that influence <em>indirectly</em>, by designing and optimizing the imaging, rendering, and computer systems. The outputs of these systems, i.e., the visual stimuli coming out of the display, become the input to the HVS of a human whose psychological states we care to optimize. So if we understand the HVS, we could invert the HVS process, given the desired psychological states, to solve for the optimal visual stimuli, and from there we can then think about how to best design the various engineered systems.</p>
+<p>Understanding the cellular, molecular, and neural processes in the HVS has also inspired people to better engineer systems such as imaging systems <span class="citation" data-cites="liao2022bioinspired wodnicki1995foveated">(<a href="references.html#ref-liao2022bioinspired" role="doc-biblioref">Liao et al. 2022</a>; <a href="references.html#ref-wodnicki1995foveated" role="doc-biblioref">Wodnicki, Roberts, and Levine 1995</a>)</span> and deep neural networks, even though the output of these systems is not meant to be consumed by the HVS <span class="citation" data-cites="idrees2024biophysical">(<a href="references.html#ref-idrees2024biophysical" role="doc-biblioref">Idrees et al. 2024</a>)</span>.</p>
+</section>
+<section id="sec-chpt-hvs-percept-ov-how" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-ov-how"><span class="header-section-number">2.1.2</span> How Do We Study HVS?</h3>
+<p>How do photons in the real world give rise to perception and cognition in our brain when they enter our eyes? We want to show you that there is really no magic here. The perception and cognition we experience are fundamentally a result of the complicated, first optical and eventually electrical, signal processing in the physiological system — our eyes and brains.</p>
+<p>This relationship between low-level electrical signals and high-level behavioral responses in humans is conceptually no different from one that we find in computers. This comparison is shown earlier in <a href="intro.html#fig-abstractions" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>. For someone unfamiliar with computer systems and chip design, it would seem rather magical that a computer does what it does. But we know that the high-level, observable behaviors of a computer program are a result of low-level processing in the electrical circuits. Similarly, the experiences humans have in response to visual stimuli are a result of the collective behaviors of the underlying neurons in the nervous system, whose behaviors result from the cellular and molecular processes within and between individual neurons.</p>
+<p>The circuits in a computer are made of engineered material such as transistors, whereas circuits in the HVS are made of biological materials such as neurons. Fundamentally, however, it is all physics — electrons and/or ions move around and cause changes in voltage potentials and currents, and these changes are how information is propagated.</p>
+<p>With the advancements in modern science and engineering, we can now measure, at a neuronal or even sub-neuronal level, the electrical responses of the HVS when presented with visual inputs. These measurements allow us to <em>correlate</em> electrical responses to perception and cognition, which, in turn, allow us to say something like “this part of the HVS supports or is responsible for that particular function (e.g., object detection).”” It is important to note, however, that we still do not know why the electrical responses <em>cause</em> our perception and cognition. The causation problem, for the moment, is at best a philosophical problem or, if you will, a religious one.</p>
+<p>The goal of this chapter is to give you an overview of the Human Visual System (HVS). We will focus on the main components and key facts of the HVS so that you can start appreciating the connections between signal processing at the physiological level and perception, cognition, and action at the behavioral level while leaving many details to later chapters.</p>
+<p>The signal processing in the HVS consists of three main components; this is illustrated in <a href="#fig-brain_flow" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>. First, lights are processed in the optical domain as they enter our eyes and go through the eye optics. The optical signals then reach the retina and are first converted to electrical signals by the photoreceptors (cones and rods), which are further processed before exiting the retina. The retina output neurons, i.e., the retinal ganglion cells, encode low-level information such as wavelengths, contrast, timing of object motion, etc. The retinal outputs are then transmitted to the Lateral Geniculate Nucleus (LGN) and, for the most part, relayed to the visual cortex. Cortical processing essentially knits together the low-level, upstream information to give us vision. The retino-geniculo-cortical pathway is the main pathway for the electrical signals.</p>
+<div id="fig-brain_flow" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-brain_flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/brain_flow_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-brain_flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Pupil, under the control of the iris, lets in lights. Cornea and lens focus light with the former contributing the most optical bending power. Lens contracts and relaxes to accommodate object depth under the control of the ciliary muscle. Retina transforms optical signals to electrical signals, which are further processed and exit the retina through the optic nerve. Retinal signals go through the Lateral Geniculate Nucleus and then are projected to the visual cortex. This retino-geniculo-cortical pathway carries the main information flow in the HVS, with the cortex also providing feedback to the LGN. Adapted from <span class="citation" data-cites="ventral_dorsal">Selket (<a href="references.html#ref-ventral_dorsal" role="doc-biblioref">2007</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-optics" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-optics"><span class="header-section-number">2.2</span> Eye Optics</h2>
+<p>The optical signal impinging on the retina is called the <strong>optical image</strong>, which is a 2D continuous signal in that at any position on the retinal surface we can ask: how much optical power is there here? Ideally, the optical image is a perfect perspective projection from the 3D physical world, with no loss of information other than the projection. The reality is much more complicated.</p>
+<div id="fig-eye_optics_focus" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eye_optics_focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/eye_optics_focus.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eye_optics_focus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Much of the optical bending power in the eye is contributed by the cornea, which has a large refractive index difference with respect to its adjacent ocular media (Snell’s law). The lens also contributes to light bending, albeit with a lower contribution. Cornea is rigid but the lens is malleable, so accommodation is attributed exclusively to the lens. From <span class="citation" data-cites="lavalle2023virtual">LaValle (<a href="references.html#ref-lavalle2023virtual" role="doc-biblioref">2023, fig. 4.25</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<section id="sec-chpt-hvs-percept-optics-goal" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-optics-goal"><span class="header-section-number">2.2.1</span> The Main Goal is to Focus Lights</h3>
+<p>The main goal of the eye is to focus light on the retina. To focus light the optics need to bend light, which is achieved collectively by all the ocular media in the eye, including the cornea, aqueous humour, lens, and vitreous humour. This is illustrated in <a href="#fig-eye_optics_focus" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>. Lights bend because of the difference in refractive index between adjacent ocular media. Most of the bending is done by the cornea because there is a large difference in the refractive index between the cornea and the air. The lens also contributes to light bending, albeit with a lower contribution, because the differences in refractive index between the lens and its adjacent media (aqueous fluid and vitreous fluid) are relatively small.</p>
+<p>The cornea is fixed in shape. Lens, in contrast, is malleable in its shape. The ciliary muscle controls the contraction and relaxation of the lens, which changes the focal length, and thus bending power, of the lens, and by extension the entire eye optical system. Adjusting the focal length to bring an object into focus is called <strong>accommodation</strong>.</p>
+<p>But if the ciliary muscle cannot properly adjust the lens, we get defocused blur, which is a form of optical <strong>aberration</strong>. There are a number of other optical aberrations; astigmatism and chromatic aberration are two common ones found in eyes. While not an optical aberration, diffraction also contributes substantially to visible blurs when the pupil size is very small (e.g., under strong illumination).</p>
+<p>For our purpose, ``imperfections’’ introduced by eye optics (aberration and diffraction) can be modeled by the Point Spread Function (PSF) of the optical system, which we will see later in .</p>
+</section>
+<section id="sec-chpt-hvs-percept-absorb" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-absorb"><span class="header-section-number">2.2.2</span> Ocular Media Absorb Light Selectively</h3>
+<p>While all the ocular media are generally transparent, they still absorb some amount of light. Critically, the absorption and, by extension, transmittance, are strongly wavelength dependent. Color vision is fundamentally tied to the power distribution of light over wavelengths, so the selective absorption of light by the ocular media significantly influences our color vision.</p>
+<div id="fig-eye_transmittance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eye_transmittance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/eye_transmittance.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eye_transmittance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: Transmittance spectra of ocular media. Adapted from <span class="citation" data-cites="boettner1962transmission">Boettner and Wolter (<a href="references.html#ref-boettner1962transmission" role="doc-biblioref">1962, fig. 7</a>)</span>
+</figcaption>
+</figure>
+</div>
+<p><span class="citation" data-cites="boettner1962transmission">Boettner and Wolter (<a href="references.html#ref-boettner1962transmission" role="doc-biblioref">1962, fig. 7</a>)</span> measured the spectral transmittance of the eye, which defines the amount of light allowed to transmit through the media at each wavelength; the results are shown in <a href="#fig-eye_transmittance" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>. Each curve represents the percentage of light remaining at each ocular media and the retina (including both direct transmission and forward scattering). Considering the visible range (we will discuss in the next Chapter why there are even invisible lights) roughly between 380 <span class="math inline">\(\text{nm}\)</span> and 780 <span class="math inline">\(\text{nm}\)</span>, we can see the ocular media significantly reduces the light power at short wavelengths. As a result, the transmittance spectrum of the ocular media is generally lower at short wavelengths, which means the ocular media generally absorbs blue-ish lights; so if the incident light is white-ish, the light would appear yellow after traveling through the ocular media.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-retina" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retina"><span class="header-section-number">2.3</span> Retina: Basic Facts</h2>
+<p>Now the photons have arrived at the retina. The retina is where optical signals are transformed into electrical signals. The electrical signals undergo further processing on the retina and are then carried by the optic nerve to the brain. The signal transduction and processing are carried out through layers of neurons on the retina, of which there are five categories (each of which has sub-categories). They are the photoreceptors, bipolar cells, horizontal cells, amacrine cells, and retinal ganglion cells (RGCs). This is illustrated in <a href="#fig-retinal_nn" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>.</p>
+<p>The main information flow starts from the photoreceptors, flows through the bipolar cells, which synapse with photoreceptors and send their outputs to the RGCs. The horizontal cells synapse with the photoreceptors (and other horizontal cells), and the amacrine cells connect with both the bipolar cells and the RGCs (and other amacrine cells). Identifying the different classes of neurons and their connections is largely due to Santiago Ramón y Cajal <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Interestingly, while we might be used to neurons communicating through spikes, i.e., action potentials <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the RGCs are the only type of neurons on the retina that spike. The rest of the neurons are non-spiking neurons; they communicate through graded potentials.</p>
+<section id="optical-to-electrical-signal-transduction-takes-place-in-photoreceptors" class="level4">
+<h4 class="anchored" data-anchor-id="optical-to-electrical-signal-transduction-takes-place-in-photoreceptors">Optical-to-Electrical Signal Transduction Takes Place in Photoreceptors</h4>
+<p>Photoreceptors are where optical signals are transformed into electrical signals. Photoreceptors absorb incident photons; once a photon is absorbed, it could generate electrical responses through the process of <strong>phototransduction</strong> cascade <span class="citation" data-cites="wald1968molecular">(<a href="references.html#ref-wald1968molecular" role="doc-biblioref">Wald 1968</a>)</span> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The electrical response can be represented as photocurrents or, equivalently, photovoltages across the cell membrane of the photoreceptor. We will have a lot to say about this process later in .</p>
+<div id="fig-retinal_nn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-retinal_nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/retinal_nn.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-retinal_nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: The basic neural network on the retina. The photoreceptors convert optical signals to electrical signals. The electrical signals go through the bipolar cells and then to the retinal ganglion cells, which carry all the output of the retina. Horizontal and amacrine cells mediate lateral interactions, giving rise to important features such as the receptive field. Since the RGCs are at the outer most layer of the retina, the optical information and the electrical information flow in opposite directions. Adapted from <span class="citation" data-cites="purves2017neurosciences">Purves et al. (<a href="references.html#ref-purves2017neurosciences" role="doc-biblioref">2017, fig. 11.5B</a>)</span>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="functional-and-anatomical-organizations-of-the-retina-are-opposite" class="level4">
+<h4 class="anchored" data-anchor-id="functional-and-anatomical-organizations-of-the-retina-are-opposite">Functional and Anatomical Organizations of the Retina are Opposite</h4>
+<p>The functional organization of the cells is opposite to the anatomical organization of the cells. This is illustrated in <a href="#fig-retinal_nn" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>.</p>
+<p>Functionally, the first layer of the retina is the photoreceptor cells, which convert photons to electrical responses, and the last layer is the RGCs, which carry all the retinal output information and are directly connected to the optic nerve, which are effectively the axons of the RGCs. Anatomically, however, the RGCs lie at the outermost layer of the retina, and the photoreceptors are the innermost layer. Therefore, photons upon reaching the retina first hit the RGCs and then go through other neurons before eventually hitting the photoreceptors, where the signal transduction takes place. As far as a photon is concerned, neurons before the photoreceptors are transparent and simply let the photon through without doing much about it — with an exception that we will see soon.</p>
+</section>
+<section id="blind-spot-exists-because-of-the-routing-issue" class="level4">
+<h4 class="anchored" data-anchor-id="blind-spot-exists-because-of-the-routing-issue">Blind Spot Exists Because of the Routing Issue</h4>
+<p>An implication of the anatomical organization is that the optic nerve must be routed from the front of the retina and <em>through</em> the retina at a single location, which is called the <strong>optic disk</strong>. The optic disk must be free from any neurons, including photoreceptors, simply for the optic nerve to exit. Since photoreceptors sense light, the optic disk is also called the blind spot. This is illustrated in <a href="#fig-blindspot" class="quarto-xref">Figure&nbsp;<span>2.5</span></a>. Some vertebrates, like the octopus, do not have this “wiring” issue, since their retinal signals exist from the back of the retina.</p>
+<div id="fig-blindspot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blindspot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/blindspot.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blindspot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.5: Vertebrate eyes have a blind spot (scotoma) because the RGC axons exit the retina from the <em>front</em> of the retina. It is purely a “wiring” issue. Octopus eyes do not have this issue. Adapted from <span class="citation" data-cites="blindspot">Caerbannog (<a href="references.html#ref-blindspot" role="doc-biblioref">2016</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>It is unclear whether there are evolutionary advantages of having a blind spot on our retina, but it does not seem to be a disadvantage: we clearly do not notice the blind spot in our daily life — the downstream visual system fills in the missing information there. Our head and eye movements further mitigate the impact of the blind spot.</p>
+</section>
+<section id="iprgcs-are-light-sensitive-but-do-not-contribute-to-image-forming-vision" class="level4">
+<h4 class="anchored" data-anchor-id="iprgcs-are-light-sensitive-but-do-not-contribute-to-image-forming-vision">ipRGCs are Light-Sensitive but Do Not Contribute to Image-Forming Vision</h4>
+<p>Photoreceptors are the only type of neurons on the retina that are sensitive to light <em>and</em> contribute to image-forming vision. There is another type of neuron, a sub-type of the RGCs actually, called the <strong>intrinsically photosensitive RGCs</strong> (ipRGCs) that are also sensitive to light (i.e., they absorb photons and convert optical signals to electrical signals), but interestingly they do not (primarily) contribute to image-forming vision.</p>
+<p>The ipRGCs were discovered fairly recently, and it is fair to say that the discovery was a big deal for the field <span class="citation" data-cites="berson2002phototransduction hattar2002melanopsin">(<a href="references.html#ref-berson2002phototransduction" role="doc-biblioref">Berson, Dunn, and Takao 2002</a>; <a href="references.html#ref-hattar2002melanopsin" role="doc-biblioref">Hattar et al. 2002</a>)</span>. For the past 150 years or so, human vision could be adequately explained by photoreceptors being the only light-sensitive neurons. Now, if the ipRGCs are also light sensitive, do we have to rewrite the science behind human vision? It turns out that while the ipRGCs do respond to lights, they primarily contribute to non-image-forming vision (but see <span class="citation" data-cites="dacey2005melanopsin">Dacey et al. (<a href="references.html#ref-dacey2005melanopsin" role="doc-biblioref">2005</a>)</span>). For instance, they are shown to impact circadian rhythms, mood, and pupillary light reflex <span class="citation" data-cites="lazzerini2017mood do2010intrinsically">(<a href="references.html#ref-lazzerini2017mood" role="doc-biblioref">Lazzerini Ospri, Prusky, and Hattar 2017</a>; <a href="references.html#ref-do2010intrinsically" role="doc-biblioref">Do and Yau 2010</a>)</span>.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-retinafunc" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc"><span class="header-section-number">2.4</span> Retinal Structure and Functions</h2>
+<p>Retina is organized to perform a set of low-level tasks that are crucial to vision. “Low-level” here refers to the fact that information encoded by the retina forms the building blocks for more complicated visual functions later in the HVS. At the risk of over-simplication, each task is achieved by a <strong>visual stream</strong> of neurons. These visual streams are also called <strong>parallel pathways</strong>. This section briefly discusses a set of basic functions of the retina and their visual streams.</p>
+<section id="sec-chpt-hvs-percept-retinafunc-rodcone" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-rodcone"><span class="header-section-number">2.4.1</span> Rod vs.&nbsp;Cone Specialization</h3>
+<section id="sensitivity-and-kinetics" class="level4">
+<h4 class="anchored" data-anchor-id="sensitivity-and-kinetics">Sensitivity and Kinetics</h4>
+<p>There are two types of photoreceptors: rods and cones. Perhaps the most important difference between the two is that rods are much more sensitive to light than cones. This is evident in <a href="#fig-rod_cone_response" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>, which compares the single-photon response of rods and cones in primates. The response here is represented by the photocurrent, the change of current that flows into the photoreceptor as a result of photon absorption, which we will talk about in detail later in .</p>
+<div id="fig-rod_cone_response" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rod_cone_response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/rod_cone_response.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rod_cone_response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.6: Comparing single photon responses (photocurrents) of rod and cone on a primate. Rods are more sensitive with a slower kinetics. From <span class="citation" data-cites="angueyra2014limits">Angueyra-Aristizábal (<a href="references.html#ref-angueyra2014limits" role="doc-biblioref">2014, fig. 1.4C</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Due to the high sensitivity, rod responses saturate quickly as the ambient light level increases, so they are primarily responsible for vision at low illumination levels (e.g., at night); rod-mediated vision is called the <strong>scotopic vision</strong>. Cones are much less sensitive, so they are responsible for vision at normal illumination levels, such as during the day. Cone-mediated vision is called the <strong>photopic vision</strong>. <a href="#fig-sen_range" class="quarto-xref">Figure&nbsp;<span>2.7</span></a> shows the luminance range that both the scotopic and the photopic vision are sensitive to. The sensitivity range overlap, so there is a luminance range where both rods and cones contribute to vision, which is called the <strong>mesopic vision</strong>.</p>
+<div id="fig-sen_range" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sen_range-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/sen_range.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sen_range-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.7: Sensitivity range of rod-mediated vision and cone-mediated vision. From <span class="citation" data-cites="purves2017neurosciences">Purves et al. (<a href="references.html#ref-purves2017neurosciences" role="doc-biblioref">2017, fig. 11.11</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Cones also have faster response kinetics than rods: cone responses rise and fall much faster than rods; this is illustrated in <a href="#fig-rod_cone_response" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>. The faster kinetics allows cones to track moving objects better than rods do. To reason about the influence of the response kinetics, think of a camera where the exposure time is very long: the resulting image is (motion) blurred. Shorter exposure/shutter time captures motion better. Cones have a shorter effective “exposure time” than rods.</p>
+<p>Cones also have faster response kinetics than rods: cone responses rise and fall much faster than rods; this is illustrated in <a href="#fig-rod_cone_response" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>. The faster kinetics allows cones to track moving objects better than rods do. To reason about the influence of the response kinetics, think of a camera where the exposure time is very long: the resulting image is (motion) blurred. Shorter exposure/shutter time captures motion better. Cones have a shorter effective “exposure time” than rods.</p>
+</section>
+<section id="sec-chpt-hvs-percept-retinafunc-rodcone-spectral" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-rodcone-spectral">Spectral Sensitivity and Color Vision</h4>
+<p>Yet another important difference between rods and cones is that the cone-mediated vision provides color information whereas rod-mediated vision encodes only light intensity but not color. This is because there is only one class of rods but three different classes of cones, each with a different (linearly independent) wavelength sensitivity function. Fundamentally, color arises from the wavelength information in incident lights. Having three types allows cones to have a stronger capability of encoding wavelength information than rods. The entire is devoted to color vision; for now, let us just appreciate how different cones have different wavelength selectivities.</p>
+<div id="fig-receptor_sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-receptor_sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/receptor_sensitivity_new.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-receptor_sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.8: The absorbance spectra of the three cones (L, M, S) and the rod (R) in humans; data from <span class="citation" data-cites="dartnall1983human">Dartnall, Bowmaker, and Mollon (<a href="references.html#ref-dartnall1983human" role="doc-biblioref">1983</a>)</span>. The spectra are normalized to peak at 1
+</figcaption>
+</figure>
+</div>
+<p>One way to measure the spectral differences between photoreceptors is using a technique called microspectrophotometry (MSP), which measures the fraction of photons that gets absorbed by a photoreceptor at each wavelength. Using MSP, <span class="citation" data-cites="dartnall1983human">Dartnall, Bowmaker, and Mollon (<a href="references.html#ref-dartnall1983human" role="doc-biblioref">1983</a>)</span> collected data for cones and rods from human donors, shown in <a href="#fig-receptor_sensitivity" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>. The <span class="math inline">\(y\)</span>-axis plots <em>absorbance</em>, which is <span class="math inline">\(\log(I_{\text{incident}}/I_{\text{transmitted}})\)</span>, i.e., the log ratio between the incident light intensity and transmitted (i.e., unabsorbed) light intensity <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>While many cones were measured, there were only three distinct spectra, whose absorbance peaks at relatively long, medium, and short wavelength, respectively. We call them the L, M, and S cones. The rod’s peak is in-between that between the S and the M cones. Note that the spectra in <a href="#fig-receptor_sensitivity" class="quarto-xref">Figure&nbsp;<span>2.8</span></a> are normalized to peak at unity. The absolute absorbance of rods is slightly lower than that of the cones.</p>
+<p>Notably, the L and M cones exhibit greater similarity to each other than to the S cones, suggesting that the S cones are quite different from the L and M cones. This is a clue about the evolution of the three cone types. Most mammals have only two cone types, one that is sensitive to short-wavelength light and the other that is sensitive to long-wavelength lights; the former is evolved into the S cones, and the latter separated into the L cones and M cones through a local gene duplication <span class="citation" data-cites="jacobs2008primate">(<a href="references.html#ref-jacobs2008primate" role="doc-biblioref">Jacobs 2008</a>)</span>. Since the duplication is relatively recent (about 30 to 35 million years ago), the L and M cones are rather similar.</p>
+<p><span class="citation" data-cites="bowmaker1978visual">Bowmaker et al. (<a href="references.html#ref-bowmaker1978visual" role="doc-biblioref">1978</a>)</span> shows similar data for a macaque. There, the L and M cone spectra are also closer to each other than to the S cone spectrum, indicating that the divergence between the L and M cones occurred <em>before</em> the split between modern Old World monkeys and great apes (including humans).</p>
+</section>
+<section id="spatial-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-distribution">Spatial Distribution</h4>
+<p>There are about 120 million rods and about 6 millions cones. The left panel in <a href="#fig-photoreceptor_density" class="quarto-xref">Figure&nbsp;<span>2.9</span></a> shows the distribution of both cones and rods on the retina. Almost all the cones are concentrated at <strong>fovea</strong>, a small, central pit on the retina that is approximately 2 mm in diameter and subtends a visual angle of about 1<span class="math inline">\(^{\circ}\)</span>. The position in the fovea that has the peak cone density is defined to have an <strong>eccentricity</strong> of 0<span class="math inline">\(^{\circ}\)</span>. There are no rods in the fovea; all the rods are placed at the retina periphery, peaking at about 20<span class="math inline">\(^{\circ}\)</span> away from the fovea.</p>
+<p>The right panel in <a href="#fig-photoreceptor_density" class="quarto-xref">Figure&nbsp;<span>2.9</span></a> are images of photoreceptors at the fovea and at the periphery, taken by <span class="citation" data-cites="curcio1990human">Curcio et al. (<a href="references.html#ref-curcio1990human" role="doc-biblioref">1990</a>)</span>. Cones exclusively occupy the fovea and they become sparser and larger in the periphery. Rods fill in the spaces in the periphery.</p>
+<p>There are many important implications of the photoreceptor mosaic and distribution. First, the visual acuity decreases in the visual periphery. Think of photoreceptors as sampling the continuous optical image impinging upon the retina. A higher density leads to a higher sampling rate. In addition, larger cone sizes in the periphery are equivalent to higher degrees of blurring, since photons hitting a cone are integrated together just like by a camera pixel (although, critically, the electrical response of a photoreceptor is <em>not</em> proportional to the photon count, unlike a camera pixel), and integration is a form of low-pass filtering.</p>
+<div id="fig-photoreceptor_density" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-photoreceptor_density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/photoreceptor_density.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-photoreceptor_density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.9: Left: cone and rod distribution on the retina; the x-axis is the eccentricity (angular distance from the fovea, which has an eccentricity of 0<span class="math inline">\(^{\circ}\)</span>). From <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995, fig. 1.4</a>)</span>. Right: photos of photoreceptors in the fovea and periphery; rods are absent in the fovea, and cones become sparser and larger in the periphery. Adapted from <span class="citation" data-cites="curcio1990human">Curcio et al. (<a href="references.html#ref-curcio1990human" role="doc-biblioref">1990</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>We hasten to add that the lower acuity in the periphery is <em>not</em> exclusively attributed to the photoreceptor mosaic. As we will see shortly, how photoreceptors communicate with other neurons on the retina plays an important role, too.</p>
+<p>Second, since the fovea has the highest visual acuity, our ocular motor system has evolved in such a way that when we want to see fine details of an object, we move our eyes so that light from the object is captured by the fovea. This means that we cannot see fine details of an object in dim environments if we fixate at it. Instead, we would have a better chance of seeing details if we intentionally placed the object in our peripheral vision.</p>
+</section>
+<section id="sec-chpt-hvs-percept-retina-rodcone-pathways" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-hvs-percept-retina-rodcone-pathways">Rod vs.&nbsp;Cone Pathways and Visual Streams</h4>
+<p>Rods and cones have their own pathways initially and merge later. This is shown in <a href="#fig-retinal_nn" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>. Both rods and cones synapse with bipolar cells, but they synapse with distinct bipolar cells. That is, an individual bipolar cell receives information from either rods only or cones only. The rod pathway and cone pathway are parallel streams at this point. The bipolar cells then feed their outputs to the RGCs. A RGC can mix information from both rod and cone bipolar cells. This mixing is enabled by amacrine cells, which synapse with both the rod and cone bipolar cells and with the RGCs. Thus, the distinct information in the rod pathway and the cone pathway gets merged in the RGC layers.</p>
+<p>Why are rod and cone pathways initially parallel but merge later? The initial parallel pathways allow rods and cones to extract low-level information, such as contrast, independently under different lighting conditions, but once the information is collected, it is processed similarly, so there is really no need to duplicate the processing circuitry.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-retinafunc-contrast" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-contrast"><span class="header-section-number">2.4.2</span> Contrast Detection</h3>
+<p>Another important function of the retina is to extract contrast information. Arguably most interesting information in the physical world exists all in image contrast, i.e., local differences in light intensities. Take a look at your surroundings; uniform light levels where there is absolutely no change in light are rare and do not present much useful information. Fine details of an object are really encoded in contrasts.</p>
+<p>This imposes two requirements on our visual system. First, we need to extract contrasts and encode them in neural signals so that they can be processed by the rest of the brain. This is the focus of this section. Second, we must reliably encode contrast across a wide range of ambient light levels, which is the focus of <a href="#sec-chpt-hvs-percept-retinafunc-lightadapt" class="quarto-xref"><span>Section 2.4.3</span></a>.</p>
+<div id="fig-contrast" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/contrast.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.10: Weber contrast is often used for detecting objects against a uniform background, and Michelson contrast is used for detecting patterns. The two definitions are compatible: they both describe the ratio between the maximal variation of the signal over the mean.
+</figcaption>
+</figure>
+</div>
+<section id="contrast-is-variation-over-mean" class="level4">
+<h4 class="anchored" data-anchor-id="contrast-is-variation-over-mean">Contrast is Variation Over Mean</h4>
+<p>Before discussing how the RGCs meet these requirements, we must first define contrast more rigorously. Intuitively, contrast describes how much <em>variation</em> there is in a signal relative to the average strength of the signal. There are two commonly used definitions, both of which are compatible with this intuition. They are usually used in different scenarios. <a href="#fig-contrast" class="quarto-xref">Figure&nbsp;<span>2.10</span></a> illustrates the two definitions.</p>
+<p>Weber contrast is often used in scenarios where there is a small object against a relatively uniform background. The contrast <span class="math inline">\(C_w\)</span> is defined as:</p>
+<p><span id="eq-weber_contrast"><span class="math display">\[
+\begin{align}
+    C_w = \frac{I-I_b}{I_b},
+\end{align}
+\tag{2.1}\]</span></span></p>
+<p>where <span class="math inline">\(I_b\)</span> is the background luminance and <span class="math inline">\(I\)</span> is the object luminance. If the object is small, the mean luminance of the entire field is approximately the background luminance, and naturally <span class="math inline">\(I-I_b\)</span> is the maximal variance over the mean.</p>
+<p>The Michelson contrast is used in scenarios where we want to detect patterned signals. Taking a sinusoidal pattern as an example (and recall any arbitrary pattern can be decomposed into sinusoidal basis patterns), the contrast <span class="math inline">\(C_m\)</span> of a sinusoidal signal is usually defined as:</p>
+<p><span id="eq-michelson_contrast"><span class="math display">\[
+\begin{align}
+    C_m = \frac{I_{max} - I_{min}}{I_{max} + I_{min}},
+\end{align}
+\tag{2.2}\]</span></span></p>
+<p>where <span class="math inline">\(I_{max}\)</span> and <span class="math inline">\(I_{min}\)</span> are the highest and lowest luminance, respectively, of the signal. We can see that <span class="math inline">\(C_m\)</span> can also be interpreted as the ratio between the variation and the mean of the signal. A higher <span class="math inline">\(C_m\)</span> would mean that the pattern is more easily detected, and vice versa.</p>
+</section>
+<section id="rgc-pools-signals-from-many-photoreceptors" class="level4">
+<h4 class="anchored" data-anchor-id="rgc-pools-signals-from-many-photoreceptors">RGC Pools Signals from Many Photoreceptors</h4>
+<p>There are about 120 million rods, 6 million cones, and 1 million RGCs on the retina. Therefore, a single RGC <em>necessarily</em> receives signals from multiple rods and/or cones. Pooling signals from multiple neurons into a single neuron is generally called <strong>neural convergence</strong>, a many-to-one mapping. Evidently, there is a much higher degree of neural convergence in rods than in cones. The fovea, which, recall, contains only cones, is an extreme case where there is no neural convergence. In fact, each foveal cone sends its signal to multiple RGCs, so there is a one-to-many mapping there.</p>
+<div id="fig-dendritic_tree" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dendritic_tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/dendritic_tree.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dendritic_tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.11: Dendritic field sizes (of two RGC subtypes) increase with eccentricity, indicating a higher degree of neural convergence at the periphery. From <span class="citation" data-cites="wandell1995foundations">Wandell (<a href="references.html#ref-wandell1995foundations" role="doc-biblioref">1995, fig. 5.7</a>)</span>, which is after <span class="citation" data-cites="dacey1992dendritic">Dacey and Petersen (<a href="references.html#ref-dacey1992dendritic" role="doc-biblioref">1992, fig. 2A</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The higher degree of neural convergence in the rod pathway is another reason why rod-mediated vision is more sensitive than cone-mediated vision: the responses of different rods that are pooled together to the same downstream RGC, so that the RGC could generate responses faster to the brain than if the RGC receives input from only a single cone at the fovea. The flip side of the higher degree of convergence is that rod vision offers low spatial acuity. If an RGC generates a response, we could not resolve the source of that response since it could come from anywhere within a large group of photoreceptors being stimulated. From a signal processing perspective, summation is a form of low-pass filtering (equivalent to convolving the signal with a box filter), which naturally reduces the frequency of the signal.</p>
+<p>The degree of neural convergence increases as the eccentricity increases. <a href="#fig-dendritic_tree" class="quarto-xref">Figure&nbsp;<span>2.11</span></a> shows the dendritic field sizes of two RGC subtypes; the size increases with the eccentricity. The higher degree of neural convergence is another reason why peripheral acuity is much worse than that at the fovea.</p>
+</section>
+<section id="rgcs-have-a-center-surround-receptive-field" class="level4">
+<h4 class="anchored" data-anchor-id="rgcs-have-a-center-surround-receptive-field">RGCs Have a Center-Surround Receptive Field</h4>
+<p>Neural convergence gives rise to an important concept called <strong>receptive field</strong>, which is central to contrast encoding. The receptive field of a neuron is the <em>retinal</em> area that influences the neuronal activity. For an RGC, its receptive field is the collection of photoreceptors whose output signals converge at that RGC. Due to the one-to-one mapping relationship at the fovea, the RGCs that are connected to the fovea cones have a receptive field of only one cone.</p>
+<p>The way an RGC aggregates information from the receptive field is <em>not</em> to simply sum up the signals from the individual photoreceptors. If we illuminate the entire receptive field of an RGC uniformly, the RGCs respond similarly regardless of the illumination intensity. This is a form of <em>light adaptation</em>, which we will discuss shortly. Let’s call the RGC’s response rate under a uniform illumination its spontaneous rate.</p>
+<div id="fig-rgc_rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rgc_rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/rgc_rf_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rgc_rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.12: RGCs have a center-surround receptive field with two types. The ON-center RGCs are excited by stimuli presented at the center but inhibited by stimuli presented at the surround (stimulus 2 on the left); OFF-center RGCs have the opposite response (stimulus 4 on the right). Drawn after <span class="citation" data-cites="hubel1995eye">Hubel (<a href="references.html#ref-hubel1995eye" role="doc-biblioref">1995, p. 41</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>If uniformly changing the light levels does not change the RGC’s response rate, what does? It turns out that you need to have <em>variations</em> in the illumination within the receptive field. The RGCs respond best to variation patterns that have a center-surround structure. For about half of the RGCs, their response rate is maximized if we present bright lights to the center photoreceptors and dark lights to the surround photoreceptors. These are called <strong>ON-center, OFF-surround</strong> RGCs, since they have an excitatory center (excited by light) and inhibitory surround (inhibited by light). The other half prefers the opposite pattern: dark at the center and bright at the surround. They are the <strong>OFF-center, ON-surround RGCs</strong>, since they have an inhibitory center and an excitatory surround. The RGCs are said to have a <strong>center-surround</strong> receptive field. <a href="#fig-rgc_rf" class="quarto-xref">Figure&nbsp;<span>2.12</span></a> illustrates the receptive fields of the two RGCs.</p>
+<p>H.K. Hartline measured the RGC responses from horseshoe crabs <span class="citation" data-cites="hartline1932nerve">(<a href="references.html#ref-hartline1932nerve" role="doc-biblioref">Hartline and Graham 1932</a>)</span>, using which he famously demonstrated inhibitory signals <span class="citation" data-cites="hartline1949inhibition hartline1956inhibition">(<a href="references.html#ref-hartline1949inhibition" role="doc-biblioref">Hartline 1949</a>; <a href="references.html#ref-hartline1956inhibition" role="doc-biblioref">Hartline, Wagner, and Ratliff 1956</a>)</span> <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>; he was also the first to use the term receptive field <span class="citation" data-cites="hartline1938response hartline1939excitation hartline1940effects hartline1940receptive">(<a href="references.html#ref-hartline1938response" role="doc-biblioref">Hartline 1938</a>, <a href="references.html#ref-hartline1939excitation" role="doc-biblioref">1939</a>, <a href="references.html#ref-hartline1940effects" role="doc-biblioref">1940a</a>, <a href="references.html#ref-hartline1940receptive" role="doc-biblioref">1940b</a>)</span>. <span class="citation" data-cites="barlow1953summation">Barlow (<a href="references.html#ref-barlow1953summation" role="doc-biblioref">1953</a>)</span> demonstrated the inhibitory signals in a frog’s RGC; Stephen Kuffler <span class="citation" data-cites="kuffler1952neurons kuffler1953discharge">(<a href="references.html#ref-kuffler1952neurons" role="doc-biblioref">Kuffler 1952</a>, <a href="references.html#ref-kuffler1953discharge" role="doc-biblioref">1953</a>)</span> was the first to demonstrate the center-surround receptive-field structure in a mammalian (cat) RGC, with Barlow also making significant contributions <span class="citation" data-cites="barlow1957change">(<a href="references.html#ref-barlow1957change" role="doc-biblioref">Barlow, Fitzhugh, and Kuffler 1957</a>)</span>.</p>
+</section>
+<section id="center-surround-receptive-fields-are-designed-to-encode-contrasts" class="level4">
+<h4 class="anchored" data-anchor-id="center-surround-receptive-fields-are-designed-to-encode-contrasts">Center-Surround Receptive Fields are Designed to Encode Contrasts</h4>
+<p>Looking at the preferred stimulus of the two RGC types in <a href="#fig-rgc_rf" class="quarto-xref">Figure&nbsp;<span>2.12</span></a> (stimulus 2 for ON-center and stimulus 4 for OFF-center), evidently the RGCs are designed to extract illuminant variations, i.e., contrast. If a visual field has a high (positive) Weber contrast, i.e., there is a small object that is significantly lighter than the background, the ON-center RGC would respond well to it. Similarly, an OFF-center RGC would respond well to a dark object placed against a light background.</p>
+<div id="fig-csf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-csf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/csf_new.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-csf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.13: Contrast sensitivity function (CSF) under an ON-center midget RGC <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>; the filled circle is the represents the sensitivity of a uniform signal (i.e., 0 Hz). CSF is bandpass. <span class="math inline">\(x\)</span>-axis is the cycles per degree (CPD) of the retinal signal (see <a href="#fig-cpd" class="quarto-xref">Figure&nbsp;<span>2.14</span></a>). Adapted from <span class="citation" data-cites="derrington1984spatial">Derrington and Lennie (<a href="references.html#ref-derrington1984spatial" role="doc-biblioref">1984, fig. 3C</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>We can also quantify the how the center-surround receptive fields respond to patterns of different Michelson contrast. A complication is that a pattern is described not only by its contrast but also by the frequency. At each frequency, we determine the minimal amount of contrast needed to produce a criterion level of RGC response (say 30 spikes/second) <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. The contrast sensitivity at that frequency is defined as the reciprocal of the threshold contrast. We then sweep the frequency and repeat this exercise for each frequency. The result of such a measurement is called the <strong>Contrast Sensitivity Function</strong> (CSF); <a href="#fig-csf" class="quarto-xref">Figure&nbsp;<span>2.13</span></a> shows one such example.</p>
+<p>We can see that the RGC’s CSF is <em>bandpass</em>, where there is a preferred frequency to which an RGC responds the best. When the frequency is too low, the signal is equivalent to a uniform background (filled circle); when the frequency is too high, the positive and negative cycles of the signal cancel each other. In both cases, an RGC would respond weakly, so the contrast needed to produce a criterion level of response is high (i.e., the sensitivity is low). With a spatial frequency of about 5 cycles per degree, the positive amplitude coincides with the ON-center of the cell and the negative amplitude coincides with the OFF-surround of the cell. As a result, the contrast required to produce the same level of response can afford to be low, resulting in a higher sensitivity.</p>
+<p>Note that the Michelson contrast of a signal, as defined in <a href="#eq-michelson_contrast" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, is bounded between 0 and 1, so long as the signal is positive everywhere (which is of course the case in real-world visual signals). As a result, the contrast sensitivity is lower-bounded by 1. Sometimes we will see CSF plots where the <span class="math inline">\(y\)</span>-axis goes below 1, because usually people fit a smooth CSF curve based on the measured data and do not cut off the curve below 1. In practice, any contrast sensitivity below 1 should be interpreted as “not detectable”.</p>
+<div id="fig-cpd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cpd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/cpd.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cpd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.14: The relationship between ordinary spatial frequency and cycle per degree (CPD). Signals <span class="math inline">\(S_1\)</span> and <span class="math inline">\(S_2\)</span> have different spatial frequencies but the same CPD, as they project to the same retinal signal <span class="math inline">\(R_b\)</span>. <span class="math inline">\(S_2\)</span> and <span class="math inline">\(S_3\)</span> share the same spatial frequency but differ in CPD, as they correspond to different retinal signals (<span class="math inline">\(R_a\)</span> and <span class="math inline">\(R_b\)</span>). Since retinal signal is what matters for vision, we usually use CPD to represent signal frequency (e.g., <a href="#fig-csf" class="quarto-xref">Figure&nbsp;<span>2.13</span></a>).
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-csf" class="quarto-xref">Figure&nbsp;<span>2.13</span></a> quantifies the spatial frequency of a signal using <strong>Cycle Per Degree</strong> (CPD), which is the number of cycles/periods in a degree (<span class="math inline">\(\pi/180\)</span> of a radian). CPD is an angular measure of spatial frequency. The relationship between the ordinary spatial frequency and CPD is illustrated in <a href="#fig-cpd" class="quarto-xref">Figure&nbsp;<span>2.14</span></a>. Why do we prefer CPD when describing the spatial frequency? This is because CPD better quantifies the frequency of retinal signals, which is what matters for vision, not the frequency of the physical objects themselves.</p>
+<p>Consider an object <span class="math inline">\(S_1\)</span> in the object space. It produces a retinal signal <span class="math inline">\(R_b\)</span>, which dictates how well the pattern in <span class="math inline">\(S_1\)</span> is detected. Now we shrink the size of <span class="math inline">\(S_1\)</span> but move it closer to the eye to obtain another signal <span class="math inline">\(S_2\)</span>. Clearly <span class="math inline">\(S_2\)</span> has a higher spatial frequency that does <span class="math inline">\(S_1\)</span>, but they produce identical retinal signals (assuming the eye optics is approximated as a pinhole system), so the patterns in <span class="math inline">\(S_1\)</span> and <span class="math inline">\(S_2\)</span> are equally detected. This is captured by the fact that <span class="math inline">\(S_1\)</span> and <span class="math inline">\(S_2\)</span> have the same CPD. In contrast, if we move <span class="math inline">\(S_2\)</span> closer to our eye, we get another signal <span class="math inline">\(S_3\)</span> that has as an identical ordinary spatial frequency as that of <span class="math inline">\(S_2\)</span> but whose pattern is more easily detected. This is adequately captured by the lower CPD in <span class="math inline">\(S_3\)</span>.</p>
+<p>The CSF in <a href="#fig-csf" class="quarto-xref">Figure&nbsp;<span>2.13</span></a> allows us to study the joint effect of spatial frequency and contrast in detecting a patterned signal. In general, the ability of pattern detection depends on a number of other factors, such as the spatial frequency, eccentricity, color, and temporal frequency (if the stimulus is time-varying) <span class="citation" data-cites="mantiuk2022stelacsf ashraf2024castlecsf">(<a href="references.html#ref-mantiuk2022stelacsf" role="doc-biblioref">Mantiuk, Ashraf, and Chapiro 2022</a>; <a href="references.html#ref-ashraf2024castlecsf" role="doc-biblioref">Ashraf et al. 2024</a>)</span>. Customarily, this high-dimensional data is plotted as a set of different CSFs, each quantifying the contrast sensitivity as a function of other factors.</p>
+<p>Functionally, detecting contrast allows us to detect edges and contours: information across the two sides of an edge has the highest contrast. We will see shortly how later processing stages in the HVS leverage the contrasts to extract more specific information from the visual field to aid tasks such as object recognition.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-retinafunc-lightadapt" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-lightadapt"><span class="header-section-number">2.4.3</span> Light Adaptation</h3>
+<p>Looking at <a href="#fig-rgc_rf" class="quarto-xref">Figure&nbsp;<span>2.12</span></a> again, the RGC responses do not change much with uniform illuminations (stimulus 1 and stimulus 3) regardless of the illumination level. This is true for a wide range of illumination levels. In some sense, the RGCs are able to “discount” the ambient light level so that the contrast is reliably encoded at arbitrary light levels. This is called <strong>light adaptation</strong>.</p>
+<div id="fig-rgc_adaptation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rgc_adaptation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/rgc_adaptation.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rgc_adaptation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.15: Illustration of the RGC adaptation. Through the increment-threshold experiment, we show that, over a wide range of the background intensity <span class="math inline">\(I_b\)</span>, the threshold <span class="math inline">\(\Delta I\)</span> needed for the spot light to be detectable is linearly proportional to <span class="math inline">\(I_b\)</span>. That is, the minimal detectable contrast <span class="math inline">\(\frac{\Delta I}{I_b}\)</span> is roughly constant, a.k.a., the Weber’s law, the result of light adaptation. The extended dashed line shows that the Weber’s law does not hold for all the luminance levels. <span class="citation" data-cites="enroth1977cone">Enroth-Cugell, Hertz, and Lennie (<a href="references.html#ref-enroth1977cone" role="doc-biblioref">1977, fig. 6</a>)</span> and <span class="citation" data-cites="sakmann1969scotopic">Sakmann and Creutzfeldt (<a href="references.html#ref-sakmann1969scotopic" role="doc-biblioref">1969</a>)</span> report actual data for cat’s RGC.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> illustrates an experiment showing the effect of light adaptation. It uses the “increment-threshold” paradigm, where there is a uniform background light with an intensity of <span class="math inline">\(I_b\)</span> and a spot light is superimposed over the background; the spot light has an intensity increment <span class="math inline">\(\Delta I\)</span> over <span class="math inline">\(I_b\)</span>. The entire stimulus (background + spot light) is impinging on the receptive field of an RGC. The goal is to adjust the increment of the spot light so that the RGC’s response reaches a criterion level (e.g., 30 spikes per second). The plot in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> shows the minimal amount of increment (<span class="math inline">\(y\)</span>-axis) under different background intensities (<span class="math inline">\(x\)</span>-axis).</p>
+<p>We can see that over a wide range of background intensity <span class="math inline">\(I_b\)</span>, the threshold <span class="math inline">\(\Delta I\)</span> needed for the spot light to be detectable is linearly proportional to <span class="math inline">\(I_b\)</span>. That is, the minimal detectable (Weber) contrast <span class="math inline">\(\frac{\Delta I}{I_b}\)</span> is roughly constant. We could also perform this increment-threshold experiment <em>behaviorally</em> on human participants, through which we can derive the minimal <span class="math inline">\(\Delta I\)</span> needed for the spot light to be detectable to humans <span class="citation" data-cites="blakemore1965dark fuortes1961increment aguilar1954saturation barlow1957increment">(<a href="references.html#ref-blakemore1965dark" role="doc-biblioref">Blakemore and Rushton 1965</a>; <a href="references.html#ref-fuortes1961increment" role="doc-biblioref">Fuortes, Gunkel, and Rushton 1961</a>; <a href="references.html#ref-aguilar1954saturation" role="doc-biblioref">Aguilar and Stiles 1954</a>; <a href="references.html#ref-barlow1957increment" role="doc-biblioref">Barlow 1957</a>)</span>. Perhaps unsurprisingly, the same trend holds: over a rather wide range of background levels, the increment threshold varies linearly with the background intensity. This means, behaviorally, the minimal detectable contrast is also constant, and this constancy could potentially be accounted for by the physiological constancy <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<section id="webers-law-means-desensitization" class="level4">
+<h4 class="anchored" data-anchor-id="webers-law-means-desensitization">Weber’s Law Means Desensitization</h4>
+<p>Minimally detectable contrast being constant over different background intensities is called the <strong>Weber’s law</strong> or the “Weber–Fechner law” <span class="citation" data-cites="fechner1860elemente">(<a href="references.html#ref-fechner1860elemente" role="doc-biblioref">Fechner 1860</a>)</span>. A direct interpretation of the Weber’s law is that stronger signals are needed at high ambient light levels for a signal to be barely detectable. It is almost like our visual system is <strong>desensitized</strong> at higher ambient light levels. This desensitization is very well documented for photoreceptors <span class="citation" data-cites="matthews1988photoreceptor nakatani1988calcium fain2001adaptation">(<a href="references.html#ref-matthews1988photoreceptor" role="doc-biblioref">Matthews et al. 1988</a>; <a href="references.html#ref-nakatani1988calcium" role="doc-biblioref">Nakatani and Yau 1988</a>; <a href="references.html#ref-fain2001adaptation" role="doc-biblioref">Fain et al. 2001</a>)</span>, and it is unsurprising that photoreceptor desensitization can lead to (although does not fully account for) the desensitization observed in the RGCs and in the behavioral experiments <span class="citation" data-cites="dunn2007light">(<a href="references.html#ref-dunn2007light" role="doc-biblioref">Dunn, Lankheet, and Rieke 2007</a>)</span>.</p>
+<p>This desensitization allows us to extract contrasts rather than absolute light levels, which is of significant advantage to us. The ambient level varies over several orders of magnitude, but the contrast of a scene is relatively stable regardless of the ambient light level. Consider our ape ancestors who need to find apples from a tree to survive. As the ambient light level increases, both the apple and the tree become brighter, but the contrast is relatively constant. To be able to reliably detect the apple, an ape needs to reliably extract contrast at all light levels but not the absolute light level itself.</p>
+</section>
+<section id="webers-law-fails-at-low-and-high-intensities" class="level4">
+<h4 class="anchored" data-anchor-id="webers-law-fails-at-low-and-high-intensities">Weber’s Law Fails at Low and High Intensities</h4>
+<p>Sharp readers like you have most definitely noticed that Weber’s law does not hold at all background illumination levels <span class="citation" data-cites="kolb2005organization">(<a href="references.html#ref-kolb2005organization" role="doc-biblioref">Kolb, Fernandez, and Nelson 2005, pt. VIII</a> Light and Dark Adaptation)</span>. The extended dashed line in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> indicates that Weber’s law fails at very low background levels. When the ambient light level is very low, Weber’s law fails because the retinal responses are dominated by noise, both retinal internal noise (called dark light or dark noise) <span class="citation" data-cites="barlow1957increment blakemore1965dark donner1992noise">(<a href="references.html#ref-barlow1957increment" role="doc-biblioref">Barlow 1957</a>; <a href="references.html#ref-blakemore1965dark" role="doc-biblioref">Blakemore and Rushton 1965</a>; <a href="references.html#ref-donner1992noise" role="doc-biblioref">Donner 1992</a>)</span> and external photon shot noise <span class="citation" data-cites="rose1948sensitivity de1943quantum">(<a href="references.html#ref-rose1948sensitivity" role="doc-biblioref">Rose 1948</a>; <a href="references.html#ref-de1943quantum" role="doc-biblioref">De Vries 1943</a>)</span>. At extremely high background levels, Weber’s law also fails because of photoreceptor saturation. All in all, however, Weber’s law holds reasonably well under a very wide range of normal lighting conditions that we encounter in every life.</p>
+<p><span id="eq-weber"><span class="math display">\[
+\begin{align}
+    \Delta I =kI_b,
+\end{align}
+\tag{2.3}\]</span></span></p>
+<p>where <span class="math inline">\(k\)</span> is a constant representing how fast the threshold increases with the background and is called the Weber’s constant.</p>
+<p>When is written in the log-log domain, as is plotted in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a>, we have:</p>
+<p><span id="eq-weber_log"><span class="math display">\[
+\begin{align}
+    \log(\Delta I) = \log(k) + \log(I_b).
+\end{align}
+\tag{2.4}\]</span></span></p>
+<p>We can see that in the log-log plot, the Weber’s constant affects the intercept of the threshold-vs-background line (the intersection of the dashed line and the <span class="math inline">\(y\)</span>-axis; not shown in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a>).</p>
+<p>For the Weber’s law to hold exactly, the slope of the threshold-vs-background line in the log-log plot must be 1, which is roughly the case in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> (for the range where the relationship is linear). In many measurements, the slope fit from the data is not exactly 1. To account for this, the Weber’s law is extended, phenomenologically, to take the following form, which is also called the Stevens’s power law <span class="citation" data-cites="stevens1957psychophysical stevens1961honor">(<a href="references.html#ref-stevens1957psychophysical" role="doc-biblioref">Stanley S. Stevens 1957</a>; <a href="references.html#ref-stevens1961honor" role="doc-biblioref">Stanley Smith Stevens 1961</a>)</span>:</p>
+<p><span id="eq-weber_fechner"><span class="math display">\[
+\begin{align}
+    \Delta I =kI_b^d, \\
+    \log(\Delta I) = \log(k) + d\log(I_b),
+\end{align}
+\tag{2.5}\]</span></span></p>
+<p>where <span class="math inline">\(d\)</span> is a free parameter that permits this additional degree of freedom.</p>
+</section>
+<section id="dark-and-chromatic-adaptations" class="level4">
+<h4 class="anchored" data-anchor-id="dark-and-chromatic-adaptations">Dark and Chromatic Adaptations</h4>
+<p>A concept related to light adaptation is <strong>dark adaptation</strong>. Dark adaptation deals with the situation where the eye is first exposed to light at a certain level and then the light is removed. We can all tell from experience that our visual sensitivity is terrible when the light is just removed but will improve over time as we spend more time in the dark. Dark adaptation is concerned with quantifying the dynamics of the visual sensitivity recovery at different times in the dark. Once again, dark adaptation can be studied both psychophysically <span class="citation" data-cites="hecht1937influence crawford1937change crawford1947visual">(<a href="references.html#ref-hecht1937influence" role="doc-biblioref">Hecht, Haig, and Chase 1937</a>; <a href="references.html#ref-crawford1937change" role="doc-biblioref">Crawford 1937</a>, <a href="references.html#ref-crawford1947visual" role="doc-biblioref">1947</a>)</span> and physiologically <span class="citation" data-cites="lamb2006phototransduction lamb2004dark">(<a href="references.html#ref-lamb2006phototransduction" role="doc-biblioref">T. D. Lamb and Pugh 2006</a>; <a href="references.html#ref-lamb2004dark" role="doc-biblioref">T. Lamb and Pugh Jr 2004</a>)</span>.</p>
+<p>While light and dark adaptations are concerned with visual experiences under different intensity levels, <strong>chromatic adaptation</strong> is concerned with how our vision adapts to illuminant <em>colors</em>. It turns out that our visual system can pretty reliably discount the color of the lighting illunminating a scene so that an object’s color appears relatively stable under different illuminations. We will study light, dark, and chromatic adaptations in greater depth in <a href="hvs-adaptation.html" class="quarto-xref"><span>Chapter 7</span></a>.</p>
+</section>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-postretina" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-chpt-hvs-percept-postretina"><span class="header-section-number">2.5</span> Post Retinal Processing</h2>
+<p>The signals leaving the retina are first routed to the <strong>Lateral Geniculate Nucleus</strong> (LGN) and then to the cortex, where vision is formed.</p>
+<section id="sec-chpt-hvs-percept-postretina-lgn" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-postretina-lgn"><span class="header-section-number">2.5.1</span> Lateral Geniculate Nucleus</h3>
+<p>Different classes of RGCs project to distinct LGN layers with virtually the same RFs: midget RGCs project to the Parvocellular layers (P cells) in the LGN (forming the P pathway/stream), parasol RGCs project to the Magnocellular layers (M cells) in the LGN (forming the M pathway/stream), and bistratified RGCs project to the Koniocellular layers (K cells) in the LGN (forming the K pathway/stream).</p>
+<p>Similar to the RGCs, the LGN neurons also have center-surround receptive fields, and their receptive-field organizations are almost exact copies of that of the corresponding RGCs. This is why, by and large, LGN has been thought to be mainly a relay station, transmitting information from the retina to the brain. Interestingly, the way the LGN relays information to the brain is to gather information from one hemifield and send it to the other side of the cortex.</p>
+<p>If LGN simply relays information, why does it exist at all? It turns out that LGN receives about 90% of its inputs from the cortex <span class="citation" data-cites="sherman1986control">(<a href="references.html#ref-sherman1986control" role="doc-biblioref">Sherman and Koch 1986</a>)</span>. This is different from the retina, which is a “closed” system that does not receive information from the rest of the brain. The feedback from the brain serves to regulate the visual signals before they are sent to the brain. Higher-order brain regions encode cognitive information such as attention, and one can imagine how attention can be used to influence what subsequent information is sent to the brain <span class="citation" data-cites="o2002attention">(<a href="references.html#ref-o2002attention" role="doc-biblioref">O’Connor et al. 2002</a>)</span>. If the brain were to send the feedback signals to the retina, the blind spot would have been 10 times larger, so the LGN seems like a convenient and cost-effective place where the feedback-driven regulation can take place.</p>
+<section id="another-example-of-parallel-pathways" class="level4">
+<h4 class="anchored" data-anchor-id="another-example-of-parallel-pathways">Another Example of Parallel Pathways</h4>
+<p>Rods vs.&nbsp;cones is an example of parallel pathways in the HVS. The parvocellular vs.&nbsp;magnocellular pathway is another example; they encode different spatial/temporal frequency information. The magnocellular pathway responds to high temporal frequency well, is sensitive to low spatial frequency, and responds strongly to contrast changes. The parvocellular pathway, in large part, behaves oppositely. It is worth noting that these two visual streams start from the retina, where they start from distinct RGC cell types, and remain physically separated all the way into the primary visual cortex V1. This is different from the rod vs.&nbsp;cone pathways, which start at the photoreceptors and merge at the RGC layer.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-percept-postretina-cortex" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-postretina-cortex"><span class="header-section-number">2.5.2</span> Visual Cortex</h3>
+<p>Once in the cortex, the visual signals are first processed in the <strong>primary visual cortex</strong>, also known as visual area 1 (<strong>V1</strong>) or the <strong>striate cortex</strong>. V1 neurons primarily encode edge orientations but are also tuned to edge lengths, object motion direction, and specific colors. David Hubel and Torsten Wiesel were the first to elucidate the responses of V1 neurons and the architecture of V1 in general <span class="citation" data-cites="hubel1959receptive hubel1962receptive hubel1968receptive">(<a href="references.html#ref-hubel1959receptive" role="doc-biblioref">Hubel and Wiesel 1959</a>, <a href="references.html#ref-hubel1962receptive" role="doc-biblioref">1962</a>, <a href="references.html#ref-hubel1968receptive" role="doc-biblioref">1968</a>)</span> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</p>
+<section id="v1-simple-cells-are-orientation-selective" class="level4">
+<h4 class="anchored" data-anchor-id="v1-simple-cells-are-orientation-selective">V1 Simple Cells are Orientation Selective</h4>
+<p>Perhaps the most striking feature of V1 neurons is that they are orientation selective. The left panel of <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> shows the responses of a cat V1 neuron, recorded by <span class="citation" data-cites="hubel1959receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1959receptive" role="doc-biblioref">1959</a>)</span>, when presented with a slit of illumination at different orientations. This neuron responds best to a particular orientation (vertical in this case) and responds very weakly, if at all, to other orientations. The right panel in <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> plots the neuron responses (spikes/second) as a function of the illumination orientation; a plot like this is called the neuron’s orientation <strong>tuning curve</strong>.</p>
+<div id="fig-orientation_selectivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-orientation_selectivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/orientation_selectivity.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orientation_selectivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.16: Left: orientation selectivity of a cat V1 simple cell; from <span class="citation" data-cites="hubel1959receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1959receptive" role="doc-biblioref">1959, fig. 3</a>)</span>. Right: orientation tuning curves of two illustrative V1 simple cells (do not necessarily correspond to the experimental data on the left); different cells can have different preferred orientations.
+</figcaption>
+</figure>
+</div>
+<p>Perhaps the most striking feature of V1 neurons is that they are orientation selective. The left panel of <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> shows the responses of a cat V1 neuron, recorded by <span class="citation" data-cites="hubel1959receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1959receptive" role="doc-biblioref">1959</a>)</span>, when presented with a slit of illumination at different orientations. This neuron responds best to a particular orientation (vertical in this case) and responds very weakly, if at all, to other orientations. The right panel in <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> plots the neuron responses (spikes/second) as a function of the illumination orientation; a plot like this is called the neuron’s orientation <strong>tuning curve</strong>.</p>
+<div id="fig-v1_simple_spot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-v1_simple_spot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/v1_simple_spot.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-v1_simple_spot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.17: Left: responses of a V1 simple cell to spot lights at different locations in the receptive field. <span class="math inline">\(\triangle\)</span>: inhibitory areas; <span class="math inline">\(\times\)</span>: excitatory areas. <span class="math inline">\(f\)</span> is when the entire field is illuminated uniformly. Right: the receptive field of the cell. From <span class="citation" data-cites="hubel1959receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1959receptive" role="doc-biblioref">1959, fig. 1</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Why would this neuron be tuned to a specific orientation? The reason lies in its receptive field structure. <a href="#fig-v1_simple_spot" class="quarto-xref">Figure&nbsp;<span>2.17</span></a> shows the response of such a neuron when illuminated with spot lights at different locations. When the neuron is illuminated by spot lights across the vertical axis, it is inhibited, and it is excited when the spot lights are across the horizontal axis. The right panel shows the receptive field of such a neuron, where the skinny, tall central area is inhibited and the flanking areas are excitatory. There are other neurons where the excitatory and inhibitory regions are swapped.</p>
+<p>This receptive field explains why a neuron could have an orientation selectivity: when the orientation of the stimulus coincides with the excitatory region of the receptive field the neuron is optimally stimulated <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. Other orientations would involve both the excitatory and inhibitory regions, reducing or abolishing the response. V1 cells with such a receptive field are called <strong>simple cells</strong>. Different simple cells might have different preferred orientations; for instance, the first cell in the right panel of <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> prefers a 90<span class="math inline">\(^{\circ}\)</span> orientation.</p>
+<div id="fig-v1_simple_rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-v1_simple_rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/v1_simple_rf.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-v1_simple_rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.18: Bottom: typical receptive-field maps for V1 simple cells (C – G); while there are on and off regions, they are not organized in a center-surround fashion as they are in RGCs/LGN (A and B). Top: multiple center-surround (LGN) neurons synpase with a V1 simple cell, producing the receptive field in C at the bottom. <span class="math inline">\(\triangle\)</span>: inhibitory areas; <span class="math inline">\(\times\)</span>: excitatory areas. Adapted from <span class="citation" data-cites="hubel1962receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1962receptive" role="doc-biblioref">1962, figs. 2, 19</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>C–G in <a href="#fig-v1_simple_rf" class="quarto-xref">Figure&nbsp;<span>2.18</span></a> illustrate typical receptive fields found in V1 simple neurons. All are oriented (only one orientation is shown) but differ in arrangements. In comparison, A and B show the center-surround receptive fields found in RGCs and LGN neurons. Clearly, center-surround receptive fields simply cannot be orientation selective: try superimposing an edge and rotating it over the center-surround receptive field; will the response change much?</p>
+<p>How would a V1 simple neuron acquire such an oriented receptive field? This can be explained by looking at how LGN neurons are connected to a V1 simple neuron. The top panel in <a href="#fig-v1_simple_rf" class="quarto-xref">Figure&nbsp;<span>2.18</span></a> illustrates the model suggested by <span class="citation" data-cites="hubel1962receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1962receptive" role="doc-biblioref">1962</a>)</span>, which is supported by later electrophysiological results <span class="citation" data-cites="clay1995specificity">(<a href="references.html#ref-clay1995specificity" role="doc-biblioref">Clay Reid and Alonso 1995</a>)</span>. Each V1 simple cell synapses with and sums the inputs from multiple LGN neurons (which, recall, also have the center-surround receptive fields as the RGCs), whose receptive fields abut and overlap on the retina, and are arranged in an oblique angle. When those receptive fields all have the same ON-center (or OFF-center) structure, the simple cell would tune for an oblique, elongated edge. Therefore, even if center-surround cells do not have orientation selectivity, V1 simple cells can.</p>
+</section>
+<section id="direction-length-and-binocular-vision-emerge-from-hypercomplex-cells" class="level4">
+<h4 class="anchored" data-anchor-id="direction-length-and-binocular-vision-emerge-from-hypercomplex-cells">Direction, Length, and Binocular Vision Emerge from (Hyper)Complex Cells</h4>
+<p>The majority of neurons in V1 are actually not simple cells. Three-quarters of the V1 neurons are <strong>complex cells</strong>, which have, well, complex selectivities. Fundamentally, their receptive fields cannot be subdivided into excitatory and inhibitory areas. That is, they do not respond to a spot light no matter where the light is placed in the receptive field. Therefore, their responses to complicated geometries cannot be explained/predicted by their responses to spot lights, unlike those of simple cells.</p>
+<p>The complex cells are also orientation selective, but unlike simple cells, many complex cells respond only to a properly oriented edge <em>sweeping</em> across the receptive field <em>as if</em> (but not actually) the entire receptive field is excitatory. However, when we present a properly oriented, <em>stationary</em> edge, complex cells do not respond at all, or only weakly, at the onset or the turning off of the edge. This further shows that the responses of complex cells are not a linear superposition of responses to spot lights.</p>
+<div id="fig-v1_complex" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-v1_complex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/v1_complex.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-v1_complex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.19: Some V1 complex neurons prefer properly oriented edges sweeping across their receptive field; these neurons also have direction selectivity — even under the same orientation. From <span class="citation" data-cites="hubel1968receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1968receptive" role="doc-biblioref">1968, fig. 2</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Interestingly, about one-fifth of the complex cells prefer movement in a particular direction, showing the <strong>direction selectivity</strong> of many complex cells. <span class="citation" data-cites="hubel1968receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1968receptive" role="doc-biblioref">1968</a>)</span> measured the direction selectivity of V1 complex cells in monkeys, and some of the results are shown in <a href="#fig-v1_complex" class="quarto-xref">Figure&nbsp;<span>2.19</span></a>. In this example, the cell is excited by a properly oriented edge moving in upward directions, but not the opposing, orthogonal directions, showing selectivity toward motion directions.</p>
+<p><span class="citation" data-cites="hubel1968receptive">Hubel and Wiesel (<a href="references.html#ref-hubel1968receptive" role="doc-biblioref">1968</a>)</span> also discovered a set of what they call the <strong>end-stopping</strong> neurons or hypercomplex cells in V1. Those neurons are tuned to properly oriented edges with a specific length, beyond which the neurons are inhibited. These neurons play a role in encoding corners, curvatures, and sudden breaks in lines <span class="citation" data-cites="hubel1995eye">(<a href="references.html#ref-hubel1995eye" role="doc-biblioref">Hubel 1995, p. 85</a>)</span>.</p>
+<p>Finally, Hubel and Wiesel also found that some V1 neurons respond to stimuli only from the left eye or only from the right eye, a property termed <strong>ocular dominance</strong>. There are also binocular cells that can be stimulated independently by stimulus from either eye. There cells represent the first stage where information from the left and right hemi-fields converge, which is critical for depth perception.</p>
+</section>
+<section id="be-more-specific" class="level4">
+<h4 class="anchored" data-anchor-id="be-more-specific">“Be More Specific”</h4>
+<p>An obvious conclusion we can draw from comparing the V1 neurons and the retina/LGN neurons is this: as we progress along the visual pathway, the stimulus we present to the visual system must be more specific. Put another way, our visual system increasingly extracts more specific information as signals progress in the pathway.</p>
+<p>Being more specific is critical, as that allows us to recognize objects by their subtle details. For instance, the RGCs/LGN neurons provide the contrast/edge detection capability, but virtually any object has contrasts and edges, so they are not terribly useful in recognizing specific objects. The V1 simple neurons, however, allow us to detect orientations, and that is critical to our vision — from orientations we can then infer shapes, as we recognize objects mostly by their shapes.</p>
+<p>Critically, however, the V1 simple neurons offer orientation selectivity precisely because the RGCs/LGN neurons have contrast/edge detection capabilities, as demonstrated in <a href="#fig-v1_simple_rf" class="quarto-xref">Figure&nbsp;<span>2.18</span></a> (top). This is why we say the early visual system extracts low-level information, but the later visual system extracts high-level information: the former is used as the building blocks by the latter.</p>
+</section>
+<section id="the-rest-of-the-cortex" class="level4">
+<h4 class="anchored" data-anchor-id="the-rest-of-the-cortex">The Rest of the Cortex</h4>
+<div id="fig-brain_cortex" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-brain_cortex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/brain_cortex.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-brain_cortex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.20: Once in the cortex, signals are projected from area V1 to other areas, each generally specialized in a particular information process. The two main pathways from V1 are the ventral pathway (“what”) and the dorsal pathway (“where”). There is top-down feedback in the cortex from higher-order areas to lower-order areas. Adapted from <span class="citation" data-cites="dowling2016vision">Dowling and Dowling Jr (<a href="references.html#ref-dowling2016vision" role="doc-biblioref">2016, fig. 1.3</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>From V1, signals are projected to other areas such as V2, V4, IT, MT, etc. There are two main projection pathways <span class="citation" data-cites="nassi2009parallel ungerleider1982two mishkin1983object">(<a href="references.html#ref-nassi2009parallel" role="doc-biblioref">Nassi and Callaway 2009</a>; <a href="references.html#ref-ungerleider1982two" role="doc-biblioref">Ungerleider and Mishkin 1982</a>; <a href="references.html#ref-mishkin1983object" role="doc-biblioref">Mishkin, Ungerleider, and Macko 1983</a>)</span>, as shown in <a href="#fig-brain_cortex" class="quarto-xref">Figure&nbsp;<span>2.20</span></a>. The first is the <strong>dorsal</strong> pathway, which is concerned with observing objects in space, such as their spatial location and motion, information that is also useful to guide actions <span class="citation" data-cites="goodale1991neurological">(<a href="references.html#ref-goodale1991neurological" role="doc-biblioref">Goodale et al. 1991</a>)</span>. Therefore, this pathway is also called the “where/how” pathway. The other is the <strong>ventral</strong> pathway, or the “what” pathway, that carries information of the details and identity of objects and supports visual functions such as object recognition, facial recognition, and color perception. The two pathways interact. For instance, to guide visual action we not only need to know the position and motion of the objects but also the shape, color, etc.</p>
+<p>The discussion so far focuses on the bottom-up information flow, the flow of information from lower-order representations in the hierarchy, such as V1, to higher-order representations, such as V4 and beyond. There is also a top-down information flow from the higher regions to the lower regions. This information flow provides feedback information such as attention, knowledge, and expectation to influence the early information processing in the cortex <span class="citation" data-cites="gilbert2013top briggs2020role">(<a href="references.html#ref-gilbert2013top" role="doc-biblioref">Gilbert and Li 2013</a>; <a href="references.html#ref-briggs2020role" role="doc-biblioref">Briggs 2020</a>)</span>. Combining the bottom-up and the top-down flows, the HVS acts essentially as a self-adaptive system that automatically optimizes its performance for a given task.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-aguilar1954saturation" class="csl-entry" role="listitem">
+Aguilar, M, and WS Stiles. 1954. <span>“Saturation of the Rod Mechanism of the Retina at High Levels of Stimulation.”</span> <em>Optica Acta: International Journal of Optics</em> 1 (1): 59–65.
+</div>
+<div id="ref-angueyra2014limits" class="csl-entry" role="listitem">
+Angueyra-Aristizábal, Juan M. 2014. <span>“The Limits Imposed in Primate Vision by Transduction in Cone Photoreceptors.”</span> PhD thesis, University of Washington Libraries.
+</div>
+<div id="ref-ashraf2024castlecsf" class="csl-entry" role="listitem">
+Ashraf, Maliha, Rafał K Mantiuk, Alexandre Chapiro, and Sophie Wuerger. 2024. <span>“castleCSF—a Contrast Sensitivity Function of Color, Area, Spatiotemporal Frequency, Luminance and Eccentricity.”</span> <em>Journal of Vision</em> 24 (4): 5–5.
+</div>
+<div id="ref-barlow1953summation" class="csl-entry" role="listitem">
+Barlow, Horace B. 1953. <span>“Summation and Inhibition in the Frog’s Retina.”</span> <em>The Journal of Physiology</em> 119 (1): 69.
+</div>
+<div id="ref-barlow1957increment" class="csl-entry" role="listitem">
+———. 1957. <span>“Increment Thresholds at Low Intensities Considered as Signal/Noise Discriminations.”</span> <em>The Journal of Physiology</em> 136 (3): 469.
+</div>
+<div id="ref-barlow1957change" class="csl-entry" role="listitem">
+Barlow, Horace B, Roo Fitzhugh, and SW Kuffler. 1957. <span>“Change of Organization in the Receptive Fields of the Cat’s Retina During Dark Adaptation.”</span> <em>The Journal of Physiology</em> 137 (3): 338.
+</div>
+<div id="ref-berson2002phototransduction" class="csl-entry" role="listitem">
+Berson, David M, Felice A Dunn, and Motoharu Takao. 2002. <span>“Phototransduction by Retinal Ganglion Cells That Set the Circadian Clock.”</span> <em>Science</em> 295 (5557): 1070–73.
+</div>
+<div id="ref-blakemore1965dark" class="csl-entry" role="listitem">
+Blakemore, CB, and WA Rushton. 1965. <span>“Dark Adaptation and Increment Threshold in a Rod Monochromat.”</span> <em>The Journal of Physiology</em> 181 (3): 612.
+</div>
+<div id="ref-boettner1962transmission" class="csl-entry" role="listitem">
+Boettner, Edward A, and J Reimer Wolter. 1962. <span>“Transmission of the Ocular Media.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 1 (6): 776–83.
+</div>
+<div id="ref-bowmaker1978visual" class="csl-entry" role="listitem">
+Bowmaker, JK, HJ Dartnall, JN Lythgoe, and JD Mollon. 1978. <span>“The Visual Pigments of Rods and Cones in the Rhesus Monkey, Macaca Mulatta.”</span> <em>The Journal of Physiology</em> 274 (1): 329–48.
+</div>
+<div id="ref-briggs2020role" class="csl-entry" role="listitem">
+Briggs, Farran. 2020. <span>“Role of Feedback Connections in Central Visual Processing.”</span> <em>Annual Review of Vision Science</em> 6 (1): 313–34.
+</div>
+<div id="ref-blindspot" class="csl-entry" role="listitem">
+Caerbannog. 2016. <span>“<span class="nocase">Comparison of structures in vertebrate’s eye (left) with octopus’ eye (right); CC BY-SA 3.0 license</span>.”</span> <a href="https://en.wikipedia.org/wiki/Blind_spot_(vision)#/media/File:Evolution_eye_2.svg" class="uri">https://en.wikipedia.org/wiki/Blind_spot_(vision)#/media/File:Evolution_eye_2.svg</a>.
+</div>
+<div id="ref-clay1995specificity" class="csl-entry" role="listitem">
+Clay Reid, R, and Jose-Manuel Alonso. 1995. <span>“Specificity of Monosynaptic Connections from Thalamus to Visual Cortex.”</span> <em>Nature</em> 378 (6554): 281–84.
+</div>
+<div id="ref-crawford1937change" class="csl-entry" role="listitem">
+Crawford, BH. 1937. <span>“The Change of Visual Sensitivity with Time.”</span> <em>Proceedings of the Royal Society of London. Series B-Biological Sciences</em> 123 (830): 69–89.
+</div>
+<div id="ref-crawford1947visual" class="csl-entry" role="listitem">
+———. 1947. <span>“Visual Adaptation in Relation to Brief Conditioning Stimuli.”</span> <em>Proceedings of the Royal Society of London. Series B-Biological Sciences</em> 134 (875): 283–302.
+</div>
+<div id="ref-curcio1990human" class="csl-entry" role="listitem">
+Curcio, Christine A, Kenneth R Sloan, Robert E Kalina, and Anita E Hendrickson. 1990. <span>“Human Photoreceptor Topography.”</span> <em>Journal of Comparative Neurology</em> 292 (4): 497–523.
+</div>
+<div id="ref-dacey2005melanopsin" class="csl-entry" role="listitem">
+Dacey, Dennis M, Hsi-Wen Liao, Beth B Peterson, Farrel R Robinson, Vivianne C Smith, Joel Pokorny, King-Wai Yau, and Paul D Gamlin. 2005. <span>“Melanopsin-Expressing Ganglion Cells in Primate Retina Signal Colour and Irradiance and Project to the LGN.”</span> <em>Nature</em> 433 (7027): 749–54.
+</div>
+<div id="ref-dacey1992dendritic" class="csl-entry" role="listitem">
+Dacey, Dennis M, and Michael R Petersen. 1992. <span>“Dendritic Field Size and Morphology of Midget and Parasol Ganglion Cells of the Human Retina.”</span> <em>Proceedings of the National Academy of Sciences</em> 89 (20): 9666–70.
+</div>
+<div id="ref-dartnall1983human" class="csl-entry" role="listitem">
+Dartnall, Herbert JA, James K Bowmaker, and John Dixon Mollon. 1983. <span>“Human Visual Pigments: Microspectrophotometric Results from the Eyes of Seven Persons.”</span> <em>Proceedings of the Royal Society of London. Series B. Biological Sciences</em> 220 (1218): 115–30.
+</div>
+<div id="ref-de1943quantum" class="csl-entry" role="listitem">
+De Vries, HL. 1943. <span>“The Quantum Character of Light and Its Bearing Upon Threshold of Vision, the Differential Sensitivity and Visual Acuity of the Eye.”</span> <em>Physica</em> 10 (7): 553–64.
+</div>
+<div id="ref-derrington1984spatial" class="csl-entry" role="listitem">
+Derrington, AM, and P Lennie. 1984. <span>“Spatial and Temporal Contrast Sensitivities of Neurones in Lateral Geniculate Nucleus of Macaque.”</span> <em>The Journal of Physiology</em> 357 (1): 219–40.
+</div>
+<div id="ref-do2010intrinsically" class="csl-entry" role="listitem">
+Do, Michael Tri Hoang, and KW Yau. 2010. <span>“Intrinsically Photosensitive Retinal Ganglion Cells.”</span> <em>Physiological Reviews</em>.
+</div>
+<div id="ref-donner1992noise" class="csl-entry" role="listitem">
+Donner, Kristian. 1992. <span>“Noise and the Absolute Thresholds of Cone and Rod Vision.”</span> <em>Vision Research</em> 32 (5): 853–66.
+</div>
+<div id="ref-dowling2016vision" class="csl-entry" role="listitem">
+Dowling, John E, and Joseph L Dowling Jr. 2016. <em>Vision: How It Works and What Can Go Wrong</em>. MIT Press.
+</div>
+<div id="ref-dunn2007light" class="csl-entry" role="listitem">
+Dunn, Felice A, Martin J Lankheet, and Fred Rieke. 2007. <span>“Light Adaptation in Cone Vision Involves Switching Between Receptor and Post-Receptor Sites.”</span> <em>Nature</em> 449 (7162): 603–6.
+</div>
+<div id="ref-enroth1977cone" class="csl-entry" role="listitem">
+Enroth-Cugell, Christina, B Gevene Hertz, and P Lennie. 1977. <span>“Cone Signals in the Cat’s Retina.”</span> <em>The Journal of Physiology</em> 269 (2): 273–96.
+</div>
+<div id="ref-fain2001adaptation" class="csl-entry" role="listitem">
+Fain, Gordon L, Hugh R Matthews, M Carter Cornwall, and Yiannis Koutalos. 2001. <span>“Adaptation in Vertebrate Photoreceptors.”</span> <em>Physiological Reviews</em> 81 (1): 117–51.
+</div>
+<div id="ref-fechner1860elemente" class="csl-entry" role="listitem">
+Fechner, Gustav Theodor. 1860. <em>Elemente Der Psychophysik</em>. Vol. 2. Breitkopf u. H<span>ä</span>rtel.
+</div>
+<div id="ref-fuortes1961increment" class="csl-entry" role="listitem">
+Fuortes, MGF, RD Gunkel, and WAH Rushton. 1961. <span>“Increment Thresholds in a Subject Deficient in Cone Vision.”</span> <em>The Journal of Physiology</em> 156 (1): 179.
+</div>
+<div id="ref-gilbert2013top" class="csl-entry" role="listitem">
+Gilbert, Charles D, and Wu Li. 2013. <span>“Top-down Influences on Visual Processing.”</span> <em>Nature Reviews Neuroscience</em> 14 (5): 350–63.
+</div>
+<div id="ref-glassner1995principles" class="csl-entry" role="listitem">
+Glassner, Andrew S. 1995. <em>Principles of Digital Image Synthesis</em>. Elsevier.
+</div>
+<div id="ref-goodale1991neurological" class="csl-entry" role="listitem">
+Goodale, Melvyn A, A David Milner, Lorna S Jakobson, and David P Carey. 1991. <span>“A Neurological Dissociation Between Perceiving Objects and Grasping Them.”</span> <em>Nature</em> 349 (6305): 154–56.
+</div>
+<div id="ref-hartline1938response" class="csl-entry" role="listitem">
+Hartline, H Keffer. 1938. <span>“The Response of Single Optic Nerve Fibers of the Vertebrate Eye to Illumination of the Retina.”</span> <em>American Journal of Physiology-Legacy Content</em> 121 (2): 400–415.
+</div>
+<div id="ref-hartline1939excitation" class="csl-entry" role="listitem">
+———. 1939. <span>“Excitation and Inhibition of the" Off" Response in Vertebrate Optic Nerve Fibers.”</span> <em>Am. J. Physiol</em> 126:527.
+</div>
+<div id="ref-hartline1940effects" class="csl-entry" role="listitem">
+———. 1940a. <span>“The Effects of Spatial Summation in the Retina on the Excitation of the Fibers of the Optic Nerve.”</span> <em>American Journal of Physiology-Legacy Content</em> 130 (4): 700–711.
+</div>
+<div id="ref-hartline1940receptive" class="csl-entry" role="listitem">
+———. 1940b. <span>“The Receptive Fields of Optic Nerve Fibers.”</span> <em>American Journal of Physiology-Legacy Content</em> 130 (4): 690–99.
+</div>
+<div id="ref-hartline1949inhibition" class="csl-entry" role="listitem">
+———. 1949. <span>“Inhibition of Activity of Visual Receptors by Illuminating Nearby Retinal Areas in the Limulus Eye.”</span> <em>Federation Proceedings</em> 8 (1): 69.
+</div>
+<div id="ref-hartline1932nerve" class="csl-entry" role="listitem">
+Hartline, H Keffer, and Clarence Henry Graham. 1932. <span>“Nerve Impulses from Single Receptors in the Eye.”</span> <em>Journal of Cellular &amp; Comparative Physiology</em>.
+</div>
+<div id="ref-hartline1956inhibition" class="csl-entry" role="listitem">
+Hartline, H Keffer, Henry G Wagner, and Floyd Ratliff. 1956. <span>“Inhibition in the Eye of Limulus.”</span> <em>The Journal of General Physiology</em> 39 (5): 651–73.
+</div>
+<div id="ref-hattar2002melanopsin" class="csl-entry" role="listitem">
+Hattar, Samer, H-W Liao, Motoharu Takao, David M Berson, and KW Yau. 2002. <span>“Melanopsin-Containing Retinal Ganglion Cells: Architecture, Projections, and Intrinsic Photosensitivity.”</span> <em>Science</em> 295 (5557): 1065–70.
+</div>
+<div id="ref-hecht1937influence" class="csl-entry" role="listitem">
+Hecht, Selig, Charles Haig, and Aurin M Chase. 1937. <span>“The Influence of Light Adaptation on Subsequent Dark Adaptation of the Eye.”</span> <em>The Journal of General Physiology</em> 20 (6): 831–50.
+</div>
+<div id="ref-hodgkin1952quantitative" class="csl-entry" role="listitem">
+Hodgkin, Alan L, and Andrew F Huxley. 1952. <span>“A Quantitative Description of Membrane Current and Its Application to Conduction and Excitation in Nerve.”</span> <em>The Journal of Physiology</em> 117 (4): 500.
+</div>
+<div id="ref-hubel1995eye" class="csl-entry" role="listitem">
+Hubel, David H. 1995. <em>Eye, Brain, and Vision.</em> Scientific American Library/Scientific American Books.
+</div>
+<div id="ref-hubel1959receptive" class="csl-entry" role="listitem">
+Hubel, David H, and Torsten N Wiesel. 1959. <span>“Receptive Fields of Single Neurones in the Cat’s Striate Cortex.”</span> <em>J Physiol</em> 148 (3): 574–91.
+</div>
+<div id="ref-hubel1962receptive" class="csl-entry" role="listitem">
+———. 1962. <span>“Receptive Fields, Binocular Interaction and Functional Architecture in the Cat’s Visual Cortex.”</span> <em>The Journal of Physiology</em> 160 (1): 106.
+</div>
+<div id="ref-hubel1968receptive" class="csl-entry" role="listitem">
+———. 1968. <span>“Receptive Fields and Functional Architecture of Monkey Striate Cortex.”</span> <em>The Journal of Physiology</em> 195 (1): 215–43.
+</div>
+<div id="ref-idrees2024biophysical" class="csl-entry" role="listitem">
+Idrees, Saad, Michael B Manookin, Fred Rieke, Greg D Field, and Joel Zylberberg. 2024. <span>“Biophysical Neural Adaptation Mechanisms Enable Artificial Neural Networks to Capture Dynamic Retinal Computation.”</span> <em>Nature Communications</em> 15 (1): 5957.
+</div>
+<div id="ref-jacobs2008primate" class="csl-entry" role="listitem">
+Jacobs, Gerald H. 2008. <span>“Primate Color Vision: A Comparative Perspective.”</span> <em>Visual Neuroscience</em> 25 (5-6): 619–33.
+</div>
+<div id="ref-kolb2005organization" class="csl-entry" role="listitem">
+Kolb, Helga, Eduardo Fernandez, and Ralph Nelson. 2005. <span>“The Organization of the Retina and Visual System.”</span> <em>Webvision-the Organization of the Retina and Visual System</em>.
+</div>
+<div id="ref-kuffler1952neurons" class="csl-entry" role="listitem">
+Kuffler, Stephen W. 1952. <span>“Neurons in the Retina: Organization, Inhibition and Excitation Problems.”</span> In <em>Cold Spring Harbor Symposia on Quantitative Biology</em>, 17:281–92. Cold Spring Harbor Laboratory Press.
+</div>
+<div id="ref-kuffler1953discharge" class="csl-entry" role="listitem">
+———. 1953. <span>“Discharge Patterns and Functional Organization of Mammalian Retina.”</span> <em>Journal of Neurophysiology</em> 16 (1): 37–68.
+</div>
+<div id="ref-lamb2004dark" class="csl-entry" role="listitem">
+Lamb, TD, and Edward N Pugh Jr. 2004. <span>“Dark Adaptation and the Retinoid Cycle of Vision.”</span> <em>Progress in Retinal and Eye Research</em> 23 (3): 307–80.
+</div>
+<div id="ref-lamb2006phototransduction" class="csl-entry" role="listitem">
+Lamb, Trevor D, and Edward N Pugh. 2006. <span>“Phototransduction, Dark Adaptation, and Rhodopsin Regeneration: The Proctor Lecture.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 47 (12): 5138–52.
+</div>
+<div id="ref-lavalle2023virtual" class="csl-entry" role="listitem">
+LaValle, Steven M. 2023. <em>Virtual Reality</em>. Cambridge university press.
+</div>
+<div id="ref-lazzerini2017mood" class="csl-entry" role="listitem">
+Lazzerini Ospri, Lorenzo, Glen Prusky, and Samer Hattar. 2017. <span>“Mood, the Circadian System, and Melanopsin Retinal Ganglion Cells.”</span> <em>Annual Review of Neuroscience</em> 40 (1): 539–56.
+</div>
+<div id="ref-liao2022bioinspired" class="csl-entry" role="listitem">
+Liao, Fuyou, Zheng Zhou, Beom Jin Kim, Jiewei Chen, Jingli Wang, Tianqing Wan, Yue Zhou, et al. 2022. <span>“Bioinspired in-Sensor Visual Adaptation for Accurate Perception.”</span> <em>Nature Electronics</em> 5 (2): 84–91.
+</div>
+<div id="ref-mantiuk2022stelacsf" class="csl-entry" role="listitem">
+Mantiuk, Rafał K, Maliha Ashraf, and Alexandre Chapiro. 2022. <span>“stelaCSF: A Unified Model of Contrast Sensitivity as the Function of Spatio-Temporal Frequency, Eccentricity, Luminance and Area.”</span> <em>ACM Transactions on Graphics (TOG)</em> 41 (4): 1–16.
+</div>
+<div id="ref-matthews1988photoreceptor" class="csl-entry" role="listitem">
+Matthews, HR, RLW Murphy, GL Fain, and TD Lamb. 1988. <span>“Photoreceptor Light Adaptation Is Mediated by Cytoplasmic Calcium Concentration.”</span> <em>Nature</em> 334 (6177): 67–69.
+</div>
+<div id="ref-mishkin1983object" class="csl-entry" role="listitem">
+Mishkin, Mortimer, Leslie G Ungerleider, and Kathleen A Macko. 1983. <span>“Object Vision and Spatial Vision: Two Cortical Pathways.”</span> <em>Trends in Neurosciences</em> 6:414–17.
+</div>
+<div id="ref-nakatani1988calcium" class="csl-entry" role="listitem">
+Nakatani, K, and KW Yau. 1988. <span>“Calcium and Light Adaptation in Retinal Rods and Cones.”</span> <em>Nature</em> 334 (6177): 69–71.
+</div>
+<div id="ref-nassi2009parallel" class="csl-entry" role="listitem">
+Nassi, Jonathan J, and Edward M Callaway. 2009. <span>“Parallel Processing Strategies of the Primate Visual System.”</span> <em>Nature Reviews Neuroscience</em> 10 (5): 360–72.
+</div>
+<div id="ref-o2002attention" class="csl-entry" role="listitem">
+O’Connor, Daniel H, Miki M Fukui, Mark A Pinsk, and Sabine Kastner. 2002. <span>“Attention Modulates Responses in the Human Lateral Geniculate Nucleus.”</span> <em>Nature Neuroscience</em> 5 (11): 1203–9.
+</div>
+<div id="ref-purves2017neurosciences" class="csl-entry" role="listitem">
+Purves, Dale, George J. Augustine, David Fitzpatrick, William Hall, Anthony-Samuel LaMantia, Richard D. Mooney, Michael L. Platt, and Leonard E. White. 2017. <em>Neurosciences</em>. 6th ed. Oxford University Press.
+</div>
+<div id="ref-rose1948sensitivity" class="csl-entry" role="listitem">
+Rose, Albert. 1948. <span>“The Sensitivity Performance of the Human Eye on an Absolute Scale.”</span> <em>Journal of the Optical Society of America</em> 38 (2): 196–208.
+</div>
+<div id="ref-sakmann1969scotopic" class="csl-entry" role="listitem">
+Sakmann, Bert, and Otto D Creutzfeldt. 1969. <span>“Scotopic and Mesopic Light Adaptation in the Cat’s Retina.”</span> <em>Pfl<span>ü</span>gers Archiv</em> 313:168–85.
+</div>
+<div id="ref-ventral_dorsal" class="csl-entry" role="listitem">
+Selket. 2007. <span>“<span class="nocase">The ventral vs. dorsal stream; CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg" class="uri">https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg</a>.
+</div>
+<div id="ref-sherman1986control" class="csl-entry" role="listitem">
+Sherman, SM, and Christof Koch. 1986. <span>“The Control of Retinogeniculate Transmission in the Mammalian Lateral Geniculate Nucleus.”</span> <em>Experimental Brain Research</em> 63:1–20.
+</div>
+<div id="ref-stevens1957psychophysical" class="csl-entry" role="listitem">
+Stevens, Stanley S. 1957. <span>“On the Psychophysical Law.”</span> <em>Psychological Review</em> 64 (3): 153.
+</div>
+<div id="ref-stevens1961honor" class="csl-entry" role="listitem">
+Stevens, Stanley Smith. 1961. <span>“To Honor Fechner and Repeal His Law: A Power Function, Not a Log Function, Describes the Operating Characteristic of a Sensory System.”</span> <em>Science</em> 133 (3446): 80–86.
+</div>
+<div id="ref-ungerleider1982two" class="csl-entry" role="listitem">
+Ungerleider, Leslie G, and Mortimer Mishkin. 1982. <span>“Two Cortical Visual Systems.”</span> In <em>Analysis of Visual Behavior</em>, edited by David J Ingle, Melvyn A Goodale, Richard JW Mansfield, et al., 549–86. Mit Press Cambridge, MA.
+</div>
+<div id="ref-wald1968molecular" class="csl-entry" role="listitem">
+Wald, George. 1968. <span>“Molecular Basis of Visual Excitation.”</span> <em>Science</em> 162 (3850): 230–39.
+</div>
+<div id="ref-wandell1995foundations" class="csl-entry" role="listitem">
+Wandell, Brian A. 1995. <em>Foundations of Vision</em>. Sinauer Associates.
+</div>
+<div id="ref-wodnicki1995foveated" class="csl-entry" role="listitem">
+Wodnicki, Robert, Gordon W Roberts, and Martin D Levine. 1995. <span>“A Foveated Image Sensor in Standard CMOS Technology.”</span> In <em>Proceedings of the IEEE 1995 Custom Integrated Circuits Conference</em>, 357–60. IEEE.
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Cajal shared the Nobel Prize in 1906 with Camillo Golgi, who invented a method that Cajal used to study neuronal connections.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>which were first recorded by Edgar Adrian, a Nobel Prize laureate in 1932 who developed the all-or-none theory of action potentials; Hodgkin and Huxley <span class="citation" data-cites="hodgkin1952quantitative">(<a href="references.html#ref-hodgkin1952quantitative" role="doc-biblioref">Hodgkin and Huxley 1952</a>)</span>, who shared the Nobel Prize in 1963, explained the ionic mechanisms underlying the action potentials.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>George Wald won his Nobel Prize in 1967 by essentially elucidating this process.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><span class="math inline">\(\text{absorbance} = \log(I_{\text{incident}}/I_{\text{transmitted}})\)</span>, and the fraction absorbed, i.e., <span class="math inline">\(\text{absorptance} = 1 - I_{\text{transmitted}}/I_{\text{incident}}\)</span>. Therefore, <span class="math inline">\(\text{absorptance} = 1-e^{-\text{absorbance}}\)</span>. Numerically, absorbance is approximately absorption when absorbance is low, which is the case here when using MSP to illuminate the photoreceptors.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Hartline he won the Nobel Prize in 1967 because of this discovery.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This is actually a parvocellular LGN neuron, which is directly projected from the midget RGC and shares the same receptive field with that of the midget RGC.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>The implicit assumption here is that once the RGC responses reach a criterion level, the pattern becomes subjectively detectable at the behavioral level.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>We emphasize “potentially” because while correlation is easy to establish, claiming causation requires ruling out other factors.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>They shared the Nobel Prize in 1981.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Note that the receptive field in <a href="#fig-v1_simple_spot" class="quarto-xref">Figure&nbsp;<span>2.17</span></a> has an inhibitory central region and excitatory flanking areas, but the receptive field of the neuron in <a href="#fig-orientation_selectivity" class="quarto-xref">Figure&nbsp;<span>2.16</span></a> evidently has an opposite excitatory vs.&nbsp;inhibitory regions, so the two figures do not share the same underlying data.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./hvs.html" class="pagination-link" aria-label="Human Visual System">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Human Visual System</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./hvs-receptor.html" class="pagination-link" aria-label="Photoreceptors">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

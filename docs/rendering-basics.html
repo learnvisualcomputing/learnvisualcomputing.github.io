@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; The Basics – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./rendering-surface.html" rel="next">
+<link href="./rendering.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-basics.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-mat-basics-ov" id="toc-sec-chpt-mat-basics-ov" class="nav-link active" data-scroll-target="#sec-chpt-mat-basics-ov"><span class="header-section-number">8.1</span> Overview</a></li>
+  <li><a href="#sec-chpt-mat-basics-model" id="toc-sec-chpt-mat-basics-model" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-model"><span class="header-section-number">8.2</span> Observed Reflection and Transmission</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry" id="toc-sec-chpt-mat-basics-radiometry" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry"><span class="header-section-number">8.3</span> Key Concepts in Radiometry</a>
+  <ul class="collapse">
+  <li><a href="#energy-and-power" id="toc-energy-and-power" class="nav-link" data-scroll-target="#energy-and-power"><span class="header-section-number">8.3.1</span> Energy and Power</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-irradiance" id="toc-sec-chpt-mat-basics-radiometry-irradiance" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-irradiance"><span class="header-section-number">8.3.2</span> Irradiance</a></li>
+  <li><a href="#solid-angle" id="toc-solid-angle" class="nav-link" data-scroll-target="#solid-angle"><span class="header-section-number">8.3.3</span> Solid Angle</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-radiance" id="toc-sec-chpt-mat-basics-radiometry-radiance" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-radiance"><span class="header-section-number">8.3.4</span> Radiance</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-lamb" id="toc-sec-chpt-mat-basics-radiometry-lamb" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">8.4</span> Lambert’s Cosine Law</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-cam" id="toc-sec-chpt-mat-basics-radiometry-cam" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-cam"><span class="header-section-number">8.5</span> The Measurement Equation</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-lf" id="toc-sec-chpt-mat-basics-radiometry-lf" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lf"><span class="header-section-number">8.6</span> Light Field and Radiance Field</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-basics-radiometry-lf-im" id="toc-sec-chpt-mat-basics-radiometry-lf-im" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lf-im"><span class="header-section-number">8.6.1</span> Light-Field Imaging</a></li>
+  <li><a href="#light-field-rendering-and-radiance-field" id="toc-light-field-rendering-and-radiance-field" class="nav-link" data-scroll-target="#light-field-rendering-and-radiance-field"><span class="header-section-number">8.6.2</span> Light-Field Rendering and Radiance Field</a></li>
+  <li><a href="#light-field-display" id="toc-light-field-display" class="nav-link" data-scroll-target="#light-field-display"><span class="header-section-number">8.6.3</span> Light-Field Display</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-pm" id="toc-sec-chpt-mat-basics-radiometry-pm" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">8.7</span> Photometric Quantities</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-basics.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-mat-basics" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter lays the land for physically modeling light-matter interactions in rendering, discussing the different levels at which the modeling can occur. We will then introduce one such model, an extremely high-level model that abstracts away almost all the underlying physics and models an object as its apparent reflection and transmission spectra. This simple modeling is functionally very useful, as it is very commonly used in practice, and serves as a curious teaser for the remaining chapters: how and when can this simple model be a good approximation of the sophisticated light-matter interactions? We will conclude with a brief overview of radiometry, which provides the necessary analytical tools we will use in physical modeling.</p>
+<div class="hidden">
+<p><span class="math display">\[
+\def\oi{{\omega_i}}
+\def\os{{\omega_s}}
+\def\Oi{{\Omega_i}}
+\def\Os{{\Omega_s}}
+\def\d{{\text{d}}}
+\def\D{{\Delta}}
+\def\do{{\d\omega}}
+\def\Do{{\Delta\omega}}
+\def\doi{{\d\omega_i}}
+\def\dos{{\d\omega_s}}
+\def\Doi{{\D\omega_i}}
+\def\Dos{{\D\omega_s}}
+\def\H{{\mathbf{H}}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cL}{\mathcal{L}}
+\]</span></p>
+</div>
+<section id="sec-chpt-mat-basics-ov" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-ov"><span class="header-section-number">8.1</span> Overview</h2>
+<p>When a beam of photons hits a material surface, some of the photons will be scattered directly back to your eyes, and others will penetrate into the material. These surface phenomena are governed by <strong>surface scattering</strong>. We use the word “scattering” here to generally refer to lights coming back from the surface. Depending on the material, some of the scattered photons are along the perfect mirror-reflection directions, and others might be more diffuse. You might sometimes see the word “reflection” used. Reflection is sometimes used in the same way as scattering, which will be our use, but other times is reserved for the perfect, mirror-like reflection. Usually what the word means is self-evident given the context, but we will err on the side of verbosity when we want to mean a specific form of reflection.</p>
+<p>Photons that penetrate the surface will further interact with particles in the material, which absorb, scatter, or might even emit photons. This is called <strong>subsurface scattering</strong> (SSS) in computer graphics. Even though we use the term “scattering”, you should know that the actual SSS processes involve not only scattering but also absorption and emission. It turns out that the principles that govern SSS are exactly the same as those that govern the interactions between photons and particles in the so-called “participating media”, such as clouds, fogs, and smokes. In computer graphics, light transport in participating media is called <strong>volume scattering</strong>, and again, even though we use the term “scattering”, absorption and emission are usually involved in the most general cases.</p>
+<p>The way to model SSS/volume scattering is different from the way to model surface scattering: we no longer consider the material as a continuous surface and the light-matter interaction as photons bouncing off of the surface; instead, we break a material down into small particles and model how photons interact with individual particles.</p>
+<p>Very importantly, the difference in the modeling methodology does <em>not</em> imply that there somehow is a fundamental difference between surface scattering and volume scattering. Ultimately, both are caused by the light, an oscillating electromagnetic field, exciting discrete electric charges. The differences lie in how the charges are arranged in space and in relation to one another. The laws that govern how photons interact with the charges are described by the electromagnetic theories in the classical regime and, in the quantum regime, by the quantum electrodynamics (QED) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In fact, using the electromagnetic theories, we can show that surface reflection/refraction is nothing more than the coherent scattering of incident light waves by the surface particles.</p>
+<p>Since there is no fundamental differences in the underlying physics, the only meaningful distinction is one between different phenomenological approximations, or “models”, of the same underlying physics. We totally could invoke the electromagnetic theories or QED, and if we did, we would have one single unified model that explains both surface scattering (reflection and refraction) and volume scattering. Doing so, however, is not only unnecessary (because many, not all, real-world material color phenomena could be modeled without them) and too computationally expensive, but also, perhaps more importantly, blinds us from the relatively simple intuitions in each scenario. Instead, each phenomenological model is based on a set of high-level guiding principles, which are approximations of the underlying physical process but are sufficient to quantitatively describe light-matter interactions in each scenario.</p>
+<p><span class="citation" data-cites="johnsen2012optics">Johnsen (<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">2012</a>)</span> is a great reference, which has some equations but generally focuses on building intuitions and mostly uses the electromagnetic language rather than the quantum language. If you want to get to the nuts and bolts of the mathematical modeling, <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>)</span> is a phenomenal text whose models are also built in the electromagnetic land. <span class="citation" data-cites="feynman1985qed">Feynman (<a href="references.html#ref-feynman1985qed" role="doc-biblioref">1985</a>)</span> has an accessible and breathtaking introduction to QED that I highly recommend. <span class="citation" data-cites="dorsey2010digital">Dorsey, Rushmeier, and Sillion (<a href="references.html#ref-dorsey2010digital" role="doc-biblioref">2010</a>)</span> is a classic text on material appearance modeling in graphics that covers a range of topics, including modeling, measurements, and various implementation issues in practice. <span class="citation" data-cites="johnston2001color">Johnston-Feller (<a href="references.html#ref-johnston2001color" role="doc-biblioref">2001</a>)</span> is specifically concerned with paintings; it has many interesting discussions of pigments and pigment mixtures and has many real-world data and insights that are rarely found elsewhere.</p>
+</section>
+<section id="sec-chpt-mat-basics-model" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-model"><span class="header-section-number">8.2</span> Observed Reflection and Transmission</h2>
+<p>Regardless of the details of surface scattering and volume scattering, a material appears to have some color because some photons leaving the material enter our eye. If we observe the material from the same side of the light source, it is the lights reflected from the material that matter. If we observe the material from the other side of the light source, it is the light transmitted through the material that matter. At the highest level of abstraction, we can model the material color in the real world by modeling the <em>observed</em> reflection and transmission <em>apparent</em> to an outside observer: how much of the incident power is reflected/transmitted back to the eye?</p>
+<p>We can quantify the observed reflection and transmission using the <strong>spectral reflectance function</strong> <span class="math inline">\(r(\lambda)\)</span> and the <strong>spectral transmittance function</strong> <span class="math inline">\(t(\lambda)\)</span>, respectively. These two functions spare us the details of how lights interact with a material but describe, at each wavelength <span class="math inline">\(\lambda\)</span>, the percentage of optical power that is reflected back to the eye or transmitted through the material and enters the eye, respectively.</p>
+<div id="fig-spectral_reflectance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spectral_reflectance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/spectral_reflectance_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spectral_reflectance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: (a): apparent spectral reflectance modifies the illumination spectrum and dictates the observed color; adapted from The Astronomer by <span class="citation" data-cites="astronomer">Johannes Vermeer (<a href="references.html#ref-astronomer" role="doc-biblioref">1668</a>)</span>. (b): a photo of Acadia Redfish I took in the Ripley’s Aquarium of Canada. The fish ordinarily looks red-ish under a white-ish light, but appears colorless in the aquarium, which simulates the lighting environment in the deep sea where lights are predominately blue/violet. The spectral data are not accurate and for the illustration purpose only.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-spectral_reflectance" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> (a) illustrates this modeling at work using the famous The Astronomer by Johannes Vermeer. We will proceed with our discussion using reflectance, but the case idea can be easily extended to transmittance. Vermeer paints an astronomer looking at a globe. Given the illumination coming from the window <span class="math inline">\(\Phi(\lambda)\)</span> and the spectral reflectance of the point on the globe under gaze <span class="math inline">\(r(\lambda)\)</span>, the light reflected toward the eye is then <span class="math inline">\(\Phi(\lambda)r(\lambda)\)</span>. We can then calculate the color of these lights using the cone fundamentals or some set of CMFs, the same way as if the lights were directly emitted from the globe.</p>
+<p>As another example, <a href="#fig-spectral_reflectance" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> (b) is a photo of Acadia Redfish I took when visiting the Ripley’s Aquarium of Canada. The fish ordinarily looks red-ish under a white-ish light, which suggests that its spectral reflectance <span class="math inline">\(r(\lambda)\)</span> peaks at longer wavelengths: it scatters more long-wavelength, i.e., red-ish, lights than short-wavelength lights. But the fish appears colorless in the aquarium, which simulates the lighting environment in the deep sea where lights <span class="math inline">\(\Phi(\lambda)\)</span> are predominately blue/violet <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As a result, the scattered lights have a rather uniform spectral power distribution, resulting in a gray-ish appearance.</p>
+<p><a href="#fig-spectral_reflectance" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> makes an important simplification: the reflectance of a point <span class="math inline">\(p\)</span> on the material is simplified to only a single spectrum. In reality, the reflectance of a point <span class="math inline">\(p\)</span> depends on both <span class="math inline">\(\oi\)</span>, the direction of the light incident on <span class="math inline">\(p\)</span>, and <span class="math inline">\(\os\)</span>, the outgoing direction (leaving <span class="math inline">\(p\)</span>) through which one observes the material. In certain materials where SSS contributes to the material appearance (e.g., translucent materials like jade), the reflectance can also depend on light incident on <em>other</em> points of the material surface. So when we use a single reflectance spectrum to model material colors, what we have implicitly assumed is that the reflectance spectrum has been calculated in such a way that when you multiply it with the incident illumination, you get the scattered light power that is actually observed.</p>
+<p>How such a reflectance spectrum can be obtained in measurement (to the extent that it is a useful high-level abstraction) will be discussed in <a href="rendering-surface.html#sec-chpt-mat-measurement" class="quarto-xref"><span>Section 9.6</span></a>. The reflectance is a “quick-and-dirty” abstraction that we often use to give a rough estimation/explanation of a material’s color, but it is so high-level that it hides lots of the low-level details: what exactly are the light-matter interactions that cause the surface and subsurface scattering behaviors that eventually give rise to the apparent reflectance and transmittance spectra? The remaining chapters in this part essentially answer this question.</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry"><span class="header-section-number">8.3</span> Key Concepts in Radiometry</h2>
+<p>To be more formal about surface and volume scattering, we need to scientifically define a few physical properties pertaining to light propagation spatially and angularly. This is called <strong>radiometry</strong>, which operates completely at the geometric optics level, so we will be describing light as a collection of photons, each of which can travel along a particular direction with certain energy associated with it. <span class="citation" data-cites="reinhard2008color">Reinhard et al. (<a href="references.html#ref-reinhard2008color" role="doc-biblioref">2008</a>, Chpt. 6)</span> and <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4)</span> have more rigorous treatments of radiometry. Here, we introduce the language and a few important radiometric quantities that are relevant to our discussion.</p>
+<section id="energy-and-power" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="energy-and-power"><span class="header-section-number">8.3.1</span> Energy and Power</h3>
+<p>Each photon carries a certain amount of energy that is determined by its wavelength governed by:</p>
+<p><span class="math display">\[
+\begin{align}
+    Q = \frac{hc}{\lambda},
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(c\)</span> is the speed of light, <span class="math inline">\(\lambda\)</span> is the photon wavelength, and <span class="math inline">\(h\)</span> is the Planck’s constant.</p>
+<p>Power, or more formally in radiometry, <strong>radiant flux</strong> (or simply flux) is the total amount of energy passing through some surface in space per unit time. Or, taking a calculus perspective, power <span class="math inline">\(\Phi\)</span> is defined as:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi = \lim_{\Delta t \rightarrow 0}\frac{\Delta Q}{\Delta t} = \frac{\text{d}Q}{\text{d}t}.
+\end{align}
+\]</span></p>
+<p>The way to think about this is that each photon carries a certain amount of energy so if you monitor photons passing across a surface over a period of time <span class="math inline">\(\Delta t\)</span>, you can calculate the average power of that period by dividing the total energy passed by by <span class="math inline">\(\Delta t\)</span>. As <span class="math inline">\(\Delta t\)</span> approaches 0, we get the instantaneous power.</p>
+<p>Of course, energy/power is a function of wavelength, so more rigorously we should be talking about <em>spectral</em> power <span class="math inline">\(\Phi(\lambda)\)</span>, which has a unit of <span class="math inline">\(\text{W}/\text{nm}\)</span>:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi(\lambda) = \lim_{\Delta \lambda \rightarrow 0}\frac{\Delta \Phi}{\Delta \lambda} = \frac{\d \Phi}{\d \lambda},
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\Delta \Phi\)</span> is the total power within a wavelength interval <span class="math inline">\(\Delta \lambda\)</span>.</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-irradiance" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-irradiance"><span class="header-section-number">8.3.2</span> Irradiance</h3>
+<p>Our power calculation is done with respect to a surface area, but how about the power at each point on the surface area? You can imagine that some points get more photons and others get fewer, so it is useful to characterize the power at any given point. Technically, the answer to the question “how many photons hit a particular point” is <em>zero</em>, since the area of a single point is 0. The meaningful question is: what is the power <em>density</em> of a particular point <span class="math inline">\(p\)</span>? <strong>Irradiance</strong> is such a quantity.</p>
+<p>Imagine again that you are monitoring photons crossing a surface for a period <span class="math inline">\(\Delta t\)</span>; you can calculate the average power received per unit area by dividing the average power by the surface area, and when you shrink the surface area to an infinitesimal point <span class="math inline">\(p\)</span>, we can calculate the power density, i.e., the irradiance, of <span class="math inline">\(p\)</span> by:</p>
+<p><span id="eq-irradiance"><span class="math display">\[
+\begin{align}
+    E(p) = \lim_{\Delta A \rightarrow 0}\frac{\Delta \Phi(p)}{\Delta A} = \frac{\text{d}\Phi(p)}{\text{d}A}.
+\end{align}
+\tag{8.1}\]</span></span></p>
+<p>Irradiance is a more primitive measure than power: in calculus terms, irradiance is a power density function, which means we can derive the power of a surface by integrating the irradiance over the surface area:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi = \int^{A}E(p)dA.
+\end{align}
+\]</span></p>
+<p>Irradiance has a unit of <span class="math inline">\(\text{W}/\text{m}^\text{2}\)</span>, and <em>spectral</em> irradiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2} \cdot \text{nm})\)</span>.</p>
+</section>
+<section id="solid-angle" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="solid-angle"><span class="header-section-number">8.3.3</span> Solid Angle</h3>
+<p>Irradiance is concerned with the power of all the photons incident on a point, but photons hit a point from all directions, so how do we quantify the amount of light coming from a direction?</p>
+<p>A direction is a vector, which is invariant to translational transformations, so the two parallel “arrows” <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span> in <a href="#fig-solid_angle" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> (left) represent the same vector/direction. Therefore, conceptually it is easier if we translate all the arrows so that they start from the same origin when we want to reason about a collection of directions.</p>
+<div id="fig-solid_angle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-solid_angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/solid_angle.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-solid_angle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: (a): a solid angle is a measure of the size of a collection of directions in 3D. A direction is a vector, which is translationally invariant, so <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span> refer to the same direction. (b): in spherical coordinate systems, a 3D direction can be parameterized by two angles, a polar angle <span class="math inline">\(\theta\)</span> and an azimuthal angle <span class="math inline">\(\phi\)</span>. (c): radiance is an intrinsic property of the radiation field, but we can measure it differently.
+</figcaption>
+</figure>
+</div>
+<p>How do we count the number of directions? In 2D, we use a <em>planar angle</em> to measure the amount of directions. Given an origin <span class="math inline">\(O\)</span> and a vector, we rotate it to generate an arc. The angle subtended by the arc and <span class="math inline">\(O\)</span> is a measure of the amount of directions we have just covered. The angle can also be mathematically given by the ratio <span class="math inline">\(s/r\)</span>, where <span class="math inline">\(s\)</span> is the arc length and <span class="math inline">\(r\)</span> is the radius of the circle. This matches our intuition that if we increase the radius of the circle, we would get a longer arc but the same angle. A full circle has a planar angle of <span class="math inline">\(2\pi\)</span>.</p>
+<p>We can similarly define the size of a set of directions in 3D. We draw a sphere around <span class="math inline">\(O\)</span>, and imagine that we have some area on the spherical surface. Connecting <span class="math inline">\(O\)</span> to every point on that area represents a direction in 3D. So the spherical surface area is a measure of the amount of 3D directions. Like in the 2D case, we want the measure to be invariant to the spherical radius, so we define <strong>solid angle</strong>, a measure of the size of a set of 3D directions, as:</p>
+<p><span id="eq-solid_angle"><span class="math display">\[
+\begin{align}
+    \Omega = \frac{A}{r^2},
+\end{align}
+\tag{8.2}\]</span></span></p>
+<p>where <span class="math inline">\(A\)</span> is an area on a spherical surface and <span class="math inline">\(r\)</span> is the radius. The unit of a solid angle is the <strong>steradian</strong> (<span class="math inline">\(sr\)</span>), and the entire sphere subtends a solid angle of <span class="math inline">\(4\pi\)</span>.</p>
+<p>Sometimes we want to know the size of the set of directions from a point <span class="math inline">\(O\)</span> to an arbitrary surface. We would project that surface to a sphere and get a projected spherical area <span class="math inline">\(A\)</span>, using which we can invoke <a href="#eq-solid_angle" class="quarto-xref">Equation&nbsp;<span>8.2</span></a> to estimate the solid angle subtended by the surface. One useful trick that might help sometimes is to project the surface to the unit sphere (i.e., <span class="math inline">\(r=1\)</span>), and the solid angle is mathematically equivalent to the projected area on the unit sphere. But the most useful intuition I use whenever I am confused about what a particular solid angle means is to always think of the set of directions/vectors that are represented by that solid angle.</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-radiance" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-radiance"><span class="header-section-number">8.3.4</span> Radiance</h3>
+<p>We can now ask, what is the amount of flux received by a point from a particular direction? Photons travel in all sorts of directions. Let’s assume that we place an imaginary flux detector with an area <span class="math inline">\(A\)</span> in the field. The detector is able to receive light from only one direction <span class="math inline">\(\omega\)</span>, as illustrated in <a href="#fig-solid_angle" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> (c). We can then read out the total flux <span class="math inline">\(\Phi\)</span> received by the detector, from which we know that the power per unit area along the direction <span class="math inline">\(\omega\)</span> is simply <span class="math inline">\(\frac{\Phi}{A}\)</span>.</p>
+<p>Now imagine that we orient the detector so that its normal subtends an angle <span class="math inline">\(\theta\)</span> with respect to the light direction <span class="math inline">\(\omega\)</span>. <a href="#fig-solid_angle" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> (b) explicitly illustrates this angle, where the tilted detector lies in the <span class="math inline">\(xy\)</span>-plane, and the <span class="math inline">\(z\)</span> direction is the normal <span class="math inline">\(n\)</span>. In a spherical coordinate system, a direction <span class="math inline">\(\omega\)</span> can be parameterized by two angles: a polar angle <span class="math inline">\(\theta\)</span> and an azimuthal angle <span class="math inline">\(\phi\)</span>.</p>
+<p>The total flux received by the detector has changed to <span class="math inline">\(\Phi\cos\theta\)</span>, because the area that is available to receive photons is now <span class="math inline">\(A\cos\theta\)</span>. We call this the “effective area”. As a result, the power per area at the direction <span class="math inline">\(\omega\)</span> remains the same, i.e., <span class="math inline">\(\frac{\Phi}{A}\)</span>. This is not surprising, because we are not changing the radiation field, only how we measure it. When the effective area reaches 0 (i.e., the detector is completely parallel to the light direction), the detector collects no photons, but it certainly does not mean that there is no light in the field.</p>
+<p>If we now want to measure light power coming from another direction, we would change the detector so that it receives light from only that direction. In reality, this is, of course, not possible. No detector can screen lights only from one direction. If we place a detector in a radiation field, it is going to receive photons from all sorts of directions. We can limit the directions of photons that the detector collects by placing a baffle that allows only certain directions to hit the detector.</p>
+<div id="fig-radiance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-radiance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/radiance.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radiance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: Left: the baffle limits the directions through which incident photons can be collected by the detector. As we reduce the solid angle of the baffle <span class="math inline">\(\Do\)</span> and the detector <span class="math inline">\(\D A\)</span>, the average power per unit “effective area” per unit solid angle approaches <span class="math inline">\(L(p, \omega)\)</span>, the radiance at position <span class="math inline">\(p\)</span> along direction <span class="math inline">\(\omega\)</span>. Right: intuitively we can think of a point (an infinitesimal area) receiving lights from a single direction (an infinitesimal solid angle) as just a tiny area intercepting a tiny cylinder.
+</figcaption>
+</figure>
+</div>
+<p>This setup is illustrated in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> (left). The total flux collected by the detector is <span class="math inline">\(\Delta \Phi\)</span>, the detector size is <span class="math inline">\(\D A\)</span>, and the solid angle subtended by the baffle is <span class="math inline">\(\D \omega\)</span>. The average power collected per unit “effective area” per unit direction by the detector is then:</p>
+<p><span class="math display">\[
+\begin{align}
+    \frac{\D \Phi}{\D A \cos\theta \D \omega}.
+\end{align}
+\]</span></p>
+<p>The baffle does a good job of rejecting many directions that are outside <span class="math inline">\(\D \omega\)</span>, but unless it is infinitely long, the detector will still collect some photons traveling through directions outside <span class="math inline">\(\D \omega\)</span>. But as we reduce the detector size and the baffle size, the baffle becomes a very thin cylinder over a very small detector, which collects light from a very small area along a very small solid angle, visualized in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> (right) <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. In calculus terms, when we let the detector size and baffle’s solid angle approach 0, we obtain the quantity called <strong>radiance</strong>:</p>
+<p><span id="eq-radiance_2"><span class="math display">\[
+\begin{align}
+    L(p, \omega) = \lim_{\D \omega \rightarrow 0} \lim_{\D A \rightarrow 0} \frac{\D \Phi}{\D A \cos\theta \D \omega}
+    = \frac{\text{d}}{\text{d}\omega}\frac{\text{d}\Phi(p)}{\text{d}A \cos\theta} = \frac{\text{d}^2\Phi(p)}{\text{d}\omega\text{d}A \cos\theta}.
+\end{align}
+\tag{8.3}\]</span></span></p>
+<p><a href="#eq-radiance_2" class="quarto-xref">Equation&nbsp;<span>8.3</span></a> is the definition of radiance, and it can be rewritten to <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>8.4</span></a> given the definition of irradiance (see <a href="#eq-irradiance" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>).</p>
+<p><span id="eq-radiance_3"><span class="math display">\[
+\begin{align}
+    L(p, \omega) = \frac{\text{d}E(p)}{\text{d}\omega\cos\theta}.
+\end{align}
+\tag{8.4}\]</span></span></p>
+<p>Radiance is an intrinsic property of the radiation field, and the reason we have the <span class="math inline">\(\cos\theta\)</span> term in the definition is merely due to the way we have chosen to measure the property (using a detector that is <span class="math inline">\(\theta\)</span>-oriented). Radiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2}\cdot \text{sr})\)</span>, and <em>spectral</em> radiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2}\cdot \text{sr} \cdot \text{nm})\)</span>.</p>
+<p>Looking at the effective area in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>8.3</span></a>, if the irradiance at the infinitesimal area <span class="math inline">\(p\)</span> is <span class="math inline">\(\d E(p)\)</span>, the irradiance at the (infinitesimal) effective area (projected from <span class="math inline">\(\d A\)</span> along <span class="math inline">\(\omega\)</span>) is <span class="math inline">\(\frac{\d E(p)}{\cos\theta}\)</span>, which we denote <span class="math inline">\(\d E_\bot(p)\)</span>. Combining this with <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>8.4</span></a>, radiance <span class="math inline">\(L(p, \omega)\)</span> can also be defined as:</p>
+<p><span id="eq-radiance_4"><span class="math display">\[
+\begin{align}
+    L(p, \omega) = \frac{\text{d}E_\bot(p)}{\text{d}\omega}.
+\end{align}
+\tag{8.5}\]</span></span></p>
+<p><a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>8.5</span></a> and <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>8.4</span></a> each corresponds to a concrete way of measuring the radiance. <a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>8.5</span></a> places the detector perpendicular to the direction of light that we care to measure, and the detector used by <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>8.4</span></a> is <span class="math inline">\(\theta\)</span>-oriented with respect to the direction of interest. They give us an identical radiance result because radiance, again, is an inherent property of the radiation field invariant to how we measure it.</p>
+<p>Radiance is a density function: the density of power at a point along a direction. As with any density function, it is useful when it gets integrated to compute some other quantities. For instance, given the radiance <span class="math inline">\(L(p, \omega)\)</span>, the irradiance at <span class="math inline">\(p\)</span> is given by:</p>
+<p><span id="eq-int_radiance"><span class="math display">\[
+\begin{align}
+    E(p, \Omega) = \int^{\Omega}L(p, \omega)\cos\theta\text{d}\omega.
+\end{align}
+\tag{8.6}\]</span></span></p>
+<p>Here we write the irradiance as <span class="math inline">\(E(p, \Omega)\)</span> to explicitly signify that the irradiance depends not only on the specific position <span class="math inline">\(p\)</span> but also the solid angle <span class="math inline">\(\Omega\)</span> over which the lights are coming.</p>
+<p>Using the interpretation of radiance in <a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>8.5</span></a>, we can also give a more operational interpretation of <a href="#eq-int_radiance" class="quarto-xref">Equation&nbsp;<span>8.6</span></a>: we first calculate the infinitesimal irradiance <span class="math inline">\(\d E_\bot(p) = L(p, \omega)\do\)</span> made by lights at the direction <span class="math inline">\(\omega\)</span>, then “transfer” that to the infinitesimal irradiance at the detector surface through the <span class="math inline">\(\cos\theta\)</span> factor, and then repeat this for all the directions to accumulate the contributions from all directions.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-lamb" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">8.4</span> Lambert’s Cosine Law</h2>
+<p>A <strong>Lambertian emitter</strong> or an ideal <em>diffuse emitter</em> is a flux-emitting point whose emitted radiance is constant regardless of the outgoing direction. A related concept is a <strong>Lambertian scatterer</strong> or an ideal <em>diffuse surface</em>, which is a surface point where the scattered radiance is independent of the scattering direction.</p>
+<p>It might come as a surprise that the flux emitted by a Lambertian emitter through a fixed solid angle is different for different emission directions. Consider a setup where a Lambertian emitter has an infinitesimal area <span class="math inline">\(\d A\)</span>. The power emitted by <span class="math inline">\(\d A\)</span> toward its normal direction in an infinitesimal solid angle of <span class="math inline">\(\do\)</span> is <span class="math inline">\(\d\Phi_0 = L\do\d A\)</span>, where <span class="math inline">\(L\)</span> is the radiance. The power emitted toward an oblique direction <span class="math inline">\(\omega\)</span> through the same solid angle is <span class="math inline">\(\d\Phi_\theta = L \do \cos\theta \d A\)</span>.</p>
+<p>In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the <strong>radiant intensity</strong><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, denoted <span class="math inline">\(I\)</span>:</p>
+<p><span id="eq-intensity"><span class="math display">\[
+\begin{align}
+    I(\omega) = \frac{\d\Phi}{\do}.
+\end{align}
+\tag{8.7}\]</span></span></p>
+<p><span class="math inline">\(I\)</span> is a meaningful measure only for a point source (e.g., our infinitesimal Lambertian emitter here). We can see that for a Lambertian emitter, the radiant intensity decays by a factor of <span class="math inline">\(\cos\theta\)</span>: <span class="math inline">\(\frac{\d\Phi_\theta}{\d\omega} = \frac{\d\Phi_0}{\d\omega}\cos\theta\)</span>. This is usually called the <strong>Lambert’s cosine law</strong>, named after Johann Heinrich Lambert, from his Photometria <span class="citation" data-cites="lambert1760photometria">(<a href="references.html#ref-lambert1760photometria" role="doc-biblioref">Lambert 1760</a>)</span>. Similarly, if we have a Lambertian scatterer, its scattered radiant intensity will also decay by <span class="math inline">\(\cos\theta\)</span> as the polar angle <span class="math inline">\(\theta\)</span> of the viewing direction <span class="math inline">\(\omega\)</span> increases.</p>
+<div id="fig-intensity_vs_radiance_lobe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intensity_vs_radiance_lobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/intensity_vs_radiance_lobe_new.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intensity_vs_radiance_lobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: Comparison between the radiance distribution (constant w.r.t. viewing direction <span class="math inline">\(\omega\)</span>) and radiant intensity distribution (weakens by a factor of <span class="math inline">\(\cos\theta\)</span>) of a Lambertian emitter/scatterer.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-intensity_vs_radiance_lobe" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> compares the radiance distribution and radiant intensity distribution of a Lambertian emitter/scatterer. Both distributions are over the entire hemisphere, but we show only a cross section. The distributions are visualized as two lobes, and the distance of a point on the lobe to the origin is proportional to the value at that point. The radiance distribution is constant regardless of <span class="math inline">\(\omega\)</span> but the radiant intensity is proportional to <span class="math inline">\(\cos\theta\)</span>. This difference stems from the fact that intensity is defined with respect to the power at the detector/emission area (<span class="math inline">\(\d A\)</span>) while radiance is defined with respect to power at the effective area (<span class="math inline">\(\d A \cos\theta\)</span>).</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-cam" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-cam"><span class="header-section-number">8.5</span> The Measurement Equation</h2>
+<p>Given that we have the basic understanding of radiometry, now seems like a good time to show how radiometry is of fundamental importance to computer graphics and imaging. For simplicity, let’s just consider one single pixel with a setup illustrated in <a href="#fig-cam_measurement_setup" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>.</p>
+<div id="fig-cam_measurement_setup" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cam_measurement_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/cam_measurement_setup.svg" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cam_measurement_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: Geometric setting for the camera measurement equation. Calculating the pixel value requires integrating the energy of all the rays hitting the pixel area, which requires knowing the light field inside the camera, which, in turn, requires knowing the light field in the scene and how the camera optics transfer the external light field to the internal light field.
+</figcaption>
+</figure>
+</div>
+<p>Each pixel is very small, but it has a finite area, say <span class="math inline">\(A_p\)</span>. Each pixel is constantly being bombarded by lights that enter the aperture, which has an area <span class="math inline">\(V\)</span>. The raw pixel value is roughly proportional to the energy it receives during the exposure time<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. So using the basic radiometry, we can write the total energy received by a pixel during the exposure time <span class="math inline">\(T\)</span> as:</p>
+<p><span id="eq-cam"><span class="math display">\[
+\begin{align}
+    Q = \int^{T} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega) \cos\theta~\text{d}\omega~\text{d}p~\text{d}t,
+\end{align}
+\tag{8.8}\]</span></span></p>
+<p>where <span class="math inline">\(\Omega(p, V)\)</span> explicitly expresses that a solid angle is determined by the aperture <span class="math inline">\(V\)</span> and a point <span class="math inline">\(p\)</span> on the pixel surface. Of course this quantity changes with <span class="math inline">\(p\)</span>. We sometimes omit <span class="math inline">\(p\)</span> and <span class="math inline">\(V\)</span> when it is clear what <span class="math inline">\(\Omega\)</span> refers to, but here, since the solid angle changes with the dummy variable <span class="math inline">\(p\)</span> in the integral equation, we express it explicitly. <!-- %similar to Equ 6.65b in CIFA. --> In graphics literature, this equation is sometimes called the <strong>measurement equation</strong> of an image sensor <span class="citation" data-cites="kolb1995realistic reinhard2008color pharr2023physically">(<a href="references.html#ref-kolb1995realistic" role="doc-biblioref">Kolb, Mitchell, and Hanrahan 1995</a>; <a href="references.html#ref-reinhard2008color" role="doc-biblioref">Reinhard et al. 2008</a>, Chpt. 6.8.1; <a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 5.4)</span>.</p>
+<p>The inner integral in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>8.8</span></a> is expressed over the solid angle, which varies with <span class="math inline">\(p\)</span>. A more common, but equivalent, formulation of the measurement equation is to re-express the inner integral over the aperture area <span class="math inline">\(V\)</span>:</p>
+<p><span id="eq-cam_area"><span class="math display">\[
+\begin{align}
+    Q = \frac{1}{d^2} \int^{T} \int^{A_p} \int^{V} L(p, \omega) |\cos^4\theta|~\text{d}p'~\text{d}p~\text{d}t,
+\end{align}
+\tag{8.9}\]</span></span></p>
+<p>where <span class="math inline">\(d\)</span> is the distance between the aperture plane and the sensor plane, and <span class="math inline">\(p'\)</span> is a point on the aperture plane. The derivation is available in standard texts <span class="citation" data-cites="pharr2023physically">(<a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 5.4.1)</span> and is omitted here.</p>
+<p>The measurement equation is concerned with the radiance distribution inside a camera, but the only reason there is a radiance distribution inside the camera is because there is an external radiance distribution in the scene impinging upon the camera optics, which act as a transfer function that turns external radiance into internal radiance. The transfer function is determined by the material properties of the camera optics (e.g., lenses, filters, etc.), whose effects are nothing more than surface scattering and volume scattering, topics of the next two chapters.</p>
+<p>Using <a href="#fig-cam_measurement_setup" class="quarto-xref">Figure&nbsp;<span>8.5</span></a> as a concrete example, to know the radiance <span class="math inline">\(L(p, \omega)\)</span> inside the camera, we need to know <span class="math inline">\(L(p', \omega')\)</span>, the corresponding radiance in the scene and how the latter is transferred to the former. If the camera is an ideal pinhole, we have <span class="math inline">\(\omega = \omega'\)</span> and <span class="math inline">\(L(p, \omega) = L(p', \omega')\)</span> (ignoring diffraction). If the camera uses an ideal convex lens, the relationship between the two rays is governed by the Gauss lens equation (<a href="imaging-optics.html#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 11.3.1</span></a>) and, with some simplifications, <span class="math inline">\(L(p, \omega) = L(p', \omega')\)</span> still holds (<a href="imaging-optics.html#sec-chpt-imaging-optics-lens-rad" class="quarto-xref"><span>Section 11.3.7</span></a>). The transfer function is more complicated when as the camera optics become more complicated. Imaging we replace the lenses with a duck tape — how would the radiance be transferred?</p>
+<p>The measurement equation is important because it fundamentally allows us to, in theory, synthesize/render any image taken by any camera at any viewpoint — given that we know the radiance distribution of the scene. Using <a href="#fig-lf_setup" class="quarto-xref">Figure&nbsp;<span>8.6</span></a> as an example, let us simulate a new camera where the sensor is moved closer to the lens. To calculate the pixel value <span class="math inline">\(p_c\)</span> of this new camera imaging the scene, it requires nothing more than invoking the measurement equation <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>8.8</span></a> at <span class="math inline">\(p_c\)</span>, integrating over all the incident rays, which is a portion of the overall radiance distribution. This is why having access to the underlying radiance field allows us to synthesize new images.</p>
+<div id="fig-lf_setup" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_setup.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.6: The light field is described by the plenoptic function, which describes the radiance of any ray, i.e., the energy at any position, along any ray direction, at any wavelength, and at any time. In free space, the plenoptic function is invariant to traversal along the ray propagation direction (<span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> share the same radiance but not with <span class="math inline">\(P_3\)</span>). Having access to the entire light field allows us to synthesize any image taken by any camera (e.g., moving the sensor closer to the lens). A lens-based camera, however, is a poor device to capture the light field, since each pixel necessarily integrates many rays.
+</figcaption>
+</figure>
+</div>
+<p>Critically, observe that two of the rays that <span class="math inline">\(p_c\)</span> needs are already captured by <span class="math inline">\(p_a\)</span> and <span class="math inline">\(p_b\)</span> in the current camera. So it is only natural to ask: can we synthesize new images from images taken from the same scene? How do we systematically reason about this? Read on.</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-lf" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lf"><span class="header-section-number">8.6</span> Light Field and Radiance Field</h2>
+<p>There is a name for the distribution of the radiance in the space — it is called the <strong>light field</strong>, which refers to the complete set of all the possible radiances flowing through every possible direction. The light field is thus a function <span class="math inline">\(L(p, \omega, \lambda, t)\)</span>, describing the energy of a ray passing the position <span class="math inline">\(p\)</span>, along the direction <span class="math inline">\(\omega\)</span>, at time <span class="math inline">\(t\)</span> and wavelength <span class="math inline">\(\lambda\)</span>. This function is also called the <strong>plenoptic function</strong> <span class="citation" data-cites="bergen1991plenoptic gortler1996lumigraph levoy1996light">(<a href="references.html#ref-bergen1991plenoptic" role="doc-biblioref">Bergen and Adelson 1991</a>; <a href="references.html#ref-gortler1996lumigraph" role="doc-biblioref">Gortler et al. 1996</a>; <a href="references.html#ref-levoy1996light" role="doc-biblioref">Levoy and Hanrahan 1996</a>)</span>. <a href="#fig-lf_setup" class="quarto-xref">Figure&nbsp;<span>8.6</span></a> shows a tiny portion of the light field — six rays in fact; three inside the camera and three outside the camera.</p>
+<section id="sec-chpt-mat-basics-radiometry-lf-im" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lf-im"><span class="header-section-number">8.6.1</span> Light-Field Imaging</h3>
+<p>The field of <strong>light-field imaging</strong> is concerned with measuring the light field of a scene, which is a task impossible — we cannot possibly measure the radiance of every single ray. There are some simplifications we can make. For instance, we can assume that a ray’s energy does not change in free space during propagation, so the plenoptic function is invariant along the ray traversal direction; we can also assume that the light field is time-invariant during the period of interest. But still, the task of measuring the entire field is a daunting one.</p>
+<p>The next best thing is to sample the light field. A lens-based camera does a poor job of sampling the light field. The pixel <span class="math inline">\(p_a\)</span> integrates a bundle of rays, two of which are shown. Even assuming that the ray’s radiance remains unchanged as it passes through the lens, the inherent integration by the pixel (i.e., the measurement equation in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>8.8</span></a>) still means from the pixel value itself we could not decouple the radiance of the incident rays. Therefore, the ray that <span class="math inline">\(p_c\)</span> wants cannot be easily extracted from <span class="math inline">\(p_a\)</span>. Using an ideal pinhole helps, but pinhole imaging comes with its own limitations that make it infeasible in practice (<a href="imaging-optics.html#sec-chpt-imaging-optics-pinhole" class="quarto-xref"><span>Section 11.2</span></a>).</p>
+<div id="fig-lf_microlens_array" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_microlens_array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_microlens_array.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_microlens_array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.7: A pixel in a conventional camera (e.g., <span class="math inline">\(q\)</span>) integrates over a large portion of the light field. By placing a microlens array (here at where the sensor plane would have been in lieu of the microlens array), each pixel (e.g., <span class="math inline">\(p\)</span>) now integrates over a small portion of the light field.
+</figcaption>
+</figure>
+</div>
+<p>A vast literature exists in effective light-field sampling <span class="citation" data-cites="lam2015computational">(<a href="references.html#ref-lam2015computational" role="doc-biblioref">Lam 2015, sec. 3</a>)</span>. A good trade-off in practice is to insert a lenticular array or a microlens array between the main imaging lens and the sensor plane <span class="citation" data-cites="ng2006digital adelson1992single">(<a href="references.html#ref-ng2006digital" role="doc-biblioref">Ng 2006</a>; <a href="references.html#ref-adelson1992single" role="doc-biblioref">Adelson and Wang 1992</a>)</span>. The idea was first conceptualized by Gabriel Lippmann <span class="citation" data-cites="lippmann1908epreuves">(<a href="references.html#ref-lippmann1908epreuves" role="doc-biblioref">Lippmann 1908</a>)</span><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <a href="#fig-lf_microlens_array" class="quarto-xref">Figure&nbsp;<span>8.7</span></a> shows one such example. Without the microlens array, a pixel (e.g., <span class="math inline">\(q\)</span>) would integrate over all the rays that are subtended by the main lens, which is relatively large. Now we insert a microlens array and move the sensor plane a little farther back; each pixel (e.g., <span class="math inline">\(q\)</span>) now integrates over a much smaller portion of the light field (rays subtended by a microlens), providing a higher angular resolution in light-field measurement.</p>
+</section>
+<section id="light-field-rendering-and-radiance-field" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="light-field-rendering-and-radiance-field"><span class="header-section-number">8.6.2</span> Light-Field Rendering and Radiance Field</h3>
+<p>The main reason we want to measure the light field is so that we can render new images. <strong>Light-field rendering</strong> is concerned with rendering a new image at a novel perspective (or by a novel camera configuration) given a set of images from other perspectives/configurations. It is a form of <strong>image-based rendering</strong>. In this sense, many familiar tasks such as interpolating between video frames, panoramic photography, and (stereoscopic) 360<span class="math inline">\(^\circ\)</span> video rendering are all light-field rendering in disguise.</p>
+<p>Given that each image is a sample of a portion of the light field followed by a low-pass filter (i.e., the integration in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>8.8</span></a>), rendering an image at a new perspective is nothing more than estimating another sample of the light field. As with any signal resampling task, the ideal solution to light-field rendering is to first estimate the underlying light field from a set of samples and then re-sample the light field given the new perspective. Signal filtering is necessary for both signal reconstruction and anti-aliasing, and the name of the game is to design good filters that are practically useful and computationally tractable.</p>
+<p>Of course, modern image-based rendering, known under the name (neural) radiance-field rendering <span class="citation" data-cites="mildenhall2021nerf kerbl20233d">(<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">Mildenhall et al. 2021</a>; <a href="references.html#ref-kerbl20233d" role="doc-biblioref">Kerbl et al. 2023</a>)</span>, approaches the whole problem through machine learning and learns to reconstruct from massive amounts of data. To be precise, these methods do not reconstruct the light field; they reconstruct the radiance field.</p>
+<section id="radiance-field" class="level4">
+<h4 class="anchored" data-anchor-id="radiance-field">Radiance Field</h4>
+<p><strong>Radiance field</strong>, popularized by <span class="citation" data-cites="mildenhall2021nerf">Mildenhall et al. (<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">2021</a>)</span>, applies a simplification and an addition to a light field. A radiance field is described by a function <span class="math inline">\(R(p, \omega, r, g, b, \sigma)\)</span>, describing the <span class="math inline">\((r, g, b)\)</span> color and the density <span class="math inline">\(\sigma\)</span> of a ray passing through a position <span class="math inline">\(p\)</span> along the direction <span class="math inline">\(\omega\)</span>. Compare that with the plenoptic function, we can see that the radiance field function simplifies the the energy spectrum into just the tristimulus color values and assumes that the energy is time-invariant.</p>
+<p>Importantly, the radiance field incorporates a new quantity, density, that is absent in the light field. Density has nothing to do with the energy of a ray; rather, it is/models an intrinsic property of the material (at position <span class="math inline">\(p\)</span> along ray direction <span class="math inline">\(\omega\)</span>). Materials are important for imaging and rendering, because they change the light field of the scene — through surface scattering and volume scattering. After all, rendering is a process of simulating the light-matter interactions.</p>
+<p>In essence, a radiance field combines both a (simplified) light field, a property of the light, and a density field, a property of the materials. This simple extension from light to materials allows radiance-field methods to model (in fact, learn) material properties, which in turn enables more effective light-field rendering. Conventional light-field rendering, in contrast, does not attempt to decouple the light field from the material properties.</p>
+<p>Radiance-field methods learn, from offline captured images (hence image-based rendering), to predict the tristimulus color values and density of a given point along a given direction:</p>
+<p><span class="math display">\[
+f: (p, \omega) \mapsto r, g, b, \sigma.
+\]</span></p>
+<p>The function <span class="math inline">\(f\)</span> can be parameterized in many ways. Two of most popular parameterizations are to use either a neural network <span class="citation" data-cites="mildenhall2021nerf">(<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">Mildenhall et al. 2021</a>)</span> or a mixture of Gaussians <span class="citation" data-cites="kerbl20233d">(<a href="references.html#ref-kerbl20233d" role="doc-biblioref">Kerbl et al. 2023</a>)</span>. With <span class="math inline">\(f\)</span>, we can then synthesize/rendering any image — by co-opting the classic volume rendering. We will study density and radiance field in much greater detail in <a href="rendering-sss.html#sec-chpt-mat-vs-rte" class="quarto-xref"><span>Section 10.4</span></a>.</p>
+</section>
+</section>
+<section id="light-field-display" class="level3" data-number="8.6.3">
+<h3 data-number="8.6.3" class="anchored" data-anchor-id="light-field-display"><span class="header-section-number">8.6.3</span> Light-Field Display</h3>
+<p><strong>Light-field display</strong> is a 3D display technology that attempts to reproduce the light field of a scene <span class="citation" data-cites="jones2007rendering wetzstein2012tensor lanman2013near">(<a href="references.html#ref-jones2007rendering" role="doc-biblioref">Jones et al. 2007</a>; <a href="references.html#ref-wetzstein2012tensor" role="doc-biblioref">Wetzstein et al. 2012</a>; <a href="references.html#ref-lanman2013near" role="doc-biblioref">Lanman and Luebke 2013</a>)</span>. Reproducing the light field provides the depth information of a scene that is missing in conventional 2D displays and can, thus, accurately drive the accommodation of eye lens in immersive (AR/VR) environment <span class="citation" data-cites="wann1995natural hoffman2008vergence">(<a href="references.html#ref-wann1995natural" role="doc-biblioref">Wann, Rushton, and Mon-Williams 1995</a>; <a href="references.html#ref-hoffman2008vergence" role="doc-biblioref">Hoffman et al. 2008</a>)</span>. Other technologies include varifocal displays, multi-focal displays, and holographic displays.</p>
+<div id="fig-lf_disp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_disp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_disp.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_disp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.8: We first capture the light field (here using a pinhole array) and then reproduce the light field (by placing the displays on the other side of the pinhole array), offering depth cues.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-lf_disp" class="quarto-xref">Figure&nbsp;<span>8.8</span></a> shows a usual two-stage process of displaying a light-field. The first step is to capture the light field using some form of light-field imaging technique discussed in <a href="#sec-chpt-mat-basics-radiometry-lf-im" class="quarto-xref"><span>Section 8.6.1</span></a>; here we use a pinhole array placed in front of the sensor plane. Each pinhole covers a small group of the pixels on the sensor; the image captured by the group of pixels under each pinhole is called an <em>elemental image</em>. Once we have recorded the light field, we can then reproduce it. This is done by displaying the elemental images, each with a display placed on the other side of the pinhole array. Note that the relative positions of the display pixels are reversed from that of the the image pixels during light-field recording.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-pm" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">8.7</span> Photometric Quantities</h2>
+<p>Spectral radiant flux (power), irradiance, radiant intensity, and radiance are all radiometric quantities. They all have a <strong>photometric</strong> counterpart, which weighs the radiometric quantity by the luminous efficiency function (LEF). The LEF, as we have discussed in <a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a>, at a particular wavelength is inversely proportional to the radiometric quantity at each wavelength needed to produce the same level of perceptual brightness.</p>
+<p>For instance, given a spectral radiant flux <span class="math inline">\(\Phi(\lambda)\)</span>, the corresponding photometric counterpart is then:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi_v(\lambda) = K \Phi(\lambda) V(\lambda),
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\Phi_v(\lambda)\)</span> is the spectral <strong>luminous flux</strong>, <span class="math inline">\(V(\lambda)\)</span> is the LEF, and <span class="math inline">\(K\)</span> is a constant that, for historical reasons, takes the value of 683.002. The total luminous flux is then:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi_v = \int_\lambda K \Phi(\lambda) V(\lambda) \d \lambda.
+\end{align}
+\]</span></p>
+<p>Luminous flux has a unit of <strong>lumen</strong> (<span class="math inline">\(\text{lm}\)</span>), so K has a unit of <span class="math inline">\(\text{lm}/\text{W}\)</span>. We can also weigh the radiant power by the scotopic LEF, in which case <span class="math inline">\(\text{K} = 1700\)</span> (<span class="math inline">\(\text{lm}/\text{W}\)</span>).</p>
+<p>Other radiometric quantities can be similarly converted to the photometric counterparts. Specifically:</p>
+<ul>
+<li>the photometric counterpart of irradiance is <strong>illumination</strong>, which has a unit of <span class="math inline">\(\text{lx} = \text{lm}/\text{m}^2\)</span>, which is also called the <strong>lux</strong>;</li>
+<li>the photometric counterpart of radiance intensity is <strong>luminous intensity</strong>, which has a unit of <span class="math inline">\(\text{cd} = \text{lm}/\text{sr}\)</span>, which is called the <strong>candela</strong>;</li>
+<li>the photometric counterpart of radiance is <strong>luminance</strong>, which has a unit of <span class="math inline">\(\text{lm}/(\text{m}^2\text{sr}) = \text{cd}/(\text{m}^2)\)</span>, which is also called the <strong>nit</strong>.</li>
+</ul>
+<p>Sometimes radiometric vs.&nbsp;photometric quantities are also called the radiant vs.&nbsp;luminous quantities. The way to interpret the photometric quantities is that they take into account the spectral sensitivity of a particular photodetector, which in our case is the photoreceptors on the retina. But if we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different. We will study the spectral sensitivity of image sensors in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 12.5</span></a>.</p>
+<p>A <strong>radiometer</strong> measures the absolute radiometric quantities, whereas a <strong>photometer</strong> reports photometric quantities. An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-adelson1992single" class="csl-entry" role="listitem">
+Adelson, Edward H, and John YA Wang. 1992. <span>“Single Lens Stereo with a Plenoptic Camera.”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> 14 (2): 99–106.
+</div>
+<div id="ref-bergen1991plenoptic" class="csl-entry" role="listitem">
+Bergen, James R, and Edward H Adelson. 1991. <span>“The Plenoptic Function and the Elements of Early Vision.”</span> <em>Computational Models of Visual Processing</em> 1 (8): 3.
+</div>
+<div id="ref-bohren2006fundamentals" class="csl-entry" role="listitem">
+Bohren, Craig F, and Eugene E Clothiaux. 2006. <em>Fundamentals of Atmospheric Radiation: An Introduction with 400 Problems</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-dorsey2010digital" class="csl-entry" role="listitem">
+Dorsey, Julie, Holly Rushmeier, and François Sillion. 2010. <em>Digital Modeling of Material Appearance</em>. Elsevier.
+</div>
+<div id="ref-feynman1985qed" class="csl-entry" role="listitem">
+Feynman, R. 1985. <em>QED: The Strange Theory of Light and Matter by Richard Feynman</em>. Princeton University Press.
+</div>
+<div id="ref-gortler1996lumigraph" class="csl-entry" role="listitem">
+Gortler, Steven J, Radek Grzeszczuk, Richard Szeliski, and Michael F Cohen. 1996. <span>“The Lumigraph.”</span> In <em>ACM Transactions on Graphics (ToG)</em>, 43–54. ACM New York, NY, USA.
+</div>
+<div id="ref-hoffman2008vergence" class="csl-entry" role="listitem">
+Hoffman, David M, Ahna R Girshick, Kurt Akeley, and Martin S Banks. 2008. <span>“Vergence–Accommodation Conflicts Hinder Visual Performance and Cause Visual Fatigue.”</span> <em>Journal of Vision</em> 8 (3): 33–33.
+</div>
+<div id="ref-astronomer" class="csl-entry" role="listitem">
+Johannes Vermeer. 1668. <span>“<span class="nocase">The Astronomer; released into the public domain</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Johannes_Vermeer_-_The_Astronomer_-_1668.jpg" class="uri">https://en.wikipedia.org/wiki/File:Johannes_Vermeer_-_The_Astronomer_-_1668.jpg</a>.
+</div>
+<div id="ref-johnsen2012optics" class="csl-entry" role="listitem">
+Johnsen, Sönke. 2012. <em>The Optics of Life: A Biologist’s Guide to Light in Nature</em>. Princeton University Press.
+</div>
+<div id="ref-johnston2001color" class="csl-entry" role="listitem">
+Johnston-Feller, Ruth. 2001. <em>Color Science in the Examination of Museum Objects: Nondestructive Procedures</em>. Getty Publications.
+</div>
+<div id="ref-jones2007rendering" class="csl-entry" role="listitem">
+Jones, Andrew, Ian McDowall, Hideshi Yamada, Mark Bolas, and Paul Debevec. 2007. <span>“Rendering for an Interactive 360 Light Field Display.”</span> In <em>ACM SIGGRAPH 2007 Papers</em>, 40–es.
+</div>
+<div id="ref-kerbl20233d" class="csl-entry" role="listitem">
+Kerbl, Bernhard, Georgios Kopanas, Thomas Leimkühler, and George Drettakis. 2023. <span>“3d Gaussian Splatting for Real-Time Radiance Field Rendering.”</span> <em>ACM Trans. Graph.</em> 42 (4): 139–31.
+</div>
+<div id="ref-kolb1995realistic" class="csl-entry" role="listitem">
+Kolb, Craig, Don Mitchell, and Pat Hanrahan. 1995. <span>“A Realistic Camera Model for Computer Graphics.”</span> In <em>Proceedings of the 22nd Annual Conference on Computer Graphics and Interactive Techniques</em>, 317–24.
+</div>
+<div id="ref-lam2015computational" class="csl-entry" role="listitem">
+Lam, Edmund Y. 2015. <span>“Computational Photography with Plenoptic Camera and Light Field Capture: Tutorial.”</span> <em>Journal of the Optical Society of America A</em> 32 (11): 2021–32.
+</div>
+<div id="ref-lambert1760photometria" class="csl-entry" role="listitem">
+Lambert, Jean-Henri. 1760. <em>Photometria Sive de Mensura Et Gradibus Luminis, Colorum Et Umbrae</em>. Sumptibus viduae Eberhardi Klett, typis Christophori Petri Detleffsen.
+</div>
+<div id="ref-lanman2013near" class="csl-entry" role="listitem">
+Lanman, Douglas, and David Luebke. 2013. <span>“Near-Eye Light Field Displays.”</span> <em>ACM Transactions on Graphics (TOG)</em> 32 (6): 1–10.
+</div>
+<div id="ref-levoy1996light" class="csl-entry" role="listitem">
+Levoy, Marc, and Pat Hanrahan. 1996. <span>“Light Field Rendering.”</span> In <em>ACM Transactions on Graphics (ToG)</em>, 31–42. ACM New York, NY, USA.
+</div>
+<div id="ref-lippmann1908epreuves" class="csl-entry" role="listitem">
+Lippmann, Gabriel. 1908. <span>“Epreuves Reversibles Donnant La Sensation Du Relief.”</span> <em>J. Phys. Theor. Appl.</em> 7 (1): 821–25.
+</div>
+<div id="ref-mildenhall2021nerf" class="csl-entry" role="listitem">
+Mildenhall, Ben, Pratul P Srinivasan, Matthew Tancik, Jonathan T Barron, Ravi Ramamoorthi, and Ren Ng. 2021. <span>“Nerf: Representing Scenes as Neural Radiance Fields for View Synthesis.”</span> <em>Communications of the ACM</em> 65 (1): 99–106.
+</div>
+<div id="ref-ng2006digital" class="csl-entry" role="listitem">
+Ng, Ren. 2006. <span>“Digital Light Field Photography.”</span> PhD thesis, Stanford University.
+</div>
+<div id="ref-pharr2023physically" class="csl-entry" role="listitem">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2023. <em>Physically Based Rendering: From Theory to Implementation</em>. 4th ed. MIT Press.
+</div>
+<div id="ref-reinhard2008color" class="csl-entry" role="listitem">
+Reinhard, Erik, Erum Arif Khan, Ahmet Oguz Akyuz, and Garrett Johnson. 2008. <em>Color Imaging: Fundamentals and Applications</em>. CRC Press.
+</div>
+<div id="ref-wann1995natural" class="csl-entry" role="listitem">
+Wann, John P, Simon Rushton, and Mark Mon-Williams. 1995. <span>“Natural Problems for Stereoscopic Depth Perception in Virtual Environments.”</span> <em>Vision Research</em> 35 (19): 2731–36.
+</div>
+<div id="ref-wetzstein2012tensor" class="csl-entry" role="listitem">
+Wetzstein, Gordon, Douglas R Lanman, Matthew Waggener Hirsch, and Ramesh Raskar. 2012. <span>“Tensor Displays: Compressive Light Field Synthesis Using Multilayer Displays with Directional Backlighting.”</span>
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The electromagnetic theories do not explain everything in light-matter interactions. Famously, they do not explain how the interference pattern in the double-slit experiment still arises even if the photons are delivered sequentially.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>which results from a combination of water selectively absorbing medium-to-long wavelengths of light and increasing scattering of short wavelengths in the Rayleigh regime (<a href="rendering-sss.html#sec-chpt-mat-vs-sca-models" class="quarto-xref"><span>Section 10.3.4</span></a>).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It is just a visualization convention, but visualizing <span class="math inline">\(\do\)</span> as a cylinder rather than a cone makes it easier to imagine what <span class="math inline">\(\d A \cos\theta\)</span> is like.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Or simply, the “intensity”, which is an extremely overloaded term, so we will be verbose and use “radiant intensity” when we mean it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Assuming there is no noise and there is no quantization error in converting analog signals to digital signals.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Lippmann did not get to implement the idea. He won the Nobel Prize in Physics in 1908 for inventing, for the first time, a method for color photography.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./rendering.html" class="pagination-link" aria-label="Rendering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rendering</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./rendering-surface.html" class="pagination-link" aria-label="Surface Scattering">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

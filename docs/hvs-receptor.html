@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Photoreceptors – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./hvs-color.html" rel="next">
+<link href="./hvs-intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-receptor.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-hvs-receptor-counting" id="toc-sec-chpt-hvs-receptor-counting" class="nav-link active" data-scroll-target="#sec-chpt-hvs-receptor-counting"><span class="header-section-number">3.1</span> Counting Photons: Principle of Univariance</a></li>
+  <li><a href="#sec-chpt-hvs-receptor-absorb" id="toc-sec-chpt-hvs-receptor-absorb" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-absorb"><span class="header-section-number">3.2</span> Spectral Absorbance, Absorptance, and Sensitivity</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-receptor-absorb-msp" id="toc-sec-chpt-hvs-receptor-absorb-msp" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-absorb-msp"><span class="header-section-number">3.2.1</span> Absorbance Spectra from Microspectrophotometry</a></li>
+  <li><a href="#sec-chpt-hvs-receptor-suction" id="toc-sec-chpt-hvs-receptor-suction" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-suction"><span class="header-section-number">3.2.2</span> Relative Absorptance Spectra from Electrical Responses</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-hvs-receptor-fundamentals" id="toc-sec-chpt-hvs-receptor-fundamentals" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-fundamentals"><span class="header-section-number">3.3</span> Cone Fundamentals: Cornea-Referred Spectral Sensitivities</a>
+  <ul class="collapse">
+  <li><a href="#cone-fundamentals-from-physiology" id="toc-cone-fundamentals-from-physiology" class="nav-link" data-scroll-target="#cone-fundamentals-from-physiology"><span class="header-section-number">3.3.1</span> Cone Fundamentals From Physiology</a></li>
+  <li><a href="#cone-fundamentals-from-psychophysics" id="toc-cone-fundamentals-from-psychophysics" class="nav-link" data-scroll-target="#cone-fundamentals-from-psychophysics"><span class="header-section-number">3.3.2</span> Cone Fundamentals From Psychophysics</a></li>
+  <li><a href="#physiological-and-psychophysical-sensitivities-match-well" id="toc-physiological-and-psychophysical-sensitivities-match-well" class="nav-link" data-scroll-target="#physiological-and-psychophysical-sensitivities-match-well"><span class="header-section-number">3.3.3</span> Physiological and Psychophysical Sensitivities Match Well</a></li>
+  </ul></li>
+  <li><a href="#sec-hvs-receptor-cascade" id="toc-sec-hvs-receptor-cascade" class="nav-link" data-scroll-target="#sec-hvs-receptor-cascade"><span class="header-section-number">3.4</span> Beyond Counting Photons: Phototransduction and Recovery</a>
+  <ul class="collapse">
+  <li><a href="#phototransduction-cascade" id="toc-phototransduction-cascade" class="nav-link" data-scroll-target="#phototransduction-cascade"><span class="header-section-number">3.4.1</span> Phototransduction Cascade</a></li>
+  <li><a href="#sec-chpt-hvs-receptor-counter" id="toc-sec-chpt-hvs-receptor-counter" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-counter"><span class="header-section-number">3.4.2</span> Deactivation of Phototransduction and Pigment Regeneration</a></li>
+  </ul></li>
+  <li><a href="#absolute-sensitivity-and-saturation-in-rods-vs.-cones" id="toc-absolute-sensitivity-and-saturation-in-rods-vs.-cones" class="nav-link" data-scroll-target="#absolute-sensitivity-and-saturation-in-rods-vs.-cones"><span class="header-section-number">3.5</span> Absolute Sensitivity and Saturation in Rods vs.&nbsp;Cones</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-hvs-receptor-snr" id="toc-sec-chpt-hvs-receptor-snr" class="nav-link" data-scroll-target="#sec-chpt-hvs-receptor-snr"><span class="header-section-number">3.5.1</span> Rods Have a Much Higher Signal-to-Noise Ratio Than Cones</a></li>
+  <li><a href="#rods-saturate-much-more-easily-than-cones" id="toc-rods-saturate-much-more-easily-than-cones" class="nav-link" data-scroll-target="#rods-saturate-much-more-easily-than-cones"><span class="header-section-number">3.5.2</span> Rods Saturate Much More Easily Than Cones</a></li>
+  </ul></li>
+  <li><a href="#sec-hvs-receptor-intensity" id="toc-sec-hvs-receptor-intensity" class="nav-link" data-scroll-target="#sec-hvs-receptor-intensity"><span class="header-section-number">3.6</span> Response vs.&nbsp;Light Intensity</a>
+  <ul class="collapse">
+  <li><a href="#sec-hvs-receptor-intensity-peak" id="toc-sec-hvs-receptor-intensity-peak" class="nav-link" data-scroll-target="#sec-hvs-receptor-intensity-peak"><span class="header-section-number">3.6.1</span> Peak Response is Not Linearly Proportional to Light Intensity</a></li>
+  <li><a href="#why-and-how-do-photoreceptors-desensitize" id="toc-why-and-how-do-photoreceptors-desensitize" class="nav-link" data-scroll-target="#why-and-how-do-photoreceptors-desensitize"><span class="header-section-number">3.6.2</span> Why and How Do Photoreceptors Desensitize?</a></li>
+  <li><a href="#sec-hvs-receptor-intensity-model" id="toc-sec-hvs-receptor-intensity-model" class="nav-link" data-scroll-target="#sec-hvs-receptor-intensity-model"><span class="header-section-number">3.6.3</span> Linear Range</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hvs.html">Human Visual System</a></li><li class="breadcrumb-item"><a href="./hvs-receptor.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-hvs-receptor" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In this chapter we will review how photoreceptors work. We will start from the highest level of abstraction, where photoreceptors can be seen as photon counting devices. The photon counting capability is fundamentally a result of the photoreceptors’ ability to absorb photons (selectively) over wavelengths. We will then lower the level of abstraction, reviewing in detail how a photon is absorbed in a photoreceptor, a.k.a., the phototransduction process and its recovery. Understanding photoreceptors at this low level, in turn, allows us to reason about key high-level behaviors of vision, such as sensitivity and saturation.</p>
+<section id="sec-chpt-hvs-receptor-counting" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-counting"><span class="header-section-number">3.1</span> Counting Photons: Principle of Univariance</h2>
+<div id="fig-photoreceptors" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-photoreceptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/photoreceptors_new.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-photoreceptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Anatomical structures of rods and cones. The outer segment contains photon-absorbing photopigments, which of which has the capability of absorbing a photon and being excited/isomerized after absorption. Adapted from <span class="citation" data-cites="cone_cell">Ivo Kruusamägi (<a href="references.html#ref-cone_cell" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="rod_cell">Kosigrim (<a href="references.html#ref-rod_cell" role="doc-biblioref">2007</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Anatomically, a photoreceptor has two parts: an inner segment and an outer segment. Photons enter from the inner segment, which for the most part can be thought of as a waveguide that funnels the photons to the outer segment. The outer segment contains the photon-absorbing pigments. This is illustrated in <a href="#fig-photoreceptors" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>.</p>
+<p>Conceptually, we can think of each photoreceptor as a bucket that collects photons. There are millions of buckets sitting on the retina, taking a shower of photons. Many photons entering the eye will not hit any bucket: they are absorbed before they reach the bucket (e.g., by the lens). Any photon that does hit the bucket has a certain <em>probability</em> of being absorbed. The absorption probability varies with the photoreceptor type and the photon’s wavelength.</p>
+<p>Fundamentally, a photoreceptor can absorb photons because it contains light-sensitive, photon-absorbing pigments, each of which is able to absorb one photon. Each rod photoreceptor has tens of millions of such pigments <span class="citation" data-cites="milo2015cell nathans1992rhodopsin">(<a href="references.html#ref-milo2015cell" role="doc-biblioref">Milo and Phillips 2015, p. 142–47</a>; <a href="references.html#ref-nathans1992rhodopsin" role="doc-biblioref">Nathans 1992</a>)</span>. Why is a photon’s absorption probability not 100% once it enters a photoreceptor? For one, a photon might not meet a photopigment as it travels through the photoreceptor before the exit. Even if a photon hits a pigment, its absorption is still probabilistic, as absorption is dictated fundamentally by quantum mechanics.</p>
+<p>Once a photon is absorbed, it has a certain probability of “exciting” or “isomerizing” the pigment. A pigment <strong>excitation</strong> or <strong>isomerization</strong> generates a certain level of electrical signal — in the form of a current or voltage change across the cell membrane of the photoreceptor. The excitation probability once a photon is absorbed is called the <strong>quantum efficiency</strong> of the pigment. Quantum efficiency is about two-thirds in the visible spectrum and is not wavelength sensitive <span class="citation" data-cites="dartnall1972photo kropf1982photo fu2010phototransduction">(<a href="references.html#ref-dartnall1972photo" role="doc-biblioref">H. J. A. Dartnall 1972</a>; <a href="references.html#ref-kropf1982photo" role="doc-biblioref">Kropf 1982</a>; <a href="references.html#ref-fu2010phototransduction" role="doc-biblioref">Fu 2010</a>)</span>. A pigment excitation is also called pigment <strong>bleach</strong>, since the pigment after excitation is no longer responsive to light as if it is bleached.</p>
+<p>The process of initiating an electrical response upon a photon absorption is called phototransduction. We will study this process in detail shortly in <a href="#sec-hvs-receptor-cascade" class="quarto-xref"><span>Section 3.4</span></a>. For now, it is important to know that for a given photoreceptor class, the electrical response caused by a photon absorption is constant regardless of the photon’s wavelength. This is called the <strong>Principle of Univariance</strong> <span class="citation" data-cites="rushton1972visual rushton1972review naka1966s">(<a href="references.html#ref-rushton1972visual" role="doc-biblioref">W. A. Rushton 1972</a>; <a href="references.html#ref-rushton1972review" role="doc-biblioref">W. H. Rushton 1972</a>; <a href="references.html#ref-naka1966s" role="doc-biblioref">Naka and Rushton 1966</a>)</span>: each photon that generates an electrical response has the same effect as any other photon that does so. In other words, the only effect that wavelength has is to impact the probability a photon gets absorbed; after absorption, the wavelength information is lost.</p>
+<p>A crucial implication of this principle is that any two lights that are equally absorbed/excited will be seen as the same light by the human vision. For the purpose of comparing two lights, we can think of each bucket as having a counter; every time a photon is absorbed and excites a pigment, the counter gets incremented by 1. If two lights lead to the same counter value, they are perceptually the same. Crucially, if a bucket’s counter is, say, twice as high as another’s, it does <em>not</em> mean the electrical responses produced by the first photoreceptor are twice as high as that of the second. We will see why this is the case shortly.</p>
+</section>
+<section id="sec-chpt-hvs-receptor-absorb" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-absorb"><span class="header-section-number">3.2</span> Spectral Absorbance, Absorptance, and Sensitivity</h2>
+<p>To understand vision in everyday scenarios, what we care about is not the probability of how a single photon is absorbed and excites a pigment, but the collective behavior of a flux of photons that enter our eyes. Conveniently, when we have a large population of photons, the probability that an individual photon causes an excitation translates to the <em>percentage</em> of incident photons that are absorbed and/or cause excitations. In fact, the percentage of absorption is the quantity that we can directly measure.</p>
+<p>There are in general two ways to estimate the absorption rate of a flux of photons. The direct way of measurement is using a technique called microspectrophotometry (MSP). The indirect method is to measure the electrical responses using, e.g., a suction electrode, and then estimate the absorption. The indirect method gives us only relative absorption across wavelengths, while the MSP approach gives us absolute absorption.</p>
+<section id="sec-chpt-hvs-receptor-absorb-msp" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-absorb-msp"><span class="header-section-number">3.2.1</span> Absorbance Spectra from Microspectrophotometry</h3>
+<p>The idea of MSP is to shine a beam of light through a photoreceptor and then measure, at the other side, the percentage of photons that are transmitted, i.e., unabsorbed <span class="citation" data-cites="bowmaker1984microspectrophotometry">(<a href="references.html#ref-bowmaker1984microspectrophotometry" role="doc-biblioref">J. Bowmaker 1984</a>)</span>. Ignoring back-scattering <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, photon absorption by photopigments in a photoreceptor can be modeled using the Beer-Lambert law. The <strong>transmittance</strong> at wavelength <span class="math inline">\(\lambda\)</span> is defined as the ratio between the amount of transmitted photons <span class="math inline">\(I_d(\lambda)\)</span> and the amount of total incident photons <span class="math inline">\(I_0(\lambda)\)</span>:</p>
+<p><span class="math display">\[\begin{align}
+    T(\lambda) = \frac{I_d(\lambda)}{I_0(\lambda)} = e^{-\epsilon(\lambda) c l},
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(\epsilon(\lambda)\)</span> is called the absorption coefficient and is wavelength dependent, <span class="math inline">\(c\)</span> is the concentration (the number of pigments per unit volume), and <span class="math inline">\(l\)</span> is the optical length, the length through which a photon has to travel. Both <span class="math inline">\(c\)</span> and <span class="math inline">\(l\)</span> are inherent properties of a photoreceptor and are not dependent on photon wavelength.</p>
+<p><strong>Absorptance</strong> <span class="math inline">\(a(\lambda)\)</span>, the percentage of absorption at <span class="math inline">\(\lambda\)</span>, is naturally <span class="math inline">\(1-T(\lambda)\)</span>. <strong>Absorbance</strong> <span class="math inline">\(A(\lambda)\)</span> (also called the <strong>optical density</strong>), whose spelling is subtly and annoyingly different from that of absorptance, is defined as:</p>
+<p><span id="eq-absorbance"><span class="math display">\[
+    A(\lambda) = -\ln(T(\lambda)) = \epsilon(\lambda) c l.
+\tag{3.1}\]</span></span></p>
+<p>Therefore, absorptance <span class="math inline">\(a(\lambda)\)</span> and absorbance <span class="math inline">\(A(\lambda)\)</span> are related by:</p>
+<p><span id="eq-absorptance"><span class="math display">\[
+    a(\lambda) = 1 - e^{-A(\lambda)}.
+\tag{3.2}\]</span></span></p>
+<div id="fig-receptor_sensitivity_2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-receptor_sensitivity_2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/receptor_sensitivity.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-receptor_sensitivity_2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Left: Log-scaled spectral sensitivities of the cones (L, M, S) in a macaque measured using the suction electrode method; adapted from <span class="citation" data-cites="baylor1987spectral">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987, fig. 3A</a>)</span>. Right: Absorbance spectra of the three cones (L, M, S) and the rod (R) in a human, measured using MSP; adapted from <span class="citation" data-cites="dartnall1983human">H. J. Dartnall, Bowmaker, and Mollon (<a href="references.html#ref-dartnall1983human" role="doc-biblioref">1983, fig. 2</a>)</span>. The spectra in both cases are normalized to peak at 1/100.
+</figcaption>
+</figure>
+</div>
+<p>We would repeat this experiment over a frequency range and obtain the axial absorbance at each sampled frequency. The resulting plot is usually called the <strong>absorbance spectrum</strong>. One such example is shown in the right panel in <a href="#fig-receptor_sensitivity_2" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>, measured by <span class="citation" data-cites="dartnall1983human">H. J. Dartnall, Bowmaker, and Mollon (<a href="references.html#ref-dartnall1983human" role="doc-biblioref">1983</a>)</span> on humans. Much such data has been obtained in the literature, the earliest of which is perhaps by George Wald and his colleagues <span class="citation" data-cites="marks1964visual brown1964visual">(<a href="references.html#ref-marks1964visual" role="doc-biblioref">Marks, Dobelle, and MacNichol Jr 1964</a>; <a href="references.html#ref-brown1964visual" role="doc-biblioref">Brown and Wald 1964</a>)</span> who identified three distinct absorbance spectra in cone-mediated vision and, thus, provided direct physiological evidence for the existence of three classes of cones. The three cone types are generally referred to as the <strong>L</strong>, <strong>M</strong>, and <strong>S</strong> cones, since their absorbances peak at, relatively, long, medium, and short wavelengths.</p>
+<p>Decades before the work by Wald et al., Ragnar Granit measured the spectral sensitivities of the retinal ganglion cells <span class="citation" data-cites="granit1941retinal granit1943physiological granit1945electrophysiological granit1945colour">(<a href="references.html#ref-granit1941retinal" role="doc-biblioref">Granit 1941</a>, <a href="references.html#ref-granit1943physiological" role="doc-biblioref">1943</a>, <a href="references.html#ref-granit1945electrophysiological" role="doc-biblioref">1945b</a>, <a href="references.html#ref-granit1945colour" role="doc-biblioref">1945a</a>)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Granit showed the existence of two classes of RGCs: 1) one that has a broader spectral sensitivity whose peak shifts to shorter wavelengths from photopic vision to scotopic vision, and 2) one whose spectral sensitivities are narrower and fall generally into three main groups. The former is the physiological version of the Purkinje shift that we will discuss in <a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a>, and provides direct evidence for the convergence of the rod and the cone vision pathways (<a href="hvs-intro.html#sec-chpt-hvs-percept-retina-rodcone-pathways" class="quarto-xref"><span>Section 2.4.1.4</span></a> and <a href="hvs-intro.html#fig-retinal_nn" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>). The latter is the first direct evidence of the existence of three dinstinct wavelength encoding mechanisms (albeit not at the photoreceptor level), essential for the trichromatic color vision. <!-- %see dowling1967nobel and granit1968development (nobel lecture) too.
+%granit1945electrophysiological is a summary of his own work. Sec. 5 is quite interesting (based on work in granit1945colour), as it shows a mechanism to isolate the spectra of his modulators. originally he by chance could find RGCs that have narrow spectra (modulators), but he wanted to have a more scalable way to get modulator spectra and test the hypothesis that denominators are formed by modulators. in modern terms, his modulators are definitely not just single cones, but the technique in Sec. 5 is interesting: adapting colored lights would universally reduce the sensitivity of rod's LEF and any discrependacy must be because of cones (or the resulting modulators) whose sensitivities are not suppressed by the adapting light, so they can they derive the modulator spectra.
+% in this scheme, blue modulators could give non-zero M curves under R and G adapting light, and R modulators could give such spectra under B/G adapting lights, and so on. Fig. 9 averages all the modulator spectra by adapting light, and Fig. 10 averages modulator spectra by modulator type (based on the pre-established preferential peak of each type).
+% his view is perhaps incorrect in modern terms. Fig. 10 in granit1945colour shows his guess of the "fundamental sensation curves", which are cone fundamentals.  he later then says "fundamental sensation curves cannot be shown to exist" and "They are theoretical postulates which can merely be satisfied by adding modulators within the three preferential regions".  he shows in fig. 10 the R fundamental curve is the sum of M_y and M_r modulators.
+% basically, since he observed more than 3 modulators, "On the basis of the known modulators it would be necessary to develop a 6- or 7-colour theory, based on one red and one yellow modulator, two or three green modulators and two blue ones", he concludes that each cone fundamental must be sumed from individual modulators. in modern terms, we have only three cone classes, but they converge/combine in different ways at the RGCs, which is what he measured. --></p>
+<section id="normalization" class="level4">
+<h4 class="anchored" data-anchor-id="normalization">Normalization</h4>
+<p>Quite often, the absorbance spectrum is normalized to peak at unity, as is the case in <a href="#fig-receptor_sensitivity_2" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> (right). According to <a href="rendering-sss.html#eq-absorbance" class="quarto-xref">Equation&nbsp;<span>10.9</span></a>, normalizing absorbance across different wavelengths is equivalent to normalizing <span class="math inline">\(\epsilon\)</span> across wavelengths, since <span class="math inline">\(c\)</span> and <span class="math inline">\(l\)</span> are not wavelength specific, whereas <span class="math inline">\(\epsilon\)</span> is. <span class="math inline">\(c\)</span> and <span class="math inline">\(l\)</span> might vary across species and across individuals and might differ between different illumination methods (see below), but <span class="math inline">\(\epsilon\)</span>, which is fundamental to the photopigment, does not. Therefore, the normalized absorbance spectrum tells us something fundamental about the wavelength sensitivity of the photopigments.</p>
+<p>Perhaps a subtlety but quite confusing when perusing the literature, the maximum absolute absorbance across all wavelengths (i.e., the peak of an absorbance spectrum) is usually simply called the optical density; “peak optical density” would have been more accurate, as optical density is wavelength specific. Using the peak optical density and the normalized absorbance spectrum, we can reconstruct the absolute absorbance spectrum; from there we can get the absolute absorptance spectrum.</p>
+<p>While not shown here, the peak absorbance between rods and cones is not that different. The peak absorbance of rods is about 0.475, and the value is about 0.375 for foveal S cones and 0.525 for foveal L/M cones <span class="citation" data-cites="bowmaker1978visual bowmaker1980visual">(<a href="references.html#ref-bowmaker1978visual" role="doc-biblioref">J. Bowmaker et al. 1978</a>; <a href="references.html#ref-bowmaker1980visual" role="doc-biblioref">J. K. Bowmaker and Dartnall 1980</a>)</span>. The large sensitivity difference between rod vision and cone vision is not primarily attributed to the difference in their ability to absorb photons. <!-- %http://www.cvrl.org/database/text/optdens/optdens.htm --></p>
+</section>
+<section id="correcting-for-transverse-illuminations" class="level4">
+<h4 class="anchored" data-anchor-id="correcting-for-transverse-illuminations">Correcting for Transverse Illuminations</h4>
+<p>There is one more complication. With MSP, we illuminate a photoreceptor <em>transversely</em>, i.e., the light passes from one side of the photoreceptor to the other side. In reality, when a photon enters a photoreceptor, it travels <em>axially</em> from the inner segment through the outer segment. The main difference between these two scenarios is the optical length that a photon has to travel. A photoreceptor is tall and skinny, so its width is much smaller than its length, about 2.5 <span class="math inline">\(\mu\text{m}\)</span> wide and 35 <span class="math inline">\(\mu\text{m}\)</span> long for a fovea L/M cone <span class="citation" data-cites="polyak1941retina">(<a href="references.html#ref-polyak1941retina" role="doc-biblioref">Polyak 1941</a>)</span>. <!-- %http://www.cvrl.org/database/text/outseg/length.htm
+%bowmaker1980visual cites polyak 1941 "25 um for parafoveal S cone"
+%bowmaker1980microspectrophotometric cites polyak 1941 "35 um for foveal cones and 25 um for extra-foveal rods," --></p>
+<p>Therefore, we need to first calculate the absorbance per unit length, called the <strong>specific absorbance</strong>, and then scale the specific absorbance by the axial length of the photoreceptor to obtain the axial absorbance, from which we can estimate the axial absorptance using <a href="rendering-sss.html#eq-absorbance" class="quarto-xref">Equation&nbsp;<span>10.9</span></a>. This is shown below (omitting <span class="math inline">\(\lambda\)</span> for simplicity):</p>
+<p><span id="eq-axial"><span class="math display">\[
+\begin{align}
+    A_{\text{transverse}} &amp;= -\ln(p_{\text{transverse}}) = \epsilon c l_{\text{transverse}} \\
+    A_{\text{specific}} &amp;= \frac{A_{\text{transverse}}}{l_{\text{transverse}}} = \epsilon c \\
+    A_{\text{axial}} &amp;= A_{\text{specific}} l_{\text{axial}} \\
+    T_{\text{axial}} &amp;= e^{-A_{\text{axial}}}
+\end{align}
+\tag{3.3}\]</span></span></p>
+</section>
+</section>
+<section id="sec-chpt-hvs-receptor-suction" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-suction"><span class="header-section-number">3.2.2</span> Relative Absorptance Spectra from Electrical Responses</h3>
+<p>Another method is by measuring the photoreceptor’s electrical responses across different wavelengths using techniques such as suction electrode, which records the electrical responses of an isolated photoreceptor sucked into a micropipette. Spectra so estimated are usually called the spectral sensitivity of the photoreceptors in the literature, but as we will see, they are equivalent to the <em>normalized</em> absorptance spectra.</p>
+<div id="fig-spectral_sensitivity_from_photocurrents" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spectral_sensitivity_from_photocurrents-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/spectral_sensitivity_from_photocurrents.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spectral_sensitivity_from_photocurrents-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Each curve shows the electrical response (in photovoltage; <span class="math inline">\(y\)</span>-axis) as a function of light intensity (<span class="math inline">\(x\)</span>-axis) at a given wavelength. To estimate the relative sensitivity/absorptance between two wavelengths, we laterally shift one curve so that it coincides with the other. Given the Principle of Univariance, the amount of shift is proportional to the relative absorptance. From <span class="citation" data-cites="baylor1973detection">Baylor and Hodgkin (<a href="references.html#ref-baylor1973detection" role="doc-biblioref">1973, fig. 8</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-spectral_sensitivity_from_photocurrents" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> illustrates the idea, where <span class="citation" data-cites="baylor1973detection">Baylor and Hodgkin (<a href="references.html#ref-baylor1973detection" role="doc-biblioref">1973</a>)</span> measured the peak electrical response of a turtle cone (in photovoltage; <span class="math inline">\(y\)</span>-axis) as a function of light intensity (<span class="math inline">\(x\)</span>-axis) at two wavelengths: 644 <span class="math inline">\(\text{nm}\)</span> and 539 <span class="math inline">\(\text{nm}\)</span>. We see that the curves are almost parallel to each other: we can laterally move the 644 <span class="math inline">\(\text{nm}\)</span> curve to coincide with that of 539 <span class="math inline">\(\text{nm}\)</span>. In this case, we have to shift the former by 1.27 log units.</p>
+<p>Think for a second what this means. When we increase the intensity at 644 <span class="math inline">\(\text{nm}\)</span> by a factor of <span class="math inline">\(10^{1.27}\)</span>, the sheer number of photons absorbed at 644 nm is increased by a factor of <span class="math inline">\(10^{1.27}\)</span>, too. That means without scaling the number of incident photons at 644 <span class="math inline">\(\text{nm}\)</span> is <span class="math inline">\(10^{-1.27}\)</span> (about 5.4%) of that at 539 <span class="math inline">\(\text{nm}\)</span>. Even with just 5.4% of incident photons, 644 <span class="math inline">\(\text{nm}\)</span> light is able to produce the same level of electrical response, i.e., cause the same amount of photon absorption (given the Principle of Univariance), as the light at 539 <span class="math inline">\(\text{nm}\)</span>. Therefore, we can say the absorption rate (absorptance) at 644 <span class="math inline">\(\text{nm}\)</span> is <span class="math inline">\(10^{1.27}\)</span> higher than of that at 539 <span class="math inline">\(\text{nm}\)</span>.</p>
+<p>We repeat this experiment across other wavelengths and obtain the relative spectral sensitivity/absorptance spectra. The left panel in <a href="#fig-receptor_sensitivity_2" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows one such example obtained by <span class="citation" data-cites="baylor1987spectral">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987</a>)</span> on macaque cones. Critically, the absorptance so obtained is relative: we do not know the absolute absorptance at either wavelength. The <span class="math inline">\(y\)</span>-axis is necessarily normalized to peak at unity. Similar data have been collected on humans as well <span class="citation" data-cites="schnapf1987spectral kraft1993visual">(<a href="references.html#ref-schnapf1987spectral" role="doc-biblioref">Schnapf, Kraft, and Baylor 1987</a>; <a href="references.html#ref-kraft1993visual" role="doc-biblioref">Kraft, Schneeweis, and Schnapf 1993</a>)</span>.</p>
+<section id="normalized-spectra-from-the-two-methods-match-well" class="level4">
+<h4 class="anchored" data-anchor-id="normalized-spectra-from-the-two-methods-match-well">Normalized Spectra From the Two Methods Match Well</h4>
+<p>It is worth noting that the suction electrode method also uses transversely illuminated lights. Since the absorptance obtained here is relative, we cannot easily use the method in to obtain the absorptance spectra for the axial illumination.</p>
+<p>Here is the catch. Numerically, <span class="math inline">\(1 - e^{-A} \approx A\)</span> when <span class="math inline">\(A\)</span> is small. When we illuminate a photoreceptor transversely, the optical length <span class="math inline">\(l\)</span> is the photoreceptor width, which is short, which means <span class="math inline">\(A\)</span> is small <span class="citation" data-cites="wyszecki1982color">(<a href="references.html#ref-wyszecki1982color" role="doc-biblioref">Wyszecki and Stiles 1982, p. 588, 594</a>)</span>. Therefore, the transverse absorbance and transverse absorptance are approximately equal. So the normalized absorptance spectrum given by the suction electrode method <em>is</em> approximately the normalized absorbance spectrum, as is shown experimentally <span class="citation" data-cites="schnapf1987spectral stockman2000spectral">(<a href="references.html#ref-schnapf1987spectral" role="doc-biblioref">Schnapf, Kraft, and Baylor 1987</a>; <a href="references.html#ref-stockman2000spectral" role="doc-biblioref">Stockman and Sharpe 2000, fig. 11</a>)</span>.</p>
+<p>The normalized absorbance spectra are still not sufficient, since to use the method in <a href="#eq-axial" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> we need to know the absolute absorbance spectra. People usually have to resort to another data source that provides absolute peak absorbance or fit the data against, e.g., psychophysical measurements that provide some form of absolute measures <span class="citation" data-cites="kraft1993visual baylor1984photocurrent baylor1987spectral">(<a href="references.html#ref-kraft1993visual" role="doc-biblioref">Kraft, Schneeweis, and Schnapf 1993</a>; <a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>, <a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987</a>)</span>.</p>
+</section>
+</section>
+</section>
+<section id="sec-chpt-hvs-receptor-fundamentals" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-fundamentals"><span class="header-section-number">3.3</span> Cone Fundamentals: Cornea-Referred Spectral Sensitivities</h2>
+<p>Our discussions so far have focused on absorption by the photoreceptors, but for a flux of photons arriving at the cornea about to enter our eye, they are also absorbed even before reaching the photoreceptors. Accounting for these <strong>pre-receptoral</strong> filters is important to model human vision. Spectral sensitivities that account for these pre-receptoral filters are what we call the <em>cornea-referred</em> spectral sensitivities.</p>
+<section id="cone-fundamentals-from-physiology" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="cone-fundamentals-from-physiology"><span class="header-section-number">3.3.1</span> Cone Fundamentals From Physiology</h3>
+<p>There are two such pre-receptoral filters: the ocular media (<a href="hvs-intro.html#sec-chpt-hvs-percept-absorb" class="quarto-xref"><span>Section 2.2.2</span></a>) and the macular pigments, which are located at a small area in the fovea. Macular pigments absorb light presumably to counter some of the aberrations from the ocular media and to protect the retina from light damage <span class="citation" data-cites="snodderly1984macular">(<a href="references.html#ref-snodderly1984macular" role="doc-biblioref">Snodderly et al. 1984</a>)</span>. Both ocular media and macular pigments absorb light selectively over the spectrum, just like photoreceptors do.</p>
+<p>We can model <span class="math inline">\(E(\lambda)\)</span>, the fraction of photons arriving at the cornea that are absorbed by the photoreceptors:</p>
+<p><span class="math display">\[\begin{align}
+    E(\lambda) = l(\lambda) m(\lambda) a(\lambda)
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(a(\lambda)\)</span> represents the photoreceptor absorptance spectrum, <span class="math inline">\(l(\lambda)\)</span> and <span class="math inline">\(m(\lambda)\)</span> represent ocular and macular transmittance spectrum, respectively, i.e., the fraction of photons at <span class="math inline">\(\lambda\)</span> <em>unabsorbed</em> by the ocular media (e.g., lens) <span class="citation" data-cites="boettner1962transmission norren1974spectral">(<a href="references.html#ref-boettner1962transmission" role="doc-biblioref">Boettner and Wolter 1962</a>; <a href="references.html#ref-norren1974spectral" role="doc-biblioref">Norren and Vos 1974</a>)</span> and the macular pigments. <a href="#fig-cone_fundamentals" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> illustrates this process.</p>
+<div id="fig-cone_fundamentals" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cone_fundamentals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/cone_fundamentals_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone_fundamentals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Cornea-referred spectral sensitivity function measures the percentage of photons arriving at the cornea (about to enter the eye) that are absorbed by each photoreceptor type at each wavelength. The cone versions of this are called the cone fundamentals and are visualized in the bottom right. The sensitivity metric relates to the rate of pigment excitation only by a constant scaling factor (i.e., the photoreceptor quantum efficiency, which is about two-thirds). It is a product of ocular transmittance (top left), macular transmittance (top right), and photoreceptor absorptance (bottom left). The macular transmittance and lens transmittance are from <span class="citation" data-cites="stockman1999spectral">Stockman, Sharpe, and Fach (<a href="references.html#ref-stockman1999spectral" role="doc-biblioref">1999</a>)</span>; the cone absorptance spectra are estimated from <span class="citation" data-cites="stockman2000spectral">Stockman and Sharpe (<a href="references.html#ref-stockman2000spectral" role="doc-biblioref">2000</a>)</span> (different from the <span class="citation" data-cites="dartnall1983human">H. J. Dartnall, Bowmaker, and Mollon (<a href="references.html#ref-dartnall1983human" role="doc-biblioref">1983</a>)</span> data used in <a href="hvs-intro.html#fig-receptor_sensitivity" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>; see the methodology in <span class="citation" data-cites="absorption_spectra_cvrl">CVRL (<a href="references.html#ref-absorption_spectra_cvrl" role="doc-biblioref">n.d.</a>)</span>).
+</figcaption>
+</figure>
+</div>
+<!-- %the probability a here is a constant; one might think that absorption becomes harder as a photon travels through the cell, but we are calculating the total absorption *given* a cell length. so the probability here already considers the cell length. See https://web.stanford.edu/~wandell/data/papers/2022_ISETBio_VisualEncoding.pdf#page=19.65
+% what this means is that the amount of excitation (and absorption) is proportional to light power. so if we want to increase absorption we linearly increase power. this however does not mean response is linearly wrt power/excitation/absorption; in fact we know that r/rmax is not linear. so what the spectral sensitivity function really means the not the response per unit power but the amount of excitation per unit power. -->
+<p>We call <span class="math inline">\(E(\lambda)\)</span> the cornea-referred spectral sensitivity function, since it is calculated with respect to the incident lights at the cornea surface. When <span class="math inline">\(a(\lambda)\)</span> is replaced by the absorptance spectra of the three classes of cones, the resulting sensitivity functions are more commonly referred to as the <strong>cone fundamentals</strong>.</p>
+<p>We can make a few general observations about the cone fundamentals. First, the cone sensitivity drops to 0 beyond the 380 <span class="math inline">\(\text{nm}\)</span> and 780 <span class="math inline">\(\text{nm}\)</span> range, a range we usually call the visible spectrum, since there will be no pigment excitation beyond that range: lights beyond that range are invisible. Second, S cones are generally the least sensitive of the three cone types, but it is not because of the photoreceptors but because of the pre-receptoral filters, which absorb mostly low-wavelength lights. Finally, the sensitivity peaks of the L cones and M cones are very similar (off by about 20 <span class="math inline">\(\text{nm}\)</span>), but both are rather far from the peak of the S cones. We have discussed the reason behind this when discussing <a href="hvs-intro.html#fig-receptor_sensitivity" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>.</p>
+</section>
+<section id="cone-fundamentals-from-psychophysics" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="cone-fundamentals-from-psychophysics"><span class="header-section-number">3.3.2</span> Cone Fundamentals From Psychophysics</h3>
+<p>The spectral sensitivities discussed above are measured physiologically. We can also measure such functions through psychophysics using the increment-threshold method. A typical set up is one where there is a uniform background illumination and a spot light superimposed at the center of the background. We ask a participant to adjust a knob to control the intensity of the spot light so that it is just noticeable from the background. The sensitivity is then defined as the reciprocal of the threshold intensity. We repeat this experiment for each sampled wavelength across the spectrum to obtain a sensitivity curve. This method is first used in the pioneering work done by W.S. Stiles <span class="citation" data-cites="stiles1939directional stiles1959color stiles1964appendix">(<a href="references.html#ref-stiles1939directional" role="doc-biblioref">Stiles 1939</a>, <a href="references.html#ref-stiles1959color" role="doc-biblioref">1959</a>, <a href="references.html#ref-stiles1964appendix" role="doc-biblioref">1964</a>)</span>, and is adopted in virtually all later work <span class="citation" data-cites="wald1964receptors smith1975spectral stockman1999spectral stockman2000spectral">(<a href="references.html#ref-wald1964receptors" role="doc-biblioref">Wald 1964</a>; <a href="references.html#ref-smith1975spectral" role="doc-biblioref">Smith and Pokorny 1975</a>; <a href="references.html#ref-stockman1999spectral" role="doc-biblioref">Stockman, Sharpe, and Fach 1999</a>; <a href="references.html#ref-stockman2000spectral" role="doc-biblioref">Stockman and Sharpe 2000</a>)</span>.</p>
+<p>A curious question is how we can separate the sensitivity of different photoreceptor types, given that the spectral sensitivities of the four photoreceptor types overlap. There are two methods to isolate rods from cones. We can either use very dim lights, to which cone responses are too small to contribute to vision <span class="citation" data-cites="crawford1949scotopic">(<a href="references.html#ref-crawford1949scotopic" role="doc-biblioref">Crawford 1949</a>)</span>, or we could measure from people with rod monochromacy — individuals who have only rods. When measuring cone sensitivities, we will use intense lights that almost completely saturate rods.</p>
+<p>Isolating the three cone types from each other is generally challenging with individuals with normal vision. W.S. Stiles’ initial work <span class="citation" data-cites="stiles1939directional stiles1959color">(<a href="references.html#ref-stiles1939directional" role="doc-biblioref">Stiles 1939</a>, <a href="references.html#ref-stiles1959color" role="doc-biblioref">1959</a>)</span> designed special conditions of background illumination to suppress the sensitivity of two unwanted cone types while sparing the one under study. Modern studies usually turn to color-deficient individuals who lack one or two cone types. Isolating S cones is done by measuring from S-cone monochromats <span class="citation" data-cites="stockman1999spectral">(<a href="references.html#ref-stockman1999spectral" role="doc-biblioref">Stockman, Sharpe, and Fach 1999</a>)</span>. Isolating L and M cones is challenging because individuals with only L or M cones are very rare and the spectral sensitivities of the L and M cones overlap substantially. Instead, a common approach is to resort to Protanopes and Deuteranopes; the former has only M and S cones, and the latter has only L and S cones. To isolate M (L) cones from the S cones, we measure from Protanopes (Deuteranopes) using lights that have high spatial and/or temporal frequencies, to which S cones are known to be insensitive <span class="citation" data-cites="stockman2000spectral smith1975spectral">(<a href="references.html#ref-stockman2000spectral" role="doc-biblioref">Stockman and Sharpe 2000</a>; <a href="references.html#ref-smith1975spectral" role="doc-biblioref">Smith and Pokorny 1975</a>)</span>.</p>
+</section>
+<section id="physiological-and-psychophysical-sensitivities-match-well" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="physiological-and-psychophysical-sensitivities-match-well"><span class="header-section-number">3.3.3</span> Physiological and Psychophysical Sensitivities Match Well</h3>
+<p>We can then compare the spectral sensitivity data from physiology and from psychophysics. This is shown in <a href="#fig-spectral_sensitivity_comparison" class="quarto-xref">Figure&nbsp;<span>3.5</span></a>. See the figure caption for details. Overall it is fair to say that the two sets of data match well.</p>
+<div id="fig-spectral_sensitivity_comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spectral_sensitivity_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/spectral_sensitivity_comparison.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spectral_sensitivity_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Left: comparison of the physiologically-obtained rod spectral sensitivity from macaques (open circles) and the rod spectral sensitivity from human psychophysics (filled circles); adapted from <span class="citation" data-cites="baylor1987photoreceptor">Baylor (<a href="references.html#ref-baylor1987photoreceptor" role="doc-biblioref">1987, fig. 14</a>)</span>, which is after <span class="citation" data-cites="baylor1984photocurrent">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">1984, fig. 5</a>)</span>. Right: comparison of the spectral sensitivity of the three cone types between physiology data (open circles; from macaques) and psychophysics data (curves; from humans); adapted from <span class="citation" data-cites="baylor1987spectral">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987, fig. 5</a>)</span>. The human psychophysics data is from <span class="citation" data-cites="stiles1959color">Stiles (<a href="references.html#ref-stiles1959color" role="doc-biblioref">1959</a>)</span> for cones and from <span class="citation" data-cites="crawford1949scotopic">Crawford (<a href="references.html#ref-crawford1949scotopic" role="doc-biblioref">1949</a>)</span> for rods.
+</figcaption>
+</figure>
+</div>
+<p>Think about what this comparison means. What we measure in psychophysics is the threshold intensity (at each wavelength) needed to evoke a criterion level of human <em>behavioral response</em> (i.e., just noticeability). The threshold intensity in the physiological measurement represents how much light is needed (at each wavelength) to cause the same amount of pigment absorption and, by the Principle of Univariance, the amount of <em>electrical responses</em>. The fact that the two sets of data match suggests that the amount of electrical response we need to evoke a just-noticeable level of perception is a constant regardless of wavelength, a perhaps unsurprising inference.</p>
+<p>Interestingly, the physiological data in <a href="#fig-spectral_sensitivity_comparison" class="quarto-xref">Figure&nbsp;<span>3.5</span></a> is obtained from macaques, and the psychophysical data is from humans. The fact that they match well suggests the similarities of the visual system among primates — we have come a long way since the monkey days, but our photoreceptors have not changed much. Other studies obtaining the physiological sensitivity data from humans show similarly good matches with human psychophysical data <span class="citation" data-cites="crescitelli1953human kraft1993visual bowmaker1980visual mollon1982colour">(<a href="references.html#ref-crescitelli1953human" role="doc-biblioref">Crescitelli and Dartnall 1953</a>; <a href="references.html#ref-kraft1993visual" role="doc-biblioref">Kraft, Schneeweis, and Schnapf 1993</a>; <a href="references.html#ref-bowmaker1980visual" role="doc-biblioref">J. K. Bowmaker and Dartnall 1980</a>; <a href="references.html#ref-mollon1982colour" role="doc-biblioref">Mollon 1982</a>)</span>.</p>
+</section>
+</section>
+<section id="sec-hvs-receptor-cascade" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-hvs-receptor-cascade"><span class="header-section-number">3.4</span> Beyond Counting Photons: Phototransduction and Recovery</h2>
+<p>The discussion so far about (spectral) sensitivity has focused on the ability of different types of photoreceptors to absorb (“count”) photons at different wavelengths, and by that measure, rods and cones are not that different: their peak absorbances differ by less than 10% (<a href="#sec-chpt-hvs-receptor-absorb-msp" class="quarto-xref"><span>Section 3.2.1</span></a>). So then why do we say rod vision is more sensitive than cone vision? What we have ignored is the absolute <em>strength</em> of the electrical response once photons are absorbed. To understand the absolute response strength, we need to understand the cellular and molecular processes underlying how electrical responses are actually produced from pigment excitations. These processes constitute the so-called <strong>phototransduction cascade</strong> and are the focus of this section. George Wald is largely credited for elucidating these processes <span class="citation" data-cites="wald1933vitamin wald1968molecular">(<a href="references.html#ref-wald1933vitamin" role="doc-biblioref">Wald 1933</a>, <a href="references.html#ref-wald1968molecular" role="doc-biblioref">1968</a>)</span>.</p>
+<section id="phototransduction-cascade" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="phototransduction-cascade"><span class="header-section-number">3.4.1</span> Phototransduction Cascade</h3>
+<p>The phototransduction cascades in rods and (different types of) cones are exactly the same. The differences appear to be quantitative rather than qualitative and are dictated by the genes expressing the isoforms of the molecules participating in phototransduction <span class="citation" data-cites="ingram2016rods yau1994phototransduction">(<a href="references.html#ref-ingram2016rods" role="doc-biblioref">Ingram, Sampath, and Fain 2016</a>; <a href="references.html#ref-yau1994phototransduction" role="doc-biblioref">Yau 1994</a>)</span>. We will mainly use rods as an example to drive the discussion here.</p>
+<section id="photoreceptor-has-a-stable-transmembrane-current-in-dark" class="level4">
+<h4 class="anchored" data-anchor-id="photoreceptor-has-a-stable-transmembrane-current-in-dark">Photoreceptor Has a Stable Transmembrane Current in Dark</h4>
+<p>A visual pigment in a rod is a special molecule called a rhodopsin, which has two parts: a long strand of protein called opsin (which is insensitive to light) and the light-sensitive <strong><em>11-cis</em> retinal</strong>, a form of Vitamin A as discovered by <span class="citation" data-cites="wald1933vitamin">Wald (<a href="references.html#ref-wald1933vitamin" role="doc-biblioref">1933</a>)</span>, that is attached to the opsin and acts as a chromophore. <span class="citation" data-cites="hofmann2023rhodopsin">Hofmann and Lamb (<a href="references.html#ref-hofmann2023rhodopsin" role="doc-biblioref">2023</a>)</span> presents a comprehensive survey of what is known about rhodopsin to date.</p>
+<div id="fig-dark_current_photoreceptor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dark_current_photoreceptor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/dark_current_photoreceptor.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dark_current_photoreceptor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: cGMP-gated ion channels keep a transmembrane current of about -34 pA for each photoreceptor in the dark. The current is called the dark current, and its negative sign indicates that the direction of the current is inward). Adapted from <span class="citation" data-cites="rodieck1998first">Rodieck (<a href="references.html#ref-rodieck1998first" role="doc-biblioref">1998, p. 172</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>In the dark, there is a stable current of -34 pA that flows <em>into</em> the outer segment called the <strong>dark current</strong>. By convention, inward current is defined as negative. This is illustrated in <a href="#fig-dark_current_photoreceptor" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>. The dark current is a result of a particular kind of cation-selective ion channel that is permeable to both Na<sup>+</sup> and Ca<sup>2+</sup> flowing into the outer segment. Critically, these channels are ligand-gated channel — gated by cyclic guanosine monophosphate (cGMP) molecules <span class="citation" data-cites="fesenko1985induction yau1989cyclic">(<a href="references.html#ref-fesenko1985induction" role="doc-biblioref">Fesenko, Kolesnikov, and Lyubarsky 1985</a>; <a href="references.html#ref-yau1989cyclic" role="doc-biblioref">Yau and Baylor 1989</a>)</span>. Think of cGMPs as the guards of the channels; on average, each channel needs three cGMPs to remain open <span class="citation" data-cites="rodieck1998first">(<a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 169</a>)</span>. In a rod outer segment in the dark, there is an ample amount (3-4 micromoles) of cGMPs, which bind to a large amount of channels and keep them open.</p>
+<p>As a result of the dark current, the membrane potential of a photoreceptor in the dark is about -35 mV. If you are familiar with basic neuroscience, you would notice that the photoreceptor in the dark is depolarized, since the membrane potential is higher than that of the resting potential of a typical neuron. The depolarization is exactly caused by the inward flow of cations through the cGMP-gated channels.</p>
+</section>
+<section id="closing-ion-channels-produces-electrical-responses" class="level4">
+<h4 class="anchored" data-anchor-id="closing-ion-channels-produces-electrical-responses">Closing Ion Channels Produces Electrical Responses</h4>
+<p>Once a photon is absorbed and, with a two-thirds chance, excites a pigment (dictated by quantum efficiency, as discussed in <a href="#sec-chpt-hvs-receptor-counting" class="quarto-xref"><span>Section 3.1</span></a>), the <em>11-cis</em> retinal of the pigment changes to its isomer called <strong><em>all-trans</em> retinal</strong> (which will later be separated from the pigment). This is why a pigment excitation is often called a <strong>photoisomerization</strong>. This all takes place remarkably fast: the absorption takes about 3 fs and the photoisomerization takes about 200 fs <span class="citation" data-cites="gruhl2023ultrafast rodieck1998first">(<a href="references.html#ref-gruhl2023ultrafast" role="doc-biblioref">Gruhl et al. 2023</a>; <a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 162</a>)</span>.</p>
+<div id="fig-phototransduction_steps" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-phototransduction_steps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/phototransduction_steps.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phototransduction_steps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7: Steps involved in phototransduction. A single excited rhodopsin pigment can close about 2% of the cGMP-gated ion channels, introducing a photocurrent (change in the transmembrane current) of about 0.7 pA; photocurrent is always positive, whereas the actual transmembrane current is always negative. Adapted from <span class="citation" data-cites="rodieck1998first">Rodieck (<a href="references.html#ref-rodieck1998first" role="doc-biblioref">1998, p. 166–72</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The isomerization changes the conformation of a rhodopsin pigment, which becomes “activated”: it diffuses randomly and activates a transducin (a form of G protein) whenever they meet. This is illustrated by step ① in <a href="#fig-phototransduction_steps" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>. On average, an activated pigment activates about 700-800 transducins <span class="citation" data-cites="purves2017neurosciences rodieck1998first">(<a href="references.html#ref-purves2017neurosciences" role="doc-biblioref">Purves et al. 2017, p. 243</a>; <a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 170</a>)</span>. Each activated G protein then meets and binds to a molecule called “cGMP-specific phosphodiesterase” (PDE), activating the PDE. This is step ② in <a href="#fig-phototransduction_steps" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>. Each activated PDE has the ability to catalyze the hydrolysis of several dozen cGMPs~, reducing the cGMP concentrations. This is step ③ in <a href="#fig-phototransduction_steps" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>.</p>
+<p>We know that the ion channels that induce dark current are gated by cGMPs. A reduction in cGMP concentration will close some of these channels, <em>reducing</em> the dark current and <em>increasing</em> the membrane potential (i.e., the photoreceptor hyperpolarizes). This membrane current/potential change <em>is</em> the electrical response of photon absorptions and <em>is</em> the signal that will be delivered to the rest of the visual system to eventually give rise to vision.</p>
+<!-- Figure 5b in \cite{rieke1998single} is a good figure to reproduce here. -->
+<p>At the peak of this transduction process, a single activated rhodopsin in a rod can reduce the number of cGMPs by about 1,400, which translates to about 2% closure of the cGMP-gated channels <span class="citation" data-cites="rodieck1998first">(<a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 170</a>)</span>. Since each cGMP-gated channel carries the same amount of current, this means the total membrane current is reduced by about 2%. This is step ④ in <a href="#fig-phototransduction_steps" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>. In the literature, the <em>change</em> of membrane current and voltage potential is usually termed <strong>photocurrent</strong> and <strong>photovoltage</strong>, respectively. Since the change in the membrane current is positive and the change in the membrane voltage is negative, the photocurrent is positive and the photovoltage is negative. The actual transmembrane current and voltage are always negative. Some electrophysiological techniques measure the total membrane current/voltage, while others measure the photocurrent/photovoltage. Be careful of what quantity is being reported when perusing the literature.</p>
+</section>
+</section>
+<section id="sec-chpt-hvs-receptor-counter" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-counter"><span class="header-section-number">3.4.2</span> Deactivation of Phototransduction and Pigment Regeneration</h3>
+<p>If phototransduction continues without any hindrance, eventually 1) all pigments will be bleached (isomerized), and 2) all the ion channels will be open. If so, the photoreceptor and, ultimately, our visual system will not be able to respond to further lights: additional photons cannot be absorbed, and even if they are absorbed and excite pigments, there are no ion channels to close, and so no electrical response will be produced; at that point, our visual system <em>saturates</em>.</p>
+<p>In order for our visual system to continue to respond to lights, two things must take place. First, there must be mechanisms to terminate the phototransduction and re-open the ion channels <span class="citation" data-cites="burns2005beyond burns2001activation">(<a href="references.html#ref-burns2005beyond" role="doc-biblioref">Burns and Arshavsky 2005</a>; <a href="references.html#ref-burns2001activation" role="doc-biblioref">Burns and Baylor 2001</a>)</span>. Second, new pigments must be continuously regenerated. This is the job of the <strong>retinoid cycle</strong> or the <strong>visual cycle</strong>.</p>
+<section id="phototransductions-are-continuously-being-deactivated" class="level4">
+<h4 class="anchored" data-anchor-id="phototransductions-are-continuously-being-deactivated">Phototransductions are Continuously Being Deactivated</h4>
+<div id="fig-phototransduction_kinetics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-phototransduction_kinetics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/phototransduction_kinetics.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phototransduction_kinetics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: There are activities constantly at work to deactivate the phototransduction. This can be seen by observing the response kinetics to a flash light (left) and to a step light (right). Without the deactivation activities, the responses to the flash light would not have been eliminated, and the responses to the step light would not have reached an equilibrium. Left: macaque rods; adapted from <span class="citation" data-cites="baylor1984photocurrent">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">1984, fig. 1</a>)</span>; Right: macaque M cones; adapted from <span class="citation" data-cites="schnapf1990visual">Schnapf et al. (<a href="references.html#ref-schnapf1990visual" role="doc-biblioref">1990, fig. 7A</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>There are activities <em>constantly</em> at work attempting to terminate the phototransduction. This can be seen by observing the response kinetics of a photoreceptor to light. The left panel in <a href="#fig-phototransduction_kinetics" class="quarto-xref">Figure&nbsp;<span>3.8</span></a> shows the photocurrent kinetics of macaque rods in response to a flash light <span class="citation" data-cites="baylor1984photocurrent">(<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>)</span>; the right panel shows the photocurrent kinetics of macaque M cones when presented with a step light, i.e., a constant background illumination <span class="citation" data-cites="schnapf1990visual">(<a href="references.html#ref-schnapf1990visual" role="doc-biblioref">Schnapf et al. 1990</a>)</span>. Without the deactivation activities, the responses to the flash light would not have been eliminated after the flash light was removed, and the responses to the step light would not have reached an equilibrium.</p>
+<p>For the phototransduction cascade to terminate, there are mechanisms to deactivate every step in the transduction: activated rhodopsins must be deactivated so that they cannot activate more G proteins, activated G proteins must come off the PDE so that the PDE cannot hydrolyze more cGMPs, the cGMPs must be replenished, and the cGMP-gated ion channels must reopen. Every step must be deactivated; for instance, it is not sufficient to just deactivate the pigments: that just means the inactivated pigments will not activate more G proteins, but existing G proteins that are still activated will continue activating PDEs and the rest of the phototransduction.</p>
+<div id="fig-pigment_regeneration" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pigment_regeneration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/pigment_regeneration.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pigment_regeneration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.9: Steps involved in pigment deactivation and regeneration. An activated pigment is first deactivated, at which point the <em>11-cis</em> retinal falls off the opsin and is transported to the RPE to be re-synthesized back to <em>all-trans</em> retinal. Top: adapted from <span class="citation" data-cites="goldstein2009sensation">Goldstein (<a href="references.html#ref-goldstein2009sensation" role="doc-biblioref">2009, fig. 3.20</a>)</span>; Bottom right: from <span class="citation" data-cites="rodieck1998first">Rodieck (<a href="references.html#ref-rodieck1998first" role="doc-biblioref">1998, p. 511</a>)</span>; R* denotes activated pigments, RK denotes rhodopsin kinase, and A denotes arrestin.
+</figcaption>
+</figure>
+</div>
+<p>The deactivation also involves a set of biochemical reactions that we will not detail here, but just to give you a flavor, here is how the pigments are deactivated, and the process is illustrated in <a href="#fig-pigment_regeneration" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>. An enzyme, rhodopsin kinase (RK), binds to and phosphorylates an activated pigment. Another protein called arrestin (A) then binds to phosphorylated pigment, which inhibits the pigment’s ability to activate G proteins, essentially deactivating the pigment.</p>
+</section>
+<section id="deactivation-is-accelerated-by-negative-feedbacks" class="level4">
+<h4 class="anchored" data-anchor-id="deactivation-is-accelerated-by-negative-feedbacks">Deactivation is Accelerated by Negative Feedbacks</h4>
+<p>Interestingly, some of the deactivation steps are <em>accelerated</em> by <em>negative feedback</em> mechanisms mediated by Ca<sup>2+</sup> concentration. One such mechanism is shown in <a href="#fig-deactivation_negative_feedback" class="quarto-xref">Figure&nbsp;<span>3.10</span></a>. Let’s briefly take a look at this, not only because it is a classical example of the dynamics common in visual neuroscience (and many dynamical systems) but also because we will come back to this negative feedback when we discuss light adaptation later in the class.</p>
+<div id="fig-deactivation_negative_feedback" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deactivation_negative_feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/deactivation_negative_feedback.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deactivation_negative_feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.10: Left: the deactivation is accelerated by the negative feedback from Ca<sup>2+</sup>. Right: the kinetics of macaque L cones; the negative feedback is so strong in cones that the response kinetics have undershoots; from <span class="citation" data-cites="baylor1987photoreceptor">Baylor (<a href="references.html#ref-baylor1987photoreceptor" role="doc-biblioref">1987, fig. 11</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The closing of cGMP-gated channels from phototransduction reduces the inward flows of Ca<sup>2+</sup> and Na<sup>+</sup> to the outer segment. Importantly, Ca<sup>2+</sup> inhibits guanylate cyclase (GC), which inherently re-synthesizes cGMPs. As the Ca<sup>2+</sup> level reduces, the cGMP re-synthesis rate increases, which replenishes cGMPs and re-opens ion channels. That is, phototransduction initially reduces the cGMP concentration, and the very reduction of concentration serves to replenish the cGMPs — the feedback is negative. Without this negative feedback, the response still would have stabilized. For instance, soon after we move the flash light the cGMP concentration will stop falling while the GC-induced resynthesis is steadily going on. Eventually, the cGMP concentration will be restored to the original level <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The negative feedback simply accelerates this process.</p>
+<p>The strength of the negative feedback is much stronger in cones than in rods <span class="citation" data-cites="yau2009phototransduction burns2001activation">(<a href="references.html#ref-yau2009phototransduction" role="doc-biblioref">Yau and Hardie 2009</a>; <a href="references.html#ref-burns2001activation" role="doc-biblioref">Burns and Baylor 2001</a>)</span>. The stronger negative feedback is the reason why cone responses recover much faster than do rods: compare the kinetics of macaque rods under flash lights of varying intensities in <a href="#fig-phototransduction_kinetics" class="quarto-xref">Figure&nbsp;<span>3.8</span></a> (left) and the macaque L cone kinetics under the same set of lights in <a href="#fig-deactivation_negative_feedback" class="quarto-xref">Figure&nbsp;<span>3.10</span></a> (right), and pay attention to the timescale on the <span class="math inline">\(x\)</span>-axis. In cones, the negative feedback is so strong that there is actually a temporary over-provision of cGMPs during the deactivation phase, leading to an undershoot in the current (right panel in <a href="#fig-deactivation_negative_feedback" class="quarto-xref">Figure&nbsp;<span>3.10</span></a>).</p>
+<p>The negative feedback through Ca<sup>2+</sup> concentration also accelerates other steps in deactivation, including accelerating pigment deactivation (although with a much less potent effect than that on the GC <span class="citation" data-cites="nikonov2000role pugh1999molecular">(<a href="references.html#ref-nikonov2000role" role="doc-biblioref">Nikonov, Lamb, and Pugh Jr 2000</a>; <a href="references.html#ref-pugh1999molecular" role="doc-biblioref">Pugh Jr, Nikonov, and Lamb 1999</a>)</span>) and increasing the sensitivity of cGMP-gated channels to cGMPs (so that the channels can be open even at lower cGMP levels) <span class="citation" data-cites="hsu1993modulation">(<a href="references.html#ref-hsu1993modulation" role="doc-biblioref">Hsu and Molday 1993</a>)</span>.</p>
+</section>
+<section id="pigments-are-continuously-being-regenerated" class="level4">
+<h4 class="anchored" data-anchor-id="pigments-are-continuously-being-regenerated">Pigments are Continuously Being Regenerated</h4>
+<p>Deactivating phototransduction is not enough; it reopens ion channels and replenishes all the materials involved in phototransduction — except the pigments themselves. Pigments must somehow be restored so that they are available for phototransduction again, and this is the job of the retinoid cycle. An activated pigment roams about randomly and gets deactivated when it meets rhodopsin kinase and arrestin. When an activated pigment is deactivated, the <em>all-trans</em> retinal falls off the pigment. This is shown in the top panel in <a href="#fig-pigment_regeneration" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>. The <em>all-trans</em> retinals then leave the photoreceptor and are transported to the Retinal Pigment Epithelium (RPE), which is a layer of special skin cells just outside the retina and is where <em>all-trans</em> retinals are converted back to <em>11-cis</em> retinals, which are then transported back to the outer segment, recombining with the opsin portion of the pigment, at which point the pigment is reconstituted to its original form and is sensitive to photons again. This is shown in the bottom panel in <a href="#fig-pigment_regeneration" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>.</p>
+<div id="fig-pigment_regeneration_kinetics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pigment_regeneration_kinetics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/pigment_regeneration_kinetics.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pigment_regeneration_kinetics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.11: Bleach all pigments using intense light, then remove the light and measure the fraction of available/bleached pigments vs.&nbsp;time in the dark. Left: human rod kinetics; adapted from <span class="citation" data-cites="rushton1963cone">W. A. H. Rushton (<a href="references.html#ref-rushton1963cone" role="doc-biblioref">1963, fig. 3</a>)</span>; Right: human cone kinetics; adapted from <span class="citation" data-cites="rushton1965ferrier">W. A. H. Rushton (<a href="references.html#ref-rushton1965ferrier" role="doc-biblioref">1965, fig. 3</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Rushton used retinal densitometry to measure the pigment regeneration of both cones and rods in the living eye. The kinetics of the rod and cone pigment regenerations are shown in <a href="#fig-pigment_regeneration_kinetics" class="quarto-xref">Figure&nbsp;<span>3.11</span></a>. The half-life of of cone pigments regeneration is about 3 times shorter than that of rod pigments <span class="citation" data-cites="rushton1961rhodopsin rushton1963cone rushton1965ferrier">(<a href="references.html#ref-rushton1961rhodopsin" role="doc-biblioref">W. A. H. Rushton 1961</a>, <a href="references.html#ref-rushton1963cone" role="doc-biblioref">1963</a>, <a href="references.html#ref-rushton1965ferrier" role="doc-biblioref">1965</a>)</span>. <!-- %, which is consistent with modern electroretinogram (ERG) measurements \citep{mahroo2004recovery}, which shows the delivery or 11-cis is the rate limiting step.
+%\citep{rushton1968bleaching} shows ``regeneration after full bleaching is twice as fast when bleaching takes 1 sec as when it takes 2 min'', and ``the regeneration rate depends upon the amount of 11- cis retinal immediately available.'' --> The fast regeneration of cone pigments means it is unlikely that the steady-state cone pigment bleaching level exceeds about 90% under the normal range of illumination levels throughout a day <span class="citation" data-cites="burns2004visual">(<a href="references.html#ref-burns2004visual" role="doc-biblioref">Burns and Lamb 2014, p. 15</a>)</span>. In contrast, under normal daylight, rod pigments are almost all bleached.</p>
+<p>Compared to the speed of pigment generation, the deactivation of phototransduction takes place much more rapidly. On average, a cone pigment is regenerated in about 2 minutes <span class="citation" data-cites="rodieck1998first">(<a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 184–85</a>)</span>, and phototransduction deactivation (and activation for that matter) happens in millisecond scale. Imagine in your visual field there is a brief flash. You see the flash as a flash because the phototransduction initiated by the flash quickly goes away almost immediately as the flash is removed.</p>
+</section>
+<section id="steady-vision-means-equilibrium" class="level4">
+<h4 class="anchored" data-anchor-id="steady-vision-means-equilibrium">Steady Vision Means Equilibrium</h4>
+<p>Both pigment regeneration and phototransduction deactivation are constantly at work, countering the effect of the phototransduction in light. The more pigments are excited and the more ion channels are open, the stronger the deactivation and pigment regeneration processes are.</p>
+<p>Under a modest background illumination, the opposing forces reach an equilibrium where the rate of closing cGMP-gated ion channels matches that of re-opening them. So dynamically a fixed number, not all, of the ion channels are open. If after light exposure we move to a dark room, there are no photons coming in, so there is no phototransduction. The countering forces completely dominate, and eventually all the materials involved in phototransduction are replenished and all the ion channels are open — another equilibrium. If we flash a light on top of the background, some cGMP channels open for a short period of time and then close as the flash goes away; our vision goes back to the steady state.</p>
+<p>If we increase the intensity of the steady background a little, again some cGMP channels will open, and simultaneously the countering forces are at work trying to close them. Eventually a new equilibrium is reached where more channels are steadily open than before. What if we keep increasing the background light’s intensity? Every time we intensify the background light a little, we reach a new equilibrium with fewer channels steadily open. This is readily seen in the right panel in <a href="#fig-phototransduction_kinetics" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>, where the steady-state response increases (i.e., fewer channels are open) as the background light intensity increases. Eventually all the channels will close, and our vision is said to be saturated. This is what we will study next.</p>
+</section>
+</section>
+</section>
+<section id="absolute-sensitivity-and-saturation-in-rods-vs.-cones" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="absolute-sensitivity-and-saturation-in-rods-vs.-cones"><span class="header-section-number">3.5</span> Absolute Sensitivity and Saturation in Rods vs.&nbsp;Cones</h2>
+<p>Now that we understand phototransduction and its recovery, we can appreciate some fundamental differences between rods and cones in their absolute sensitivity and saturation levels, which shape our daily visual experience.</p>
+<section id="sec-chpt-hvs-receptor-snr" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="sec-chpt-hvs-receptor-snr"><span class="header-section-number">3.5.1</span> Rods Have a Much Higher Signal-to-Noise Ratio Than Cones</h3>
+<p>Psychophysical experiments show that humans can reliably detect a flash when only about 5 to 7 pigments are excited in a field of about 500 rods; in contrast, it takes about 5 pigment excitations <em>per cone</em> in a pool of about 10 cones for humans to signal a flash <span class="citation" data-cites="hecht1942energy barlow1956retinal donner1992noise angueyra2014limits">(<a href="references.html#ref-hecht1942energy" role="doc-biblioref">Hecht, Shlaer, and Pirenne 1942</a>; <a href="references.html#ref-barlow1956retinal" role="doc-biblioref">Barlow 1956</a>; <a href="references.html#ref-donner1992noise" role="doc-biblioref">Donner 1992</a>; <a href="references.html#ref-angueyra2014limits" role="doc-biblioref">Angueyra-Aristizábal 2014</a>)</span>. Assuming the visual system requires the same level of electrical response to see a flash, the difference suggests that rods are able to produce the same amount of electrical response using fewer pigment excitations than cones.</p>
+<p>Part of this can be explained by the different levels of neural convergence in the rod and cone pathway, which we have discussed before. But the difference in sensitivity between the photoreceptors themselves also plays a significant role: rod photoreceptors have a higher electrical response and a lower noise floor than cones. This contributes to the lower detection threshold in rod vision. Let’s examine the signal and the noise separately.</p>
+<section id="single-photon-response-is-much-larger-in-rods-than-in-cones" class="level4">
+<h4 class="anchored" data-anchor-id="single-photon-response-is-much-larger-in-rods-than-in-cones">Single Photon Response is Much Larger in Rods than in Cones</h4>
+<p>The photocurrent, i.e., the signal part of the SNR, from a single rod pigment excitation is about 20 times higher than that from a cone pigment excitation (34 pA vs.&nbsp;0.7 pA) <span class="citation" data-cites="baylor1979responses baylor1984photocurrent baylor1987photoreceptor schnapf1990visual ingram2016rods angueyra2014limits">(<a href="references.html#ref-baylor1979responses" role="doc-biblioref">Baylor, Lamb, and Yau 1979b</a>; <a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>; <a href="references.html#ref-baylor1987photoreceptor" role="doc-biblioref">Baylor 1987</a>; <a href="references.html#ref-schnapf1990visual" role="doc-biblioref">Schnapf et al. 1990</a>; <a href="references.html#ref-ingram2016rods" role="doc-biblioref">Ingram, Sampath, and Fain 2016</a>; <a href="references.html#ref-angueyra2014limits" role="doc-biblioref">Angueyra-Aristizábal 2014</a>)</span>. A single rod pigment excitation already closes about 2% of the ion channels in a rod, and about 30 pigment excitations would close half of the ion channels in a rod in the dark. In contrast, it requires about 650 pigment excitations in a cone photoreceptor to provide a half-maximal response in dark <span class="citation" data-cites="baylor1984photocurrent schnapf1990visual">(<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>; <a href="references.html#ref-schnapf1990visual" role="doc-biblioref">Schnapf et al. 1990</a>)</span>. <!-- %schnapf1990visual is cited by baylor1987photoreceptor, which, however, says 3000; not sure where the data is from --></p>
+<p>Part of the reason why rods have larger responses than cones is because the phototransduction cascade in rods is much more rapid <span class="citation" data-cites="ingram2016rods">(<a href="references.html#ref-ingram2016rods" role="doc-biblioref">Ingram, Sampath, and Fain 2016</a>)</span>: the rate of PDE activation is higher, the rate of cGMP concentration reduction is higher, etc. As a result, a lot of cGMP-gated ion channels already close before much of the “countering forces” (that are simultaneously trying to deactivate phototransductions) kick in, resulting in higher peak responses in rods than in cones.</p>
+</section>
+<section id="cones-are-much-noisier-than-rods" class="level4">
+<h4 class="anchored" data-anchor-id="cones-are-much-noisier-than-rods">Cones are Much Noisier than Rods</h4>
+<p>Not only do rods produce a higher response per pigment excitation, but the inherent noise in a rod is much lower than that in a cone. Photocurrents exist even in the dark due to noise, which comes from two main sources <span class="citation" data-cites="baylor1980two rieke2000origin">(<a href="references.html#ref-baylor1980two" role="doc-biblioref">Baylor, Matthews, and Yau 1980</a>; <a href="references.html#ref-rieke2000origin" role="doc-biblioref">Fred Rieke and Baylor 2000</a>)</span>: 1) the spontaneous, thermal-induced activations of pigments, which show up as discrete spikes in photocurrents, and 2) the spontaneous activation of PDEs, which causes the cGMP concentration to fluctuate and shows up as the continuous rumbling of the photocurrent <span class="citation" data-cites="rieke1996molecular">(<a href="references.html#ref-rieke1996molecular" role="doc-biblioref">F. Rieke and Baylor 1996</a>)</span>. Photocurrent in the dark has the equivalent effect of a background illumination in the dark, so it is also termed <strong>dark noise</strong>, <strong>dark light</strong>, or “eigengrau” (German: one’s own light). As we can imagine, dark noise interferes with light detection when the signal is weak, i.e., illumination is dim <span class="citation" data-cites="barlow1957increment">(<a href="references.html#ref-barlow1957increment" role="doc-biblioref">Barlow 1957</a>)</span>, where behaviorally we cannot tell for certain if we are seeing actual light or dark light.</p>
+<p>Dark noise is much higher in cones than in rods <span class="citation" data-cites="angueyra2014limits donner1992noise">(<a href="references.html#ref-angueyra2014limits" role="doc-biblioref">Angueyra-Aristizábal 2014</a>; <a href="references.html#ref-donner1992noise" role="doc-biblioref">Donner 1992</a>)</span>. For instance, the dark light in rods is equivalent to about one pigment excitation every 90 seconds <span class="citation" data-cites="baylor1984photocurrent">(<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>)</span> and about 500 – 1,000 times per second in cones <span class="citation" data-cites="schnapf1990visual schneeweis1999photovoltage rieke2000origin burns2004visual rieke1998single">(<a href="references.html#ref-schnapf1990visual" role="doc-biblioref">Schnapf et al. 1990</a>; <a href="references.html#ref-schneeweis1999photovoltage" role="doc-biblioref">Schneeweis and Schnapf 1999</a>; <a href="references.html#ref-rieke2000origin" role="doc-biblioref">Fred Rieke and Baylor 2000</a>; <a href="references.html#ref-burns2004visual" role="doc-biblioref">Burns and Lamb 2014</a>; <a href="references.html#ref-rieke1998single" role="doc-biblioref">Foster Rieke and Baylor 1998</a>)</span>. <!-- % for cone dark light, rieke2000origin is a good cite (600/s for L/M, much lower for S). rieke1998single didn't provide a cite and burns says it's estimated from tvi curves. neither is for primates though.  schnapf1990visual is for macaques (6400/s; 2400 is a typo as pointed out by schneeweis1999photovoltage). --> The dark light in cones is high enough to allow a rod to reach its half-maximum response <span class="citation" data-cites="tamura1991calcium nakatani1988calcium matthews1988photoreceptor">(<a href="references.html#ref-tamura1991calcium" role="doc-biblioref">Tamura, Nakatani, and Yau 1991</a>; <a href="references.html#ref-nakatani1988calcium" role="doc-biblioref">Nakatani and Yau 1988</a>; <a href="references.html#ref-matthews1988photoreceptor" role="doc-biblioref">Matthews et al. 1988</a>)</span>! <!-- % what we need here is response vs. step intensity. FSS page 143 has a figure for that and says it's from Baylor 1984, but i can't find that data in the paper.
+% tamura1991calcium is macaque rods and data on page 111-113 are good.  we can use the two 1988 light adaptation papers too but they are not for primates. --> As a result, the SNR in cones is much lower than that in rods. <!-- %It's not that the cones don't give electrical response to a single pigment excitation; it's just the signal is buried in the noise.
+
+%\fixme{free opsin dark light is not considered here since they are after a full bleach and we are talking about after full dark adaptation.}
+%\fixme{\cite{barlow1971responses} quantifies the threshold for RGC responses. so mention that noise can be measured at downstream and at the behavioral level and they are much less noisy than receptor level.  \cite{field2005retinal} is a good reference for both and cites \cite{schneeweis1999photovoltage}} --></p>
+</section>
+</section>
+<section id="rods-saturate-much-more-easily-than-cones" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="rods-saturate-much-more-easily-than-cones"><span class="header-section-number">3.5.2</span> Rods Saturate Much More Easily Than Cones</h3>
+<p>We know the rod-mediated vision saturates under much lower light levels than does the cone-mediated vision. Because of this, rods are not useful in mediating vision in typical daylight illuminations. Cones are much harder to saturate, if ever, under normal daylight <span class="citation" data-cites="burns2004visual barlow1972dark shevell1977saturation">(<a href="references.html#ref-burns2004visual" role="doc-biblioref">Burns and Lamb 2014</a>; <a href="references.html#ref-barlow1972dark" role="doc-biblioref">Barlow 1972</a>; <a href="references.html#ref-shevell1977saturation" role="doc-biblioref">Shevell 1977</a>)</span>, so they are primarily responsible for daylight vision. But why do the rod-mediated vision saturate more easily, other than the higher degree of neural convergence? Again, the difference in the photoreceptors themselves plays a role.</p>
+<p>First, the photocurrent generated by a pigment excitation is much higher in rods than in cones, as discussed before. Second, the phototransduction kinetics is faster in cones than in rods. As we have seen in <a href="#fig-phototransduction_kinetics" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>, the electrical response of a pigment excitation is an event that does not finish instantaneously: it takes time for the photocurrent to rise, reach its peak, and then decay. The rising phase, as discussed in <a href="#sec-chpt-hvs-receptor-snr" class="quarto-xref"><span>Section 3.5.1</span></a>, is briefer in rods than in cones, but the decay phase is much longer in rods than in cones <span class="citation" data-cites="ingram2016rods">(<a href="references.html#ref-ingram2016rods" role="doc-biblioref">Ingram, Sampath, and Fain 2016</a>)</span>. The faster decay is due to the stronger phototransduction deactivation in cones than in rods <span class="citation" data-cites="yau2009phototransduction burns2001activation">(<a href="references.html#ref-yau2009phototransduction" role="doc-biblioref">Yau and Hardie 2009</a>; <a href="references.html#ref-burns2001activation" role="doc-biblioref">Burns and Baylor 2001</a>)</span> (which is attributed to the stronger negative feedbacks as discussed in <a href="#sec-chpt-hvs-receptor-counter" class="quarto-xref"><span>Section 3.4.2</span></a>), which means ion channels are more rapidly restored. Overall, the duration of a cone phototransduction is about four times shorter than that for a rod (100 ms vs.&nbsp;400 ms) <span class="citation" data-cites="baylor1987photoreceptor angueyra2014limits nakatani1988calcium rodieck1998first">(<a href="references.html#ref-baylor1987photoreceptor" role="doc-biblioref">Baylor 1987</a>; <a href="references.html#ref-angueyra2014limits" role="doc-biblioref">Angueyra-Aristizábal 2014</a>; <a href="references.html#ref-nakatani1988calcium" role="doc-biblioref">Nakatani and Yau 1988</a>; <a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 185</a>)</span>.</p>
+<p>Why does the time duration matter? It is because a longer duration integrates responses of more incoming photons. Consider an example where two excitations are taking place, say, 200 ms apart in a photoreceptor. In a rod, the time durations of these two excitations overlap, so the total electrical response the photoreceptor generates is greater than that if only one excitation takes place. In a cone, however, these two events do not overlap, and so their effects do not add up.</p>
+<p>As a side, the slow kinetics of rods is the reason we cannot sense object movement very well in low light conditions. If you have ever played basketball at night, you would know that even though you can tell where the ball is when it is still, but you cannot track the movement of the ball well.</p>
+<p>It is worth noting that even though cone pigments regenerate much faster than rods (<a href="#sec-chpt-hvs-receptor-counter" class="quarto-xref"><span>Section 3.4.2</span></a>), the slower pigment regeneration rate unlikely affects the saturation in rods. There are tens of millions of pigments in a mammalian rod cell <span class="citation" data-cites="nathans1992rhodopsin milo2015cell">(<a href="references.html#ref-nathans1992rhodopsin" role="doc-biblioref">Nathans 1992</a>; <a href="references.html#ref-milo2015cell" role="doc-biblioref">Milo and Phillips 2015, p. 142–47</a>)</span> but a rod is almost saturated by only several hundreds of pigment excitations, so when a rod is saturated, the vast majority of pigments are still available <span class="citation" data-cites="lamb1980spontaneous">(<a href="references.html#ref-lamb1980spontaneous" role="doc-biblioref">Lamb 1980</a>)</span>. It is the fact that almost all cGMP-gated ion channels are closed, rather than all pigments are bleached, that prevents rods from responding further to lights. The slow regeneration rate in rods does affect dark adaptation time, which we will discuss later in the class.</p>
+</section>
+</section>
+<section id="sec-hvs-receptor-intensity" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-hvs-receptor-intensity"><span class="header-section-number">3.6</span> Response vs.&nbsp;Light Intensity</h2>
+<p>The Principle of Univariance tells us that the electrical response from a photon absorption is constant without regard to the photon wavelength, but it does not tell us how the <em>magnitude</em> of the electrical response varies with the <em>number</em> of photons absorbed. With the basic understanding of phototransduction, we can now turn to this question. You might be tempted to think that the relationship is linear, and you would be wrong!</p>
+<div id="fig-peak_flash_response" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-peak_flash_response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/peak_flash_response.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-peak_flash_response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.12: Left: the electrical response (photocurrent) kinetics of macaque rods under varying flash light intensities (quantified by the total number of pigment excitations/isomerizations); from . Right: the peak response (normalized to maximum response) as a function of flash intensity; from , which uses the underlying data in the left plot. The tangential line shows that only 47 pigment excitations would saturate the photoreceptor <em>if</em> the photoreceptor does not desensitize.
+</figcaption>
+</figure>
+</div>
+<section id="sec-hvs-receptor-intensity-peak" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-hvs-receptor-intensity-peak"><span class="header-section-number">3.6.1</span> Peak Response is Not Linearly Proportional to Light Intensity</h3>
+<p><a href="#fig-peak_flash_response" class="quarto-xref">Figure&nbsp;<span>3.12</span></a> (left) shows the response (photocurrents) kinetics of macaque rods under flash lights of different intensities. The right plot shows the peak response (normalized to the maximum response) as a function of flash intensity.</p>
+<p>If the relationship between the response magnitude and the light intensity were linear, the curve would be a straight line. But in reality, we can see that the response grows quickly initially, but the growth slows down soon. What does the actual relationship tell us about photoreceptors? Let’s define the photoreceptor’s sensitivity, or its response rate, to flash lights as the additional response per unit increment in light intensity.</p>
+<p>The sensitivity/response rate is given by the derivative of the curve, i.e., the slope at every point on the curve. Evidently, the response rate slows down as light becomes more intense; in other words, the photoreceptor becomes less sensitive as light becomes more intense. While the discussions here focus on photoreceptor responses to flash lights, the conclusion holds for responses to steady background lights as well.</p>
+<p>This non-linear relationship can be used to explain our brightness perception. Our perceived brightness is not linear with respect to the light intensity. Imagine you walk into a dark room and turn one light on; the perceived brightness changes a lot (literally from 0 to 1); then you turn another light on and another light on; every time you turn on an additional light, your perceived brightness increases, but not as much as before. As you continue, the additional brightness you feel from turning one additional light on becomes smaller: you probably would not notice it if someone turned on one more light when there are 1,000 lights on already.</p>
+<p>This non-linear relationship between perceived brightness and absolute light power is important when deciding how to effectively allocate digital bits when encoding pixel values. A classic example is the gamma encoding/compression in the popular sRGB color space, a topic we will turn to in <a href="hvs-colorimetry.html#sec-chpt-hvs-cori-cube-step2" class="quarto-xref"><span>Section 5.3.2</span></a>.</p>
+</section>
+<section id="why-and-how-do-photoreceptors-desensitize" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="why-and-how-do-photoreceptors-desensitize"><span class="header-section-number">3.6.2</span> Why and How Do Photoreceptors Desensitize?</h3>
+<p>The reduction of sensitivity under stronger lights is called <strong>desensitization</strong>, and is stereotypical of photoreceptor <strong>light adaptation</strong>. A curious question is, does desensitization provide us any benefits? Do we not want our photoreceptors to be more sensitive to light? Without desensitization, i.e., if the initial response rate was maintained, the rod would saturate at about 47 pigment excitations, as shown in <a href="#fig-peak_flash_response" class="quarto-xref">Figure&nbsp;<span>3.12</span></a>. The desensitization allows the photoreceptors to extend their operating range, which, in turn, allows our vision to operate at higher light levels.</p>
+<p>What mechanisms cause photoreceptor desensitization? We will leave a thorough discussion for later in the class when we actually discuss adaptation, but briefly, there are two reasons.</p>
+<p>The first reason is the natural exponential decay you would observe in pretty much any dynamical system. Recall that the reason a photoreceptor can produce electrical responses is because of the sequence of biochemical reactions, which require a bunch of materials, like the cGMPs, PDEs, etc., to bump into each other. Under stronger lights, the concentration of these materials is lower, which means they are less likely to meet each other. That in turn means the rate of cGMP concentration reduction becomes even slower, and the ion channels close even less frequently.</p>
+<p>The second reason, first experimentally shown by <span class="citation" data-cites="matthews1988photoreceptor">Matthews et al. (<a href="references.html#ref-matthews1988photoreceptor" role="doc-biblioref">1988</a>)</span> and <span class="citation" data-cites="nakatani1988calcium">Nakatani and Yau (<a href="references.html#ref-nakatani1988calcium" role="doc-biblioref">1988</a>)</span>, has to do with negative feedbacks regulated by Ca<sup>2+</sup> ions. Interestingly, these negative feedback mechanisms are exactly the same as those that accelerate phototransduction deactivation, as discussed in <a href="#sec-chpt-hvs-receptor-counter" class="quarto-xref"><span>Section 3.4.2</span></a>. As we will discuss more quantitatively in the adaptation chapter (<a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-light" class="quarto-xref"><span>Section 7.1</span></a>), this is not a coincidence: desensitization and faster recovery kinetics are two hallmarks of photoreceptor light adaptation.</p>
+</section>
+<section id="sec-hvs-receptor-intensity-model" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-hvs-receptor-intensity-model"><span class="header-section-number">3.6.3</span> Linear Range</h3>
+<p>If you observe <a href="#fig-peak_flash_response" class="quarto-xref">Figure&nbsp;<span>3.12</span></a> (right) closely, you will see that the response vs.&nbsp;flash intensity is linear when the lights are dim. This linear relationship is used to estimate the single photon response: we cannot easily measure the response of a single photon as it is difficult to precisely deliver just one single photon, but this linear relationship in the dim range allows us to estimate such a response by scaling the response of a dim light by its intensity.</p>
+<p>Mathematically, the response vs.&nbsp;intensity relationship is modeled in literature either by a negative exponential function (when negative feedbacks are weak) <span class="citation" data-cites="baylor1984photocurrent lamb1981spatial kraft1993visual">(<a href="references.html#ref-baylor1984photocurrent" role="doc-biblioref">Baylor, Nunn, and Schnapf 1984</a>; <a href="references.html#ref-lamb1981spatial" role="doc-biblioref">Lamb, McNaughton, and Yau 1981</a>; <a href="references.html#ref-kraft1993visual" role="doc-biblioref">Kraft, Schneeweis, and Schnapf 1993</a>)</span> or by the Michaelis equation (when negative feedbacks are not negligible) <span class="citation" data-cites="baylor1970electrical baylor1974electrical baylor1979membrane normann1979effects fain1976sensitivity schneeweis1995photovoltage ingram2016rods">(<a href="references.html#ref-baylor1970electrical" role="doc-biblioref">Baylor and Fuortes 1970</a>; <a href="references.html#ref-baylor1974electrical" role="doc-biblioref">Baylor, Hodgkin, and Lamb 1974</a>; <a href="references.html#ref-baylor1979membrane" role="doc-biblioref">Baylor, Lamb, and Yau 1979a</a>; <a href="references.html#ref-normann1979effects" role="doc-biblioref">Normann and Perlman 1979</a>; <a href="references.html#ref-fain1976sensitivity" role="doc-biblioref">Fain 1976</a>; <a href="references.html#ref-schneeweis1995photovoltage" role="doc-biblioref">Schneeweis and Schnapf 1995</a>; <a href="references.html#ref-ingram2016rods" role="doc-biblioref">Ingram, Sampath, and Fain 2016</a>)</span>. The negative exponential model would look something like <span class="math inline">\(r/r_{max} = 1 - e^{-ki}\)</span>, where <span class="math inline">\(r\)</span>, <span class="math inline">\(r_{max}\)</span>, and <span class="math inline">\(i\)</span> denote the response, maximum response, and flash light intensity, respectively; <span class="math inline">\(k\)</span> is a constant fit to data. The Michaelis equation, which is also called the Naka–Rushton equation (presumably because <span class="citation" data-cites="naka1966s">Naka and Rushton (<a href="references.html#ref-naka1966s" role="doc-biblioref">1966</a>)</span> was the first to use it), looks like <span class="math inline">\(r/r_{max} = \frac{i}{i+\sigma}\)</span>, where <span class="math inline">\(\sigma\)</span> is a constant fit to data. Sometimes it would fit the data better to use the generalized Michaelis equation, which takes the form <span class="math inline">\(r/r_{max} = \frac{i^n}{i^n+\sigma^n}\)</span>, where <span class="math inline">\(n\)</span> is the additional parameter that can fit to data. Both models can be approximated by a linear function when <span class="math inline">\(i\)</span> is small. This linear region perhaps also explains why the sRGB encoding is a piece-wise function where the encoding is linear when light levels are low (<a href="hvs-colorimetry.html#sec-chpt-hvs-cori-cube-step2" class="quarto-xref"><span>Section 5.3.2</span></a>).</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-angueyra2014limits" class="csl-entry" role="listitem">
+Angueyra-Aristizábal, Juan M. 2014. <span>“The Limits Imposed in Primate Vision by Transduction in Cone Photoreceptors.”</span> PhD thesis, University of Washington Libraries.
+</div>
+<div id="ref-barlow1956retinal" class="csl-entry" role="listitem">
+Barlow, Horace B. 1956. <span>“Retinal Noise and Absolute Threshold.”</span> <em>Josa</em> 46 (8): 634–39.
+</div>
+<div id="ref-barlow1957increment" class="csl-entry" role="listitem">
+———. 1957. <span>“Increment Thresholds at Low Intensities Considered as Signal/Noise Discriminations.”</span> <em>The Journal of Physiology</em> 136 (3): 469.
+</div>
+<div id="ref-barlow1972dark" class="csl-entry" role="listitem">
+———. 1972. <span>“Dark and Light Adaptation: Psychophysics.”</span> In <em>Visual Psychophysics</em>, edited by Matthew Alpern, 1–28. Springer.
+</div>
+<div id="ref-baylor1987photoreceptor" class="csl-entry" role="listitem">
+Baylor, Denis A. 1987. <span>“Photoreceptor Signals and Vision: The Proctor Lecture.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 28 (1): 34–49.
+</div>
+<div id="ref-baylor1970electrical" class="csl-entry" role="listitem">
+Baylor, Denis A, and MGF Fuortes. 1970. <span>“Electrical Responses of Single Cones in the Retina of the Turtle.”</span> <em>The Journal of Physiology</em> 207 (1): 77–92.
+</div>
+<div id="ref-baylor1973detection" class="csl-entry" role="listitem">
+Baylor, Denis A, and Alan L Hodgkin. 1973. <span>“Detection and Resolution of Visual Stimuli by Turtle Photoreceptors.”</span> <em>The Journal of Physiology</em> 234 (1): 163–98.
+</div>
+<div id="ref-baylor1974electrical" class="csl-entry" role="listitem">
+Baylor, Denis A, AL Hodgkin, and TD Lamb. 1974. <span>“The Electrical Response of Turtle Cones to Flashes and Steps of Light.”</span> <em>The Journal of Physiology</em> 242 (3): 685–727.
+</div>
+<div id="ref-baylor1979membrane" class="csl-entry" role="listitem">
+Baylor, Denis A, TD Lamb, and KW Yau. 1979a. <span>“The Membrane Current of Single Rod Outer Segments.”</span> <em>The Journal of Physiology</em> 288 (1): 589–611.
+</div>
+<div id="ref-baylor1979responses" class="csl-entry" role="listitem">
+Baylor, Denis A, Trevor D Lamb, and KW Yau. 1979b. <span>“Responses of Retinal Rods to Single Photons.”</span> <em>The Journal of Physiology</em> 288 (1): 613–34.
+</div>
+<div id="ref-baylor1980two" class="csl-entry" role="listitem">
+Baylor, Denis A, G Matthews, and KW Yau. 1980. <span>“Two Components of Electrical Dark Noise in Toad Retinal Rod Outer Segments.”</span> <em>The Journal of Physiology</em> 309 (1): 591–621.
+</div>
+<div id="ref-baylor1984photocurrent" class="csl-entry" role="listitem">
+Baylor, Denis A, BJ Nunn, and JL Schnapf. 1984. <span>“The Photocurrent, Noise and Spectral Sensitivity of Rods of the Monkey Macaca Fascicularis.”</span> <em>The Journal of Physiology</em> 357 (1): 575–607.
+</div>
+<div id="ref-baylor1987spectral" class="csl-entry" role="listitem">
+———. 1987. <span>“Spectral Sensitivity of Cones of the Monkey Macaca Fascicularis.”</span> <em>The Journal of Physiology</em> 390 (1): 145–60.
+</div>
+<div id="ref-boettner1962transmission" class="csl-entry" role="listitem">
+Boettner, Edward A, and J Reimer Wolter. 1962. <span>“Transmission of the Ocular Media.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 1 (6): 776–83.
+</div>
+<div id="ref-bowmaker1980visual" class="csl-entry" role="listitem">
+Bowmaker, James K, and HJk Dartnall. 1980. <span>“Visual Pigments of Rods and Cones in a Human Retina.”</span> <em>The Journal of Physiology</em> 298 (1): 501–11.
+</div>
+<div id="ref-bowmaker1984microspectrophotometry" class="csl-entry" role="listitem">
+Bowmaker, JK. 1984. <span>“Microspectrophotometry of Vertebrate Photoreceptors: A Brief Review.”</span> <em>Vision Research</em> 24 (11): 1641–50.
+</div>
+<div id="ref-bowmaker1978visual" class="csl-entry" role="listitem">
+Bowmaker, JK, HJ Dartnall, JN Lythgoe, and JD Mollon. 1978. <span>“The Visual Pigments of Rods and Cones in the Rhesus Monkey, Macaca Mulatta.”</span> <em>The Journal of Physiology</em> 274 (1): 329–48.
+</div>
+<div id="ref-brown1964visual" class="csl-entry" role="listitem">
+Brown, Paul K, and George Wald. 1964. <span>“Visual Pigments in Single Rods and Cones of the Human Retina.”</span> <em>Science</em> 144 (3614): 45–52.
+</div>
+<div id="ref-burns2005beyond" class="csl-entry" role="listitem">
+Burns, Marie E, and Vadim Y Arshavsky. 2005. <span>“Beyond Counting Photons: Trials and Trends in Vertebrate Visual Transduction.”</span> <em>Neuron</em> 48 (3): 387–401.
+</div>
+<div id="ref-burns2001activation" class="csl-entry" role="listitem">
+Burns, Marie E, and Denis A Baylor. 2001. <span>“Activation, Deactivation, and Adaptation in Vertebrate Photoreceptor Cells.”</span> <em>Annual Review of Neuroscience</em> 24 (1): 779–805.
+</div>
+<div id="ref-burns2004visual" class="csl-entry" role="listitem">
+Burns, Marie E, and Trevor D Lamb. 2014. <span>“Visual Transduction by Rod and Cone Photoreceptors.”</span> In <em>The New Visual Neurosciences</em>. MIT Press.
+</div>
+<div id="ref-crawford1949scotopic" class="csl-entry" role="listitem">
+Crawford, BH. 1949. <span>“The Scotopic Visibility Function.”</span> <em>Proceedings of the Physical Society. Section B</em> 62 (5): 321.
+</div>
+<div id="ref-crescitelli1953human" class="csl-entry" role="listitem">
+Crescitelli, Frederick, and Herbert JA Dartnall. 1953. <span>“Human Visual Purple.”</span> <em>Nature</em> 172 (4370): 195–97.
+</div>
+<div id="ref-absorption_spectra_cvrl" class="csl-entry" role="listitem">
+CVRL. n.d. <span>“<span class="nocase">Photopigment curves based on the Stockman &amp; Sharpe (2000) cone fundamentals</span>.”</span> <a href="http://www.cvrl.org/database/text/pigments/ssabance.htm" class="uri">http://www.cvrl.org/database/text/pigments/ssabance.htm</a>.
+</div>
+<div id="ref-dartnall1972photo" class="csl-entry" role="listitem">
+Dartnall, Herbert J. A. 1972. <span>“Photosensitivity.”</span> In <em>Photochemistry of Vision</em>, edited by Herbert J. A. Dartnall, 122–45. Springer Berlin Heidelberg.
+</div>
+<div id="ref-dartnall1983human" class="csl-entry" role="listitem">
+Dartnall, Herbert JA, James K Bowmaker, and John Dixon Mollon. 1983. <span>“Human Visual Pigments: Microspectrophotometric Results from the Eyes of Seven Persons.”</span> <em>Proceedings of the Royal Society of London. Series B. Biological Sciences</em> 220 (1218): 115–30.
+</div>
+<div id="ref-donner1992noise" class="csl-entry" role="listitem">
+Donner, Kristian. 1992. <span>“Noise and the Absolute Thresholds of Cone and Rod Vision.”</span> <em>Vision Research</em> 32 (5): 853–66.
+</div>
+<div id="ref-fain1976sensitivity" class="csl-entry" role="listitem">
+Fain, Gordon L. 1976. <span>“Sensitivity of Toad Rods: Dependence on Wave-Length and Background Illumination.”</span> <em>The Journal of Physiology</em> 261 (1): 71–101.
+</div>
+<div id="ref-fesenko1985induction" class="csl-entry" role="listitem">
+Fesenko, Evgeniy E, Stanislav S Kolesnikov, and Arkadiy L Lyubarsky. 1985. <span>“Induction by Cyclic GMP of Cationic Conductance in Plasma Membrane of Retinal Rod Outer Segment.”</span> <em>Nature</em> 313 (6000): 310–13.
+</div>
+<div id="ref-fu2010phototransduction" class="csl-entry" role="listitem">
+Fu, Yingbin. 2010. <span>“Phototransduction in Rods and Cones.”</span> In <em>WebVision: The Organization of the Retina and Visual System</em>, edited by Helga Kolb, Eduardo Fernandez, and Ralph Nelson.
+</div>
+<div id="ref-goldstein2009sensation" class="csl-entry" role="listitem">
+Goldstein, E. Bruce. 2009. <em>Sensation and Perception</em>. 8th ed. Cengage Learning.
+</div>
+<div id="ref-granit1941retinal" class="csl-entry" role="listitem">
+Granit, Ragnar. 1941. <span>“The Retinal Mechanism of Color Reception.”</span> <em>Journal of the Optical Society of America</em> 31 (9): 570–80.
+</div>
+<div id="ref-granit1943physiological" class="csl-entry" role="listitem">
+———. 1943. <span>“A Physiological Theory of Colour Perception.”</span> <em>Nature</em> 151 (3818): 11–14.
+</div>
+<div id="ref-granit1945colour" class="csl-entry" role="listitem">
+———. 1945a. <span>“The Colour Receptors of the Mammalian Retina.”</span> <em>Journal of Neurophysiology</em> 8 (3): 195–210.
+</div>
+<div id="ref-granit1945electrophysiological" class="csl-entry" role="listitem">
+———. 1945b. <span>“The Electrophysiological Analysis of the Fundamental Problem of Colour Reception.”</span> <em>Proceedings of the Physical Society</em> 57 (6): 447–63.
+</div>
+<div id="ref-gruhl2023ultrafast" class="csl-entry" role="listitem">
+Gruhl, Thomas, Tobias Weinert, Matthew J Rodrigues, Christopher J Milne, Giorgia Ortolani, Karol Nass, Eriko Nango, et al. 2023. <span>“Ultrafast Structural Changes Direct the First Molecular Events of Vision.”</span> <em>Nature</em> 615 (7954): 939–44.
+</div>
+<div id="ref-hecht1942energy" class="csl-entry" role="listitem">
+Hecht, Selig, Simon Shlaer, and Maurice Henri Pirenne. 1942. <span>“Energy, Quanta, and Vision.”</span> <em>The Journal of General Physiology</em> 25 (6): 819–40.
+</div>
+<div id="ref-hofmann2023rhodopsin" class="csl-entry" role="listitem">
+Hofmann, Klaus Peter, and Trevor D Lamb. 2023. <span>“Rhodopsin, Light-Sensor of Vision.”</span> <em>Progress in Retinal and Eye Research</em> 93:101116.
+</div>
+<div id="ref-hsu1993modulation" class="csl-entry" role="listitem">
+Hsu, Yi-Te, and Robert S Molday. 1993. <span>“Modulation of the cGMP-Gated Channel of Rod Photoreceptor Cells by Calmodulin.”</span> <em>Nature</em> 361 (6407): 76–79.
+</div>
+<div id="ref-ingram2016rods" class="csl-entry" role="listitem">
+Ingram, Norianne T, Alapakkam P Sampath, and Gordon L Fain. 2016. <span>“Why Are Rods More Sensitive Than Cones?”</span> <em>The Journal of Physiology</em> 594 (19): 5415–26.
+</div>
+<div id="ref-cone_cell" class="csl-entry" role="listitem">
+Ivo Kruusamägi. 2010. <span>“<span class="nocase">Cone cell anatomy; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Cone_cell_en.png" class="uri">https://commons.wikimedia.org/wiki/File:Cone_cell_en.png</a>.
+</div>
+<div id="ref-rod_cell" class="csl-entry" role="listitem">
+Kosigrim. 2007. <span>“<span class="nocase">Rod cell anatomy; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Rod%26Cone.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Rod%26Cone.jpg</a>.
+</div>
+<div id="ref-kraft1993visual" class="csl-entry" role="listitem">
+Kraft, TW, DM Schneeweis, and JL Schnapf. 1993. <span>“Visual Transduction in Human Rod Photoreceptors.”</span> <em>The Journal of Physiology</em> 464 (1): 747–65.
+</div>
+<div id="ref-kropf1982photo" class="csl-entry" role="listitem">
+Kropf, Allen. 1982. <span>“Photosensitivity and Quantum Efficiency of Photoisomerization in Rhodopsin and Retinal.”</span> In <em>Methods in Enzymology</em>, 81:384–92. Elsevier.
+</div>
+<div id="ref-lamb1980spontaneous" class="csl-entry" role="listitem">
+Lamb, TD. 1980. <span>“Spontaneous Quantal Events Induced in Toad Rods by Pigment Bleaching.”</span> <em>Nature</em> 287 (5780): 349–51.
+</div>
+<div id="ref-lamb1981spatial" class="csl-entry" role="listitem">
+Lamb, TD, PA McNaughton, and K-W Yau. 1981. <span>“Spatial Spread of Activation and Background Desensitization in Toad Rod Outer Segments.”</span> <em>The Journal of Physiology</em> 319 (1): 463–96.
+</div>
+<div id="ref-marks1964visual" class="csl-entry" role="listitem">
+Marks, WB, William H Dobelle, and Edward F MacNichol Jr. 1964. <span>“Visual Pigments of Single Primate Cones.”</span> <em>Science</em> 143 (3611): 1181–83.
+</div>
+<div id="ref-matthews1988photoreceptor" class="csl-entry" role="listitem">
+Matthews, HR, RLW Murphy, GL Fain, and TD Lamb. 1988. <span>“Photoreceptor Light Adaptation Is Mediated by Cytoplasmic Calcium Concentration.”</span> <em>Nature</em> 334 (6177): 67–69.
+</div>
+<div id="ref-milo2015cell" class="csl-entry" role="listitem">
+Milo, Ron, and Rob Phillips. 2015. <em>Cell Biology by the Numbers</em>. Garland Science.
+</div>
+<div id="ref-mollon1982colour" class="csl-entry" role="listitem">
+Mollon, John D. 1982. <span>“Colour Vision and Colour Blindness.”</span> In <em>The Senses</em>, edited by Horace B Barlow and John D Mollon, 165–91. Cambridge University Press.
+</div>
+<div id="ref-naka1966s" class="csl-entry" role="listitem">
+Naka, KI, and William AH Rushton. 1966. <span>“S-Potentials from Colour Units in the Retina of Fish (Cyprinidae).”</span> <em>The Journal of Physiology</em> 185 (3): 536–55.
+</div>
+<div id="ref-nakatani1988calcium" class="csl-entry" role="listitem">
+Nakatani, K, and KW Yau. 1988. <span>“Calcium and Light Adaptation in Retinal Rods and Cones.”</span> <em>Nature</em> 334 (6177): 69–71.
+</div>
+<div id="ref-nathans1992rhodopsin" class="csl-entry" role="listitem">
+Nathans, Jeremy. 1992. <span>“Rhodopsin: Structure, Function, and Genetics.”</span> <em>Biochemistry</em> 31 (21): 4923–31.
+</div>
+<div id="ref-nikonov2000role" class="csl-entry" role="listitem">
+Nikonov, S, TD Lamb, and EN Pugh Jr. 2000. <span>“The Role of Steady Phosphodiesterase Activity in the Kinetics and Sensitivity of the Light-Adapted Salamander Rod Photoresponse.”</span> <em>The Journal of General Physiology</em> 116 (6): 795.
+</div>
+<div id="ref-normann1979effects" class="csl-entry" role="listitem">
+Normann, Richard A, and I Perlman. 1979. <span>“The Effects of Background Illumination on the Photoresponses of Red and Green Cones.”</span> <em>The Journal of Physiology</em> 286 (1): 491–507.
+</div>
+<div id="ref-norren1974spectral" class="csl-entry" role="listitem">
+Norren, Dirk V, and Johannes J Vos. 1974. <span>“Spectral Transmission of the Human Ocular Media.”</span> <em>Vision Research</em> 14 (11): 1237–44.
+</div>
+<div id="ref-polyak1941retina" class="csl-entry" role="listitem">
+Polyak, Stephen Lucian. 1941. <em>The Retina.</em> Univ. Chicago Press.
+</div>
+<div id="ref-pugh1999molecular" class="csl-entry" role="listitem">
+Pugh Jr, EN, S Nikonov, and TD Lamb. 1999. <span>“Molecular Mechanisms of Vertebrate Photoreceptor Light Adaptation.”</span> <em>Current Opinion in Neurobiology</em> 9 (4): 410–18.
+</div>
+<div id="ref-purves2017neurosciences" class="csl-entry" role="listitem">
+Purves, Dale, George J. Augustine, David Fitzpatrick, William Hall, Anthony-Samuel LaMantia, Richard D. Mooney, Michael L. Platt, and Leonard E. White. 2017. <em>Neurosciences</em>. 6th ed. Oxford University Press.
+</div>
+<div id="ref-rieke1996molecular" class="csl-entry" role="listitem">
+Rieke, F, and Denis A Baylor. 1996. <span>“Molecular Origin of Continuous Dark Noise in Rod Photoreceptors.”</span> <em>Biophysical Journal</em> 71 (5): 2553–72.
+</div>
+<div id="ref-rieke1998single" class="csl-entry" role="listitem">
+Rieke, Foster, and Denis A Baylor. 1998. <span>“Single-Photon Detection by Rod Cells of the Retina.”</span> <em>Reviews of Modern Physics</em> 70 (3): 1027.
+</div>
+<div id="ref-rieke2000origin" class="csl-entry" role="listitem">
+Rieke, Fred, and Denis A Baylor. 2000. <span>“Origin and Functional Impact of Dark Noise in Retinal Cones.”</span> <em>Neuron</em> 26 (1): 181–86.
+</div>
+<div id="ref-rodieck1998first" class="csl-entry" role="listitem">
+Rodieck, Robert W. 1998. <em>The First Steps in Seeing</em>. Sinauer Associates.
+</div>
+<div id="ref-rushton1972visual" class="csl-entry" role="listitem">
+Rushton, William AH. 1972. <span>“Visual Pigments in Man.”</span> In <em>Photochemistry of Vision</em>, edited by Herbert J. A. Dartnall, 364–94. Springer Berlin Heidelberg.
+</div>
+<div id="ref-rushton1961rhodopsin" class="csl-entry" role="listitem">
+Rushton, William Albert Hugh. 1961. <span>“Rhodopsin Measurement and Dark-Adaptation in a Subject Deficient in Cone Vision.”</span> <em>The Journal of Physiology</em> 156 (1): 193.
+</div>
+<div id="ref-rushton1963cone" class="csl-entry" role="listitem">
+———. 1963. <span>“Cone Pigment Kinetics in the Protanope.”</span> <em>The Journal of Physiology</em> 168 (2): 374.
+</div>
+<div id="ref-rushton1965ferrier" class="csl-entry" role="listitem">
+———. 1965. <span>“The Ferrier Lecture, 1962 Visual Adaptation.”</span> <em>Proceedings of the Royal Society of London. Series B. Biological Sciences</em> 162 (986): 20–46.
+</div>
+<div id="ref-rushton1972review" class="csl-entry" role="listitem">
+Rushton, WilliamA H. 1972. <span>“Review Lecture. Pigments and Signals in Colour Vision.”</span> <em>The Journal of Physiology</em> 220 (3): 1P.
+</div>
+<div id="ref-schnapf1987spectral" class="csl-entry" role="listitem">
+Schnapf, JL, TW Kraft, and Denis A Baylor. 1987. <span>“Spectral Sensitivity of Human Cone Photoreceptors.”</span> <em>Nature</em> 325 (6103): 439–41.
+</div>
+<div id="ref-schnapf1990visual" class="csl-entry" role="listitem">
+Schnapf, JL, BJ Nunn, M Meister, and Denis A Baylor. 1990. <span>“Visual Transduction in Cones of the Monkey Macaca Fascicularis.”</span> <em>The Journal of Physiology</em> 427 (1): 681–713.
+</div>
+<div id="ref-schneeweis1995photovoltage" class="csl-entry" role="listitem">
+Schneeweis, David M, and Julie L Schnapf. 1995. <span>“Photovoltage of Rods and Cones in the Macaque Retina.”</span> <em>Science</em> 268 (5213): 1053–56.
+</div>
+<div id="ref-schneeweis1999photovoltage" class="csl-entry" role="listitem">
+———. 1999. <span>“The Photovoltage of Macaque Cone Photoreceptors: Adaptation, Noise, and Kinetics.”</span> <em>Journal of Neuroscience</em> 19 (4): 1203–16.
+</div>
+<div id="ref-shevell1977saturation" class="csl-entry" role="listitem">
+Shevell, Steven K. 1977. <span>“Saturation in Human Cones.”</span> <em>Vision Research</em> 17 (3): 427–34.
+</div>
+<div id="ref-smith1975spectral" class="csl-entry" role="listitem">
+Smith, Vivianne C, and Joel Pokorny. 1975. <span>“Spectral Sensitivity of the Foveal Cone Photopigments Between 400 and 500 Nm.”</span> <em>Vision Research</em> 15 (2): 161–71.
+</div>
+<div id="ref-snodderly1984macular" class="csl-entry" role="listitem">
+Snodderly, DM, PK Brown, FC Delori, and JD Auran. 1984. <span>“The Macular Pigment. I. Absorbance Spectra, Localization, and Discrimination from Other Yellow Pigments in Primate Retinas.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 25 (6): 660–73.
+</div>
+<div id="ref-stiles1939directional" class="csl-entry" role="listitem">
+Stiles, WS. 1939. <span>“The Directional Sensitivity of the Retina and the Spectral Sensitivities of the Rods and Cones.”</span> <em>Proceedings of the Royal Society of London. Series B-Biological Sciences</em> 127 (846): 64–105.
+</div>
+<div id="ref-stiles1959color" class="csl-entry" role="listitem">
+———. 1959. <span>“Color Vision: The Approach Through Increment-Threshold Sensitivity.”</span> <em>Proceedings of the National Academy of Sciences</em> 45 (1): 100–114.
+</div>
+<div id="ref-stiles1964appendix" class="csl-entry" role="listitem">
+———. 1964. <span>“Appendix by WS Stiles: Foveal Threshold Sensitivity on Fields of Different Colors.”</span> <em>Science</em> 145 (3636): 1016–17.
+</div>
+<div id="ref-stockman2000spectral" class="csl-entry" role="listitem">
+Stockman, Andrew, and Lindsay T Sharpe. 2000. <span>“The Spectral Sensitivities of the Middle-and Long-Wavelength-Sensitive Cones Derived from Measurements in Observers of Known Genotype.”</span> <em>Vision Research</em> 40 (13): 1711–37.
+</div>
+<div id="ref-stockman1999spectral" class="csl-entry" role="listitem">
+Stockman, Andrew, Lindsay T Sharpe, and Clemens Fach. 1999. <span>“The Spectral Sensitivity of the Human Short-Wavelength Sensitive Cones Derived from Thresholds and Color Matches.”</span> <em>Vision Research</em> 39 (17): 2901–27.
+</div>
+<div id="ref-tamura1991calcium" class="csl-entry" role="listitem">
+Tamura, Tarnura, K Nakatani, and KW Yau. 1991. <span>“Calcium Feedback and Sensitivity Regulation in Primate Rods.”</span> <em>The Journal of General Physiology</em> 98 (1): 95–130.
+</div>
+<div id="ref-wald1933vitamin" class="csl-entry" role="listitem">
+Wald, George. 1933. <span>“<span class="nocase">Vitamin A in the Retina</span>.”</span> <em>Nature</em> 132 (3330): 316–17.
+</div>
+<div id="ref-wald1964receptors" class="csl-entry" role="listitem">
+———. 1964. <span>“The Receptors of Human Color Vision: Action Spectra of Three Visual Pigments in Human Cones Account for Normal Color Vision and Color-Blindness.”</span> <em>Science</em> 145 (3636): 1007–16.
+</div>
+<div id="ref-wald1968molecular" class="csl-entry" role="listitem">
+———. 1968. <span>“Molecular Basis of Visual Excitation.”</span> <em>Science</em> 162 (3850): 230–39.
+</div>
+<div id="ref-wyszecki1982color" class="csl-entry" role="listitem">
+Wyszecki, Günther, and WS Stiles. 1982. <em>Color Science: Concepts and Methods, Quantitative Data and Formulae</em>. John wiley &amp; sons.
+</div>
+<div id="ref-yau1994phototransduction" class="csl-entry" role="listitem">
+Yau, KW. 1994. <span>“Phototransduction Mechanism in Retinal Rods and Cones. The Friedenwald Lecture.”</span> <em>Investigative Ophthalmology &amp; Visual Science</em> 35 (1): 9–32.
+</div>
+<div id="ref-yau1989cyclic" class="csl-entry" role="listitem">
+Yau, KW, and Denis A Baylor. 1989. <span>“Cyclic GMP-Activated Conductance of Retinal Photoreceptor Cells.”</span> <em>Annual Review of Neuroscience</em> 12 (1): 289–327.
+</div>
+<div id="ref-yau2009phototransduction" class="csl-entry" role="listitem">
+Yau, KW, and Roger C Hardie. 2009. <span>“Phototransduction Motifs and Variations.”</span> <em>Cell</em> 139 (2): 246–64.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Without back-scattering, we can assume any unabsorbed photons will be transmitted through, and measured at the other side of, the photoreceptor. In reality, a very small amount of some photons might be scattered backward toward where they come from and will not be measured either, but the effect is small.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Granit shared the Nobel Prize in 1967 with George Wald and Haldan Keffer Hartlin largely due to this work.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>You might be wondering: if the GC-induced re-synthesis is always going on, wouldn’t the outer segment of a photoreceptor be packed with cGMP molecules? It turns out that in the dark even unactivated PDEs can hydrolyze cGMPs — at a much lower rate than activated PDEs do. These two forces counter each other and maintain a steady cGMP level in dark <span class="citation" data-cites="rodieck1998first">(<a href="references.html#ref-rodieck1998first" role="doc-biblioref">Rodieck 1998, p. 373</a>)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./hvs-intro.html" class="pagination-link" aria-label="From Light to Vision">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./hvs-color.html" class="pagination-link" aria-label="Color Vision">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

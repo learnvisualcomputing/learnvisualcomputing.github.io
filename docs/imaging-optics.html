@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Imaging Optics – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./imaging-sensor.html" rel="next">
+<link href="./imaging.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./imaging.html">Imaging</a></li><li class="breadcrumb-item"><a href="./imaging-optics.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-imaging-optics-ov" id="toc-sec-chpt-imaging-optics-ov" class="nav-link active" data-scroll-target="#sec-chpt-imaging-optics-ov"><span class="header-section-number">11.1</span> Overview</a></li>
+  <li><a href="#sec-chpt-imaging-optics-pinhole" id="toc-sec-chpt-imaging-optics-pinhole" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-pinhole"><span class="header-section-number">11.2</span> Pinhole Model</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-imaging-optics-pinhole-why" id="toc-sec-chpt-imaging-optics-pinhole-why" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-pinhole-why"><span class="header-section-number">11.2.1</span> (Why) Do We Need Optics in an Imaging System?</a></li>
+  <li><a href="#sec-chpt-imaging-optics-pinhole-imaging" id="toc-sec-chpt-imaging-optics-pinhole-imaging" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-pinhole-imaging"><span class="header-section-number">11.2.2</span> Pinhole Imaging</a></li>
+  <li><a href="#sec-chpt-imaging-optics-pinhole-diffrac" id="toc-sec-chpt-imaging-optics-pinhole-diffrac" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-pinhole-diffrac"><span class="header-section-number">11.2.3</span> Diffraction Limit</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-imaging-optics-lens" id="toc-sec-chpt-imaging-optics-lens" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens"><span class="header-section-number">11.3</span> Lenses and Aberrations</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-imaging-optics-lens-gauss" id="toc-sec-chpt-imaging-optics-lens-gauss" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-gauss"><span class="header-section-number">11.3.1</span> Image Formation with an Ideal Lens</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-fov" id="toc-sec-chpt-imaging-optics-lens-fov" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-fov"><span class="header-section-number">11.3.2</span> Magnification vs.&nbsp;Field-of-View</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-mag" id="toc-sec-chpt-imaging-optics-lens-mag" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-mag"><span class="header-section-number">11.3.3</span> Magnifying Glasses and Projection Lenses</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-dof" id="toc-sec-chpt-imaging-optics-lens-dof" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-dof"><span class="header-section-number">11.3.4</span> Depth of Field</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-abe" id="toc-sec-chpt-imaging-optics-lens-abe" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-abe"><span class="header-section-number">11.3.5</span> Aberration</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-blur" id="toc-sec-chpt-imaging-optics-lens-blur" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-blur"><span class="header-section-number">11.3.6</span> Not All Blurs are Created Equal</a></li>
+  <li><a href="#sec-chpt-imaging-optics-lens-rad" id="toc-sec-chpt-imaging-optics-lens-rad" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-lens-rad"><span class="header-section-number">11.3.7</span> Radiometric Analysis of Lens</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-imaging-optics-modeling" id="toc-sec-chpt-imaging-optics-modeling" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-modeling"><span class="header-section-number">11.4</span> Computational Modeling Using Linear System Theory</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-imaging-optics-modeling-idea" id="toc-sec-chpt-imaging-optics-modeling-idea" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-modeling-idea"><span class="header-section-number">11.4.1</span> Basic Idea of a Linear System Theory</a></li>
+  <li><a href="#sec-chpt-imaging-optics-modeling-conv" id="toc-sec-chpt-imaging-optics-modeling-conv" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-modeling-conv"><span class="header-section-number">11.4.2</span> Modeling Image Formation in LSI Systems</a></li>
+  <li><a href="#sec-chpt-imaging-optics-modeling-mtf" id="toc-sec-chpt-imaging-optics-modeling-mtf" class="nav-link" data-scroll-target="#sec-chpt-imaging-optics-modeling-mtf"><span class="header-section-number">11.4.3</span> Fourier Perspectives: OTF and MTF</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./imaging.html">Imaging</a></li><li class="breadcrumb-item"><a href="./imaging-optics.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-imaging-optics" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter provides an introduction to imaging optics. We start from the pinhole model; from its pros and cons, we motivate a lens-based imaging system. We discuss important artifacts, a.k.a., aberrations, introduced by lenses that significantly impact the imaging quality. Finally, we conclude with a computational model for modeling the image formation process carried out by optics. The model provides a first-order approximation of the imaging quality and is widely used in various fields of visual computing.</p>
+<section id="sec-chpt-imaging-optics-ov" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-chpt-imaging-optics-ov"><span class="header-section-number">11.1</span> Overview</h2>
+<p>This chapter focuses on the first stage in an imaging system: the optics, i.e., optics that are used for image formation. The goal of this chapter is to build a good understanding of the image formation process in optics. Optics manipulates/transforms optical signals, so the signal after optics is still in the optical domain. In later chapters, we will discuss how the optical signals are transformed into electrical signals (first to analog and then to digital signals) and how such electrical signals are further processed.</p>
+<p>Imaging optics is important for human vision (because the ocular media of our eyes form an image on the retina), cameras (almost all of which have some form of optics), and graphics (where modeling optics is important for photorealistic rendering). Optics can also be used for ostensibly non-imaging purposes such as communication and computation. But of course the distinction is not black and white. You can argue that imaging is simultaneous communication (transferring signals from one side of the imaging system to the other side) and computation (the output signal is the result of a transfer function, usually not an identity function, applied to the input signal).</p>
+<p>We will generally assume that the goal of the optics design is to form visually pleasing images as well as possible. The thinking is that if we provide a high-quality image, we are giving the downstream consumer, whether a human observer or a machine vision algorithm, the best chance to extract information from it.</p>
+<p>This might not always be necessary. For instance, in machine vision/robotics applications, the consumer of an image is a computer vision algorithm such as object detection; so long as the algorithm can detect the object, the quality of the image itself is of no significance. In fact, one might argue that it is beneficial to design the imaging system so that the output image is obfuscated to protect privacy as long as essential features pertaining to downstream algorithms are preserved — this is an active area of research.</p>
+<p>There is also a burgeoning area of research, which this chapter is largely unconcerned with, called <strong>computational imaging</strong>, where a significant amount of computation is involved to form a final image <span class="citation" data-cites="bhandari2022computational">(<a href="references.html#ref-bhandari2022computational" role="doc-biblioref">Bhandari, Kadambi, and Raskar 2022</a>)</span>. In many cases under such a paradigm, the initial image formed by the optics is rather unintelligible, and the name of the game is to design computational algorithms that can recover the “clean” image. This is usually formulated as an <strong>inverse problem</strong>: the optics (which could be anything, even a duct tape <span class="citation" data-cites="antipa2017diffusercam">(<a href="references.html#ref-antipa2017diffusercam" role="doc-biblioref">Antipa et al. 2017</a>)</span>) transforms information in the physical world into a set of observations, and the algorithm inverts that forward model to obtain the original physical information from the observations. Even in this case, understanding and modeling the forward image formation process of the optics is crucial: only with that knowledge can we invert that process to obtain the physical information. In fact, one usually <em>co-designs</em> the image formation process (e.g., optics) with the inversion algorithm to maximize the overall performance.</p>
+<p>In this sense, imaging is a form of sensing, and the ultimate goal of imaging is to obtain information about the physical world. A visually pleasing image is one way such information can be represented, but there are other forms of information we might be interested in: depth, geometry, spectral radiance, polarization, absorption/scattering coefficient of the media, etc. Many imaging systems are designed to obtain such non-visual information, which is beyond our scope. For instance, an X-ray CT scanner is an essentially computational imaging device; it captures a set of raw images, which by themselves are not directly useful. Subsequent computational algorithms are used to obtain the actual information of interest, the absorption/scattering coefficient of the medium, from the raw images. We have actually covered the gist of the forward process in this imaging device when we discuss volume scattering.</p>
+<p>We will assume that there is a sensor plane on the other side of the imaging system to capture observations. An actual sensor has many pixels (along with many other components, some of which are optics!), each of which has a small but non-zero size, which plays a role in signal processing. In this chapter, however, we will assume that each pixel is infinitesimal. Therefore, the image formed on the sensor plane, for now, is assumed to be a continuous 2D function: for any <span class="math inline">\((x, y)\)</span> point on the sensor, there is an irradiance value. A retina is a sensor, and the continuous image on the retina is usually called the <strong>optical image</strong> in vision science. An actual image captured by the sensor, whether biological (retina) or engineered, is necessarily discretized — by pixels or photoreceptors.</p>
+</section>
+<section id="sec-chpt-imaging-optics-pinhole" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-chpt-imaging-optics-pinhole"><span class="header-section-number">11.2</span> Pinhole Model</h2>
+<p>We will start by discussing the pinhole system, which is very simple and not commonly used but carries interesting properties and implications for more complex imaging systems that we will turn to later.</p>
+<section id="sec-chpt-imaging-optics-pinhole-why" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-chpt-imaging-optics-pinhole-why"><span class="header-section-number">11.2.1</span> (Why) Do We Need Optics in an Imaging System?</h3>
+<p>What if we just expose the image sensor or our retina to lights? We will get garbage because each pixel/photoreceptor receives light from everywhere in the scene. <a href="#fig-pinhole" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> (left) illustrates the geometry of this imaging system.</p>
+<div id="fig-pinhole" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/pinhole.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: Left: without a pinhole, different pixels get roughly the same signal, and the differences between pixels are due mostly to noise. Middle: with a pinhole, the signal received by each pixel is restricted to a small area in the physical scene. Right: with a lens, the signal received by each pixel is still restricted to a small physical area, but the signal is much stronger.
+</figcaption>
+</figure>
+</div>
+<p>Each pixel receives light from everywhere in space. Assuming that each point in space is an ideal Lambertian emitter/scatterer, the two highlighted pixels will receive slightly different energy from the same point because of the cosine fall-off as a function of the incident direction. But if the sensor is much smaller relative to the distance to the physical space, the differences in fall-offs between different pixels are small, so we can say that each pixel roughly receives the same energy. In this case, the differences in pixel values are due to noise. So that’s why the image looks like a random garbage.</p>
+</section>
+<section id="sec-chpt-imaging-optics-pinhole-imaging" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="sec-chpt-imaging-optics-pinhole-imaging"><span class="header-section-number">11.2.2</span> Pinhole Imaging</h3>
+<p>What we need is for each pixel to receive information only from a small spatial region in the scene. This is what a pinhole camera does, as illustrated in <a href="#fig-pinhole" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> (middle). If the pinhole is infinitesimally small such that it allows only a single ray direction to go through, each pixel (which, again, for now is assumed to be an infinitesimal point on the sensor plane) captures light from only a single point in the scene.</p>
+<p>As the pinhole size shrinks, the information captured by two adjacent pixels becomes more distinct, which is desirable, but if the pinhole size is too small, there are two issues. First, a pinhole that is too small requires a long exposure time. We will discuss this in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-pixel" class="quarto-xref"><span>Section 12.2</span></a>, but a pixel is very much like a photoreceptor in that it is a photon collection device. Intuitively, the amount of photons a pixel collects (which we care about because it relates to the brightness of the captured image) is, roughly, proportional to both the pinhole area and the exposure time, so if we reduce the pinhole size, we need to increase the exposure time to maintain the pixel brightness.</p>
+<p>An excessively long exposure time not only poses challenges to actually taking the photo but also leads to <strong>motion blurs</strong>. <a href="#fig-pinhole_size" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> (b) shows an image captured by a pinhole camera where, during exposure, objects are moving. As a result, each pixel receives light from different points in the scene and, visually, the resulting image carries motion blurs.</p>
+<div id="fig-pinhole_size" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole_size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/pinhole_size_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole_size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: (a): blur from large aperture/pinhole (defocus blur); from <span class="citation" data-cites="ph_defocus_blur">Thycoop/photographs (<a href="references.html#ref-ph_defocus_blur" role="doc-biblioref">2022</a>)</span>. (b): blur from long exposure (motion blur); from <span class="citation" data-cites="ph_motion_blur">Jürgen Königs (<a href="references.html#ref-ph_motion_blur" role="doc-biblioref">2006</a>)</span>. (c): defocus blur arises from large pinholes, but when the pinhole becomes very small (on the order of light wavelength) diffraction occurs; adapted from <span class="citation" data-cites="ph_diff_limit">Dominic Alves (<a href="references.html#ref-ph_diff_limit" role="doc-biblioref">2006</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Second, as the pinhole size gets smaller and smaller, eventually we get to the diffraction limit, which means we cannot use geometric optics anymore and a single point in the scene does not translate to a single point in the image plane. We will discuss this shortly in <a href="#sec-chpt-imaging-optics-pinhole-diffrac" class="quarto-xref"><span>Section 11.2.3</span></a>.</p>
+<p>What happens if we increase the pinhole size? We get a blurrier image. <a href="#fig-pinhole_size" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> (a) shows one such image captured by a pinhole camera using a pinhole size of 0.5 mm. The blur can be easily explained by the geometry of pinhole imaging, as shown in <a href="#fig-pinhole_size" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> (c), where the information of a point in the scene is spread or “smeared” across multiple pixels if the pinhole size is too large, leading to the blurs. For this reason, the blur here is a form of <strong>defocus blur</strong>; we will later see how a lens-based imaging system can also have a defocus blur with the same mechanism: information at a physical point in the scene is spread across multiple pixels even when the point itself is stationary.</p>
+<p>Even in a lens-based imaging system, we do not technically have a pinhole, but we usually still have an aperture, which acts like a pinhole in the sense that it limits the amount of light that is allowed into the rest of the system, so the aperture size certainly dictates the imaging quality. Our eye is certainly a lens-based imaging system, and the pupil acts as the aperture. The pupil size changes from roughly 2 mm in relatively high ambient light levels to about 8 mm under low light intensities.</p>
+<p>Amazingly, pinhole-only imaging is used in some animals. The most famous one is perhaps Nautilus, which has a pinhole eye without lenses <span class="citation" data-cites="zhang2021genome">(<a href="references.html#ref-zhang2021genome" role="doc-biblioref">Zhang et al. 2021</a>)</span>. The pinhole size is relatively large; the diameter varies between 0.4 and 2.8 mm <span class="citation" data-cites="hurley1978adjustable">(<a href="references.html#ref-hurley1978adjustable" role="doc-biblioref">Hurley, Lange, and Hartline 1978</a>)</span>, so you can imagine the imaging quality is not great.</p>
+<!-- Discuss perspective projection? -->
+</section>
+<section id="sec-chpt-imaging-optics-pinhole-diffrac" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="sec-chpt-imaging-optics-pinhole-diffrac"><span class="header-section-number">11.2.3</span> Diffraction Limit</h3>
+<p>When the pinhole becomes very small, diffraction becomes visible. The diffraction pattern is called the Airy disk. <a href="#fig-airy_disk" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> (left) shows a computer-simulated Airy disk, and <a href="#fig-airy_disk" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> (right) shows how the intensity of the Airy disk falls off from the center.</p>
+<div id="fig-airy_disk" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-airy_disk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/airy_disk.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-airy_disk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Left: compute-simulated Airy disk (contrast is slightly exaggerated); from <span class="citation" data-cites="airy_disk_pattern">Sakurambo (<a href="references.html#ref-airy_disk_pattern" role="doc-biblioref">2007</a>)</span>. Right: the intensity of an Airy disk pattern as a function of the spatial position (0 being the center); adapted from <span class="citation" data-cites="airy_disk_func">Inductiveload (<a href="references.html#ref-airy_disk_func" role="doc-biblioref">2009</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Diffraction is usually thought of as a wave phenomenon, where the light wave propagated from a small pinhole gets expanded spatially and forms the Airy disk pattern But perhaps a more principled way to understand diffraction is through quantum mechanics, which says that the more certain we are of the position of a photon we are less certain of the direction of its travel, and vice versa. When the pinhole is infinitesimal, we know for certain where a photon is, so we are uncertain where it is going to go: the result is the Airy disk pattern. In contrast, when the pinhole is large, we are less certain of the spatial position of a photon, so we are more certain of its direction of travel; as a result, diffraction contributes little to the overall imaging.</p>
+<p>Imaging through a small pinhole can be thought of as a “single-slit” experiment. When we have a “double-slit” experiment with two small pinholes, the diffraction patterns from the two pinholes interfere, and we get the beautiful interference pattern that you perhaps have seen in middle-school physics class. Interestingly, there is a sequential version of the double-slit experiment, where photons are sent to the two slits sequentially, one by one. Amazingly, if we wait long enough, we will still see the interference pattern. This firmly establishes the fact that lights do behave like particles, not waves, just in a probabilistic manner.</p>
+<section id="theoretical-maximum-resolving-power" class="level4">
+<h4 class="anchored" data-anchor-id="theoretical-maximum-resolving-power">Theoretical Maximum Resolving Power</h4>
+<p>Diffraction is a form of blur because the optical power of a power in the scene is spread spatially on the detector plane. Therefore diffraction limits the maximum resolving power of an imaging system. The way to quantify that is to imagine that we have two different points in space imaged through a pinhole. Each point, of course, will cause a diffraction pattern. The two Airy disks add up linearly in the power domain in the captured image, but when the two points are sufficiently apart spatially, the peaks of the two Airy disks will be sufficiently apart on the detector plane as well, which means we can tell the two points apart from the image (because the power of the Airy disks falls off very quickly with the distance to the center). When the two points are closer, the peaks of the Airy disks are closer; when the two peaks are sufficiently close, the superposition of the two Airy disks will result in an image where we cannot easily tell the two peaks apart, and that is when we know we have reached the resolution limit of the imaging system.</p>
+<p>A common criterion used to quantify such a limit is called the <strong>Rayleigh criterion</strong>, first defined by Lord Rayleigh<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, which says the two points are <em>regarded</em> as just resolvable when the center of the airy disk of one point coincides with the first minimum of the other <span class="citation" data-cites="rayleigh1879xxxi">(<a href="references.html#ref-rayleigh1879xxxi" role="doc-biblioref">Rayleigh 1879</a>)</span>. If you go through the math, this translates to:</p>
+<p><span id="eq-diff_limit"><span class="math display">\[
+\begin{align}
+    \theta \approx 1.22\frac{\lambda}{D},
+\end{align}
+\tag{11.1}\]</span></span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is the light wavelength, <span class="math inline">\(D\)</span> is the diameter of the pinhole, and <span class="math inline">\(\theta\)</span> is the angular resolution of the imaging system, i.e., the angle subtended by the two points and the pinhole. As an example, assuming a 550 nm typical visible light, when the pupil size is about 2 mm, which is a typical size under normal daylight, the resolvable angular resolution between two points is about 0.02 degree.</p>
+<p>Note that I italicize “regarded” in the text above. There is no reason why one cannot distinguish between two points separated less than the Rayleigh criterion in a given scenario or train a deep neural network to do so. The Rayleigh criterion for the most part serves as an intuitive criterion that works empirically well with observations.</p>
+<p>How do we improve the resolving power of an imaging system? One way is to use shorter wavelength lights, which, according to <a href="#eq-diff_limit" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>, would allow us to resolve objects that are closer. Optical microscopes use visible light, whereas electron microscopes take advantage of the wave nature of <em>electrons</em> to achieve much higher resolution than optical microscopes. The <em>de Broglie wavelength</em> of an electron is inversely proportional to its momentum. An electron microscope accelerates electrons to very high speeds, which reduces their wavelengths to below 1 nm (c.f., hundreds of nm for visible light) and increases the overall resolving power of the imaging system.</p>
+</section>
+</section>
+</section>
+<section id="sec-chpt-imaging-optics-lens" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens"><span class="header-section-number">11.3</span> Lenses and Aberrations</h2>
+<p>A convex lens brings many rays from a point together, as shown in <a href="#fig-pinhole" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> (right). If the sensor plane is placed such as the image is in focus (which we will discuss shortly), the captured image is the geometrically the same as the one captured by a pinhole camera, but much brighter given the same exposure time. Both a pinhole imaging system and a convex-lens imaging system perform a perspective projection, which is basically the camera model used in computer vision when a camera needs to be modeled and in simple graphics rendering pipelines.</p>
+<section id="sec-chpt-imaging-optics-lens-gauss" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-gauss"><span class="header-section-number">11.3.1</span> Image Formation with an Ideal Lens</h3>
+<p>What is the imaging process of a convex lens? How do we model the behavior of a (convex) lens? We can model this using the basic geometrical optics. <a href="#fig-lens_equation" class="quarto-xref">Figure&nbsp;<span>11.4</span></a> shows the setup. Assume we have a convex lens, which is made of two spherical surfaces combined together The curvatures of the two surfaces are <span class="math inline">\(R_1\)</span> (right surface) and <span class="math inline">\(R_2\)</span> (left surface). The two surfaces are separated by a distance <span class="math inline">\(d\)</span>, which we call the thickness of the lens. The refractive indices of the air and the lens are <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>, respectively. The goal is to calculate, for a ray originating from a distance <span class="math inline">\(u\)</span> on the optical axis in the scene and traveling in a direction that subtends an angle <span class="math inline">\(\theta\)</span> with the optical axis, what happens when it reaches the other side.</p>
+<div id="fig-lens_equation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lens_equation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lens_equation.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lens_equation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.4: The setup to derive the lens maker’s equation, which requires two assumptions: the thin lens assumption and paraxial assumption.
+</figcaption>
+</figure>
+</div>
+<p>We will apply the Snell’s law at the two interfaces, essentially tracing the ray through the lens. At the first interface, we have:</p>
+<p><span class="math display">\[
+\begin{align}
+    n_1 \sin\alpha &amp;= n_2 \sin{\beta}, \\
+    \alpha &amp;= \theta_1 + \mu_1, \\
+    \beta &amp;= \mu_1 - \phi, \\
+    \sin\mu_1 &amp;= \frac{h_1}{R_1}, \\
+    \tan\theta_1 &amp;= \frac{h_1}{u}.
+\end{align}
+\]</span></p>
+<p>As the light travels inside the lens and reaches the second interface, we have:</p>
+<p><span class="math display">\[
+\begin{align}
+    n_2 \sin\delta &amp;= n_1 \sin{\gamma}, \\
+    \delta &amp;= \mu_2 + \phi, \\
+    \gamma &amp;= \mu_2 + \theta_2, \\
+    \sin\mu_2 &amp;= \frac{h_2}{R_2}, \\
+    \tan\theta_2 &amp;= \frac{h_2}{v}.
+\end{align}
+\]</span></p>
+<p>Now, we are going to make two assumptions. First, we will assume that the lens is very thin; the thickness <span class="math inline">\(d\)</span> is very small. As a result, <span class="math inline">\(h_1 \approx h_2\)</span>. This is called the <strong>thin-lens assumption</strong>. Second, we will assume that the ray stays close to the optical axis as it travels. Such rays are <strong>paraxial rays</strong>, and this assumption is called the <strong>paraxial assumption</strong>. That is, <span class="math inline">\(\theta_1, \theta_2, \alpha, \beta, \gamma, \delta, \mu_1, \text{and~} \mu_2\)</span> are very small angles, for which we can apply the usual small-angle approximation in trigonometry, e.g., <span class="math inline">\(\sin(\alpha) \approx \tan(\alpha) \approx \alpha\)</span> and <span class="math inline">\(\cos(\alpha) = 1\)</span>.</p>
+<p>Using these two assumptions and through a little algebra, we will get:</p>
+<p><span id="eq-lmeq_1"><span class="math display">\[
+\begin{align}
+    \frac{n_2 - n_1}{n_1}(\frac{1}{R_1} + \frac{1}{R_2}) = (\frac{1}{u} + \frac{1}{v}).
+\end{align}
+\tag{11.2}\]</span></span></p>
+<p>This is called the <strong>Lens Maker’s Equation</strong>. Critically, observe that <span class="math inline">\(v\)</span> depends only on <span class="math inline">\(u\)</span> regardless of the path the ray takes (for a given lens with a particular set of <span class="math inline">\(n_1, n_2, R_1, \text{and~} R_2\)</span>). Therefore, all rays originating from an on-axis point will converge at the same point on the other side of the optical axis. This is crucial, because it means we can place a single detector <strong>Q</strong> (e.g., a pixel) on the imaging side (right side of the lens in this diagram) to capture all the rays from the point <strong>P</strong>. In other words, if we place the detector at <strong>Q</strong>, the point <strong>P</strong> would be <em>in focus</em>. In fact, you can show that this is true for all points in space, not just on-axis points: all the rays originating from a point on one side of the lens will converge to another point on the other side of the lens. In reality, of course, only paraxial rays with a thin lens follow this.</p>
+<p>Now, if the ray originates from infinity (as if it is parallel to the optical axis), where <span class="math inline">\(u = \infty\)</span>, we have</p>
+<p><span id="eq-lmeq_2"><span class="math display">\[
+\begin{align}
+    \frac{1}{v} = \frac{n_2 - n_1}{n_1}(\frac{1}{R_1} + \frac{1}{R_2}) := \frac{1}{f}.
+\end{align}
+\tag{11.3}\]</span></span></p>
+<p>This allows us to derive the position <span class="math inline">\(v\)</span> where a parallel ray intersects with the optical axis. We define that position as the <strong>focal length</strong> <span class="math inline">\(f\)</span> of the imaging system.</p>
+<p>Plugging <a href="#eq-lmeq_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> into <a href="#eq-lmeq_1" class="quarto-xref">Equation&nbsp;<span>11.2</span></a> gives us the familiar <strong>Gaussian Lens Equation</strong>:</p>
+<p><span id="eq-gse"><span class="math display">\[
+\begin{align}
+    \frac{1}{u} + \frac{1}{v} = \frac{1}{f}.
+\end{align}
+\tag{11.4}\]</span></span></p>
+<p>Under the ideal thin lens and paraxial approximation, the ray-tracing diagram is simplified to the one depicted in <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>, where:</p>
+<ul>
+<li>rays parallel to the optical axis always pass through the focal point (which has a distance <span class="math inline">\(f\)</span> to the optical center) on the other side;</li>
+<li>rays passing through the focal point will be parallel on the other side;</li>
+<li>a ray passing through the optical center does not change its direction if the lens is symmetric; otherwise the incident ray at the first interface is parallel to that leaving the second interface as if the ray has been shifted.</li>
+</ul>
+<div id="fig-thin_lens" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thin_lens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/thin_lens.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thin_lens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.5: Under an ideal thin lens and paraxial approximation, the ray-tracing diagram can be simplified so that points at the same depth (<span class="math inline">\(u\)</span>) are all in focus at the same depth (<span class="math inline">\(v\)</span>) on the other side of the lens. The chief ray is the ray that passes the center of the aperture, which is assumed to coincide with the optical center (not shown). The magnification of the lens is <span class="math inline">\(M = H'/H\)</span>, and the field-of-view (FoV) of the system is <span class="math inline">\(2\theta\)</span> (assuming that <span class="math inline">\(H'\)</span> is half of the sensor, which is symmetric).
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>11.5</span></a> shows that if we place an image sensor in the image space (right side of the lens) at <span class="math inline">\(v\)</span>, all the points at the depth <span class="math inline">\(u\)</span> in the world space (left side of the lens) will be in focus. Another important point <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>11.5</span></a> makes clear is that, if in focus, the captured image is the geometrically the same as the one captured by a pinhole camera (but of course brighter given the same exposure time because more rays are captured): the optical center of the lens is the pinhole here <em>geometrically</em>.</p>
+<section id="accommodation" class="level4">
+<h4 class="anchored" data-anchor-id="accommodation">Accommodation</h4>
+<p>Let’s assume that <span class="math inline">\(R_1 = R_2 = R\)</span>; <a href="#eq-lmeq_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> suggests that if we reduce <span class="math inline">\(R\)</span> (increase the curvature of the lens surface), <span class="math inline">\(f\)</span> reduces as well. Then look at <a href="#eq-gse" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>; if <span class="math inline">\(f\)</span> reduces and we fix the object at the distance <span class="math inline">\(u\)</span>, for that object to be in focus we have to reduce <span class="math inline">\(v\)</span>, i.e., move the sensor plane closer to the lens. That is, if we curve the lens surfaces more, rays focus closer to the optical center as if the lens bends light more, and vice versa.</p>
+<p>Another way to think of this is that if we cannot move the relative distance between the sensor and the lens, to focus on an object (in the world space) closer to the lens (<span class="math inline">\(u\)</span> reduces), the lens focal length <span class="math inline">\(f\)</span> has to reduce too. This is exactly what our eye lens does: to focus on closer objects, the lens curves more to gain more light-bending power. For that to take place, the ciliary muscle would have to contract. Conversely, to focus on farther objects, the ciliary muscle relaxes, which reduces the curvature of the lens, which now bends light less and, thus, allows us to focus on farther objects. Changing the focal length through changing the curvature is called <strong>accommodation</strong>. As one gets older, the ciliary muscle is not as effective in contracting the lens. That is why one uses the reading glasses, which provide additional light-bending power to assist that of the eye lens. Recall, from <a href="hvs-intro.html#sec-chpt-hvs-percept-optics-goal" class="quarto-xref"><span>Section 2.2.1</span></a>, that while the lens is flexible, most of the light refraction was done at the air-cornea interface because of the large difference in the refractive index there.</p>
+<p>In cameras, unless you are using liquid lenses, the curvature of each lens surface stays fixed once fabricated, so how do we focus on objects closer or farther than we are currently focused on? The answer is we move the lens, essentially solving for <span class="math inline">\(v\)</span> given a new <span class="math inline">\(u\)</span> using <a href="#eq-gse" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>. This is essentially how auto-focus works in cameras. Alternatively, we could also move the sensor, but in practice the sensor stays fixed (e.g., attached to the back of the camera housing), and it is the lens that is movable.</p>
+</section>
+</section>
+<section id="sec-chpt-imaging-optics-lens-fov" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-fov"><span class="header-section-number">11.3.2</span> Magnification vs.&nbsp;Field-of-View</h3>
+<p>Using simple trigonometry in <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>, we can relate the size of an object in the world space (<span class="math inline">\(H\)</span>) and that in the image space (<span class="math inline">\(H'\)</span>):</p>
+<p><span id="eq-mag"><span class="math display">\[
+\begin{align}
+    M = \frac{H'}{H} = \frac{f}{u-f} = \frac{1}{\frac{u}{f}- 1},
+\end{align}
+\tag{11.5}\]</span></span></p>
+<p>where <span class="math inline">\(M\)</span> is the magnification of the imaging system. We can see that <span class="math inline">\(M\)</span> increases as <span class="math inline">\(f\)</span> does. That is why telephoto cameras, those that you see in, for instance, sports broadcasting, are very long: they need to be long to accommodate a large focal length so that they can magnify objects that are very small (far away).</p>
+<p>What do we sacrifice when we increase magnification by increasing the focal length? The FoV reduces. The FoV of an imaging system is the extent of the observable world that can be captured by the sensor. Let’s use <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>11.5</span></a> to derive this, and for simplicity’s sake, let’s just assume that the sensor size is <span class="math inline">\(2H'\)</span> and is symmetric about the optical axis, i.e., the object at <span class="math inline">\(u\)</span> is just fully captured by the sensor. The figure omits the upper half of the sensor. The FoV is defined as <span class="math inline">\(2\theta = 2 \times \arctan(H'/v)\)</span>.</p>
+<div id="fig-fov" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fov.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.6: Increasing the focal length increases the magnification but reduces the FoV. For simplicity, we use a pinhole geometry here, but both the pinhole camera and the ideal thin lens (with the paraxial approximation) perform the same perspective projection, leading to the same image formation geometrically.
+</figcaption>
+</figure>
+</div>
+<p>Now for the same object at <span class="math inline">\(u\)</span>, if <span class="math inline">\(f\)</span> increases, <span class="math inline">\(v\)</span> has to increase as well for the object to be captured in focus. As a result, <span class="math inline">\(\theta\)</span> reduces, so does the FoV. This intuitively makes sense: if an object is magnified more on the sensor, which has a fixed size, the amount of <em>other</em> objects that can be captured naturally reduces, hence the reduction of the FoV. As an example, the two imaging systems in <a href="#fig-fov" class="quarto-xref">Figure&nbsp;<span>11.6</span></a> differ only in the focal length: the one on the left has a shorter focal length <span class="math inline">\(f\)</span> and hence a shorter sensor-lens distance <span class="math inline">\(v\)</span> (for the same object to be captured in focus), which translates to a larger magnification and narrower FoV.</p>
+<p><a href="#fig-focal_length" class="quarto-xref">Figure&nbsp;<span>11.7</span></a> shows a few concrete examples of how the focal length affects magnification and FoV. The fisheye lens does not perform a perspective projection (straight lines in the world space are not straight in the image space), so its image formation is not directly comparable, but we can see that it has the widest FoV. Other seven photons are taken with the same sensor but different lenses that differ in their focal lengths.</p>
+<div id="fig-focal_length" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-focal_length-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/focal_length.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-focal_length-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.7: The effect of focal length on both magnification and FoV; adapted from <span class="citation" data-cites="canon2006ef">Canon (<a href="references.html#ref-canon2006ef" role="doc-biblioref">2006, p. 123–25</a>)</span>. The fisheye lens does not perform a perspective projection, so its FoV is not directly comparable with others.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-chpt-imaging-optics-lens-mag" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-mag"><span class="header-section-number">11.3.3</span> Magnifying Glasses and Projection Lenses</h3>
+<p>The Gaussian lens equation also helps us understand the geometry behind magnifying glasses and the projection lenses in AR/VR devices and cinematography.</p>
+<p>When <span class="math inline">\(u &lt; f\)</span> in <a href="#eq-gse" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>, <span class="math inline">\(v\)</span> is negative. <a href="#fig-virtual_image" class="quarto-xref">Figure&nbsp;<span>11.8</span></a> (top) shows the geometry of this case. As a result, the object does not form a physical image in the image space, because rays from a point on the object do not converge to a point in the image space. Instead, those rays <em>diverge</em>, and the extension of those rays actually converge at a point farther away from the lens in the world space. Now, if our eye is at the right place, i.e., the diverging rays converge on the retina after traveling through the eye lens, as is the case in <a href="#fig-virtual_image" class="quarto-xref">Figure&nbsp;<span>11.8</span></a> (top), we will see a magnified object. In this case, the lens acts as a magnifying glass.</p>
+<div id="fig-virtual_image" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-virtual_image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/virtual_image.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-virtual_image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.8: Top: the geometry of a magnifying glass; adapted from <span class="citation" data-cites="hecht2016optics">Hecht (<a href="references.html#ref-hecht2016optics" role="doc-biblioref">2016, figs. 5.102 (c)</a>)</span>. Bottom: a magnifying glass projects a small and close real image to a larger and farther virtual image; VR devices all have a pair of magnifying glasses to create a virtual display that our eye lenses can focus on.
+</figcaption>
+</figure>
+</div>
+<p>The magnifying glass functionally 1) projects a small physical object to an apparently larger virtual object that is 2) farther away from the eye. These two functionalities are exactly what a project lens in AR/VR need. <a href="#fig-virtual_image" class="quarto-xref">Figure&nbsp;<span>11.8</span></a> (bottom) illustrates a projection lens in VR; the optics in AR are much more complicated, but the basic idea of a projection lens applies there too. In AR/VR devices, the actual display is very close to the eye, to the point that no eye lens can actually be accommodated to focus on the display (the lens would have to be curved so unrealistically much). Of course the display itself is very small, so seeing details is hard, too. The solution is to place a convex lens between the display and the eye, and the three components are so positioned that the display is closer to the lens than a focal length. As a result, the actual, physical display is projected to a much larger virtual display that is also farther away, to which our eye lens could actually accommodate. When you watch a movie in a cinema on a large screen or use a home projector, there is a projection lens sitting at the back doing the same thing.</p>
+</section>
+<section id="sec-chpt-imaging-optics-lens-dof" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-dof"><span class="header-section-number">11.3.4</span> Depth of Field</h3>
+<p>What if the sensor is not correctly positioned according to the Gaussian lens equation (<a href="#eq-gse" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>)? The object/point being imaged will be out of focus, and the result is a blur on the image. <a href="#fig-dof" class="quarto-xref">Figure&nbsp;<span>11.9</span></a> shows three cases, where the sensor (5) and the lens are fixed in position (4), under which objects at plane 2 (with a distance <span class="math inline">\(T\)</span> to the lens) would be in focus, but both object 1 and object 3 would be out of focus because rays originating from them will be spread across a small area on the sensor plane, looking like blurs. The shape of the blur is called the <strong>bokeh</strong>, which is mostly determined by the aperture shape (and also aberrations introduced by the imaging system, which we will see later). If the aperture is a circle, the bokeh would be one too, and we call such a blur the <strong>circle of confusion</strong> (CoC).</p>
+<div id="fig-dof" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dof-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/dof.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dof-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.9: The setup to derive the depth-of-field (DoF) equation; adapted from <span class="citation" data-cites="dofaperture">BenFrantzDale (<a href="references.html#ref-dofaperture" role="doc-biblioref">2010a</a>)</span>. CoC: circle of confusion.
+</figcaption>
+</figure>
+</div>
+<p>As the CoC increases, eventually it becomes objectionable to the human visual system. Exactly what that CoC threshold depends on a number of factors that we will omit here (e.g., how the image will be scaled when being viewed, the contrast sensitivity of the human visual system, etc.), but let’s just use <span class="math inline">\(C\)</span> to denote that threshold for now. You can see that if an object is placed slightly before or after the depth <span class="math inline">\(T\)</span> (where the object is perfectly in focus), as long as the resulting CoC is smaller than <span class="math inline">\(C\)</span>, our visual system would still regard it as in focus. The distance between the nearest and farthest objects whose CoCs are still within <span class="math inline">\(C\)</span> is called the depth-of -field (DoF) of the system.</p>
+<p>Using geometrical optics and with a few assumptions, we can show that the DoF is given by:</p>
+<p><span id="eq-dof"><span class="math display">\[
+\begin{align}
+    DoF \approx \frac{2CT^2N}{f^2} = \frac{2CT^2}{fA},
+\end{align}
+\tag{11.6}\]</span></span></p>
+<p>where <span class="math inline">\(T\)</span> is the distance of the object that is perfectly in focus, <span class="math inline">\(f\)</span> is the focal length, and <span class="math inline">\(N = f/A\)</span> is called the <strong>F-number</strong> of the camera, which is defined as the ratio between the focal length and the aperture size (<span class="math inline">\(A\)</span>).</p>
+<p>Given <a href="#eq-dof" class="quarto-xref">Equation&nbsp;<span>11.6</span></a>, there are three ways to increase the DoF. First, we can increase <span class="math inline">\(T\)</span>, i.e., focus on objects that are farther away (e.g., landscape photography). Second, we can decrease the focal length, but just keep in mind that changing the focal length will also affect the magnification and FoV as discussed in <a href="#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 11.3.1</span></a>. Finally, we can also reduce the aperture size, which would increase the F-number. Changing the aperture size, however, will have implications on other aspects of the imaging quality. Specifically, a small aperture increases the exposure time and, thus, motion blur.</p>
+<p>A larger DoF would mean that objects within a larger depth range could be simultaneously in focus. A shallow DoF, however, is at many times desirable. The “portrait mode” in many modern smartphone cameras essentially captures photos with a shallow DoF. Intuitively, one can invert all three methods above to obtain a shallow DoF, but what if the hardware does not permit us to do that? For instance, what if we cannot increase the aperture size and focal length but want to capture a close object with a shallow DoF?</p>
+<p>Computation comes to the rescue. There is a notion of <strong>Synthetic DoF</strong>, which uses post-processing algorithms to emulate a shallow DoF. For instance, one might first capture an all-in-focus photo, estimate the depth for each pixel in the photo (including the pixels that correspond to the object that we do want to have in focus), then selectively blur pixels that are farther or closer than the objects of interest. This is what the portrait mode in Google’s Pixel phone does <span class="citation" data-cites="wadhwa2018synthetic">(<a href="references.html#ref-wadhwa2018synthetic" role="doc-biblioref">Wadhwa et al. 2018</a>)</span>.</p>
+<p>Synthetic DoF is a classic example of computational photography, where the imaging system is largely assisted by computational algorithms (to reduce the design complexities of the imaging hardware). In this case, computation is required mainly to estimate depth. In turns out that auto-focus in cameras is all about depth estimation, which, again, usually involves some form of collaboration between software and hardware.</p>
+</section>
+<section id="sec-chpt-imaging-optics-lens-abe" class="level3" data-number="11.3.5">
+<h3 data-number="11.3.5" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-abe"><span class="header-section-number">11.3.5</span> Aberration</h3>
+<p>When building an imaging system, we ideally want a point in the physical space to be captured as a single point in the image space. In our derivation of the Gaussian lens equation in <a href="#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 11.3.1</span></a>, this is indeed the case, so if the sensor is correctly positioned, we will capture a sharp image of the point. This derivation, however, assumes an ideal thin lens and considers only paraxial rays. It turns out that the equation still holds even if the lens is thick (i.e., the distance between the two surfaces is not negligible), even though the definition of the focal length would have to be slightly more complicated than <a href="#eq-lmeq_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>.</p>
+<p>The real complication is that in practice we cannot ignore non-paraxial rays (i.e., rays that do not stay close to the optical axis), in which case rays from a single point (or from infinitely far away) will not all converge at a single point in the image space, resulting in a blur. Mathematically, this means we cannot invoke the small angle approximations. For instance, using Taylor expansion, we have:</p>
+<p><span class="math display">\[
+\begin{align}
+    \sin\theta = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots.
+\end{align}
+\]</span></p>
+<p>When considering paraxial rays, we can afford to consider only the first term, but when <span class="math inline">\(\theta\)</span> is large, we have to include other terms. When considering the second term of Taylor series expansion (compared to considering only the first term), five forms of <strong>aberrations</strong> show up: spherical aberration, coma, astigmatism, field curvature, distortion. Geometrical optics that consider the second term are called the <strong>third-order theory</strong>, as opposed to the <strong>first-order theory</strong> or <strong>Gaussian optics</strong> that considers only the first term.</p>
+<section id="spherical-aberration" class="level4">
+<h4 class="anchored" data-anchor-id="spherical-aberration">Spherical Aberration</h4>
+<p>It turns out that for a spherical lens, non-paraxial rays originating from a point on the optical axis will not converge at the same point. This can be shown by going through the derivation of the Gaussian lens equation (<a href="#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 11.3.1</span></a>) but this time without the small angle approximations. We would then see that <span class="math inline">\(v\)</span> depends not only on <span class="math inline">\(u\)</span> and <span class="math inline">\(f\)</span> but also on the direction of the ray leaving <span class="math inline">\(u\)</span>. By extension, not all rays parallel to the optical axis (especially those that are far away from the optical axis) will focus at the same point. This is called the spherical aberration, which is illustrated in <a href="#fig-sa_coma" class="quarto-xref">Figure&nbsp;<span>11.10</span></a> (left).</p>
+<div id="fig-sa_coma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sa_coma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/sa_coma_new.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sa_coma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.10: Left: spherical aberration; from <span class="citation" data-cites="spherical_aberration">Mglg (<a href="references.html#ref-spherical_aberration" role="doc-biblioref">2008</a>)</span>. Right: coma; from <span class="citation" data-cites="coma">Glrx (<a href="references.html#ref-coma" role="doc-biblioref">2018</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Mirrors have spherical aberrations too. Perfectly spherically curved mirrors cannot focus parallel lights; parabolic mirrors are free from spherical aberrations. One might venture to guess that’s why Archimedes could not have used mirrors to burn Roman ships, because they could not have had the skills to make parabolic mirrors. The burning mirror story is more likely a story than a fact. There are just too many technical reasons why that would have been very hard. For instance, it would have taken a very large mirror given the intensity of sunlight and the distance of the ships, and the ship would have to be perfectly positioned at the focal point <span class="citation" data-cites="burningmirrors mills1992reflections">(<a href="references.html#ref-burningmirrors" role="doc-biblioref">Chris Rorres n.d.</a>; <a href="references.html#ref-mills1992reflections" role="doc-biblioref">Mills and Clift 1992</a>)</span>.</p>
+</section>
+<section id="coma" class="level4">
+<h4 class="anchored" data-anchor-id="coma">Coma</h4>
+<p>While spherical aberration is concerned with rays from on-axis points or parallel rays that are also parallel to the optical axis, another aberration called coma or comatic aberration is concerned with rays from off-axis points or, as illustrated in <a href="#fig-sa_coma" class="quarto-xref">Figure&nbsp;<span>11.10</span></a> (right), parallel rays that have an oblique incident angle w.r.t. the optical axis. We can show that rays from an off-axis point focus on different points and, by extension, parallel rays that are not parallel to the optical axis do not focus on the same point. This aberration is called coma because the resulting blur looks like a coma.</p>
+</section>
+<section id="astigmatism" class="level4">
+<h4 class="anchored" data-anchor-id="astigmatism">Astigmatism</h4>
+<p>Yet another form of aberration is called astigmatism. It is also concerned with points off the optical axis. In particular, we are concerned with rays propagated in two planes. The first plane is one defined by the object point and the optical axis and is called the <strong>tangential plane</strong> or the <strong>meridional plane</strong>. The other plane is one that is orthogonal to the meridional plane and is called the <strong>sagittal plane</strong>. It turns out that rays from the two planes focus on different points on the optical axis. This is illustrated in <a href="#fig-ast" class="quarto-xref">Figure&nbsp;<span>11.11</span></a> (left), where all the rays in the meridional (M) plane focus at <span class="math inline">\(B_M\)</span> and all the rays in the sagittal (S) plane focus at <span class="math inline">\(B_S\)</span>.</p>
+<div id="fig-ast" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/ast.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.11: Left: an illustration of astigmatism; adapted from <span class="citation" data-cites="ast">Michael Schmid (<a href="references.html#ref-ast" role="doc-biblioref">2008</a>)</span>. Right: the images captured when the sensor plane is placed at different positions; from <span class="citation" data-cites="ast_ex">Tallfred (<a href="references.html#ref-ast_ex" role="doc-biblioref">2005</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The blur we get depends on where we place the sensor plane, and some examples are shown in <a href="#fig-ast" class="quarto-xref">Figure&nbsp;<span>11.11</span></a> (right). If we place the sensor at <span class="math inline">\(B_M\)</span>, a single point source gets imaged as a horizontal/lateral “line” due to the spread of the rays in the S plane. We say a line, but it is not actually a line because rays in other planes (other than the M and S planes) will not focus at <span class="math inline">\(B_M\)</span> and still contribute to the image formation, so the resulting image is really a very much elongated ellipse. If the object is not a point but, say, spans a plane (top-left), the resulting image has a somewhat horizontal/lateral blur as if the in-focus image is smeared laterally (bottom-right).</p>
+<p>As we move the sensor beyond <span class="math inline">\(B_M\)</span>, the elongated ellipse gradually expands vertically and then becomes circular, and then shrinks laterally; eventually, when the sensor is placed at <span class="math inline">\(B_S\)</span>, we get a vertical “line” (an elongated ellipse along the vertical axis) because, mainly, of the rays in the M plane. The resulting image would appear to have a somewhat vertical blur as if the in-focus area were smeared vertically (bottom-left). The somewhat circular blur when the sensor plane is in-between <span class="math inline">\(B_M\)</span> and <span class="math inline">\(B_S\)</span> means that the resulting image (top-right) appears as if the in-focus image is smeared in all directions.</p>
+</section>
+<section id="field-curvature" class="level4">
+<h4 class="anchored" data-anchor-id="field-curvature">Field Curvature</h4>
+<p>If an imaging system is free of all the previous aberrations, a single point in the world space corresponds to a single point in the image space. However, a plane of points in the world space would not correspond to a plane in the image space. In fact, it would correspond to a curved surface. If we used a planar sensor for imaging, we would get a blurred image. This form of aberration is called field curvature, as illustrated in <a href="#fig-fc" class="quarto-xref">Figure&nbsp;<span>11.12</span></a> (left).</p>
+<div id="fig-fc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fc_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.12: Left: a manifestation of field curvature; from <span class="citation" data-cites="fc">BenFrantzDale (<a href="references.html#ref-fc" role="doc-biblioref">2010b</a>)</span>. Right: focal plane of Kepler space telescope is curved to mitigate field curvature; from <span class="citation" data-cites="ksp_focal_plane">HandWiki (<a href="references.html#ref-ksp_focal_plane" role="doc-biblioref">2024</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>While it might be difficult to build a single curved sensor, it is relatively easy to assemble a set of sensors on a curved surface. The image-sensor array of the Kepler space observatory is curved to compensate for the field curvature, as shown in <a href="#fig-fc" class="quarto-xref">Figure&nbsp;<span>11.12</span></a> (right) Interestingly, you might recall that the human retina is not planar either; it is curved. This to some extent helps mitigate the effect of field curvature.</p>
+</section>
+<section id="distortion" class="level4">
+<h4 class="anchored" data-anchor-id="distortion">Distortion</h4>
+<p>Even when all the previous aberrations are somehow corrected, the image would look sharp but distorted. Distortion does not introduce blurs. Rather, it is a result of the variation of magnification as a function of the distance to the optical axis (object height).</p>
+<div id="fig-distortion" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distortion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/distortion_new.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distortion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.13: A comparison of pincushion (positive) distortion and barrel (negative) distortion; from <span class="citation" data-cites="pincushion">WolfWings (<a href="references.html#ref-pincushion" role="doc-biblioref">2008b</a>)</span> and <span class="citation" data-cites="barrel">WolfWings (<a href="references.html#ref-barrel" role="doc-biblioref">2008a</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#eq-mag" class="quarto-xref">Equation&nbsp;<span>11.5</span></a> suggests that magnification depends only on the object distance to the lens <span class="math inline">\(u\)</span>, but in reality the magnification depends also on the object height. We can imagine that for a point that is distant from the optical axis, rays originating from that point will not be paraxial rays. If the magnification increases with the height, we have a positive or <strong>pincushion distortion</strong>; otherwise, we have a negative or <strong>barrel distortion</strong>. The two forms of distortion are illustrated in <a href="#fig-distortion" class="quarto-xref">Figure&nbsp;<span>11.13</span></a>.</p>
+</section>
+<section id="chromatic-aberration" class="level4">
+<h4 class="anchored" data-anchor-id="chromatic-aberration">Chromatic Aberration</h4>
+<p>All the aberrations we have discussed before are present even if we consider only a single wavelength; they are called monochromatic aberrations. When we consider lights that comprise a mixture of different wavelengths, <strong>chromatic aberration</strong> shows up. Chromatic aberration arises fundamentally because the refractive index is a function of wavelength; after all, that is how Newton was able to disperse white light and show the spectrum. <a href="#fig-chromatic_aberration" class="quarto-xref">Figure&nbsp;<span>11.14</span></a> (left) illustrates the issue of chromatic adaptation, which introduces “colorful” blurs. <a href="#fig-chromatic_aberration" class="quarto-xref">Figure&nbsp;<span>11.14</span></a> (middle) shows how the refractive index of BK7 glass (which is commonly used in lenses) changes with wavelength.</p>
+<div id="fig-chromatic_aberration" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromatic_aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/chromatic_aberration.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromatic_aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.14: Left: illustration of chromatic adaptation; adapted from <span class="citation" data-cites="ca">Bob Mellish (<a href="references.html#ref-ca" role="doc-biblioref">2006</a>)</span>. Middle: refractive index vs.&nbsp;wavelength for BK7 glass; from <span class="citation" data-cites="sellmeier_equ">DrBob (<a href="references.html#ref-sellmeier_equ" role="doc-biblioref">2007</a>)</span>. Right: sRGB white as displayed by a 4th-generation iPad Pro; the image is captured when focusing on the green subpixel, so other subpixels are out of focus.
+</figcaption>
+</figure>
+</div>
+<p>As another example, I took a picture of my 4th-gen iPad Pro when it displayed sRGB white. I intentionally focused on the green subpixels. As a result, the other two subpixels are out of focus — due to chromatic aberration; see <a href="#fig-chromatic_aberration" class="quarto-xref">Figure&nbsp;<span>11.14</span></a> (right).</p>
+</section>
+<section id="correction-for-aberrations" class="level4">
+<h4 class="anchored" data-anchor-id="correction-for-aberrations">Correction for Aberrations</h4>
+<p>One of the main tasks of optical design, especially for imaging lenses, is to correct for aberrations. There are two main approaches: non-spherical (aspherical) lenses and compound lenses.</p>
+<p>Optical designers often use multiple (compound) lenses in combination to correct various aberrations. For instance, chromatic doublets or apochromatic triplets are specifically designed to counteract chromatic aberration. One obvious downside of compound lenses is form factor, which becomes an issue for systems like Augmented Reality that need to be very compact.</p>
+<p>One promising technology that people are currently investigating is called <strong>freeform optics</strong>. Traditional aspherical lenses, while deviating away from a spherical design and can avoid compound lenses in many cases, are still rotationally symmetric, so they are still limited in what they can do. Freeform optics take this concept further by allowing surfaces that lack rotational symmetry, providing additional degrees of freedom in optical design. This enables better correction of higher-order aberrations, such as coma and astigmatism, which aspheric lenses alone may not fully eliminate.</p>
+</section>
+</section>
+<section id="sec-chpt-imaging-optics-lens-blur" class="level3" data-number="11.3.6">
+<h3 data-number="11.3.6" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-blur"><span class="header-section-number">11.3.6</span> Not All Blurs are Created Equal</h3>
+<p>Ideally a point source in the scene should really be captured as a single point in the image plane, but we have seen a few ways that a blur can occur. But not all blurs are created equal; it is perhaps useful to review the different causes of a blur.</p>
+<p>Blurs can result from aberrations, diffraction, defocus, and motion. We have just seen blurs from aberrations, but just note that not all aberrations result in blurs, an example of which would be distortion. Assuming an aberration-free imaging system, if the sensor is not placed as the focal plane, we could get a de-focus blur, as we have seen in the DoF section (<a href="#sec-chpt-imaging-optics-lens-dof" class="quarto-xref"><span>Section 11.3.4</span></a>). Note that a pinhole camera would never have defocus blur, because its DoF is infinite (using <span class="math inline">\(A=0\)</span> in <a href="#eq-dof" class="quarto-xref">Equation&nbsp;<span>11.6</span></a>).</p>
+<p>Even if the sensor is placed as the focal plane, but if the object is motion, we would most likely get motion blur, because the exposure time is finite — unless of course the exposure time is so short that the object motion, when projected on the sensor plane, is within the pixel width. The longer the exposure time, the more pronounced the motion blur becomes.</p>
+<p>Finally, we have blurs from diffraction, which, as we have discussed in <a href="#sec-chpt-imaging-optics-pinhole-diffrac" class="quarto-xref"><span>Section 11.2.3</span></a>, is fundamentally a result of the quantum nature of light. If an imaging system is free from all previous forms of blur<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, we say it is “diffraction limited”, because its imaging capability (the ability to avoid blurs) is limited only by diffraction.</p>
+</section>
+<section id="sec-chpt-imaging-optics-lens-rad" class="level3" data-number="11.3.7">
+<h3 data-number="11.3.7" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-rad"><span class="header-section-number">11.3.7</span> Radiometric Analysis of Lens</h3>
+<p>What does a convex lens do to the radiance of incident light? We know that the radiance of a ray does not change as the ray propagates through space along a particular direction, but what does a lens do to the radiance? This is an important problem in practice: the lens essentially transforms the light field in the physical scene to the light field inside the camera, which means if we know the latter <em>and</em> the radiance transformation done by the lens, we can infer the light field in the scene.</p>
+<p>The way to reason about it is to think of a lens as performing a sequence of two refractions at its two surfaces, so we will have to first reason about, at each surface, what happens to the radiance and then consider the composite effect of the two surfaces.</p>
+<p>With a little radiometry (which we will omit but refer to <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4.1.6)</span> for the derivation), we can show that the radiance after refraction <span class="math inline">\(L_r\)</span> relates to the incident radiance <span class="math inline">\(L_i\)</span> by:</p>
+<p><span class="math display">\[
+\begin{align}
+    L_r = n^2 L_i,
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the relative refractive index of the lens/medium to the air. Usually <span class="math inline">\(n &gt; 1\)</span>, which means after refraction the radiance increases. This makes sense because after refraction from the air to, say, glass, the set of incident rays maps to a smaller solid angle.</p>
+<p>What happens in the second surface? The same thing except the relative refractive index is now <span class="math inline">\(1/n\)</span>, since we are now going from the medium to the air:</p>
+<p><span class="math display">\[
+\begin{align}
+    L_o = \frac{1}{n^2} L_r,
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(L_o\)</span> is the radiance leaving the lens. Combining the two equations above, we can see <span class="math inline">\(L_o = L_i\)</span>, meaning the lens does not change the radiance. This is a nice result, because it essentially means we can simply trace rays through a lens and be reasonably sure that the ray radiance does not change.</p>
+<p>Intuitively, this conclusion is obviously <em>wrong</em>: some energy of incident light is absorbed/reflected away by the lens, so the energy leaving the lens is definitely smaller than that entering the lens. So the derivation above is a bit of a simplification, because we have assumed that no reflection takes place at each surface and no absorption by the lens. That said, this invariance largely still holds if we confine ourselves to near-normal angles of incidence and assume typical materials for lenses (which are mostly transparent with little absorption).</p>
+</section>
+</section>
+<section id="sec-chpt-imaging-optics-modeling" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-chpt-imaging-optics-modeling"><span class="header-section-number">11.4</span> Computational Modeling Using Linear System Theory</h2>
+<p>How do we model the image formation process of an image system? We could trace rays out of a point in the world space, but it has many limitations. First, we could afford to sample only a few rays for a point. Second, we could afford to sample only a few points on an object. Third, things like diffraction that go beyond geometrical optics need special treatment if not straight up impossible. How do we effectively model the image formed on the sensor plane?</p>
+<section id="sec-chpt-imaging-optics-modeling-idea" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="sec-chpt-imaging-optics-modeling-idea"><span class="header-section-number">11.4.1</span> Basic Idea of a Linear System Theory</h3>
+<p>A common modeling strategy is to first characterize the response of the imaging system against a <em>single point source</em>. If we assume that the system is <strong>linear and shift invariant</strong> (LSI), we can derive how the system responds to an arbitrarily complex object, which is treated as nothing more than a collection of (infinitely many) points, using the linear system theory. Let’s unpack this step by step.</p>
+<section id="point-spread-function" class="level4">
+<h4 class="anchored" data-anchor-id="point-spread-function">Point Spread Function</h4>
+<p>The response of a single point source is called the <strong>Point Spread Function</strong> (PSF) of the imaging system. How does the PSF look like? Ideally, a single point in the world space would be imaged as a single point in the image plane, so the corresponding PSF would be a Dirac delta function, but as we have discussed in <a href="#sec-chpt-imaging-optics-lens-blur" class="quarto-xref"><span>Section 11.3.6</span></a>, in reality the image of a single point would be blurred, whether it is because of diffraction, defocus, or aberration (assuming the point source is stationary).</p>
+<p><a href="#fig-psf" class="quarto-xref">Figure&nbsp;<span>11.15</span></a> (left) shows a few examples of the PSFs. The bottom-right corner shows a diffraction-limited PSF, which is essentially the Airy disk (but visualized as a 2D grayscale map). As we move vertically up, we add more spherical aberration to the system, and as we move to the right, we add more defocus to the system. <a href="#fig-psf" class="quarto-xref">Figure&nbsp;<span>11.15</span></a> (middle) shows a PSF of a system with astigmatism; this time the PSF is visualized in 3D rather than a 2D grayscale map. We can see that the PSF is not radially symmetric; rather, it is elongated along one dimension, which matches our intuition of astigmatism (see <a href="#fig-ast" class="quarto-xref">Figure&nbsp;<span>11.11</span></a>).</p>
+<div id="fig-psf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/psf_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.15: Left: PSF of a diffraction-limited system (bottom-left), with spherical aberration (vertically) and with defocus (horizontally); adapted from <span class="citation" data-cites="psf_ex">Mdf (<a href="references.html#ref-psf_ex" role="doc-biblioref">2005</a>)</span>. Middle: PSF (visualized in 3D) with astigmatism. Right: in a linear and shift-invariant imaging system, image formation is equivalent to a convolution using the PSF; from <span class="citation" data-cites="psf_conv">Mdf (<a href="references.html#ref-psf_conv" role="doc-biblioref">2006</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="linear-system" class="level4">
+<h4 class="anchored" data-anchor-id="linear-system">Linear System</h4>
+<p>Informally, if there are two inputs <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> to the system, say two points in the world space, and the responses to these two inputs, i.e., their respective PSFs, are <span class="math inline">\(H(x)\)</span> and <span class="math inline">\(H(y)\)</span>, the response of a linear system to a new input <span class="math inline">\(\alpha x + \beta y\)</span> would be <span class="math inline">\(\alpha H(x) + \beta H(y)\)</span>. <span class="math inline">\(\alpha x\)</span> means to scale the input <span class="math inline">\(x\)</span>’s value (e.g., irradiance of a point) by a factor of <span class="math inline">\(\alpha\)</span>.</p>
+<p>A linear system essentially means when we image two points simultaneously, the resulting image is equal to the sum of the individual image of each point. You can imagine how this would simplify our modeling later. In practice, an imaging system is linear when it interrogates non-coherent light, e.g., sunlight or OLEDs, rather than lasers.</p>
+</section>
+<section id="shift-invariant-system" class="level4">
+<h4 class="anchored" data-anchor-id="shift-invariant-system">Shift-Invariant System</h4>
+<p>An imaging system is shift invariant if its PSF of a point is invariant to the shifts of the point in the world space. This property allows us to use a single PSF to characterize the system.</p>
+<p>Of course, in reality a system is hardly shift-invariant. For instance, if we move a point away from or closer to the lens, we get different kinds of defocus blurs, so the point response depends on depth. Even if we shift a point within a single depth plane, the rays incident on the lens, leaving the lens, and, by extension, hitting the sensor plane would be different. Even ignoring aberrations, different incident angles result in different irradiance captured by the sensor plane (because of the Lambertian cosine law and is a form of “vignetting”).</p>
+<p>In general, however, shift invariance approximately holds if we assume that the object to be imaged is very far away from the lens (so the depth variation within an object is negligible with respect to the overall distance to the lens) and the imaging system has a relatively small FoV.</p>
+</section>
+</section>
+<section id="sec-chpt-imaging-optics-modeling-conv" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="sec-chpt-imaging-optics-modeling-conv"><span class="header-section-number">11.4.2</span> Modeling Image Formation in LSI Systems</h3>
+<p>Under the linear and shift-invariance assumptions, we can derive a simple but incredibly useful computational model for the image formation process, which is decoupled into two conceptual steps.</p>
+<p>In the first step, we calculate an ideal image <span class="math inline">\(I_{ideal}\)</span> formed by a pinhole imaging system, where the imaging system PSF is a delta function. Effectively, this means the imaging system has no diffraction/aberration and every (unoccluded) scene point is sharply in focus (no defocus blur).</p>
+<p>Geometrically, <span class="math inline">\(I_{ideal}\)</span> is a perspective projection of the 3D scene to the sensor plane. That is, each <span class="math inline">\((x, y)\)</span> point in this ideal image <span class="math inline">\(I_{ideal}\)</span> corresponds to a point <span class="math inline">\(P(x', y', z')\)</span> in the scene as if that scene point is captured through a pinhole (recall that geometrically an ideal thin lens performs the same projection as a pinhole system). This is shown in <a href="#fig-psf_conv" class="quarto-xref">Figure&nbsp;<span>11.16</span></a> (left). Radiometrically, the value of <span class="math inline">\(I_{ideal}(x, y)\)</span> is an irradiance quantity, representing the irradiance emitted from <span class="math inline">\(P(x', y', z')\)</span> that is captured at <span class="math inline">\(I_{ideal}(x, y)\)</span>. We will discuss in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 12.5</span></a> exactly how to calculate this irradiance.</p>
+<div id="fig-psf_conv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psf_conv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/psf_conv_new.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psf_conv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.16: Left: geometrically, the ideal image <span class="math inline">\(I_{ideal}\)</span> is a perspective projection of the scene, and radiometrically <span class="math inline">\(I_{ideal}(x, y)\)</span> corresponds to the irradiance from <span class="math inline">\(P(x', y', z')\)</span> that are captured by the imaging system. Right: the intuition behind why imaging in a LSI system is a convolution with the PSF.
+</figcaption>
+</figure>
+</div>
+<p>In the second step, we then using the PSF function <span class="math inline">\(f(\cdot)\)</span> to convolve <span class="math inline">\(I_{ideal}\)</span>, and the result:</p>
+<p><span id="eq-psf_conv_cont"><span class="math display">\[
+\begin{align}
+    I_{actual} = I_{ideal} \star f,
+\end{align}
+\tag{11.7}\]</span></span></p>
+<p>is the actual image formed by the imaging system. This is illustrated in <a href="#fig-psf" class="quarto-xref">Figure&nbsp;<span>11.15</span></a> (right).</p>
+<p>The convolution is a natural conclusion once we assume linearity (irradiances add) and shift invariance (constant PSF) of the imaging system. <a href="#fig-psf_conv" class="quarto-xref">Figure&nbsp;<span>11.16</span></a> (right) illustrates the intuition using an 1D example. <span class="math inline">\(I_{ideal}(x, y)\)</span> is the irradiance at <span class="math inline">\((x, y)\)</span> with a delta PSF. With a non-delta PSF, the irradiance of <span class="math inline">\(I_{ideal}(x, y)\)</span> is distributed over the sensor plane as defined in the PSF. Each point on the sensor, thus, receives contributions from all the point spreads. Since we assume linearity, the result is a convolution between <span class="math inline">\(I_{ideal}\)</span> and the PSF.</p>
+<p>Why? Here is a quick demonstration. Taking a discrete case with four points as an example and assuming we are interested in calculating the actual irradiance <span class="math inline">\(I_{actual}(x_0)\)</span>, the contribution from <span class="math inline">\(x_0\)</span> itself is <span class="math inline">\(I_{ideal}(x_0)f(0)\)</span>, the contribution from <span class="math inline">\(x_1\)</span> is <span class="math inline">\(I_{ideal}(x_1)f(x_0-x_1)\)</span>, and similarly the contributions from <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> are, respectively, <span class="math inline">\(I_{ideal}(x_2)f(x_0-x_2)\)</span> and <span class="math inline">\(I_{ideal}(x_3)f(x_0-x_3)\)</span>. So the actual irradiance received by <span class="math inline">\(x_0\)</span> is:</p>
+<p><span id="eq-psf_conv_dis"><span class="math display">\[
+\begin{align}
+    I_{actual}(x_0) = &amp;I_{ideal}(x_0)f(0) + I_{ideal}(x_1)f(x_0-x_1) \nonumber\\
+    + &amp;I_{ideal}(x_2)f(x_0-x_2) + I_{ideal}(x_3)f(x_0-x_3).
+\end{align}
+\tag{11.8}\]</span></span></p>
+<p>You can see when we generalize from four points to a continuous signal <span class="math inline">\(I_{ideal}\)</span>, <a href="#eq-psf_conv_dis" class="quarto-xref">Equation&nbsp;<span>11.8</span></a> becomes <a href="#eq-psf_conv_cont" class="quarto-xref">Equation&nbsp;<span>11.7</span></a>.</p>
+<p>In the literature, it is common to see people taking images from a dataset, e.g., ImageNet, and simply convolve a PSF against them. The underlying assumption is that those images are captures of distant objects with an ideal system (with no blurs) and, thus, can be treated as essentially irradiance maps <span class="math inline">\(I_{ideal}\)</span>.</p>
+<p>What if the system is not shift invariant? For instance, if we cannot assume that objects are all very far away from the lens, scene points at different depths will have different PSFs. So long as we can still assume linearity, however, we can still relatively easily simulate the image formation process using the exact same principle shown before in <a href="#fig-psf_conv" class="quarto-xref">Figure&nbsp;<span>11.16</span></a>: “convolving” against spatially varying PSFs is equivalent to summing the PSFs (each of course scaled by the corresponding irradiance). This is a bit similar to surface splatting in PBG (<a href="rendering-sss.html#sec-chpt-mat-vs-rte-nr-splatting" class="quarto-xref"><span>Section 10.4.4.3</span></a>), where each surface sample has a different reconstruction filter, so reconstruction amounts to summing each reconstruction filter, each scaled by the sample color.</p>
+</section>
+<section id="sec-chpt-imaging-optics-modeling-mtf" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="sec-chpt-imaging-optics-modeling-mtf"><span class="header-section-number">11.4.3</span> Fourier Perspectives: OTF and MTF</h3>
+<p>Since we are using convolution to model imaging in LSI systems, it is only natural to take a Fourier perspective. Recall the convolution theorem:</p>
+<p><span class="math display">\[
+\begin{align}
+    \mathcal{F}(f \star g) &amp;= \mathcal{F}(f)\mathcal{F}(g), \\
+    f \star g &amp;= \mathcal{F}^{-1}(\mathcal{F}(f)\mathcal{F}(g)),
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{F}\)</span> and <span class="math inline">\(\mathcal{F}^{-1}\)</span> denote Fourier transform and inverse Fourier transform. This allows us to reason about the effect of an imaging system in the frequency domain.</p>
+<p>The Fourier transform of a PSF is called the Optical Transfer Function (OTF), which is necessarily complex-valued, which has a magnitude and a phase component. The magnitude component of the OTF is called the Modulation Transfer Function (MTF) and the phase component of the OTF is called the Phase Transfer Function (PTF):</p>
+<p><span class="math display">\[
+\begin{align}
+    OTF(\omega) = MTF(\omega)e^{i PTF(\omega)}.
+\end{align}
+\]</span></p>
+<p>What is the OTF of an ideal PSF, i.e., a delta function? It is a constant 1 across all frequencies. This makes sense: an ideal PSF introduces no blur so it does nothing to each spatial frequency.</p>
+<div id="fig-otf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-otf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/otf.svg" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-otf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.17: Top: OTF, PSF, and the resulting image of a diffraction-limited system. Bottom: OTF, PSF, and the resulting image of a diffraction-limited but defocused system. From <span class="citation" data-cites="otf_ex">Tom.vettenburg (<a href="references.html#ref-otf_ex" role="doc-biblioref">2017</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-otf" class="quarto-xref">Figure&nbsp;<span>11.17</span></a> shows two more examples; the top half shows the OTF, PSF, and the resulting imaging of a diffraction-limited system (i.e., PSF being an Airy disk), and the bottom half shows the same system with a defocus blur. In both cases, the OTF is the same as the MTF because the Fourier transform of both PSFs have zero phase (PTF is zero at any <span class="math inline">\(\omega\)</span>). You can convince yourself of this by taking a Fourier transform of the Airy function and assuming that defocus adds a Gaussian blur to the Airy disk; we will omit the math here. General OTFs do have a phase term because the PSFs of many aberrations, e.g., coma and astigmatism, are not radially symmetric.</p>
+<p>We can see that in the diffraction-limited case, the OTF drops to 0 at a frequency of 500, meaning information at any frequency higher than the cut-off is lost. The (first) cut-off for the defocused system is at an even lower frequency (about 200), naturally leading to more blurs in the resulting image.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-antipa2017diffusercam" class="csl-entry" role="listitem">
+Antipa, Nick, Grace Kuo, Reinhard Heckel, Ben Mildenhall, Emrah Bostan, Ren Ng, and Laura Waller. 2017. <span>“DiffuserCam: Lensless Single-Exposure 3D Imaging.”</span> <em>Optica</em> 5 (1): 1–9.
+</div>
+<div id="ref-dofaperture" class="csl-entry" role="listitem">
+BenFrantzDale. 2010a. <span>“<span class="nocase">Effect of aperture on blur and DOF; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Depth_of_field_illustration.svg" class="uri">https://commons.wikimedia.org/wiki/File:Depth_of_field_illustration.svg</a>.
+</div>
+<div id="ref-fc" class="csl-entry" role="listitem">
+———. 2010b. <span>“<span class="nocase">Ray diagram showing field curvaure; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Field_curvature.svg" class="uri">https://commons.wikimedia.org/wiki/File:Field_curvature.svg</a>.
+</div>
+<div id="ref-bhandari2022computational" class="csl-entry" role="listitem">
+Bhandari, Ayush, Achuta Kadambi, and Ramesh Raskar. 2022. <em>Computational Imaging</em>. MIT Press.
+</div>
+<div id="ref-ca" class="csl-entry" role="listitem">
+Bob Mellish. 2006. <span>“<span class="nocase">Chromatic aberration diagram; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Chromatic_aberration_lens_diagram.svg" class="uri">https://commons.wikimedia.org/wiki/File:Chromatic_aberration_lens_diagram.svg</a>.
+</div>
+<div id="ref-bohren2006fundamentals" class="csl-entry" role="listitem">
+Bohren, Craig F, and Eugene E Clothiaux. 2006. <em>Fundamentals of Atmospheric Radiation: An Introduction with 400 Problems</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-canon2006ef" class="csl-entry" role="listitem">
+Canon. 2006. <em>EF Lens Work III: The Eye of EOS</em>. 8th ed. Canon Inc. Lens Products Group.
+</div>
+<div id="ref-burningmirrors" class="csl-entry" role="listitem">
+Chris Rorres. n.d. <span>“<span class="nocase">Burning Mirrors: Refuting the Legend</span>.”</span> <a href="https://math.nyu.edu/Archimedes/Mirrors/legend/legend.html" class="uri">https://math.nyu.edu/Archimedes/Mirrors/legend/legend.html</a>.
+</div>
+<div id="ref-ph_diff_limit" class="csl-entry" role="listitem">
+Dominic Alves. 2006. <span>“<span class="nocase">Pinhole Size Chart; CC BY 2.0 license</span>.”</span> <a href="https://www.flickr.com/photos/dominicspics/4589206921" class="uri">https://www.flickr.com/photos/dominicspics/4589206921</a>.
+</div>
+<div id="ref-sellmeier_equ" class="csl-entry" role="listitem">
+DrBob. 2007. <span>“<span class="nocase">Refractive index vs. wavelength for BK7 glass; CC BY-SA 3.0 license</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Sellmeier-equation.svg" class="uri">https://en.wikipedia.org/wiki/File:Sellmeier-equation.svg</a>.
+</div>
+<div id="ref-coma" class="csl-entry" role="listitem">
+Glrx. 2018. <span>“<span class="nocase">Ray diagram illustrating a form of coma aberration; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Lens-coma.svg" class="uri">https://commons.wikimedia.org/wiki/File:Lens-coma.svg</a>.
+</div>
+<div id="ref-ksp_focal_plane" class="csl-entry" role="listitem">
+HandWiki. 2024. <span>“<span class="nocase">Kepler space telescope focal plane; CC BY-SA 3.0 license</span>.”</span> <a href="https://handwiki.org/wiki/index.php?curid=2015813" class="uri">https://handwiki.org/wiki/index.php?curid=2015813</a>.
+</div>
+<div id="ref-hecht2016optics" class="csl-entry" role="listitem">
+Hecht, Eugene. 2016. <em>Optics</em>. 5th ed. Pearson.
+</div>
+<div id="ref-hurley1978adjustable" class="csl-entry" role="listitem">
+Hurley, Ann C, G David Lange, and Peter H Hartline. 1978. <span>“The Adjustable <span>‘Pinhole Camera’</span> Eye of Nautilus.”</span> <em>Journal of Experimental Zoology</em> 205 (1): 37–43.
+</div>
+<div id="ref-airy_disk_func" class="csl-entry" role="listitem">
+Inductiveload. 2009. <span>“<span class="nocase">Mathematical function of an airy disk pattern; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Airy_Pattern.svg" class="uri">https://commons.wikimedia.org/wiki/File:Airy_Pattern.svg</a>.
+</div>
+<div id="ref-ph_motion_blur" class="csl-entry" role="listitem">
+Jürgen Königs. 2006. <span>“<span class="nocase">Analog pinhole photography with multiple exposure; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:1)_Fenstertisch_mit_R%C3%BChrger%C3%A4t.jpg" class="uri">https://commons.wikimedia.org/wiki/File:1)_Fenstertisch_mit_R%C3%BChrger%C3%A4t.jpg</a>.
+</div>
+<div id="ref-psf_ex" class="csl-entry" role="listitem">
+Mdf. 2005. <span>“<span class="nocase">A simulation of spherical aberration in an optical system with a circular, unobstructed aperture admitting a monochromatic point source; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Spherical-aberration-disk.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Spherical-aberration-disk.jpg</a>.
+</div>
+<div id="ref-psf_conv" class="csl-entry" role="listitem">
+———. 2006. <span>“<span class="nocase">Imaging as a convolution against the PSF; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Convolution_Illustrated_eng.png" class="uri">https://commons.wikimedia.org/wiki/File:Convolution_Illustrated_eng.png</a>.
+</div>
+<div id="ref-spherical_aberration" class="csl-entry" role="listitem">
+Mglg. 2008. <span>“<span class="nocase">Conceptual ray diagrams of spherically aberrated lenses; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Spherical_aberration_2.svg" class="uri">https://commons.wikimedia.org/wiki/File:Spherical_aberration_2.svg</a>.
+</div>
+<div id="ref-ast" class="csl-entry" role="listitem">
+Michael Schmid. 2008. <span>“<span class="nocase">Graphic illustratic the astigmatism phenomenon; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Meridional%2BSaggittalEbene_1.svg" class="uri">https://commons.wikimedia.org/wiki/File:Meridional%2BSaggittalEbene_1.svg</a>.
+</div>
+<div id="ref-mills1992reflections" class="csl-entry" role="listitem">
+Mills, Allan A, and R Clift. 1992. <span>“Reflections of the’burning Mirrors of Archimedes’. With a Consideration of the Geometry and Intensity of Sunlight Reflected from Plane Mirrors.”</span> <em>European Journal of Physics</em> 13 (6): 268.
+</div>
+<div id="ref-rayleigh1879xxxi" class="csl-entry" role="listitem">
+Rayleigh, Lord. 1879. <span>“XXXI. Investigations in Optics, with Special Reference to the Spectroscope.”</span> <em>The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science</em> 8 (49): 261–74.
+</div>
+<div id="ref-airy_disk_pattern" class="csl-entry" role="listitem">
+Sakurambo. 2007. <span>“<span class="nocase">A computer-generated image of an Airy disk (the grayscale intensities have been adjusted to enhance the brightness of the outer rings of the Airy pattern); released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Airy-pattern.svg" class="uri">https://commons.wikimedia.org/wiki/File:Airy-pattern.svg</a>.
+</div>
+<div id="ref-ast_ex" class="csl-entry" role="listitem">
+Tallfred. 2005. <span>“<span class="nocase">Text blurred by different focal positions of an astigmatic lens; 3-clause BSD License</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Astigmatism_text_blur.png" class="uri">https://commons.wikimedia.org/wiki/File:Astigmatism_text_blur.png</a>.
+</div>
+<div id="ref-ph_defocus_blur" class="csl-entry" role="listitem">
+Thycoop/photographs. 2022. <span>“<span class="nocase">Small park in logatec made with matchbox pinhole camera on kodak portra 400 film; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Small_park_in_logatec_matchbox_pinhole_camera.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Small_park_in_logatec_matchbox_pinhole_camera.jpg</a>.
+</div>
+<div id="ref-otf_ex" class="csl-entry" role="listitem">
+Tom.vettenburg. 2017. <span>“<span class="nocase">Illustration of the optical transfer function and its relation to image quality; CC BY-SA 4.0 license</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Illustration_of_the_optical_transfer_function_and_its_relation_to_image_quality.svg" class="uri">https://en.wikipedia.org/wiki/File:Illustration_of_the_optical_transfer_function_and_its_relation_to_image_quality.svg</a>.
+</div>
+<div id="ref-wadhwa2018synthetic" class="csl-entry" role="listitem">
+Wadhwa, Neal, Rahul Garg, David E Jacobs, Bryan E Feldman, Nori Kanazawa, Robert Carroll, Yair Movshovitz-Attias, Jonathan T Barron, Yael Pritch, and Marc Levoy. 2018. <span>“Synthetic Depth-of-Field with a Single-Camera Mobile Phone.”</span> <em>ACM Transactions on Graphics (ToG)</em> 37 (4): 1–13.
+</div>
+<div id="ref-barrel" class="csl-entry" role="listitem">
+WolfWings. 2008a. <span>“<span class="nocase">Barrel distortion visual example; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Barrel_distortion.svg" class="uri">https://commons.wikimedia.org/wiki/File:Barrel_distortion.svg</a>.
+</div>
+<div id="ref-pincushion" class="csl-entry" role="listitem">
+———. 2008b. <span>“<span class="nocase">Pincushion distortion visual example; released into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Pincushion_distortion.svg" class="uri">https://commons.wikimedia.org/wiki/File:Pincushion_distortion.svg</a>.
+</div>
+<div id="ref-zhang2021genome" class="csl-entry" role="listitem">
+Zhang, Yang, Fan Mao, Huawei Mu, Minwei Huang, Yongbo Bao, Lili Wang, Nai-Kei Wong, et al. 2021. <span>“The Genome of Nautilus Pompilius Illuminates Eye Evolution and Biomineralization.”</span> <em>Nature Ecology &amp; Evolution</em> 5 (7): 927–38.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>who won the Nobel Prize in Physics in 1904 and the namesake of the Rayleigh scattering<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>mostly aberration, because defocus can be easily fixed and motion blur is out of the hands of an imaging system<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./imaging.html" class="pagination-link" aria-label="Imaging">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Imaging</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./imaging-sensor.html" class="pagination-link" aria-label="Image Sensor Architecture">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

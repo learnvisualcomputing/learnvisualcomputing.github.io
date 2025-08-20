@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Surface Scattering – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./rendering-sss.html" rel="next">
+<link href="./rendering-basics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surface.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-mat-ss-brdf" id="toc-sec-chpt-mat-ss-brdf" class="nav-link active" data-scroll-target="#sec-chpt-mat-ss-brdf"><span class="header-section-number">9.1</span> BRDF</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-ss-brdf-approx" id="toc-sec-chpt-mat-ss-brdf-approx" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-brdf-approx"><span class="header-section-number">9.1.1</span> A Useful Approximation</a></li>
+  <li><a href="#isotropic-material" id="toc-isotropic-material" class="nav-link" data-scroll-target="#isotropic-material"><span class="header-section-number">9.1.2</span> Isotropic Material</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-ss-reflectance" id="toc-sec-chpt-mat-ss-reflectance" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-reflectance"><span class="header-section-number">9.2</span> Reflectance and Albedo</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-ss-reflectance-dhr" id="toc-sec-chpt-mat-ss-reflectance-dhr" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-reflectance-dhr"><span class="header-section-number">9.2.1</span> Directional-Hemispherical Reflectance</a></li>
+  <li><a href="#sec-chpt-mat-ss-reflectance-hdr" id="toc-sec-chpt-mat-ss-reflectance-hdr" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-reflectance-hdr"><span class="header-section-number">9.2.2</span> Hemispherical-Directional Reflectance</a></li>
+  <li><a href="#sec-chpt-mat-ss-reflectance-hhr" id="toc-sec-chpt-mat-ss-reflectance-hhr" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-reflectance-hhr"><span class="header-section-number">9.2.3</span> Albedo and Hemispherical-Hemispherical Reflectance</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-ss-re" id="toc-sec-chpt-mat-ss-re" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-re"><span class="header-section-number">9.3</span> The Rendering Equation</a></li>
+  <li><a href="#sec-chpt-mat-ss-mat" id="toc-sec-chpt-mat-ss-mat" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-mat"><span class="header-section-number">9.4</span> Diffuse, Specular, and Glossy Materials</a>
+  <ul class="collapse">
+  <li><a href="#diffuse-material" id="toc-diffuse-material" class="nav-link" data-scroll-target="#diffuse-material"><span class="header-section-number">9.4.1</span> Diffuse Material</a></li>
+  <li><a href="#perfectly-specular-material" id="toc-perfectly-specular-material" class="nav-link" data-scroll-target="#perfectly-specular-material"><span class="header-section-number">9.4.2</span> Perfectly Specular Material</a></li>
+  <li><a href="#glossy-material" id="toc-glossy-material" class="nav-link" data-scroll-target="#glossy-material"><span class="header-section-number">9.4.3</span> Glossy Material</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-ss-para" id="toc-sec-chpt-mat-ss-para" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-para"><span class="header-section-number">9.5</span> BRDF Parameterization with Microfacet Models</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-ss-para-model" id="toc-sec-chpt-mat-ss-para-model" class="nav-link" data-scroll-target="#sec-chpt-mat-ss-para-model"><span class="header-section-number">9.5.1</span> Nature of Microfacets Models</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-mat-measurement" id="toc-sec-chpt-mat-measurement" class="nav-link" data-scroll-target="#sec-chpt-mat-measurement"><span class="header-section-number">9.6</span> Measuring Spectral Reflectance and BRDF</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-rt-ref" id="toc-sec-chpt-mat-rt-ref" class="nav-link" data-scroll-target="#sec-chpt-mat-rt-ref"><span class="header-section-number">9.6.1</span> Measuring Spectral Reflectance</a></li>
+  <li><a href="#sec-chpt-mat-rt-brdf" id="toc-sec-chpt-mat-rt-brdf" class="nav-link" data-scroll-target="#sec-chpt-mat-rt-brdf"><span class="header-section-number">9.6.2</span> Measuring BRDF</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surface.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-mat-ss" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>When a group of photons arrives at a material surface, some of the photons might be immediately turned away (i.e., reflected) while others might penetrate into the material (i.e., refracted). The refracted portion is scattered further inside the material, giving rise to subsurface scattering, which we will discuss in the next chapter. This chapter is concerned with surface scattering, ignoring the contribution of surface scattering to an object’s appearance.</p>
+<p>There are two properties we care about in surface scattering: the directions of the reflection and the (spectral) energy along each direction. The direction is important because, as far as rendering, human vision, or camera imaging are concerned, only the photons that will eventually captured by a detector matter. The (spectral) energy is important because it dictates the perceived color. These two properties are captured by what is known as the BRDF, the protagonist of this chapter. We will then derive a few very useful equations and properties based on BRDF.</p>
+<div class="hidden">
+<p><span class="math display">\[
+\def\oi{{\omega_i}}
+\def\os{{\omega_s}}
+\def\Oi{{\Omega_i}}
+\def\Os{{\Omega_s}}
+\def\d{{\text{d}}}
+\def\D{{\Delta}}
+\def\do{{\d\omega}}
+\def\Do{{\Delta\omega}}
+\def\doi{{\d\omega_i}}
+\def\dos{{\d\omega_s}}
+\def\Doi{{\D\omega_i}}
+\def\Dos{{\D\omega_s}}
+\def\H{{\mathbf{H}}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cL}{\mathcal{L}}
+\]</span></p>
+</div>
+<section id="sec-chpt-mat-ss-brdf" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-brdf"><span class="header-section-number">9.1</span> BRDF</h2>
+<p>Generally, the energy distribution of the surface scattering is captured by the Bidirectional Reflectance Distribution Function (<strong>BRDF</strong>) <span class="citation" data-cites="nicodemus1977geometrical">(<a href="references.html#ref-nicodemus1977geometrical" role="doc-biblioref">Nicodemus et al. 1977</a>)</span>. Informally, it tells us how the incident energy from a particular direction is distributed to different exiting directions. The BRDF is parameterized by three parameters: a surface point <span class="math inline">\(p\)</span>, the direction of light incident on <span class="math inline">\(p\)</span>, denoted <span class="math inline">\(\oi\)</span>, and the direction of light leaving <span class="math inline">\(p\)</span>, denoted <span class="math inline">\(\os\)</span>. So the BRDF is usually written as <span class="math inline">\(f_r(p, \os, \oi)\)</span>.</p>
+<p>The way to understand BRDF <span class="math inline">\(f_r(p, \os, \oi)\)</span> is to consider the following. <span class="math inline">\(L(p, \os)\)</span>, i.e., the radiance leaving <span class="math inline">\(p\)</span> toward <span class="math inline">\(\os\)</span>, is dependent on the light incident on <span class="math inline">\(p\)</span>. When the incident light on <span class="math inline">\(p\)</span> comes from only the direction <span class="math inline">\(\oi\)</span>, the irradiance at <span class="math inline">\(p\)</span> is zero, since the solid angle of a single direction <span class="math inline">\(\oi\)</span> is zero, so naturally <span class="math inline">\(L(p, \os)\)</span> is 0 (assuming there is no other light hitting <span class="math inline">\(p\)</span>). When <span class="math inline">\(p\)</span> receives light from a non-zero solid angle of directions <span class="math inline">\(\Delta\oi\)</span> (centered around <span class="math inline">\(\oi\)</span>), the irradiance of <span class="math inline">\(p\)</span> is increased by <span class="math inline">\(\Delta E(p, \oi)\)</span>. At the same time, due to this increase in incident light, <span class="math inline">\(L(p, \os)\)</span> is no longer zero; the increase in the radiance leaving <span class="math inline">\(p\)</span> over <span class="math inline">\(\os\)</span> is denoted <span class="math inline">\(\Delta L(p, \os)\)</span>.</p>
+<p>As we increase <span class="math inline">\(\Delta \oi\)</span>, both <span class="math inline">\(\Delta E(p, \oi)\)</span> and <span class="math inline">\(\Delta L(p, \os)\)</span> increase. BRDF is defined as the ratio of the two <em>increments</em> when <span class="math inline">\(\Delta \oi\)</span> approaches 0 (when the radiance along all directions in <span class="math inline">\(\Delta \oi\)</span> can be thought of as a constant):</p>
+<p><span id="eq-brdf"><span class="math display">\[
+\begin{align}
+    f_r(p, \os, \oi) = \lim_{\Delta \oi \rightarrow 0}\frac{\Delta L(p, \os)}{\Delta E(p, \oi)} = \frac{\text{d}L(p, \os)}{\text{d}E(p, \oi)} = \frac{\text{d}L(p, \os)}{L(p, \oi)\cos\theta_i \text{d}\oi}.
+\end{align}
+\tag{9.1}\]</span></span></p>
+<section id="sec-chpt-mat-ss-brdf-approx" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-brdf-approx"><span class="header-section-number">9.1.1</span> A Useful Approximation</h3>
+<p>Now assume that we illuminate <span class="math inline">\(p\)</span> through a finite, but small, solid angle <span class="math inline">\(\Oi\)</span>. Turning the differential equation into an integral equation, we get:</p>
+<p><span id="eq-brdf_finite_1"><span class="math display">\[
+\begin{align}
+    L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) \text{d}E(p, \oi).
+\end{align}
+\tag{9.2}\]</span></span></p>
+<p>Using the definition of radiance in <a href="rendering-basics.html#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>8.4</span></a>, we get: <span id="eq-brdf_finite_2"><span class="math display">\[
+\begin{align}
+    L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) L(p, \oi)\cos\theta_i \text{d}\oi.
+\end{align}
+\tag{9.3}\]</span></span></p>
+<p>If we assume that the BRDF is a constant over all the directions in <span class="math inline">\(\Oi\)</span>, <a href="#eq-brdf_finite_2" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> is simplified to:</p>
+<p><span id="eq-brdf_finite_3"><span class="math display">\[
+\begin{align}
+    L(p, \os) \approx f_r(p, \os, \oi) \int^{\Oi} L(p, \oi)\cos\theta_i \text{d}\oi.
+\end{align}
+\tag{9.4}\]</span></span></p>
+<p>The integration in <a href="#eq-brdf_finite_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a> has no analytical solution, since we do not know the analytical form of <span class="math inline">\(L(p, \oi)\)</span>, but we know the integration is just another way of expressing the total irradiance incident upon <span class="math inline">\(p\)</span> over <span class="math inline">\(\Oi\)</span>, which is denoted as <span class="math inline">\(E(p, \Oi)\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This gets us <a href="#eq-brdf_finite_4" class="quarto-xref">Equation&nbsp;<span>9.5</span></a>:</p>
+<p><span id="eq-brdf_finite_4"><span class="math display">\[
+\begin{align}
+    L(p, \os) \approx f_r(p, \os, \oi) E(p, \Oi).
+\end{align}
+\tag{9.5}\]</span></span></p>
+<p>Thus, we can approximate the BRDF as: <span id="eq-brdf_finite_5"><span class="math display">\[
+\begin{align}
+    f_r(p, \os, \oi) &amp;\approx \frac{L(p, \os)}{E(p, \Oi)}.
+\end{align}
+\tag{9.6}\]</span></span></p>
+<p>Ultimately, we can see from <a href="#eq-brdf_finite_5" class="quarto-xref">Equation&nbsp;<span>9.6</span></a> that the BRDF <span class="math inline">\(f_r(p, \os, \oi)\)</span> can also be calculated as the ratio between the <em>absolute</em> radiance <span class="math inline">\(L(p, \oi)\)</span> and the absolute irradiance <span class="math inline">\(E(p, \Oi)\)</span> illuminated from a very small, but finite solid angle <span class="math inline">\(\Oi\)</span>. Another way to interpret this is that the so-calculated BRDF is the average BRDF over <span class="math inline">\(\Oi\)</span>. This derivation is useful for actually measuring a BRDF, which we will discuss in <a href="#sec-chpt-mat-rt-brdf" class="quarto-xref"><span>Section 9.6.2</span></a>, where we will have no choice but to use a non-zero solid angle for illumination, because physically we just cannot illuminate a point through an infinitesimal solid angle <span class="math inline">\(\doi\)</span>.</p>
+</section>
+<section id="isotropic-material" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="isotropic-material"><span class="header-section-number">9.1.2</span> Isotropic Material</h3>
+<p>A 3D direction <span class="math inline">\(\omega\)</span> expressed in the Cartesian coordinate system can also be expressed by two 2D planar angles in the spherical coordinate system: the polar angle <span class="math inline">\(\theta\)</span> and the azimuthal angle <span class="math inline">\(\phi\)</span>. So BRDF can also be parameterized as <span class="math inline">\(f_r(p, \theta_s, \phi_s, \theta_i, \phi_i)\)</span>. A material is <strong>isotropic</strong> if its BRDF satisfies <span class="math inline">\(f_r(p, \theta_s, \phi_s, \theta_i, \phi_i) = f_r(p, \theta_s, \phi_s+x, \theta_i, \phi_i+x)\)</span> for any <span class="math inline">\(x\)</span>. An intuitive way to think of an isotropic material is this: if you pick a point <span class="math inline">\(p\)</span> and rotate the material about the normal vector at <span class="math inline">\(p\)</span>, the color of <span class="math inline">\(p\)</span> does not change. This is because rotation about the normal vector keeps <span class="math inline">\(\theta_i\)</span> and <span class="math inline">\(\theta_s\)</span> unchanged and varies <span class="math inline">\(\phi_i\)</span> and <span class="math inline">\(\phi_s\)</span> by the same amount.</p>
+<p>The nice thing about an isotropic BRDF is it can be parameterized with one fewer degree of freedom: <span class="math inline">\(f_r(p, \theta_s, \phi_s - \phi_i, \theta_i)\)</span>. This is because it is <span class="math inline">\((\phi_i - \phi_s)\)</span> rather than the specific values of <span class="math inline">\(\phi_s\)</span> or <span class="math inline">\(\phi_i\)</span> that matter.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-ss-reflectance" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance"><span class="header-section-number">9.2</span> Reflectance and Albedo</h2>
+<p>The BRDF does not have to be a value between 0 and 1. Let’s say that there is 100 J of energy incident on a point coming from a solid angle <span class="math inline">\(\Delta \oi\)</span>. That amount of energy is distributed across all the outgoing directions in the hemisphere, which forms a solid angle of <span class="math inline">\(4\pi/2 = 2\pi\)</span>. So on average the energy exiting per direction is <span class="math inline">\(\frac{100}{2\pi}J\)</span>, which clearly is greater than 1. This is not surprising, since BRDF is ultimately a <em>density</em> measure, a <em>distribution</em>, which is most meaningful when it is integrated to calculate some quantity. Integrating the BRDF gives a percentage/fraction measure between 0 and 1, i.e., reflectance, which we will discuss next.</p>
+<section id="sec-chpt-mat-ss-reflectance-dhr" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-dhr"><span class="header-section-number">9.2.1</span> Directional-Hemispherical Reflectance</h3>
+<p>For the energy to be conserved, the total outgoing energy at any point must not exceed that of the incident energy received by that point. Assume that a point <span class="math inline">\(p\)</span> receives an irradiance <span class="math inline">\(\d E_i\)</span> from a direction <span class="math inline">\(\oi\)</span> over an infinitesimal solid angle <span class="math inline">\(\doi\)</span>, and the outgoing radiance along the direction <span class="math inline">\(\os\)</span> due to that irradiance is <span class="math inline">\(f_r(p, \os, \oi)\d E_i\)</span>. Then the outgoing irradiance leaving <span class="math inline">\(p\)</span> over an infinitesimal solid angle <span class="math inline">\(\dos\)</span> around <span class="math inline">\(\os\)</span> would be <span class="math inline">\(f_r(p, \os, \oi)\d E_i\cos\theta_s\dos\)</span>. If we integrate all the outgoing directions <span class="math inline">\(\Omega\)</span>, we get the total outgoing irradiance <span class="math inline">\(\d E_o\)</span>, which must not exceed the incident irradiance <span class="math inline">\(\d E_i\)</span>:</p>
+<p><span id="eq-energy_con_0"><span class="math display">\[
+\begin{align}
+    \d E_o = \int^{\Omega} \d E_i f_r(p, \os, \oi) \cos\theta_s\text{d}\os.
+\end{align}
+\tag{9.7}\]</span></span></p>
+<p><span class="math inline">\(\d E_i\)</span> is independent of <span class="math inline">\(\os\)</span>, so it can be hoisted out of the integration. Therefore, we have the following equation, which holds for any arbitrary incident direction <span class="math inline">\(\oi\)</span>:</p>
+<p><span id="eq-energy_con_1"><span class="math display">\[
+\begin{align}
+    \int^{\Omega}f_r(p, \os, \oi)\cos\theta_s\text{d}\os = \frac{\d E_o}{\d E_i} = \rho_{dh}(p, \oi) \leq 1.
+\end{align}
+\tag{9.8}\]</span></span></p>
+<p><span class="math inline">\(\rho_{dh}\)</span> is defined as the ratio between <span class="math inline">\(\d E_o\)</span> and <span class="math inline">\(\d E_i\)</span>. When <span class="math inline">\(\Omega\)</span> is the hemisphere, <span class="math inline">\(\rho_{dh}\)</span> is called the <strong>directional-hemispherical reflectance</strong> in the computer vision and graphics literature, and is interpreted as the percentage of energy scattered by a point over the entire hemisphere given the incident light from a particular direction. Clearly, <span class="math inline">\(\rho_{dh}\)</span> is a function of both <span class="math inline">\(p\)</span> and <span class="math inline">\(\oi\)</span> and takes a value between 0 and 1.</p>
+</section>
+<section id="sec-chpt-mat-ss-reflectance-hdr" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-hdr"><span class="header-section-number">9.2.2</span> Hemispherical-Directional Reflectance</h3>
+<p>Since we are dealing with geometric optics, the Helmholtz reciprocity holds:</p>
+<p><span class="math display">\[
+\begin{align}
+    f_r(p, \os, \oi) = f_r(p, \oi, \os),
+\end{align}
+\]</span></p>
+<p>which means the energy conservation can also be expressed as:</p>
+<p><span id="eq-energy_con_2"><span class="math display">\[
+\begin{align}
+    \int^{\Omega}f_r(p, \os, \oi)\cos\theta_i\text{d}\oi = \rho_{hd}(p, \os) \leq 1,
+\end{align}
+\tag{9.9}\]</span></span></p>
+<p>where <span class="math inline">\(\rho_{hd}\)</span> is called the <strong>hemispherical-directional reflectance</strong> when <span class="math inline">\(\Omega\)</span> is the hemisphere. <span class="math inline">\(\rho_{hd}\)</span>, a function of <span class="math inline">\(p\)</span> and <span class="math inline">\(\os\)</span>, is interpreted as the percentage of energy reflected toward a particular direction <span class="math inline">\(\os\)</span> given the incident energy over the entire hemisphere.</p>
+<p><a href="#eq-energy_con_2" class="quarto-xref">Equation&nbsp;<span>9.9</span></a> can be derived by first rewriting <a href="#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>9.8</span></a> as <span class="math inline">\(\int^{\Omega}f_r(p, \oi, \os)\cos\theta_s\text{d}\os \leq 1\)</span> (using the reciprocity) followed by switching <span class="math inline">\(\os\)</span> and <span class="math inline">\(\oi\)</span> (simply a change of notation). This derivation suggests that <span class="math inline">\(\rho_{hd}(p, \oi) = \rho_{dh}(p, \os)\)</span>, a natural consequence of the reciprocity.</p>
+</section>
+<section id="sec-chpt-mat-ss-reflectance-hhr" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-hhr"><span class="header-section-number">9.2.3</span> Albedo and Hemispherical-Hemispherical Reflectance</h3>
+<p>We can also describe the relationship between all the outgoing irradiance <span class="math inline">\(E_o\)</span> of a point over a solid angle <span class="math inline">\(\Os\)</span> due to all the incident irradiance <span class="math inline">\(E_i\)</span> over a solid angle <span class="math inline">\(\Oi\)</span>:</p>
+<p><span id="eq-albedo_0"><span class="math display">\[
+\begin{align}
+    E_o &amp;= \int^{\Omega_s} \Big(\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi\Big) \cos\theta_s \dos, \\
+    E_i &amp;= \int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi
+\end{align}
+\tag{9.10}\]</span></span></p>
+<p>Due to energy conservation, we have:</p>
+<p><span id="eq-albedo_1"><span class="math display">\[
+\begin{align}
+    \rho_{hh}(p) = \frac{E_o}{E_i} \leq 1.
+\end{align}
+\tag{9.11}\]</span></span></p>
+<p><a href="#eq-albedo_1" class="quarto-xref">Equation&nbsp;<span>9.11</span></a> defines <span class="math inline">\(\rho_{hh}\)</span>, which is called the <strong>hemispherical-hemispherical reflectance</strong> when both <span class="math inline">\(\Omega_i\)</span> and <span class="math inline">\(\Omega_s\)</span> are hemispheres. <span class="math inline">\(\rho_{hh}\)</span> has another name: <strong>albedo</strong>.</p>
+<p>When <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of (invariant to) <span class="math inline">\(\oi\)</span> and <span class="math inline">\(\os\)</span>, i.e., when <span class="math inline">\(p\)</span> is an ideal <strong>Lambertian</strong> surface (see <a href="#sec-chpt-mat-ss-mat" class="quarto-xref"><span>Section 9.4</span></a>), <a href="#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>9.10</span></a> can be re-written as:</p>
+<p><span id="eq-lamb_0"><span class="math display">\[
+\begin{align}
+    E_o = \int^{\Omega_s} f_r(p, \os, \oi) (\int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos.
+\end{align}
+\tag{9.12}\]</span></span></p>
+<p>Plugging in the definition of <span class="math inline">\(E_i\)</span> from <a href="#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>9.10</span></a>, we have: <span id="eq-lamb_1"><span class="math display">\[
+\begin{align}
+    E_o = \int^{\Omega_s} f_r(p, \os, \oi) E_i \cos\theta_s \dos.
+\end{align}
+\tag{9.13}\]</span></span></p>
+<p>Since <span class="math inline">\(E_i\)</span> is independent of <span class="math inline">\(\os\)</span>, we have:</p>
+<p><span id="eq-lamb_2"><span class="math display">\[
+\begin{align}
+    E_o = E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos.
+\end{align}
+\tag{9.14}\]</span></span></p>
+<p>Using the definition of <span class="math inline">\(\rho_{dh}\)</span> in <a href="#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>9.8</span></a>, we have:</p>
+<p><span id="eq-lamb_3"><span class="math display">\[
+\begin{align}
+    E_o = E_i \rho_{dh}(p, \oi).
+\end{align}
+\tag{9.15}\]</span></span></p>
+<p>Comparing <a href="#eq-lamb_3" class="quarto-xref">Equation&nbsp;<span>9.15</span></a> and <a href="#eq-albedo_1" class="quarto-xref">Equation&nbsp;<span>9.11</span></a>, we can see that for a Lambertian surface the albedo (<span class="math inline">\(\rho_{hh}\)</span>) is equivalent to <span class="math inline">\(\rho_{dh}\)</span> and <span class="math inline">\(\rho_{hd}\)</span>, but this relationship is not true in general.</p>
+<p>We can also show that for a Lambertian surface, the BRDF is the constant <span class="math inline">\(\frac{\rho_{hh}}{\pi}\)</span>. Starting from <a href="#eq-lamb_2" class="quarto-xref">Equation&nbsp;<span>9.14</span></a> and using the assumption that <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of <span class="math inline">\(\os\)</span>:</p>
+<p><span id="eq-lamb_4"><span class="math display">\[
+\begin{align}
+    E_o = E_i \rho_{hh} &amp;= E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos \\
+    &amp;= E_i f_r(p, \os, \oi) \int^{\Omega_s} \cos\theta_s \dos \\
+    &amp;= E_i f_r(p, \os, \oi) \pi.
+\end{align}
+\tag{9.16}\]</span></span></p>
+<p>Thus: <span id="eq-diffuse_brdf"><span class="math display">\[
+\begin{align}
+    f_r(p, \os, \oi) = \frac{\rho_{hh}}{\pi}.
+\end{align}
+\tag{9.17}\]</span></span></p>
+<p>The last step in <a href="#eq-lamb_4" class="quarto-xref">Equation&nbsp;<span>9.16</span></a> uses the integral results that:</p>
+<p><span class="math display">\[
+\begin{align}
+    \d\omega &amp;= \sin\theta\d\theta\d\phi, \\
+    \int^{\Omega=2\pi} \cos\theta \d\omega &amp;= \int^{2\pi}_0 \int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta\d\phi \nonumber\\
+    &amp;= 2\pi\int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta \nonumber \\
+    &amp;= \pi,
+\end{align}
+\]</span></p>
+<p>when <span class="math inline">\(\Omega\)</span> is the hemisphere.</p>
+<p>A fun exercise you can entertain yourself with is to show that if <span class="math inline">\(f_r\)</span> is independent of <span class="math inline">\(\oi\)</span>, it must also be independent of <span class="math inline">\(\os\)</span>. An informal way to do so is the following. Since <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of <span class="math inline">\(\oi\)</span>, let’s rewrite it as <span class="math inline">\(g(p, \os)\)</span>. Now we invoke the reciprocity and rewrite <span class="math inline">\(f_r(p, \os, \oi)\)</span> as <span class="math inline">\(g(p, \oi)\)</span>. The only way for <span class="math inline">\(g(p, \os) = g(p, \oi)\)</span> is for <span class="math inline">\(g\)</span> to be dependent only on <span class="math inline">\(p\)</span>.</p>
+<p>Finally, one can also define the <strong>directional-directional reflectance</strong>, which is naturally a function of both the incident direction and outgoing direction and can be defined as the ratio between the incident irradiance and the outgoing irradiance when both the incident and outgoing solid angles approach 0.</p>
+<p>BRDF and directional-directional reflectance are both sensitive to both the incident and outgoing directions. But the former is a density measure, whereas the latter is a fraction/percentage measure (all other reflectance quantities are fraction measures too). Integrating BRDF over a finite set of directions gives us some measure reflectance. This is why the BRDF is defined as the radiance/ irradiance ratio rather than radiance/radiance or irradiance/irradiance ratio; it is to reflect the fact that the energy of a small cone of incident directions is distributed over all the directions over the hemisphere, and what we care to characterize is the <em>distribution</em> of the incident energy over all outgoing directions.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-ss-re" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-chpt-mat-ss-re"><span class="header-section-number">9.3</span> The Rendering Equation</h2>
+<p>Given the BRDF, we can estimate the outgoing radiance of a point given its illumination using the well-known <strong>Rendering Equation</strong>.</p>
+<p>The setup is that we have a surface on which there is a point <span class="math inline">\(p\)</span> that is receiving light from a solid angle <span class="math inline">\(\Omega\)</span>. We are interested in calculating the exiting radiance leaving <span class="math inline">\(p\)</span> toward an arbitrary direction <span class="math inline">\(\os\)</span>. The rendering equation formulates this calculation by:</p>
+<p><span id="eq-re"><span class="math display">\[
+\begin{align}
+    L(p, \os) = \int^{\Omega} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i \text{d}\oi,
+\end{align}
+\tag{9.18}\]</span></span></p>
+<p>where <span class="math inline">\(L(p, \os)\)</span> is the outgoing radiance from <span class="math inline">\(p\)</span> toward the direction <span class="math inline">\(\os\)</span>; <span class="math inline">\(\Omega\)</span> is usually a hemisphere in surface scattering, since lights hitting a surface point can come from anywhere in the hemisphere, in which case <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>9.18</span></a> is also called the <em>reflection equation</em>, indicating the fact that the equation governs surface reflection/scattering. The rendering equation was first introduced to computer graphics by <span class="citation" data-cites="kajiya1986rendering">Kajiya (<a href="references.html#ref-kajiya1986rendering" role="doc-biblioref">1986</a>)</span> and <span class="citation" data-cites="immel1986radiosity">Immel, Cohen, and Greenberg (<a href="references.html#ref-immel1986radiosity" role="doc-biblioref">1986</a>)</span> (albeit with slightly different formulations and the former being more general than the latter).</p>
+The rendering equation is exactly the same equation in <a href="#eq-brdf_finite_2" class="quarto-xref">Equation&nbsp;<span>9.3</span></a>, so there is nothing more profound about the rendering equation than the definition of the BRDF: we are simply following the BRDF’s definition and turning the differential equation into an integral one. Intuitively, the way to understand this equation is that every ray that hits <span class="math inline">\(p\)</span> makes some contribution toward the outgoing radiance <span class="math inline">\(L(p, \os)\)</span>, and the integration just accumulates all the contributions. In particular:
+<p><span class="math inline">\(L(p, \oi) \text{d}\oi\)</span> is the incident irradiance of a differential solid angle <span class="math inline">\(\text{d}\oi\)</span>; note that the irradiance calculated here is defined with respect to a surface perpendicular to the direction of <span class="math inline">\(\oi\)</span>.</p>
+<ul>
+<li><span class="math inline">\(L(p, \oi) \cos\theta \text{d}\oi\)</span> applies the Lambert’s cosine law and calculates the irradiance at the surface where <span class="math inline">\(p\)</span> lies.</li>
+<li><span class="math inline">\(f_r(p, \os, \oi)L(p, \oi) \cos\theta \text{d}\oi\)</span> “transfers” the differential incident irradiance to the differential outgoing radiance toward <span class="math inline">\(\os\)</span> through the BRDF function.</li>
+<li>The integration over all the incident directions calculates the total outgoing radiance given all the incident lights.</li>
+</ul>
+<p>The rendering equation in theory allows us to calculate the entire light field, i.e., the radiance distribution in space, given an arbitrary <span class="math inline">\(p\)</span> and <span class="math inline">\(\os\)</span>. Why is knowing the light field important? Recall <a href="rendering-basics.html#eq-cam" class="quarto-xref">Equation&nbsp;<span>8.8</span></a>: knowing the light field allows us to synthesize any image or calculate the color of any object from any perspective.</p>
+<p>It is, of course, much easier said than done when it comes to solving the rendering equation, which itself is worth multiple chapters in a computer graphics textbook. We will not get into it here; let’s just consider the following challenges. First, the integrand in generally has no analytical form, so we will not be able to get an analytical solution to the integral equation. A common method is Monte-Carlo integration, which samples the integrand at different points and estimates the integral from the samples.</p>
+<p>Second, in a realistic environment, we need to solve the rendering equation <em>recursively</em>. Note how the radiance function shows up on both sides of the equation. Put it in another way, when using Monte-Carlo integration to solve <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>9.18</span></a> we need to sample the value of <span class="math inline">\(L(p, \oi)\)</span> for a specific <span class="math inline">\(\oi\)</span> — how? We evaluate <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>9.18</span></a> again, but this time treating <span class="math inline">\(\oi\)</span> as the <span class="math inline">\(\os\)</span>, which means we invoke Monte Carlo integration again. You can see how this can quickly blow up the computation: the number of rays whose radiances we need to calculate exponentially increases as long as we need to sample more than one ray at each point. A big chunk of physically-based graphics is devoted to addressing this issue; the most commonly used strategy is called <strong>path tracing</strong>, for which <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 13)</span> is a great reference.</p>
+<p>Another way to think of this is that there are infinitely many paths through which light can propagate and be incident on a point. A <strong>global illumination</strong> method for rendering would attempt to track all these paths (e.g., through Monte Carlo methods). In contrast, a <strong>local illumination</strong> method is concerned with only a small subset of these paths, in which case we might be able to evaluate the rendering equation as a single-pass integration while avoiding recursion. For instance, we might consider lights only from direct light sources. We will see the counterpart of this exact situation in surface scattering/volume rendering in <a href="rendering-sss.html#sec-chpt-mat-vs-rte" class="quarto-xref"><span>Section 10.4</span></a>. For this reason, the rendering equation is sometimes called the <strong>light transport equation</strong> (LTE), because it in principle captures how light is transported in space.</p>
+<p>An interesting, and approximate, global illumination method that avoids path tracing is the idea of <strong>environment map</strong> <span class="citation" data-cites="ramamoorthi2009precomputation">(<a href="references.html#ref-ramamoorthi2009precomputation" role="doc-biblioref">Ramamoorthi 2009</a>, Chpt. 3)</span>. It assumes that the light sources are so distant from the objects in the scene that all points in the scene receive the same incident radiance distribution. That is, <span class="math inline">\(L(p, \oi)\)</span> in <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>9.18</span></a> is a function of only <span class="math inline">\(\oi\)</span> but not <span class="math inline">\(p\)</span>. We can then pre-compute (through path tracing for instance) or directly measure <span class="math inline">\(L(\oi)\)</span> offline and store them in a data structure. For instance, we can use the equirectangular projection to store a discretized form of <span class="math inline">\(L(\oi)\)</span>, or use spherical harmonics to (approximately) store a parameterized form of <span class="math inline">\(L(\oi)\)</span>. Either way, the data structure that stores pre-computed <span class="math inline">\(L(\oi)\)</span> is called an environment map, which we can load at rendering time, plug it into the rendering equation, and calculate the outgoing radiance by simply evaluating the integral.</p>
+<p>Finally, we also need to somehow know the BRDF of the material. There are generally two methods of going about it. We can, of course, measure it, but we have no realistic way of measuring the complete BRDF for a material, because we would have to measure infinitely many points and, for each point, infinitely many incident and outgoing directions. We can only sample the BRDF using something called a <em>goniospectroreflectometer</em> or a <em>goniospectrophotometer</em> <span class="citation" data-cites="judd1975color">(<a href="references.html#ref-judd1975color" role="doc-biblioref">Judd and Wyszecki 1975, p. 402–10</a>)</span>, but there is still a massive amount of samples we need to take and to store. Lots of prior work goes into efficiently sampling, measuring, and deriving BRDFs <span class="citation" data-cites="marschner2000image matusik2003data pharr2023physically">(<a href="references.html#ref-marschner2000image" role="doc-biblioref">Marschner et al. 2000</a>; <a href="references.html#ref-matusik2003data" role="doc-biblioref">Matusik 2003</a>; <a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 9.8)</span>.</p>
+<p>Another approach is to parameterize the BRDF so that we can evaluate the BRDF on demand rather than storing all the BRDF data, and this is what we will study next.</p>
+</section>
+<section id="sec-chpt-mat-ss-mat" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-chpt-mat-ss-mat"><span class="header-section-number">9.4</span> Diffuse, Specular, and Glossy Materials</h2>
+<p>In everyday life, material surfaces are usually classified as being specular, glossy, or diffuse. <a href="#fig-surface_materials" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> shows examples of the three materials. We can now give a more rigorous treatment of these material types using BRDF, which will, in turn, give us some inspiration for parameterizing the BRDF.</p>
+<div id="fig-surface_materials" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-surface_materials-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/surface_materials.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surface_materials-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Left: a specular material and its BRDF. Middle: a diffuse material and its BRDF. Right: a glossy material and its BRDF. From <span class="citation" data-cites="lake">Prabhu B Doss (<a href="references.html#ref-lake" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="have">Daderot (<a href="references.html#ref-have" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="sheffield">Steve Fareham (<a href="references.html#ref-sheffield" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="specularbrdf">VonHaarberg (<a href="references.html#ref-specularbrdf" role="doc-biblioref">2018c</a>)</span>, <span class="citation" data-cites="diffusebrdf">VonHaarberg (<a href="references.html#ref-diffusebrdf" role="doc-biblioref">2018a</a>)</span>, and <span class="citation" data-cites="glossybrdf">VonHaarberg (<a href="references.html#ref-glossybrdf" role="doc-biblioref">2018b</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<section id="diffuse-material" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="diffuse-material"><span class="header-section-number">9.4.1</span> Diffuse Material</h3>
+<p>When the surface is rough, the energy of surface reflection deviates away from the perfect mirror-like reflection and, instead, distributes across the hemisphere. When the surface becomes rough enough, the distribution of outgoing energy can become uniform across all outgoing directions over the entire hemisphere. Such a surface is called a <strong>diffuse</strong> or an ideal <strong>Lambertian</strong> surface. The perfect Lambertian surface does not exist, but many things in the real world come close, such as paper, marble, or wood.</p>
+<p>The BRDF is a Lambertian surface is a uniform function. As we have seen in <a href="#eq-diffuse_brdf" class="quarto-xref">Equation&nbsp;<span>9.17</span></a>, <span class="math inline">\(f_r(p, \os, \oi) = \frac{\rho_{hh}}{\pi}\)</span> when <span class="math inline">\(\rho_{hh}\)</span> is the surface albedo and is between 0 and 1. It is easy to see that diffuse materials are always isotropic.</p>
+</section>
+<section id="perfectly-specular-material" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="perfectly-specular-material"><span class="header-section-number">9.4.2</span> Perfectly Specular Material</h3>
+<p>If a surface is perfectly smooth, like a mirror, it is called a <strong>perfectly specular</strong> material. Such materials follow the <strong>Snell’s law</strong>, which governs the angles of reflection and refraction, and the <strong>Fresnel equations</strong>, which govern the energy of reflection and refraction.</p>
+<p>In the plane of incidence (the plane uniquely determined by the incident direction and the surface normal), the reflection direction is symmetric about the surface normal as the incident direction. More precisely, if the incident direction is <span class="math inline">\(\oi\)</span> (parameterized by the polar angle <span class="math inline">\(\theta_i\)</span> and azimuthal angle <span class="math inline">\(\phi_i\)</span>) and the reflection direction is <span class="math inline">\(\os\)</span> (<span class="math inline">\(\theta_s, \phi_s\)</span>), we have:</p>
+<p><span id="eq-snell_reflect"><span class="math display">\[
+\begin{align}
+    \theta_s &amp;= \theta_i, \\
+    \phi_s &amp;= \phi_i + \pi.
+\end{align}
+\tag{9.19}\]</span></span></p>
+<p>The refraction/transmitted direction <span class="math inline">\(\omega_t\)</span> (<span class="math inline">\(\theta_t, \phi_t\)</span>) follows:</p>
+<p><span id="eq-snell_refract"><span class="math display">\[
+\begin{align}
+    &amp; n_1 \sin\theta_i = n_2 \sin\theta_t, \\
+    &amp; \phi_t = \phi_i + \pi,
+\end{align}
+\tag{9.20}\]</span></span></p>
+<p>where <span class="math inline">\(n_1\)</span> is the refractive index of the medium where light comes from and <span class="math inline">\(n_2\)</span> is that of the medium that reflects/refracts the lights.</p>
+<p>The energy of the reflected and refracted light is governed by the Fresnel equations. We will spare you the details, but it suffices to say that the fractions of reflected/refracted light are dependent on the incident angle, refractive indices of the two interface media, and the polarization states of the light. If you work out the math and assume that the incident light is unpolarized, the percentage of reflected energy <span class="math inline">\(F_r(\oi)\)</span> for an incident direction <span class="math inline">\(\oi\)</span> is given by:</p>
+<p><span id="eq-fresnel"><span class="math display">\[
+\begin{align}
+    F_r(\oi) &amp;= \frac{r_a+r_e}{2}, \\
+    r_a &amp;= (\frac{n_2 \cos\theta_i - n_1 \cos\theta_t}{n_2 \cos\theta_i + n_1 \cos\theta_t})^2, \\
+    r_e &amp;= (\frac{n_1 \cos\theta_i - n_2 \cos\theta_t}{n_1 \cos\theta_i + n_2 \cos\theta_t})^2.
+\end{align}
+\tag{9.21}\]</span></span></p>
+<p>We call <span class="math inline">\(F_r(\oi)\)</span> the <strong>specular reflectance</strong>, which not only varies with <span class="math inline">\(\oi\)</span> but also is also a spectral term; we omit the wavelength for simplicity. Assuming no loss of energy, the specular transmittance, i.e., the fraction of the transmitted energy, is given by <span class="math inline">\(1-F_r\)</span>.</p>
+<p>Fresnel’s equations are best understood in the context of the electromagnetic theory and are derived by treating light as waves in an <em>electric field</em> (the fact that we need to consider polarization states of a light is a giveaway). While <span class="math inline">\(F_r\)</span> cannot be derived from radiometry, it is fundamentally about the energy transfer of surface scattering, which radiometry is also concerned with. So <span class="math inline">\(F_r\)</span> can be integrated into the radiometry framework. One good example is to express the BRDF of a specular material using <span class="math inline">\(F_r\)</span>:</p>
+<p><span id="eq-specular_brdf"><span class="math display">\[
+\begin{align}
+    f_r(p, \os, \oi) = F_r(\oi)\frac{\delta(\theta_s-\theta_i)\delta(\phi_s-\phi_i-\pi)}{\cos\theta_i},
+\end{align}
+\tag{9.22}\]</span></span></p>
+<p>where <span class="math inline">\(\delta(x)\)</span> is the Dirac delta function, which is 0 everywhere except when <span class="math inline">\(x=0\)</span> and has the property <span class="math inline">\(\int\delta(x)\d x = 1\)</span>.</p>
+<p>We can verify that this BRDF makes sense. First, the BRDF is non-zero only when <a href="#eq-snell_reflect" class="quarto-xref">Equation&nbsp;<span>9.19</span></a> holds because of the double-delta term. Second, the energy conservation is followed. For instance, if we calculate the directional-hemispherical reflectance by plugging the BRDF into <a href="#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>9.8</span></a> and assuming <span class="math inline">\(\Omega\)</span> is a hemisphere, we get:</p>
+<p><span id="eq-diffuse_brdf_1"><span class="math display">\[
+\begin{align}
+    \frac{E_o}{E_i} = \rho_{dh}(p, \oi) = \int^{\Omega} F_r(\oi)\frac{\delta(\theta_s-\theta_i)\delta(\phi_s-\phi_i-\pi)}{\cos\theta_i} \cos\theta_s\text{d}\os.
+\end{align}
+\tag{9.23}\]</span></span></p>
+<p>Since <span class="math inline">\(F_r(\oi)\)</span> is independent of <span class="math inline">\(\os\)</span>, <a href="#eq-diffuse_brdf_1" class="quarto-xref">Equation&nbsp;<span>9.23</span></a> evaluates to <a href="#eq-diffuse_brdf_2" class="quarto-xref">Equation&nbsp;<span>9.24</span></a>. The integration in <a href="#eq-diffuse_brdf_2" class="quarto-xref">Equation&nbsp;<span>9.24</span></a> evaluates to 1. This is because, informally, the integrand is non-zero only when <a href="#eq-snell_reflect" class="quarto-xref">Equation&nbsp;<span>9.19</span></a> holds, at which point <span class="math inline">\(\theta_s = \theta_i\)</span>, so the cosine terms cancel out. So the integration is just sort of a hugely complicated way of writing <span class="math inline">\(\int \delta(x)\d x\)</span>, which is 1. <!-- % rigorous proof here: https://pbr-book.org/4ed/Reflection_Models/Conductor_BRDF --> <span id="eq-diffuse_brdf_2"><span class="math display">\[
+\begin{align}
+    \frac{E_o}{E_i} = F_r(\oi) \int^{\Omega} \frac{\delta(\theta_s-\theta_i)\delta(\phi_s-\phi_i-\pi)}{\cos\theta_i} \cos\theta_s\text{d}\os = F_r(\oi).
+\end{align}
+\tag{9.24}\]</span></span></p>
+<!--
+\begin{align}
+    \frac{E_o}{E_i} = F_r(\oi).
+\end{align}
+{#eq-diffuse_brdf_3} -->
+<p>We can see that the specular reflectance <span class="math inline">\(F_r\)</span> is equivalent to <span class="math inline">\(\rho_{dh}\)</span>, the directional-hemispherical reflectance. This makes sense, because in specular materials the scattering is directional if the incident light is directional. So the directional-hemispherical reflectance reduces to the “directional-directional” reflectance, which is essentially the specular reflectance.</p>
+<p>The specular reflectance is also equivalent to the hemispherical-directional reflectance <span class="math inline">\(\rho_{hd}\)</span>. We can show this either by simply invoking the reciprocity that <span class="math inline">\(\rho_{hd} = \rho_{dh}\)</span> or by plugging the specular BRDF <a href="#eq-specular_brdf" class="quarto-xref">Equation&nbsp;<span>9.22</span></a> into <a href="#eq-energy_con_2" class="quarto-xref">Equation&nbsp;<span>9.9</span></a> and obtaining (assuming <span class="math inline">\(\Omega\)</span> is hemisphere):</p>
+<p><span class="math display">\[
+\begin{align}
+    \rho_{hd}(p, \os) &amp;= \int^{\Omega} F_r(\oi)\frac{\delta(\theta_s-\theta_i)\delta(\phi_s-\phi_i-\pi)}{\cos\theta_i} \cos\theta_i\text{d}\oi \\
+    &amp;= F_r(\hat\os) = F_r(\os),
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\hat\os(\theta_s, \phi_s-\pi)\)</span> is the mirror-reflection direction of <span class="math inline">\(\os(\theta_s, \phi_s)\)</span>. The integral evaluates to <span class="math inline">\(F_r(\hat\os)\)</span> because, informally, the integrand is non-zero only when <a href="#eq-snell_reflect" class="quarto-xref">Equation&nbsp;<span>9.19</span></a> holds, at which point <span class="math inline">\(\oi = \hat\os\)</span> so <span class="math inline">\(F_r(\oi) = F_r(\hat\os)\)</span>; the integral is a complicated way of writing <span class="math inline">\(\int F_r(\oi)\delta(\hat\os-\oi)\doi\)</span>, which evaluates to <span class="math inline">\(F_r(\hat\os)\)</span>. The result has an intuitive explanation: for a specular surface, the scattered energy along <span class="math inline">\(\os\)</span> given a hemispherical illumination is the same as when the illumination comes only from <span class="math inline">\(\hat\os\)</span>. We can then show that <span class="math inline">\(F_r(\hat\os) = F_r(\os)\)</span>, which is not surprising given reciprocity; you can also verify it by going through the equations in <a href="#eq-fresnel" class="quarto-xref">Equation&nbsp;<span>9.21</span></a>.</p>
+<p>Interestingly, the specular reflectance <span class="math inline">\(F_r\)</span> in general is <em>not</em> equivalent to the hemispherical-hemispherical reflectance <span class="math inline">\(\rho_{hh}\)</span>. To see this, plug the specular BRDF into <a href="#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>9.10</span></a> (assuming <span class="math inline">\(\Omega_i\)</span> and <span class="math inline">\(\Omega_s\)</span> are hemispheres):</p>
+<p><span class="math display">\[
+\begin{align}
+    E_o &amp;= \int^{\Omega_s} (\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos \label{eq:specular_brdf_hh_1} \\
+    &amp;= \int^{\Omega_s} \big(F_r(\os) L(p, \os)\big) \cos\theta_s \dos \label{eq:specular_brdf_hh_2} \\
+    &amp;= \int^{\Omega_i} F_r(\oi) L(p, \oi) \cos\theta_i \doi \label{eq:specular_brdf_hh_3}, \\
+    E_i &amp;= \int^{\Omega_i} L(p, \oi) \cos\theta_i \doi. \label{eq:specular_brdf_hh_4}
+\end{align}
+\]</span></p>
+<p>We can see that only when <span class="math inline">\(F_r(\oi)\)</span> is a constant do we get <span class="math inline">\(F_r(\oi) = \frac{E_o}{E_i} = \rho_{hh}\)</span>. This is consistent with our early result in <a href="#sec-chpt-mat-ss-reflectance-hhr" class="quarto-xref"><span>Section 9.2.3</span></a> that <span class="math inline">\(\rho_{dh} = \rho_{hh}\)</span> only when the material is Lambertian, and a specular material is obviously not Lambertian.</p>
+<p>When <span class="math inline">\(F_r(\oi)\)</span> is constant, the specular material is isotropic (can you prove it?). Since <span class="math inline">\(F_r(\oi)\)</span> does not have to be a constant, specular materials could be anisotropic. That is, it is theoretically possible that a material always reflects specularly, but the reflected energy depends on the incident direction. <!-- %https://cgg.mff.cuni.cz/~jaroslav/teaching/2017-npgr010/slides/03%20-%20npgr010-2017%20-%20BRDF.pdf --></p>
+</section>
+<section id="glossy-material" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="glossy-material"><span class="header-section-number">9.4.3</span> Glossy Material</h3>
+<p>The surface scattering in most materials is in-between being perfectly specular and perfectly diffuse. These materials scatter light to a small cone of directions, usually centered around the direction of a perfect reflection. These materials are usually called <strong>glossy</strong> or sometimes, confusingly, “specular”, too. The energy distribution of a glossy material is neither a Delta function (as in the perfectly specular case) nor a uniform function (as in the diffuse case). It is usually a function that peaks at the mirror-reflection direction and gradually decays as we move away from that direction.</p>
+<p>The bottom figures in <a href="#fig-surface_materials" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> illustrate an example of the BRDF for each of the three surface types under a given incident direction. An actual BRDF (for a given surface point and a given incident direction) would be a 3D shape, and what we are showing here is the cross section. The shape of the locus is drawn to be proportional to the magnitude of the BRDF; the locus in graphics literature is sometimes called the <em>specular lobe</em>.</p>
+<p>The spectral-lobe visualization gives us a hint: we can parameterize a BRDF by mathematically describing the shape of the specular lobe. In fact, the BRDFs for the Lambertian surface (<a href="#eq-diffuse_brdf" class="quarto-xref">Equation&nbsp;<span>9.17</span></a>) and for the specular materials (<a href="#eq-specular_brdf" class="quarto-xref">Equation&nbsp;<span>9.22</span></a>) are two such examples. A glossy BRDF is more difficult to parameterize. Many BRDF parameterizations have been proposed; some are empirical, while others attempt to be physically plausible. The most popular and widely used is based on the microfacet model, which we will discuss next.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-ss-para" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sec-chpt-mat-ss-para"><span class="header-section-number">9.5</span> BRDF Parameterization with Microfacet Models</h2>
+<p>The assumption of the microfacet model is that the surface scattering behavior of a point depends on its local roughness: the rougher the surface, the more diffuse the surface scattering becomes. To model the roughness, the surface is modeled as a collection of small microfacets, each of which acts like a perfect mirror. A specular surface is one where all the microfacets have the exact same orientation. As the surface becomes rougher, the mirrors become more randomly oriented. When the mirrors are completely randomly oriented, the resulting surface scattering becomes diffuse.</p>
+<p>To derive a microfacet model, we need to first define the orientation of each microfacet. Given a beam of incident lights from a particular direction, we can then trace, following the laws governing specular reflection, how the lights are scattered by the collection of the microfacets given their orientations. In the end, we obtain the collection of outgoing directions, from which we can derive the BRDF.</p>
+<p>There are many variants of the microfacet model. They have one thing in common: they do not explicitly model the scattering of each ray at each microfacet but, rather, model the scattering of the microfacets <em>statistically</em> given the <em>distribution</em> of the microfacet orientations. In the end, they can either have an analytical form of the BRDF (Lambertian surface being an extreme example), have a close approximation of the analytical form, or can numerically estimate the BRDF efficiently (mostly through sampling).</p>
+<p>Without going into the details, we will refer you to <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 9.6)</span> for a mathematical treatment of the general idea and to <span class="citation" data-cites="torrance1967theory">Torrance and Sparrow (<a href="references.html#ref-torrance1967theory" role="doc-biblioref">1967</a>)</span>, <span class="citation" data-cites="cook1982reflectance">Cook and Torrance (<a href="references.html#ref-cook1982reflectance" role="doc-biblioref">1982</a>)</span>, <span class="citation" data-cites="ward1992measuring">Ward (<a href="references.html#ref-ward1992measuring" role="doc-biblioref">1992</a>)</span>, <span class="citation" data-cites="oren1995generalization">Oren and Nayar (<a href="references.html#ref-oren1995generalization" role="doc-biblioref">1995</a>)</span>, and <span class="citation" data-cites="walter2007microfacet">Walter et al. (<a href="references.html#ref-walter2007microfacet" role="doc-biblioref">2007</a>)</span> for the classical models.</p>
+<section id="sec-chpt-mat-ss-para-model" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-para-model"><span class="header-section-number">9.5.1</span> Nature of Microfacets Models</h3>
+<p>If the microfacet theory does not sound weird to you, it should! In a microfacet model, we are still modeling surface scattering using discrete objects (microfacets) and events (perfect mirror-like reflection on each microfacet). Is it surprising that we can use the discrete microfacet model to reason about the behavior of a <em>continuous</em> surface? Given any point <span class="math inline">\(p\)</span> on a surface, wouldn’t <span class="math inline">\(p\)</span> correspond to one single microfacet, and the behavior of <span class="math inline">\(p\)</span> simply be the result of a perfect mirror reflection there? If so, how can the microfacet model describe non-specular surface scattering of glossy and diffuse materials?</p>
+<p>An intermediate answer is that the microfacet theory is just a modeling methodology. We use a set of discrete microfacets to derive the surface-scattering statistics of that set of microfacets, but then simply assume that the so-derived statistics apply anywhere on a continuous surface of interest. Still, does this methodology reflect the physical reality?</p>
+<div id="fig-model_scale" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model_scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/model_scale.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model_scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Triphasic profile of object property. Object property at both the macroscopic scale and at the atomic/molecular scale fluctuates wildly, but at there is a scale where the property does not very much. Models based on radiometry operate at this scale. This scale is sufficiently small (smaller than the spatial resolution of human vision and typical cameras) so our calculus machinery can be applied, but still larger than individual molecules and atoms so that we do not have to worry about the wild fluctuations at that scale.
+</figcaption>
+</figure>
+</div>
+<p>Well, the physical world is fundamentally not continuous; when we break down the surface into finer and finer scales, we eventually get to molecules and atoms, so the surface property undergoes wild fluctuations depending on whether a small area contains molecules or not. If that is the level of detail you want to get into, you have to model things at the molecular and atomic levels (or even lower). <a href="#fig-model_scale" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> illustrates this idea.</p>
+<p>Fortunately for many real-world use-cases, we do not have to go there. Our eyes have a resolution limit, so we cannot resolve the details of a tiny surface area anyway; image sensors also have a resolution limit. The just-resolvable area <span class="math inline">\(\delta A\)</span>, set by the spatial resolution limit of our visual system, is more than large enough that it contains many microfacets, so the aggregated behavior of those microfacets can effectively model the observed scattering of <span class="math inline">\(\delta A\)</span>, which is all that matters to our vision (and to computer graphics and imaging, which is concerned only with satisfying human vision). So effectively what the microfacet theory does is to assume that the small <span class="math inline">\(\delta A\)</span> (which contains a distribution of microfacets) is just within the range where the surface scattering property is stable. When the microfacet theory says something about a particular point <span class="math inline">\(p\)</span>, it is really saying something about <span class="math inline">\(\delta A\)</span>.</p>
+<p>This way of modeling and thinking is pervasive in radiometry, which uses differential and integral equations and thus has inherently assumed that the radiation field under modeling is continuous. That is not true. Take irradiance as an example. The average irradiance of a surface changes dramatically at the microscopic level when we initially reduce the surface area, because the photon distribution over a large area is likely very non-uniform. When the surface area is sufficiently small, the number of photons hitting the surface will change proportionally with the surface area, because at that scale the photon distribution is roughly uniform. This is the scale at which irradiance is defined. But if we keep reducing the area smaller and smaller, the amount of photons hitting a tiny area will, again, undergo wild fluctuations depending on whether there are photons in the area of not — photons are discrete packets of energy. We will see another example shortly in volume scattering, where we use a small volume of discrete particles to build a model for radiative energy transfer, which we then apply to any given point in a continuous volume.</p>
+<!-- %\fixme{another example is to integrate power over time to get energy. energy is not continuous wrt time so we can't take time to infinitesimal (or we can't let N=T/Dt be infinity).
+%what we do is to let Dt be sufficiently small so that the average number of photons divided by Dt is roughly a constant, and the summation over Dt is approximated by the integral over T.
+%This is OK when T is long enough (exposure time of a camera, N is sufficiently large.)
+%this sort of integration over time is needed for simulating things like motion blur.}
+%https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Radiometry -->
+<p>Orthogonal to the discussion above is the limitation that microfacet models do not account for the surface roughness on the scale of the light wavelength. In the regime where the length of each microfacet is comparable with the light wavelength, diffraction takes place. As a result, reflection does not follow the Snell’s law and is wavelength dependent. In fact, this is how we get iridescence; in engineering, people make diffraction gratings that take advantage of the wavelength dependency to disperse lights of different wavelengths.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-measurement" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-chpt-mat-measurement"><span class="header-section-number">9.6</span> Measuring Spectral Reflectance and BRDF</h2>
+<p>This section discuss the principles and practices of measuring the spectral reflectance or spectral BRDF. It is absolutely important to note that the measured reflectance is not necessarily attributed only to surface scattering, because the measurement setup does not care what the material being measured is. If SSS plays a role (e.g., translucent materials), the resulting reflectance data would include the contribution from volume scattering, too.</p>
+<p>Worse, for these materials not all the SSS influences are captured by this measurement geometry, since some back-scattered photons will exit at other surface points, which will not be captured by the detector. So the measurement is <em>neither complete nor sound</em> for materials where back-scattered photons contribute to their reflectance.</p>
+<section id="sec-chpt-mat-rt-ref" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="sec-chpt-mat-rt-ref"><span class="header-section-number">9.6.1</span> Measuring Spectral Reflectance</h3>
+<p>How do we know the spectral reflectance (transmittance) of a material? We measure it. This is easier said than done. We will focus on the reflectance measurement here, but transmittance is measured similarly, except you are not measuring from the same side of the illuminant but from the other side. <span class="citation" data-cites="sharma2003color">Sharma (<a href="references.html#ref-sharma2003color" role="doc-biblioref">2003</a>, Chpt. 1.11.4)</span>, <span class="citation" data-cites="trussell2008fundamentals">Trussell and Vrhel (<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">2008</a>, Chpt. 8.7)</span>, and <span class="citation" data-cites="reinhard2008color">Reinhard et al. (<a href="references.html#ref-reinhard2008color" role="doc-biblioref">2008</a>, Chpt 6.8)</span> have overviews of various measurement devices that might be helpful.</p>
+<section id="the-importance-of-measurement-geometry" class="level4">
+<h4 class="anchored" data-anchor-id="the-importance-of-measurement-geometry">The Importance of Measurement Geometry</h4>
+<p>Consider <a href="rendering-basics.html#fig-spectral_reflectance" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> (a) again. The illuminant emits lights everywhere, but what matters is the light incident on the point <span class="math inline">\(p\)</span> the viewer is currently gazing at; of course, the incident lights could come from everywhere else in the space, not just a particular illuminant. Similarly, <span class="math inline">\(p\)</span> could potentially scatter lights everywhere over the hemisphere (through surface scattering and/or SSS), but it is the small beam of light that enters the viewer’s eye that matters. In order to measure the reflectance that is relevant to this particular illumination-viewing geometry, we need to 1) measure all the illuminating power that hits <span class="math inline">\(p\)</span> and 2) measure the scattered light from <span class="math inline">\(p\)</span> only along the viewing direction.</p>
+<p>You can imagine that if we change the illumination to be, say, a diffuse lighting where there is an equal amount of light hitting <span class="math inline">\(p\)</span> from all directions, the reflectance would be different, and it would be a perfectly relevant reflectance measure to report. If you have not, next time when you visit an art museum, pay attention to how the lighting system is carefully set up to bring out the best viewing experience (while also considering conservation); you ideally want the reflectance measurement of an artifact to simulate the viewing lighting.</p>
+</section>
+<section id="single-reflectance-measurement" class="level4">
+<h4 class="anchored" data-anchor-id="single-reflectance-measurement">Single Reflectance Measurement</h4>
+<div id="fig-reflectance_measurement" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reflectance_measurement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/reflectance_measurement.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reflectance_measurement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: (a): Four different illumination-viewing geometries to measure the reflectance of a material; from <span class="citation" data-cites="judd1975color">Judd and Wyszecki (<a href="references.html#ref-judd1975color" role="doc-biblioref">1975, fig. 2.11</a>)</span>. (b): A spectrophotometer, which takes two spectroradiometric measurements of the standard material with a known reflectance and a test material to calculate the spectral reflectance of the test material; from <span class="citation" data-cites="sharma2003color">Sharma (<a href="references.html#ref-sharma2003color" role="doc-biblioref">2003, fig. 1.33</a>)</span>. (c): A spectroradiometer design, which measures the spectral power distribution of a light source (self-luminous or scattering) using a prism; from <span class="citation" data-cites="judd1975color">Judd and Wyszecki (<a href="references.html#ref-judd1975color" role="doc-biblioref">1975, fig. 2.1</a>)</span>. (d): Another way to implement the spectroradiometer that uses diffraction grating to disperse incident light; from <span class="citation" data-cites="reinhard2008color">Reinhard et al. (<a href="references.html#ref-reinhard2008color" role="doc-biblioref">2008, fig. 6.22</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>In general, there really is no single reflectance number we can associate with a material. There are two ways to approach this. A common approach is to set up the measurement geometry so that it is close to an actual viewing experience. <a href="#fig-reflectance_measurement" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> (a) shows four common settings. Some might illuminate the material from 0<span class="math inline">\(^{\circ}\)</span> (assuming the direction of the surface normal has an angle of 0<span class="math inline">\(^{\circ}\)</span>) and then measure the scattered lights at 45<span class="math inline">\(^{\circ}\)</span>; others can illuminate the material using diffuse illumination and measure the reflectance at 0<span class="math inline">\(^{\circ}\)</span> <span class="citation" data-cites="judd1975color reinhard2008color li2003ink">(<a href="references.html#ref-judd1975color" role="doc-biblioref">Judd and Wyszecki 1975, p. 122–25</a>; <a href="references.html#ref-reinhard2008color" role="doc-biblioref">Reinhard et al. 2008</a>, Chpt. 6.8.2; <a href="references.html#ref-li2003ink" role="doc-biblioref">Li 2003</a>, Chpt. 2.2.2)</span>.</p>
+<!-- %\fixme{talk about integration sphere?}
+%https://en.wikipedia.org/wiki/Integrating_sphere
+%Chapter 6.8.2, CIFA -->
+<p>To get a reflectance spectrum, we need to know the reflectance at each sampled wavelength. There are multiple ways to go about measuring the spectral information. For instance, we can place a monochromator or a set of optical filters between the illuminant and the material so that we can control the wavelength of the light that is incident on the material.</p>
+<p>Alternatively, we can change the detector to measure spectral information. We can use a dispersive medium such as a prism, shown in <a href="#fig-reflectance_measurement" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> (c), or a diffraction grating, shown in <a href="#fig-reflectance_measurement" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> (d), to separate the scattered light into different wavelengths and measure them individually. A detector that is capable of measuring the spectral radiometric quantities (e.g., the spectral power distribution) is called a <strong>spectroradiometer</strong>.</p>
+<p>The raw detector readings of a spectroradiometer are usually not the absolute radiometric quantity of interest. The raw recording is, instead, roughly proportional to radiometric quantity up to a constant scaling factor <span class="math inline">\(SSF(\lambda)\)</span>, which is usually called the detector’s spectral sensitivity funciton or the responsivity function, which we will study carefully in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 12.5</span></a>. <span class="math inline">\(SSF(\lambda)\)</span> can be calibrated offline, and that allows us to turn a detector’s raw recording into the corresponding absolute radiometric quantity.</p>
+<p>We take a spectroradiometric measurement of the illumination hitting the material and that of the scattered light of interest; the ratio is the spectral reflectance <span class="math inline">\(\rho(\lambda)\)</span>:</p>
+<p><span class="math display">\[
+\begin{align}
+    \rho(\lambda) = \frac{\Phi_s(\lambda)SSF(\lambda)}{\Phi_i(\lambda)SSF(\lambda)} = \frac{\Phi_s(\lambda)}{\Phi_i(\lambda)}.
+\end{align}
+\]</span></p>
+<p>We can see that for reflectance measurement, the exact values of <span class="math inline">\(SSF(\lambda)\)</span> are immaterial. A curious question is that, while the detector can measure <span class="math inline">\(\Phi_s(\lambda)\)</span>, what measures <span class="math inline">\(\Phi_i(\lambda)\)</span>? One strategy is to, offline, place the same detector where the material is and directly measure <span class="math inline">\(\Phi_i(\lambda)\)</span> there.</p>
+<p>Another, perhaps much more common and standard, way to measure spectral reflectance is to use something called a <strong>spectrophotometer</strong>. This method does not need to know <span class="math inline">\(\Phi_i(\lambda)\)</span>, but it requires a reference sample with a known spectral reflectance. This is shown in <a href="#fig-reflectance_measurement" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> (b). It takes two spectroradiometric measurements under the identical illumination: one for the test material and the other for the standard/reference sample. The spectral reflectance of the test material <span class="math inline">\(\rho_t(\lambda)\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{align}
+    \rho_t(\lambda) = \frac{m_t(\lambda)}{m_s(\lambda)}\rho_s(\lambda),
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(\rho_s(\lambda)\)</span> is the known spectral reflectance of the standard/reference sample, <span class="math inline">\(m_s(\lambda)\)</span> and <span class="math inline">\(m_t(\lambda)\)</span> refer to the raw detector readings of the standard and the test material at wavelength <span class="math inline">\(\lambda\)</span>, respectively. We can see that the spectrum of the illumination does not matter. Sometimes <span class="math inline">\(\frac{m_t(\lambda)}{m_s(\lambda)}\)</span> is called the <strong>spectral reflectance factor</strong> of the test material if the reference material is perfectly diffuse <span class="citation" data-cites="judd1975color">Judd and Wyszecki (<a href="references.html#ref-judd1975color" role="doc-biblioref">1975, p. 93</a>)</span>.</p>
+<p>In practice, the reference measurement can be done separately rather than simultaneously with the test material to reduce the device form factor, and the reference measurement data can be tabulated to save measurement time.</p>
+<p>One note on terminology: while a spectroradiometer is used to measure the spectral radiometric quantities (e.g., spectral radiance), a spectrophotometer does not measure the spectral photometric quantities (e.g., spectral luminance); instead, it measures the spectral reflectance. This is standardized in American Society for Testing and Materials (ASTM) E284-13b <span class="citation" data-cites="astme28413b">(<a href="references.html#ref-astme28413b" role="doc-biblioref">ASTM International 2013</a>)</span> (along with other terminologies related to material properties and measurement instruments).</p>
+<p>The nice thing about the approach described so far is that you get a single reflectance spectrum, but be very careful under what measurement geometry is the spectrum obtained. There is no guarantee that a particular measurement geometry corresponds to the illumination/observation geometry of an actual viewing experience, so use the reported reflectance data with that caveat in mind.</p>
+</section>
+<section id="goniometric-measurements" class="level4">
+<h4 class="anchored" data-anchor-id="goniometric-measurements">Goniometric Measurements</h4>
+<p>A more general approach is to measure the reflectance at every illumination-viewing direction combination. For that we need what is called a <strong>goniospectrophotometer</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. There are also <strong>gonioradiometers</strong>, which measure the spectral radiometric quantities from different viewing directions.]. <a href="#fig-brdf_calculation_setup" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> shows one such setup. The illuminant/light source incident on the material comes through the small aperture <span class="math inline">\(I\)</span>, and the scattered light from the material is captured by a detector (e.g., a photodiode or, essentially, a single-pixel image sensor) through another aperture <span class="math inline">\(V\)</span>. Transmittance can be similarly measured by placing the detector at the other side of the material.</p>
+<div id="fig-brdf_calculation_setup" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-brdf_calculation_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/brdf_calculation_setup.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-brdf_calculation_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: A setup for measuring goniometric reflectance and BRDF. Both the illuminant (source) and the detector (photometer) can vary in two degrees of freedom, <span class="math inline">\((\theta_i, \phi_i)\)</span> for the source and <span class="math inline">\((\theta_s, \phi_s)\)</span> for the detector, covering different illuminant-scattering combinations. Adapted from <span class="citation" data-cites="judd1975color">Judd and Wyszecki (<a href="references.html#ref-judd1975color" role="doc-biblioref">1975, fig. 3.4</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The idea is to simultaneously sample, say, <span class="math inline">\(N\)</span> illumination directions (parameterized by the azimuth <span class="math inline">\(\phi_i\)</span> and polar angle <span class="math inline">\(\theta_i\)</span>) and <span class="math inline">\(M\)</span> scattering directions (parameterized by the azimuth <span class="math inline">\(\phi_s\)</span> and polar angle <span class="math inline">\(\theta_s\)</span>), and obtain <span class="math inline">\(M \times N\)</span> measurements, each of which corresponds to one particular combination of the illuminant and scattering directions. For convenience, commercial goniometric measurements usually use a beam splitter to simultaneously measure the illumination and scattering flux <span class="citation" data-cites="lanevski2022gonioreflectometer rabal2012automatic">(<a href="references.html#ref-lanevski2022gonioreflectometer" role="doc-biblioref">Lanevski, Manoocheri, and Ikonen 2022</a>; <a href="references.html#ref-rabal2012automatic" role="doc-biblioref">Rabal et al. 2012</a>)</span>.</p>
+<p>Denote the area on the material being measured <span class="math inline">\(A_r\)</span>. The size of the area is dictated by the illumination aperture <span class="math inline">\(I\)</span>. Assuming the power received by <span class="math inline">\(A_r\)</span> from the illuminant through <span class="math inline">\(I\)</span> is <span class="math inline">\(\Phi_i(\lambda, A_r, I)\)</span>, and the power scattered by <span class="math inline">\(A_r\)</span> and collected by the detector through the aperture <span class="math inline">\(V\)</span> is <span class="math inline">\(\Phi_s(\lambda, A_r, V)\)</span>, the reflectance of the small area <span class="math inline">\(A_r\)</span> is simply given by:</p>
+<p><span class="math display">\[
+\begin{align}
+    \rho(\lambda, A_r) = \frac{\Phi_s(\lambda, A_r, V)}{\Phi_i(\lambda, A_r, I)}.
+\end{align}
+\]</span></p>
+<p>As the two apertures become very small, <span class="math inline">\(A_r\)</span> becomes very small, and the incident and outgoing solid angles become very small, too. The resulting reflectance measurement can be thought of as estimating the <strong>directional-directional reflectance</strong> (<a href="#sec-chpt-mat-ss-reflectance" class="quarto-xref"><span>Section 9.2</span></a>). But in general you can see how the reflectance number can easily change when we slightly vary the hardware setup. For instance, if we increase the detector aperture <span class="math inline">\(V\)</span>, the detected power will increase, and that would increase the resulting reflectance. If we increase the illumination aperture <span class="math inline">\(I\)</span>, the resulting reflectance would be for a larger material area <span class="math inline">\(A_r\)</span>.</p>
+<p>One can also use a reference material (with known reflectance spectra at the same measurement geometries) to avoid measuring <span class="math inline">\(\Phi_i(\lambda, A_r, I)\)</span>, similar to how a spectrophotometer is operated.</p>
+</section>
+</section>
+<section id="sec-chpt-mat-rt-brdf" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="sec-chpt-mat-rt-brdf"><span class="header-section-number">9.6.2</span> Measuring BRDF</h3>
+<p>Reflectance is integrated from the BRDF, which suggests that the latter is a more fundamental measure of material property. The same setup shown in <a href="#fig-brdf_calculation_setup" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> can also be used to measure the BRDF, in which case the setup is called a <strong>goniospectroreflectometer</strong>. We will take the same measurements, but with a bit more calculation we can estimate the BRDF of the material, rather than just the (goniometric) reflectance spectra.</p>
+<p>Let us be precise about the setup (omitting the <span class="math inline">\(\lambda\)</span> term in all relevant quantities).</p>
+<ul>
+<li>We are illuminating a small area <span class="math inline">\(A_r\)</span> through the illumination aperture <span class="math inline">\(I\)</span>.</li>
+<li>The center of <span class="math inline">\(A_r\)</span> is an infinitesimal point <span class="math inline">\(p\)</span>, which along with <span class="math inline">\(I\)</span> subtends a solid angle <span class="math inline">\(\Oi(p, I)\)</span>.</li>
+<li><span class="math inline">\(\oi\)</span> is the direction between <span class="math inline">\(p\)</span> and the center of <span class="math inline">\(I\)</span>.</li>
+<li><span class="math inline">\(A_r\)</span> scatters lights toward the detector through the detector aperture <span class="math inline">\(V\)</span>, which subtends a solid angle of <span class="math inline">\(\Os (p, V)\)</span> with <span class="math inline">\(p\)</span>.</li>
+<li><span class="math inline">\(\os\)</span> is the direction between <span class="math inline">\(p\)</span> and the center of <span class="math inline">\(V\)</span>.</li>
+<li>The power incident on <span class="math inline">\(A_r\)</span> is <span class="math inline">\(\Phi_i(A_r, I)\)</span>, and the portion of the power scattered by <span class="math inline">\(A_r\)</span> and collected by the detector is <span class="math inline">\(\Phi_s(A_r, V)\)</span>.</li>
+<li>We are interested in calculating the BRDF <span class="math inline">\(f_r(p, \omega_s, \omega_i)\)</span>.</li>
+</ul>
+<p>Recall that <span class="math inline">\(f_r(p, \omega_s, \omega_i)\)</span> is defined as the ratio of the difference in radiance leaving <span class="math inline">\(p\)</span> toward <span class="math inline">\(\os\)</span> over the difference in irradiance incident on <span class="math inline">\(p\)</span> due to the lights coming from an infinitesimal solid angle <span class="math inline">\(\doi\)</span> (omitting <span class="math inline">\(\lambda\)</span> in all equations for simplicity):</p>
+<p><span id="eq-in_f"><span class="math display">\[
+\begin{align}
+f_r(p, \omega_s, \omega_i) = \frac{\text{d}L_s(p, \omega_s)}{\text{d}E_i(p, \omega_i)} \approx \frac{L_s(p, \omega_s)}{E_i(p, \Oi(p, I))}.
+\end{align}
+\tag{9.25}\]</span></span></p>
+<p>There is no way we can illuminate a point <span class="math inline">\(p\)</span> through an infinitesimal solid angle <span class="math inline">\(\doi\)</span>; all we could do is to illuminate a small cone of directions <span class="math inline">\(\Oi(p, I)\)</span>. We can then calculate the <em>average</em> BRDF of all the incident directions in <span class="math inline">\(\Oi(p, I)\)</span> (i.e., assuming the BRDF is the same for all the outgoing directions in <span class="math inline">\(\Oi(p, I)\)</span>) using the approximation in <a href="#eq-in_f" class="quarto-xref">Equation&nbsp;<span>9.25</span></a>, which we have derived in <a href="#sec-chpt-mat-ss-brdf-approx" class="quarto-xref"><span>Section 9.1.1</span></a>.</p>
+<p>How do we calculate <span class="math inline">\(E_i(p, \Oi(p, I))\)</span>? There is no way we can illuminate and measure the irradiance of an infinitesimal point <span class="math inline">\(p\)</span>; all we can do is to illuminate a small area <span class="math inline">\(A_r\)</span> and assume that the irradiance received is constant anywhere inside <span class="math inline">\(A_r\)</span>, so we have:</p>
+<p><span id="eq-irr"><span class="math display">\[
+\begin{align}
+    E_i(p, \Oi(p, I)) \approx \frac{\Phi_i(A_r, I)}{A_r}.
+\end{align}
+\tag{9.26}\]</span></span></p>
+<p>Now how do we get <span class="math inline">\(L_s(p, \omega_s)\)</span>? For this we turn to the detector side. Using basic radiometry, <span class="math inline">\(\Phi_s(A_r, V)\)</span> is expressed in <a href="#eq-out_a" class="quarto-xref">Equation&nbsp;<span>9.27</span></a>, where <span class="math inline">\(p'\)</span> and <span class="math inline">\(\os'\)</span> are dummy variables, <span class="math inline">\(\theta_s'\)</span> is associated with <span class="math inline">\(\os'\)</span>, and <span class="math inline">\(\Oi(p', V)\)</span> is associated with <span class="math inline">\(p'\)</span> (c.f., <span class="math inline">\(p\)</span> refers to a specific point on <span class="math inline">\(A_r\)</span>, and <span class="math inline">\(\os\)</span> and <span class="math inline">\(\Os(p, V)\)</span> refer to physical quantities associated specifically with <span class="math inline">\(p\)</span>):</p>
+<p><span id="eq-out_a"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) = \int^{A_r} \int^{\Os(p', V)} L_s(p', \omega_s') \cos{\theta_s'} \text{d}\os' \text{d}p'.
+\end{align}
+\tag{9.27}\]</span></span></p>
+<p>We assume that the radiance of any ray between <span class="math inline">\(A_r\)</span> and the detector aperture <span class="math inline">\(V\)</span> is constant and takes the value of <span class="math inline">\(L_s(p, \os)\)</span>; this gets us <a href="#eq-out_b" class="quarto-xref">Equation&nbsp;<span>9.28</span></a>:</p>
+<p><span id="eq-out_b"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \approx \int^{A_r} \int^{\Os(p, V)} L_s(p, \omega_s) \cos{\theta_s} \text{d}\os' \text{d}p'.
+\end{align}
+\tag{9.28}\]</span></span></p>
+<p>Since <span class="math inline">\(L_s(p, \os)\)</span> and <span class="math inline">\(\cos\theta_s\)</span> are invariant to <span class="math inline">\(\os'\)</span> and <span class="math inline">\(p'\)</span>, they can be taken out of the two integrations, and this gives us <a href="#eq-out_c" class="quarto-xref">Equation&nbsp;<span>9.29</span></a>: <span id="eq-out_c"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \approx L_s(p, \omega_s) \cos{\theta_s} \int^{A_r} \int^{\Os(p, V)} \text{d}\os' \text{d}p'.
+\end{align}
+\tag{9.29}\]</span></span></p>
+<p>Calculating the two integrals in <a href="#eq-out_c" class="quarto-xref">Equation&nbsp;<span>9.29</span></a> gives us <a href="#eq-out_d" class="quarto-xref">Equation&nbsp;<span>9.30</span></a>, where <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> are constant. Given the boundary condition that <span class="math inline">\(\Phi_s(\cdot)\)</span> has to be 0 when <span class="math inline">\(\Os(\cdot)\)</span> or <span class="math inline">\(A_r\)</span> is 0 (if the detector aperture is closed or the illumination area vanishes, no scattered light will be detected), we know <span class="math inline">\(C_1=C_2=0\)</span>.</p>
+<p><span id="eq-out_d"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \approx L_s(p, \omega_s) \cos{\theta_s} (A_r (\Os(p, V) + C_1) + C_2).
+\end{align}
+\tag{9.30}\]</span></span></p>
+<p>Plugging <a href="#eq-in_f" class="quarto-xref">Equation&nbsp;<span>9.25</span></a> we get:</p>
+<p><span id="eq-out_e"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \approx f_r(p, \omega_s, \omega_i)E_i(p, \Oi(p, I)) \cos{\theta_s} A_r \Os(p, V).
+\end{align}
+\tag{9.31}\]</span></span></p>
+<p>Plugging <a href="#eq-irr" class="quarto-xref">Equation&nbsp;<span>9.26</span></a> we get:</p>
+<p><span id="eq-out_f"><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \approx f_r(p, \omega_s, \omega_i) \frac{\Phi_i(A_r, I)}{A_r} \cos{\theta_s} A_r \Os(p, V).
+\end{align}
+\tag{9.32}\]</span></span></p>
+<p>Therefore, the final BRDF is given by:</p>
+<p><span id="eq-brdf"><span class="math display">\[
+\begin{align}
+    f_r(p, \omega_s, \omega_i) = \frac{\Phi_s(A_r, V)}{\Phi_i(A_r, I) \cos{\theta_s} \Os(p, V)}.
+\end{align}
+\tag{9.33}\]</span></span></p>
+<p>Rearranging the terms, we get a seemingly more complex expression:</p>
+<p><span id="eq-brdf_simple"><span class="math display">\[
+\begin{align}
+    f_r(p, \omega_s, \omega_i) = \frac{[\Phi_s(A_r, V)/(A_r \cos\theta_s)]/\Os(p, V)}{\Phi_i(A_r, I)/A_r}.
+\end{align}
+\tag{9.34}\]</span></span></p>
+<p><a href="#eq-brdf_simple" class="quarto-xref">Equation&nbsp;<span>9.34</span></a> actually gives a simple interpretation. The denominator is the average irradiance incident on <span class="math inline">\(p\)</span> through a small solid angle <span class="math inline">\(\Oi(p, I)\)</span> (see <a href="#eq-irr" class="quarto-xref">Equation&nbsp;<span>9.26</span></a>), and the numerator is the average radiance leaving <span class="math inline">\(p\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Taking the ratio of the two matches our intuition of the average BRDF: radiance over irradiance (received over a small solid angle).</p>
+<p>If we assume the surface to be Lambertian, the BRDF is then <span class="math inline">\(1/\pi\)</span> for any <span class="math inline">\(\os\)</span> (under a given <span class="math inline">\(p\)</span> and <span class="math inline">\(\oi\)</span>; see ) assuming no loss of energy. This means:</p>
+<p><span class="math display">\[
+\begin{align}
+    \Phi_s(A_r, V) \propto \cos\theta_s.
+\end{align}
+\]</span></p>
+<p>That is, the flux reading weakens as the incident direction <span class="math inline">\(\theta\)</span> by a factor of <span class="math inline">\(\cos\theta\)</span>. Is this surprising? It should not be if you recall our discussion of radiant intensity (<a href="rendering-basics.html#eq-intensity" class="quarto-xref">Equation&nbsp;<span>8.7</span></a>). If we assume that every point on <span class="math inline">\(A_r\)</span> emits the same amount flux to the same solid angle (through the aperture <span class="math inline">\(V\)</span>), the radiant intensity of <span class="math inline">\(p\)</span> toward <span class="math inline">\(\os\)</span> is to <span class="math inline">\(\frac{\Phi_s(A_r, V)}{A_r \Os(p, V)}\)</span> and, thus, proportional to <span class="math inline">\(\cos\theta\)</span>, which matches our earlier conclusion of how the radiant intensity of a Lambertian emitter/scatterer decays with <span class="math inline">\(\theta\)</span>.</p>
+<p>Anytime you measure something, the measurement is subject to noise and uncertainty. For instance, in the case of gonioreflectometer measurement, the angular positioning of the illuminant and detector might not be accurate, the detector itself is subject to all sorts of measurement noise (which we will study in the image sensor lecture), and there might be stray lights that enter the detector. Quantifying the sources of uncertainty and, even better, correcting for them is an important part of reflectance/BRDF measurement <span class="citation" data-cites="lanevski2022gonioreflectometer rabal2012automatic">(<a href="references.html#ref-lanevski2022gonioreflectometer" role="doc-biblioref">Lanevski, Manoocheri, and Ikonen 2022</a>; <a href="references.html#ref-rabal2012automatic" role="doc-biblioref">Rabal et al. 2012</a>)</span>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-astme28413b" class="csl-entry" role="listitem">
+ASTM International. 2013. <span>“<span class="nocase">ASTM E284-13b Standard Terminology of Appearance</span>.”</span> <a href="https://webstore.ansi.org/standards/astm/astme28413b" class="uri">https://webstore.ansi.org/standards/astm/astme28413b</a>.
+</div>
+<div id="ref-cook1982reflectance" class="csl-entry" role="listitem">
+Cook, Robert L, and Kenneth E. Torrance. 1982. <span>“A Reflectance Model for Computer Graphics.”</span> <em>ACM Transactions on Graphics (ToG)</em> 1 (1): 7–24.
+</div>
+<div id="ref-have" class="csl-entry" role="listitem">
+Daderot. 2012. <span>“<span class="nocase">Kongens Have, Copenhagen, Denmark; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Marble_ball_-_Kongens_Have_-_Copenhagen_-_DSC07898.JPG" class="uri">https://commons.wikimedia.org/wiki/File:Marble_ball_-_Kongens_Have_-_Copenhagen_-_DSC07898.JPG</a>.
+</div>
+<div id="ref-immel1986radiosity" class="csl-entry" role="listitem">
+Immel, David S, Michael F Cohen, and Donald P Greenberg. 1986. <span>“A Radiosity Method for Non-Diffuse Environments.”</span> <em>Acm Siggraph Computer Graphics</em> 20 (4): 133–42.
+</div>
+<div id="ref-judd1975color" class="csl-entry" role="listitem">
+Judd, Deane B, and Günter Wyszecki. 1975. <em>Color in Business, Science, and Industry</em>. 3rd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-kajiya1986rendering" class="csl-entry" role="listitem">
+Kajiya, James T. 1986. <span>“The Rendering Equation.”</span> In <em>Proceedings of the 13th Annual Conference on Computer Graphics and Interactive Techniques</em>, 143–50.
+</div>
+<div id="ref-lanevski2022gonioreflectometer" class="csl-entry" role="listitem">
+Lanevski, Dmitri, Farshid Manoocheri, and Erkki Ikonen. 2022. <span>“Gonioreflectometer for Measuring 3D Spectral BRDF of Horizontally Aligned Samples with Traceability to SI.”</span> <em>Metrologia</em> 59 (2): 025006.
+</div>
+<div id="ref-li2003ink" class="csl-entry" role="listitem">
+Li, Yang. 2003. <span>“Ink-Paper Interaction-a Study in Ink-Jet Color Reproduction.”</span> <em>Institute of Technology-Link<span>ö</span>pings University. Norrk<span>ö</span>ping, Sweden: UniTryck</em>.
+</div>
+<div id="ref-marschner2000image" class="csl-entry" role="listitem">
+Marschner, Stephen R, Stephen H Westin, Eric PF Lafortune, and Kenneth E Torrance. 2000. <span>“Image-Based Bidirectional Reflectance Distribution Function Measurement.”</span> <em>Applied Optics</em> 39 (16): 2592–2600.
+</div>
+<div id="ref-matusik2003data" class="csl-entry" role="listitem">
+Matusik, Wojciech. 2003. <span>“A Data-Driven Reflectance Model.”</span> PhD thesis, Massachusetts Institute of Technology.
+</div>
+<div id="ref-nicodemus1977geometrical" class="csl-entry" role="listitem">
+Nicodemus, FE, JC Richmond, JJ Hsia, IW Ginsberg, and T Limperis. 1977. <em>Geometrical Considerations and Nomenclature for Reflectance</em>. Vol. 160. US Department of Commerce, National Bureau of Standards Washington, DC, USA.
+</div>
+<div id="ref-oren1995generalization" class="csl-entry" role="listitem">
+Oren, Michael, and Shree K Nayar. 1995. <span>“Generalization of the Lambertian Model and Implications for Machine Vision.”</span> <em>International Journal of Computer Vision</em> 14:227–51.
+</div>
+<div id="ref-pharr2023physically" class="csl-entry" role="listitem">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2023. <em>Physically Based Rendering: From Theory to Implementation</em>. 4th ed. MIT Press.
+</div>
+<div id="ref-lake" class="csl-entry" role="listitem">
+Prabhu B Doss. 2007. <span>“<span class="nocase">Tso Kiagar Lake Ladakh; CC BY 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Tso_Kiagar_Lake_Ladakh.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Tso_Kiagar_Lake_Ladakh.jpg</a>.
+</div>
+<div id="ref-rabal2012automatic" class="csl-entry" role="listitem">
+Rabal, Ana M, Alejandro Ferrero, Joaquın Campos, José Luis Fontecha, Alicia Pons, Antonio Manuel Rubiño, and Antonio Corróns. 2012. <span>“Automatic Gonio-Spectrophotometer for the Absolute Measurement of the Spectral BRDF at in-and Out-of-Plane and Retroreflection Geometries.”</span> <em>Metrologia</em> 49 (3): 213.
+</div>
+<div id="ref-ramamoorthi2009precomputation" class="csl-entry" role="listitem">
+Ramamoorthi, Ravi. 2009. <span>“Precomputation-Based Rendering.”</span> <em>Foundations and Trends<span></span> in Computer Graphics and Vision</em> 3 (4): 281–369.
+</div>
+<div id="ref-reinhard2008color" class="csl-entry" role="listitem">
+Reinhard, Erik, Erum Arif Khan, Ahmet Oguz Akyuz, and Garrett Johnson. 2008. <em>Color Imaging: Fundamentals and Applications</em>. CRC Press.
+</div>
+<div id="ref-sharma2003color" class="csl-entry" role="listitem">
+Sharma, Gaurav. 2003. <span>“Color Fundamentals for Digital Imaging.”</span> In <em>Digital Color Imaging Handbook</em>, edited by Gaurav Sharma, 14–127. CRC Press.
+</div>
+<div id="ref-sheffield" class="csl-entry" role="listitem">
+Steve Fareham. 2007. <span>“<span class="nocase">Heart of the City water feature Sheffield; CC BY-SA 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Heart_of_the_City_water_feature_Sheffield_-_geograph.org.uk_-_618552.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Heart_of_the_City_water_feature_Sheffield_-_geograph.org.uk_-_618552.jpg</a>.
+</div>
+<div id="ref-torrance1967theory" class="csl-entry" role="listitem">
+Torrance, Kenneth E, and Ephraim M Sparrow. 1967. <span>“Theory for Off-Specular Reflection from Roughened Surfaces.”</span> <em>Josa</em> 57 (9): 1105–14.
+</div>
+<div id="ref-trussell2008fundamentals" class="csl-entry" role="listitem">
+Trussell, H Joel, and Michael J Vrhel. 2008. <em>Fundamentals of Digital Imaging</em>. Cambridge University Press.
+</div>
+<div id="ref-diffusebrdf" class="csl-entry" role="listitem">
+VonHaarberg. 2018a. <span>“<span class="nocase">Illustration of a diffuse BRDF; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_diffuse.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_diffuse.svg</a>.
+</div>
+<div id="ref-glossybrdf" class="csl-entry" role="listitem">
+———. 2018b. <span>“<span class="nocase">Illustration of a glossy BRDF; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_glossy.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_glossy.svg</a>.
+</div>
+<div id="ref-specularbrdf" class="csl-entry" role="listitem">
+———. 2018c. <span>“<span class="nocase">Illustration of a mirror BRDF; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_mirror.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_mirror.svg</a>.
+</div>
+<div id="ref-walter2007microfacet" class="csl-entry" role="listitem">
+Walter, Bruce, Stephen R Marschner, Hongsong Li, and Kenneth E Torrance. 2007. <span>“Microfacet Models for Refraction Through Rough Surfaces.”</span> <em>Rendering Techniques</em> 2007:18th.
+</div>
+<div id="ref-ward1992measuring" class="csl-entry" role="listitem">
+Ward, Gregory J. 1992. <span>“Measuring and Modeling Anisotropic Reflection.”</span> In <em>Proceedings of the 19th Annual Conference on Computer Graphics and Interactive Techniques</em>, 265–72.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>To be more rigorous, the integration in <a href="#eq-brdf_finite_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a> evaluates to <span class="math inline">\(E(p, \Oi) + C\)</span>, where <span class="math inline">\(C\)</span> is a constant. Given the boundary condition that <span class="math inline">\(L(p, \os) = 0\)</span> when <span class="math inline">\(E(p, \Oi) = 0\)</span>, we know <span class="math inline">\(C=0\)</span>, so <span class="math inline">\(C\)</span> is omitted.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>“gonio-”” comes from the Greek word <span class="math inline">\(\gamma\omega\nu\iota\alpha\)</span> (g={o}n'{i}a), which means angle.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">\(\Phi_s(A_r, V)/(A_r \cos\theta_s)\)</span> in the numerator gives us the average irradiance leaving <span class="math inline">\(p\)</span> (note that this radiance is defined at the surface perpendicular to <span class="math inline">\(A_r\)</span>, hence the <span class="math inline">\(\cos\theta_s\)</span> term), which is divided by <span class="math inline">\(\Os(p, V)\)</span> to give us the average radiance leaving <span class="math inline">\(p\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./rendering-basics.html" class="pagination-link" aria-label="The Basics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./rendering-sss.html" class="pagination-link" aria-label="Subsurface and Volume Scattering">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

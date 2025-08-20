@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; An Invitation to Visual Computing – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./hvs.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-chpt-intro-what" id="toc-sec-chpt-intro-what" class="nav-link active" data-scroll-target="#sec-chpt-intro-what"><span class="header-section-number">1.1</span> What is Visual Computing?</a></li>
+  <li><a href="#sec-chpt-intro-hvs" id="toc-sec-chpt-intro-hvs" class="nav-link" data-scroll-target="#sec-chpt-intro-hvs"><span class="header-section-number">1.2</span> Human Visual System as a Visual Computing Platform</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-intro-hvs-trans" id="toc-sec-chpt-intro-hvs-trans" class="nav-link" data-scroll-target="#sec-chpt-intro-hvs-trans"><span class="header-section-number">1.2.1</span> Signal Representations, Processing, and Transformations in HVS</a></li>
+  <li><a href="#sec-chpt-intro-hvs-why" id="toc-sec-chpt-intro-hvs-why" class="nav-link" data-scroll-target="#sec-chpt-intro-hvs-why"><span class="header-section-number">1.2.2</span> The Transformations are Born of Necessity</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-intro-others" id="toc-sec-chpt-intro-others" class="nav-link" data-scroll-target="#sec-chpt-intro-others"><span class="header-section-number">1.3</span> Engineered Visual Computing Systems</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-intro-others-imaging" id="toc-sec-chpt-intro-others-imaging" class="nav-link" data-scroll-target="#sec-chpt-intro-others-imaging"><span class="header-section-number">1.3.1</span> Computer Imaging and Digital Photography</a></li>
+  <li><a href="#sec-chpt-intro-others-cg" id="toc-sec-chpt-intro-others-cg" class="nav-link" data-scroll-target="#sec-chpt-intro-others-cg"><span class="header-section-number">1.3.2</span> Computer Graphics and Rendering</a></li>
+  <li><a href="#sec-chpt-intro-others-mv" id="toc-sec-chpt-intro-others-mv" class="nav-link" data-scroll-target="#sec-chpt-intro-others-mv"><span class="header-section-number">1.3.3</span> Machine Vision Systems</a></li>
+  </ul></li>
+  <li><a href="#sec-chpt-intro-research" id="toc-sec-chpt-intro-research" class="nav-link" data-scroll-target="#sec-chpt-intro-research"><span class="header-section-number">1.4</span> A Powerful Abstraction</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-intro-research-info" id="toc-sec-chpt-intro-research-info" class="nav-link" data-scroll-target="#sec-chpt-intro-research-info"><span class="header-section-number">1.4.1</span> The Encoding-Decoding Abstraction</a></li>
+  <li><a href="#sec-chpt-intro-research-codesign" id="toc-sec-chpt-intro-research-codesign" class="nav-link" data-scroll-target="#sec-chpt-intro-research-codesign"><span class="header-section-number">1.4.2</span> Encoding-Decoding Co-Design: Two Examples</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chpt-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We present a framework in which we can reason about the connections between different fields of visual computing. The framework is centered around a series of signal transductions across fundamental signal domains: optical, analog, digital, and semantic, along with the processing that happens within each. We then use the human visual system as a concrete example to examine the different signal transductions and processing, and conclude with a simple abstraction that allows us to reason about opportunities to optimize visual computing systems.</p>
+<section id="sec-chpt-intro-what" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-chpt-intro-what"><span class="header-section-number">1.1</span> What is Visual Computing?</h2>
+<div id="fig-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/overview.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: A framework unifying visual computing. The fundamental building blocks are the signals represented in three fundamental information domains: optical, electrical, and semantic. Visual computing systems transform signals across, and process them within, these domains.
+</figcaption>
+</figure>
+</div>
+<p>We can think of many things when it comes to visual computing. Cameras? Yes; they turn the world into visually pleasing images. Computer Graphics? Yes; they simulate how visually pleasing images are captured as if there was a camera placed in the scene. Computer vision? Yes; it interprets visual information (i.e., images) to infer semantic information of the world (e.g., object categories). Displays? Yes; they generate visual information (i.e., lights) to represent an intended scene. What about Augmented Reality (AR) and Virtual Reality (VR)? Of course; in fact, AR/VR requires all the above to work seamlessly together.</p>
+<p>But what are the fundamental connections of the multitude of things that we can all loosely associate with visual computing? <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> shows the key concepts that unify the different fields of visual computing: 1) representing the physical world in three fundamental signal domains, i.e., the optical, electrical, and semantic domains; 2) processing signals within these domains; and 3) transforming signals across these domains.</p>
+<p>We will use the Human Visual System (HVS) as an example to walk through some of the key concepts (<a href="#sec-chpt-intro-hvs" class="quarto-xref"><span>Section 1.2</span></a>). We will then expand to three more visual computing domains (computer imaging, computer graphics and rendering, and machine vision), comparing and contrasting how the signal representations, processing, and transformations are exercised in different systems (<a href="#sec-chpt-intro-others" class="quarto-xref"><span>Section 1.3</span></a>). We will introduce a power abstraction that governs any visual computing system. This abstraction allows us to reason about the limits of a system and design ways to improve a system (<a href="#sec-chpt-intro-research" class="quarto-xref"><span>Section 1.4</span></a>).</p>
+</section>
+<section id="sec-chpt-intro-hvs" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-chpt-intro-hvs"><span class="header-section-number">1.2</span> Human Visual System as a Visual Computing Platform</h2>
+<p>Imagine taking a walk through the woods and seeing a butterfly. How does your visual system allow you to notice the butterfly and that it is flying? The inputs to an HVS are lights from the butterfly and the trees in the physical world; they are information represented in the optical domain. The output of the HVS is semantic information, e.g., the color and motion of the butterfly. The HVS extracts semantic information from optical signals through a sequence of signal transformations illustrated as ① <span class="math inline">\(\rightarrow\)</span> ④ <span class="math inline">\(\rightarrow\)</span> ⑦ in <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>.</p>
+<section id="sec-chpt-intro-hvs-trans" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="sec-chpt-intro-hvs-trans"><span class="header-section-number">1.2.1</span> Signal Representations, Processing, and Transformations in HVS</h3>
+<section id="sec-chpt-intro-hvs-trans-opt" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-hvs-trans-opt">Optical Signal Processing</h4>
+<p>First, lights enter your eyes by traveling through the ocular media in your eyes, such as the cornea, pupil, and lenses, and eventually reach the retina. Just before the lights get processed by the retina, the optical signal is already being processed as lights propagate through the eye. This is illustrated by ① in <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>. For instance, the ocular media absorb photons of certain wavelengths and transmit photons that are unabsorbed. The pupil controls how many photons are allowed in at any given time, and the lens bends and <em>focuses</em> lights on the retina — the chief goal of the eye.</p>
+<p>The optical information after eye optics and right before being processed by the retina is usually called the <em>optical image</em>. An optical image is a lossy and aberrated version of the optical information in the scene, because the optical signal processing in the eye is lossy. For instance, by focusing on the butterfly, which is at a particular depth, objects at other depths, such as the trees in the background, are blurred. The ocular media also absorb photons selectively across wavelengths, so the true light spectra in the scene are lost.</p>
+</section>
+<section id="sec-chpt-intro-hvs-trans-o2e" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-hvs-trans-o2e">Optical to Electrical Signal Transduction</h4>
+<p>The optical image gets transformed into an electrical representation by the photoreceptors on the retina. This is step ④ in <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>. Photoreceptors absorb incident photons; once a photon is absorbed, it could, through the <em>phototransduction cascade</em> <span class="citation" data-cites="wald1968molecular">(<a href="references.html#ref-wald1968molecular" role="doc-biblioref">Wald 1968</a>)</span> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, generate electrical responses in the form of photocurrents (or, equivalently, photovoltages) across the cell membrane of the photoreceptor. The responses of all the photoreceptors form the electrical representation of the optical image. The rest of the visual system is “just” a hugely complicated circuit that processes the electrical signals from the photoreceptors. In this sense, the optical to electrical transformation is the first step in seeing.</p>
+<p>This optical to electrical signal transduction is once again lossy. Photoreceptors sample and integrate signals spatially, temporally, and spectrally. As a result, much of the optical information of the incident light, such as the incident angle of the rays, the wavelengths of the photons, and the polarization of the light, is all lost. The main information that <em>is</em> retained, light intensity, is fundamentally limited by sampling and integration, which establish the limits of vision.</p>
+</section>
+<section id="sec-chpt-intro-hvs-trans-ele" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-hvs-trans-ele">Electrical to Semantic Signal Transduction</h4>
+<p>The electrical signals produced by the photoreceptors are first processed by the rest of the neurons on the retina and then transmitted in the nervous system to the rest of the visual system, first to the Lateral Geniculate Nucleus (LGN) and then to the visual cortex, where the electrical signals undergo further processing and eventually the semantic meanings of the scene arise. You might now realize that the object is, in fact, a red lacewing butterfly (object recognition), that the color of the butterfly is an astonishing bright red and pale brown interlaced by black and white (color perception), and that the butterfly is flapping and flying (motion perception). We lump all the processing stages after the photoreceptor and call them “post-receptoral” processing, which is denoted by ⑦ in <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>.</p>
+<p>The post-receptoral processing progressively extracts richer and higher-level information as the signal progresses through the retina-LGN-cortex pathway. The retina encodes information such as the spatial/temporal frequency, contrast, and, to a large extent, color. This set of information is generally regarded as “low-level” information, which does not, in any way, suggest that the information is somehow inferior; rather, they are the building blocks for higher-order visual processing.</p>
+<p>It is no small feat that our retina can extract such information: the retina must reliably do so across a very wide range of illumination conditions. For instance, the retina adapts to different illumination levels spanning several orders of magnitude. Perhaps somewhat surprisingly, much of the adaptation takes place within the photoreceptors, whose sensitivity changes based on the incident light intensity. This suggests that photoreceptors are not merely signal transduction devices.</p>
+<p>The LGN and early areas in the visual cortex extract information such as edge and orientation, and other higher-order areas further refine the signals to extract information such as motion, depth, and object category. Eventually, all these individual bits and pieces are knit together in our brain to give us perception and cognition, i.e., the semantic signals. Information processing in the visual system is not purely feed-forward. There are many feedback paths between cortical areas and between the cortex and the LGN <span class="citation" data-cites="gilbert2013top briggs2020role">(<a href="references.html#ref-gilbert2013top" role="doc-biblioref">Gilbert and Li 2013</a>; <a href="references.html#ref-briggs2020role" role="doc-biblioref">Briggs 2020</a>)</span>. We hasten to add that while we know a lot about the <em>correlation</em> between the electrical responses and the semantic signals, we cannot yet say much about the <em>causation</em>.</p>
+</section>
+</section>
+<section id="sec-chpt-intro-hvs-why" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-chpt-intro-hvs-why"><span class="header-section-number">1.2.2</span> The Transformations are Born of Necessity</h3>
+<p>This complex sequence of transformations that turns the physical realities into one’s subjective percept is born of necessity. A comparison is another sequence of transformations that computer architects are perhaps more familiar with. To have a computer solve a problem for us, we first describe the algorithm in a program written in a high-level language and then transform the program to a low-level, machine-understandable language (i.e., the Instruction Set Architecture), which is then executed on the microarchitecture implemented using circuits and, eventually, moving electrons. If we could directly talk to the electrons and instruct them to move to solve our problem, this sequence of transformations would not be strictly necessary. Similarly, if we could crack open one’s head and manipulate the neuron spikes at will, we could perhaps directly impose certain percepts on humans. But since we cannot (easily), the sequence of signal transduction is necessary. Of course, the sequence of transformation in the computer systems is purposefully engineered to be that way, whereas the one in the HVS is naturally evolved.</p>
+<div id="fig-abstractions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-abstractions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/abstractions.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-abstractions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Just like in a computer system, HVS also involves a sequence of transformations and can be studied at different levels of abstraction.
+</figcaption>
+</figure>
+</div>
+<p>The fact that there is a sequence of transformations involved suggests that we can study the HVS at different levels of abstraction. This idea is illustrated in <a href="#fig-abstractions" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>, where, again, we compare the HVS with a computer system. The goal of a computer system is to solve a problem for us, and we can study how a computer system solves the problem at different levels of abstraction. Similarly, the HVS reacts to physical stimuli that are presented to it, and we can study, at different levels, how an HVS reacts to the physical stimuli.</p>
+<p>First, we can study it at the psychological level to understand how human psychology, i.e., different forms of perception, cognition, and action, varies under physical stimuli (e.g., lights). This is the field of <em>psychophysics</em>. The psychological experiences one has are results of the collective behaviors of the neurons in the HVS. Naturally, the second way to study the HVS is to relate the behaviors of the neurons and the neural networks to the physical stimuli. This is the field of <em>systems neuroscience</em>. Finally, the behavior of a neuron is fundamentally a result of how cells and molecules function inside and between neurons, so one can study the underlying cellular and molecular processes given physical stimuli. This is the field of <em>cellular and molecular physiology</em>.</p>
+</section>
+</section>
+<section id="sec-chpt-intro-others" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-chpt-intro-others"><span class="header-section-number">1.3</span> Engineered Visual Computing Systems</h2>
+<p>While the example above is drawn from a biological system, engineered visual computing systems such as smartphones are fundamentally no different in that they all involve visual information represented in and transformed between different domains. We will consider three examples of engineered systems and compare and contrast them with those in the human visual system.</p>
+<section id="sec-chpt-intro-others-imaging" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="sec-chpt-intro-others-imaging"><span class="header-section-number">1.3.1</span> Computer Imaging and Digital Photography</h3>
+<p>Imaging refers to the task of capturing images of the physical world. Photography is sometimes used interchangeably with imaging. Just to be pedantic, however, photography is a special case of imaging where the goal is to capture <em>visually pleasing</em> images for the human visual system. Scientific imaging is another branch of imaging, where the goal is to capture <em>physically accurate</em> information for scientific inquiry. Examples of scientific imaging include astrophotography, microscopy, and Computed Tomography (CT). We will focus on photography here. Conventional photography is purely analog; think of dark rooms and film development. Modern imaging is computer-assisted, hence the name “computer imaging”, not to be confused with “computational imaging” or “computational photography”, which we will see later.</p>
+<p>An end-to-end photography system is a complicated sequence of signal transductions involving ② <span class="math inline">\(\rightarrow\)</span> ⑥ <span class="math inline">\(\rightarrow\)</span> ⑤ <span class="math inline">\(\rightarrow\)</span> ① <span class="math inline">\(\rightarrow\)</span> ④ <span class="math inline">\(\rightarrow\)</span> ⑦ in <a href="#fig-overview" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>. Lights enter the camera and are first processed by the optics in the camera with the main goal of focusing lights (②), similar to the eye optics. Camera optics are designed completely by humans and we can, therefore, specifically engineer them to achieve a particular performance, whereas eye optics do not enjoy such flexibilities. An example is compound lenses, where a combination of lenses of different kinds are cascaded together to correct various aberrations that a single (spherical) lens introduces.</p>
+<p>After the lenses, lights hit the image sensor, whose main job is to transform optical signals to electrical signals (⑥). This is achieved by an array of light-sensitive photodiodes, or pixels, that convert photons to electric charges — using the <em>photoelectric effect</em> <span class="citation" data-cites="einstein1905erzeugung einstein1905heuristic">(<a href="references.html#ref-einstein1905erzeugung" role="doc-biblioref">Einstein 1905b</a>, <a href="references.html#ref-einstein1905heuristic" role="doc-biblioref">1905a</a>)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> — which are then converted to digital values, i.e., image pixels. From the signal transduction perspective, the pixels in an image sensor are “just” like photoreceptors on the retina. Vision scientists might take offense at this comparison, because the photoreceptors, as alluded to earlier, are much “smarter” and do a lot more than the pixels, e.g., visual adaptation. In fact, an active area of research is to design pixels so that they adapt like photoreceptors <span class="citation" data-cites="liao2022bioinspired">(<a href="references.html#ref-liao2022bioinspired" role="doc-biblioref">Liao et al. 2022</a>)</span>.</p>
+<p>Eventually, an image needs to be displayed for the human visual system to see. The display performs an electrical to optical signal transduction, turning digital pixels to lights (⑤). The photons from the display then enter human eyes, and what we have discussed before about the HVS applies.</p>
+</section>
+<section id="sec-chpt-intro-others-cg" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="sec-chpt-intro-others-cg"><span class="header-section-number">1.3.2</span> Computer Graphics and Rendering</h3>
+<p>Computer graphics and rendering systems generate images, where photorealism is the main goal (although not the exclusive goal). What does it take to render photorealistic images? A rendered image is photorealistic if it almost looks like a photo taken by a camera, so to render something photorealistic, we want to simulate how a photo is taken! To that end, we must simulate two things: 1) how light transports in space before entering the camera and 2) how lights are turned into pixels by a camera, which follows the signal chain in an imaging system. %Photorealistic rendering is nothing more than simulation.</p>
+<p>Comparatively speaking, the second simulation is easier; it amounts to simulating the image formation process in a camera (i.e., ② <span class="math inline">\(\rightarrow\)</span> ⑥). Since cameras are built by humans, we know exactly how they work, at least in principle. The first simulation is much harder, because it requires simulating the nature: modeling the complicated light-matter interactions (③).</p>
+<p>This is why most compelling rendering systems are physically based. The kind of physical models used for rendering are <em>phenomenological</em> in nature; they describe the empirical rules governing the light-matter interactions but are not always derived from first principles. An example is that we sometimes model light scattering within a volume using the Bidirectional Scattering Surface Reflectance Distribution Function (BSSRDF), which maps energy from incident rays to exiting rays while abstracting away the details of how photons interact with particles in the material, for which one has to turn to the theory of radiative/energy transfer <span class="citation" data-cites="chandrasekhar1960radiative">(<a href="references.html#ref-chandrasekhar1960radiative" role="doc-biblioref">Chandrasekhar 1960</a>)</span>.</p>
+<p>Using phenomenological models is sometimes the only option when the actual underlying physics elude us. More importantly, however, simulating physics at the lowest level is simply unnecessary for rendering (which cares about photorealism rather than physical realism) and is computationally too costly for real-time rendering. A recent trend in graphics is neural rendering <span class="citation" data-cites="mildenhall2021nerf">(<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">Mildenhall et al. 2021</a>)</span>, which parameterizes the phenomenological models using deep neural networks and learns such models from actual images, which, by definition, are precisely simulated — by nature.</p>
+<p>Similar to photography, the rendered images will also go through an electrical-to-optical signal transformation by the display, whose output is then consumed by the HVS.</p>
+</section>
+<section id="sec-chpt-intro-others-mv" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="sec-chpt-intro-others-mv"><span class="header-section-number">1.3.3</span> Machine Vision Systems</h3>
+<p>For better or worse, machine vision systems are prevalent in modern society. Autonomous vehicles use machine vision to navigate the environment, drones are used in agriculture to monitor crop health, and facial recognition technologies are increasingly used for security authentications. A machine vision system has two main components: 1) an imaging sub-system that, as discussed above, transforms the optical information in the scene to the electrical information encoded by the image pixels (② <span class="math inline">\(\rightarrow\)</span> ⑥) and 2) a computing sub-system, which uses computer vision algorithms to interpret the images and extract meanings from the scene (⑧).</p>
+<p>At the risk of once again downplaying the capabilities and complexities of the HVS, one can argue that a machine vision system largely emulates the HVS — from a signal transduction perspective. Both aim to extract semantic information from the physical world, and both do so by first turning the optical information in the world to its electrical representation. One can even go as far as saying that today’s dominant paradigm toward computer vision, i.e., deep learning, is heavily inspired by the HVS. The field of neuromorphic computing explicitly aims to mimic the structure and operation of the human brain. %The human brain remains the holy grail that engineered systems fall far behind both functionality and efficiency wise. minor league.</p>
+<p>A key difference between imaging in machine vision and imaging for photography is their respective consumer: the output of a photograph is meant to be consumed by an HVS, so visual quality is the main consideration, whereas images captured by, for instance, a robot are meant to be consumed by the downstream computer vision algorithms, which do not care about the visual appearance as long as the semantic information can be decoded from the images. This difference influences the design of the imaging system used in photography and for machine vision.</p>
+</section>
+</section>
+<section id="sec-chpt-intro-research" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-chpt-intro-research"><span class="header-section-number">1.4</span> A Powerful Abstraction</h2>
+<p>A visual computing system enlists the work of multiple stages of signal transformation. At every stage in an application’s pipeline, we have decisions to make. These decisions should not be made locally to optimize for a specific stage. Much of the exciting research in visual computing focuses on jointly designing and optimizing all stages of an end-to-end system. This section provides two concrete examples. But before we can entertain them, we first introduce a power abstraction that will allow us to reason about these research ideas.</p>
+<section id="sec-chpt-intro-research-info" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="sec-chpt-intro-research-info"><span class="header-section-number">1.4.1</span> The Encoding-Decoding Abstraction</h3>
+<p>We can take an information-theoretical perspective and abstract virtually any end-to-end visual computing pipeline as an encoding-decoding process. Decoding is the ultimate goal, but encoding is necessary, because it transforms signals to a domain that can be processed by the decoder. Take, for instance, human vision and machine vision systems; while the ultimate goal is to generate percepts of the physical world, information in the world must be first encoded as electrical signals (through imaging), which are what the brain and computer vision algorithms can process. Imaging itself can also be regarded as an encoding-decoding pair, where the optical information of the scene is first encoded in the electrical domain and the computational algorithms, acting as a decoder, reconstruct an electrical representation that faithfully captures the information in the original scene.</p>
+<p>A more complicated example is visual display devices such as a VR headset. When developing a VR application, we usually have a scene in mind, e.g., a red lacewing butterfly flying in the woods. We hope that users will perceive the object (butterfly), color (the astonishing bright red and pale brown interlaced by black and white), and motion (flapping and flying), but we cannot simply impose these percepts on humans. Instead, we generate visual stimuli on the display to encode the desired percepts. This encoding is done through a combination of rendering (generating electrical signals) and display (converting electrical signals to optical signals). The entire HVS then acts as the decoder, which ideally would provide the intended percepts to users.</p>
+<section id="sec-chpt-intro-research-info-limits" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-research-info-limits">Encoding Capabilities Set the Limits on Decoding</h4>
+<p>Once we take this encoding-decoding abstraction, we can start reasoning about limits of a visual computing system. The decoder consumes information generated by the encoder, so its utility is fundamentally limited by the encoding capabilities. Ideally, the encoder should faithfully capture all the information in the world. But in practice, encoding is almost always lossy — for a number of reasons.</p>
+<p>First, the actual encoding device used in a system, be it biological or engineered, usually uses fundamentally lossy mechanisms such as sampling and low-pass filtering (e.g., integration). Take HVS as an example, where the optical information of the scene is encoded as photoreceptor responses. The photoreceptors sample the continuous optical image impinging on the retina. The sampling rate dictates, according to the Nyquist–Shannon sampling theorem <span class="citation" data-cites="shannon1949communication">(<a href="references.html#ref-shannon1949communication" role="doc-biblioref">Shannon 1949</a>)</span>, how well the original optical image can be reconstructed, which in turn limits our ability to see fine details. Even before the photoreceptor sampling, the eye lens blurs signals in the scene not currently in focus, and the pupil, when very small, further blurs even in-focus objects through diffraction, setting the first limit of vision. Blurring is a form of low-pass filtering and is one of the many optical aberrations introduced during the optical signal processing in the HVS.</p>
+<p>Second, an encoding device might completely disregard certain information in the incident signal. For instance, the polarization information in the incident light is simply ignored by the photoreceptors, whose responses are, thus, invariant to the polarization states. As a result, humans cannot “see” polarization. Some animals, such as butterflies, have polarization-sensitive photoreceptors. So it is not surprising that monarch butterflies make use of the light polarization for navigation <span class="citation" data-cites="reppert2004polarized">(<a href="references.html#ref-reppert2004polarized" role="doc-biblioref">Reppert, Zhu, and White 2004</a>)</span>.</p>
+</section>
+<section id="sec-chpt-intro-research-info-codesign" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-research-info-codesign">Jointly Design Encoding and Decoding</h4>
+<p>The encoder-decoder abstraction also allows us to design strategies to enhance a visual computing system, both augmenting its capabilities and improving its execution efficiency. For instance, when certain information is not needed for an accurate decoding, it need not be encoded in the first place and, of course, will not participate in decoding, reducing both encoding and decoding costs. Alternatively, if we know what information is crucial for decoding, we can design the encoding system to specifically capture such information. We can also “over-design” the encoder to encode signals in a higher dimensional space than the space to which the information is to be decoded; this essentially introduces redundant samples to improve the robustness to noise.</p>
+<p>Ultimately, exploiting these ideas amounts to modeling and, often times, jointly designing the encoder and decoder, considering the end-to-end requirements of task performance, efficiency, and quality — of both the humans and the machine. We will discuss two concrete examples.</p>
+</section>
+</section>
+<section id="sec-chpt-intro-research-codesign" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="sec-chpt-intro-research-codesign"><span class="header-section-number">1.4.2</span> Encoding-Decoding Co-Design: Two Examples</h3>
+<section id="sec-chpt-intro-research-codesign-cp" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-research-codesign-cp">Computational Photography</h4>
+<p>The optical to electrical signal transduction in the image sensor is lossy due to various forms of signal sampling and integration. The signal transduction process itself is also not perfect due to fundamental physical limitations (e.g., quantal fluctuation in photon arrivals) and practical engineering considerations (e.g., sensor size). As a result, the sensor output, which is usually called <em>raw pixels</em>, is noisy (especially in low-light conditions) and does not accurately represent the luminance (especially under bright illuminations) and color information in the scene; certain information such as light-field and polarization is completely lost.</p>
+<p>To overcome these limitations, modern smartphones and advanced imaging systems use computational algorithms to correct those imperfections, reconstruct the lost information, and sometimes can even add an artistic touch to the photo. Critically, such computational algorithms are usually jointly designed with the imaging system, i.e., the optics and image sensor. This is computational photography, co-designing camera optics, image sensors, and the computational algorithms to overcome fundamental limitations that conventional imaging systems face.</p>
+<p>A classic example of computational photography has to do with a practical problem in photography. As a contemporary reader, you most likely have had the experience where you want to use your smartphone camera to capture a scene that has both a very bright region (e.g., the sunny sky) and a relatively dark region (e.g., a street corner). In technical terms, such a scene has a very high dynamic range (HDR), in that the ratio between the highest and lowest luminance in the scene is huge. The challenge is that image sensors on smartphones cannot capture a wide dynamic range: information at low-luminance regions is noisy, and high-luminance regions saturate pixels. So how do we capture the full luminance range in the scene? This is the task of HDR imaging.</p>
+<p>People over the years have come up with a variety of clever ideas for HDR imaging. The most well-known idea is perhaps exposure bracketing, where we take multiple captures of the scene, each with a different exposure time, and then computationally combine the captures to synthesize the full dynamic range in the scene. Another approach is Google’s HDR+ algorithm <span class="citation" data-cites="hasinoff2016burst">(<a href="references.html#ref-hasinoff2016burst" role="doc-biblioref">Hasinoff et al. 2016</a>)</span>, which takes multiple exposures using the same (low) exposure time to ensure high luminance regions are accurately captured, which is then followed by denoising algorithms (e.g., frame averaging) to recover low luminance information. Yet another approach is the time-to-saturation (TTS) image sensors <span class="citation" data-cites="stoppa2002novel">(<a href="references.html#ref-stoppa2002novel" role="doc-biblioref">Stoppa et al. 2002</a>)</span>, which measure the time it takes for each pixel to saturate and use that time to extrapolate the luminance information.</p>
+<p>These HDR imaging techniques are all examples where the imaging system, i.e., the encoder, is intentionally designed to capture critical information (luminance) that is otherwise lost (either due to noise or due to saturation).</p>
+</section>
+<section id="sec-chpt-intro-research-codesign-pr" class="level4">
+<h4 class="anchored" data-anchor-id="sec-chpt-intro-research-codesign-pr">Perceptual Rendering</h4>
+<p>Perceptual rendering is a classic example that leverages the characteristics of HVS (decoder) to inform the design of visual display systems (encoder) such as AR/VR or even just smartphones. We illustrate the basic idea in <a href="#fig-codesign" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>, where imaging, rendering, and computing systems encode information that is then decoded by the HVS. The output of the decoder, i.e., the perception, cognition, and action of a human user, is what we care to influence, but what we actually have influence over, for the most part, is the encoding system (for imaging, rendering, and computing). If we have a good understanding of the HVS, we can then invert it to solve for the optimal stimuli, and from there we can then figure out how to optimally engineer the encoding system to deliver the desired stimuli while maximizing the system efficiency.</p>
+<div id="fig-codesign" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-codesign-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/codesign.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-codesign-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: In visual displaying devices such as AR/VR and smartphones, the engineered systems (imaging/rendering/computer systems) act as an encoder and the HVS acts as a decoder. By understanding the the decoding process, we can then better engineer the imaging, rendering, and computer systems to maximize end-to-end performance both for humans and for machines. Brain implants and gene therapy can directly influence the decoding process and must be designed with the encoder in mind, too.
+</figcaption>
+</figure>
+</div>
+<p>Gaze-contingent rendering is a well-known technique in AR/VR that exploits this opportunity. Our peripheral visual acuity is extremely bad: we could not tell the details of an object in our peripheral vision. This is mainly a result of: 1) a higher degree of low-pass filtering due to neural convergence in the periphery, and 2) a lower rate of sampling in the periphery due to drastically fewer photoreceptors. When immersed in a virtual environment with a VR headset, the majority of the pixels rendered and displayed fall in the periphery of the retina. Therefore, one could improve the rendering speed by generating low-quality visual stimuli for the periphery with impunity <span class="citation" data-cites="patney2016towards guenter2012foveated">(<a href="references.html#ref-patney2016towards" role="doc-biblioref">Patney et al. 2016</a>; <a href="references.html#ref-guenter2012foveated" role="doc-biblioref">Guenter et al. 2012</a>)</span>. We could also alter pixel colors in the periphery to reduce display power without introducing artifacts <span class="citation" data-cites="duinkharjav2022color">(<a href="references.html#ref-duinkharjav2022color" role="doc-biblioref">Duinkharjav et al. 2022</a>)</span>.</p>
+<p>Modern science and engineering have also empowered us to directly influence the decoder itself through techniques like brain implants and gene therapy — just imagine how powerful it would be to directly control a function whose outputs we care about. An example is the artificial retina <span class="citation" data-cites="gogliettino2023high muratore2020artificial">(<a href="references.html#ref-gogliettino2023high" role="doc-biblioref">Gogliettino et al. 2023</a>; <a href="references.html#ref-muratore2020artificial" role="doc-biblioref">Muratore and Chichilnisky 2020</a>)</span>, an electronic retinal implants that converts optical signals to electrical signals that mimic actual retinal responses or codes; this holds the potential to restore vision to blind individuals. Similarly, these mechanisms must be designed with the encoder in mind in order to deliver the desired output.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-briggs2020role" class="csl-entry" role="listitem">
+Briggs, Farran. 2020. <span>“Role of Feedback Connections in Central Visual Processing.”</span> <em>Annual Review of Vision Science</em> 6 (1): 313–34.
+</div>
+<div id="ref-chandrasekhar1960radiative" class="csl-entry" role="listitem">
+Chandrasekhar, Subrahmanyan. 1960. <em>Radiative Transfer</em>. Courier Corporation.
+</div>
+<div id="ref-duinkharjav2022color" class="csl-entry" role="listitem">
+Duinkharjav, Budmonde, Kenneth Chen, Abhishek Tyagi, Jiayi He, Yuhao Zhu, and Qi Sun. 2022. <span>“Color-Perception-Guided Display Power Reduction for Virtual Reality.”</span> <em>ACM Transactions on Graphics (TOG)</em> 41 (6): 1–16.
+</div>
+<div id="ref-einstein1905heuristic" class="csl-entry" role="listitem">
+Einstein, Albert. 1905a. <span>“On a Heuristic Point of View about the Creation and Conversion of Light.”</span> <em>Annalen Der Physik</em> 17 (6): 132–48.
+</div>
+<div id="ref-einstein1905erzeugung" class="csl-entry" role="listitem">
+———. 1905b. <span>“<span>Ü</span>ber Einen Die Erzeugung Und Verwandlung Des Lichtes Betreffenden Heuristischen Gesichtspunkt.”</span> Albert Einstein-Gesellschaft.
+</div>
+<div id="ref-gilbert2013top" class="csl-entry" role="listitem">
+Gilbert, Charles D, and Wu Li. 2013. <span>“Top-down Influences on Visual Processing.”</span> <em>Nature Reviews Neuroscience</em> 14 (5): 350–63.
+</div>
+<div id="ref-gogliettino2023high" class="csl-entry" role="listitem">
+Gogliettino, Alex R, Sasidhar S Madugula, Lauren E Grosberg, Ramandeep S Vilkhu, Jeff Brown, Huy Nguyen, Alexandra Kling, et al. 2023. <span>“High-Fidelity Reproduction of Visual Signals by Electrical Stimulation in the Central Primate Retina.”</span> <em>Journal of Neuroscience</em> 43 (25): 4625–41.
+</div>
+<div id="ref-guenter2012foveated" class="csl-entry" role="listitem">
+Guenter, Brian, Mark Finch, Steven Drucker, Desney Tan, and John Snyder. 2012. <span>“Foveated 3D Graphics.”</span> <em>ACM Transactions on Graphics (TOG)</em> 31 (6): 1–10.
+</div>
+<div id="ref-hasinoff2016burst" class="csl-entry" role="listitem">
+Hasinoff, Samuel W, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan T Barron, Florian Kainz, Jiawen Chen, and Marc Levoy. 2016. <span>“Burst Photography for High Dynamic Range and Low-Light Imaging on Mobile Cameras.”</span> <em>ACM Transactions on Graphics (ToG)</em> 35 (6): 1–12.
+</div>
+<div id="ref-liao2022bioinspired" class="csl-entry" role="listitem">
+Liao, Fuyou, Zheng Zhou, Beom Jin Kim, Jiewei Chen, Jingli Wang, Tianqing Wan, Yue Zhou, et al. 2022. <span>“Bioinspired in-Sensor Visual Adaptation for Accurate Perception.”</span> <em>Nature Electronics</em> 5 (2): 84–91.
+</div>
+<div id="ref-mildenhall2021nerf" class="csl-entry" role="listitem">
+Mildenhall, Ben, Pratul P Srinivasan, Matthew Tancik, Jonathan T Barron, Ravi Ramamoorthi, and Ren Ng. 2021. <span>“Nerf: Representing Scenes as Neural Radiance Fields for View Synthesis.”</span> <em>Communications of the ACM</em> 65 (1): 99–106.
+</div>
+<div id="ref-muratore2020artificial" class="csl-entry" role="listitem">
+Muratore, Dante G, and EJ Chichilnisky. 2020. <span>“Artificial Retina: A Future Cellular-Resolution Brain-Machine Interface.”</span> In <em>NANO-CHIPS 2030: On-Chip AI for an Efficient Data-Driven World</em>, 443–65. Springer.
+</div>
+<div id="ref-patney2016towards" class="csl-entry" role="listitem">
+Patney, Anjul, Marco Salvi, Joohwan Kim, Anton Kaplanyan, Chris Wyman, Nir Benty, David Luebke, and Aaron Lefohn. 2016. <span>“Towards Foveated Rendering for Gaze-Tracked Virtual Reality.”</span> <em>ACM Transactions on Graphics (TOG)</em> 35 (6): 1–12.
+</div>
+<div id="ref-reppert2004polarized" class="csl-entry" role="listitem">
+Reppert, Steven M, Haisun Zhu, and Richard H White. 2004. <span>“Polarized Light Helps Monarch Butterflies Navigate.”</span> <em>Current Biology</em> 14 (2): 155–58.
+</div>
+<div id="ref-shannon1949communication" class="csl-entry" role="listitem">
+Shannon, Claude Elwood. 1949. <span>“Communication in the Presence of Noise.”</span> <em>Proceedings of the IRE</em> 37 (1): 10–21.
+</div>
+<div id="ref-stoppa2002novel" class="csl-entry" role="listitem">
+Stoppa, David, Andrea Simoni, Lorenzo Gonzo, Massimo Gottardi, and G-F Dalla Betta. 2002. <span>“Novel CMOS Image Sensor with a 132-dB Dynamic Range.”</span> <em>IEEE Journal of Solid-State Circuits</em> 37 (12): 1846–52.
+</div>
+<div id="ref-wald1968molecular" class="csl-entry" role="listitem">
+Wald, George. 1968. <span>“Molecular Basis of Visual Excitation.”</span> <em>Science</em> 162 (3850): 230–39.
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>the discovery of which won George Wald his Nobel Prize.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>the discovery of which won Albert Einstein his Nobel Prize.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Why This Book">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Why This Book</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./hvs.html" class="pagination-link" aria-label="Human Visual System">
+        <span class="nav-page-text">Human Visual System</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,3297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>References – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./display-impl.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Models for Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Subsurface and Volume Scattering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Noises</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Basic Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-impl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">References</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-cie1931xyz" class="csl-entry" role="listitem">
+Acdx. 2009. <span>“<span>CIE 1931 XYZ Color Matching Functions; CC BY-SA
+4.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE_1931_XYZ_Color_Matching_Functions.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE_1931_XYZ_Color_Matching_Functions.svg</a>.
+</div>
+<div id="ref-adelson1992single" class="csl-entry" role="listitem">
+Adelson, Edward H, and John YA Wang. 1992. <span>“Single Lens Stereo
+with a Plenoptic Camera.”</span> <em>IEEE Transactions on Pattern
+Analysis and Machine Intelligence</em> 14 (2): 99–106.
+</div>
+<div id="ref-aguilar1954saturation" class="csl-entry" role="listitem">
+Aguilar, M, and WS Stiles. 1954. <span>“Saturation of the Rod Mechanism
+of the Retina at High Levels of Stimulation.”</span> <em>Optica Acta:
+International Journal of Optics</em> 1 (1): 59–65.
+</div>
+<div id="ref-iphone12_cam" class="csl-entry" role="listitem">
+ajay_suresh. 2021. <span>“<span class="nocase">iPhone 12 cameras; CC
+BY-SA 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Apple_iPhone_12_Pro_-_Cameras_(50535314721).jpg" class="uri">https://commons.wikimedia.org/wiki/File:Apple_iPhone_12_Pro_-_Cameras_(50535314721).jpg</a>.
+</div>
+<div id="ref-akahane2006sensitivity" class="csl-entry" role="listitem">
+Akahane, Nana, Shigetoshi Sugawa, Satoru Adachi, Kazuya Mori, Toshiyuki
+Ishiuchi, and Koichi Mizobuchi. 2006. <span>“A Sensitivity and Linearity
+Improvement of a 100-dB Dynamic Range CMOS Image Sensor Using a Lateral
+Overflow Integration Capacitor.”</span> <em>IEEE Journal of Solid-State
+Circuits</em> 41 (4): 851–58.
+</div>
+<div id="ref-alpern1983perception" class="csl-entry" role="listitem">
+Alpern, M, K Kitahara, and DH Krantz. 1983. <span>“Perception of Colour
+in Unilateral Tritanopia.”</span> <em>The Journal of Physiology</em> 335
+(1): 683–97.
+</div>
+<div id="ref-anderson1996proposal" class="csl-entry" role="listitem">
+Anderson, Matthew, Ricardo Motta, Srinivasan Chandrasekar, and Michael
+Stokes. 1996. <span>“Proposal for a Standard Default Color Space for the
+Internet—Srgb.”</span> In <em>Color and Imaging Conference</em>,
+4:238–45. Society of Imaging Science; Technology.
+</div>
+<div id="ref-angueyra2014limits" class="csl-entry" role="listitem">
+Angueyra-Aristizábal, Juan M. 2014. <span>“The Limits Imposed in Primate
+Vision by Transduction in Cone Photoreceptors.”</span> PhD thesis,
+University of Washington Libraries.
+</div>
+<div id="ref-foveon_x3" class="csl-entry" role="listitem">
+Anoneditor. 2007. <span>“<span class="nocase">Illustration of the Foveon
+X3 sensor; CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Absorption-X3.png" class="uri">https://commons.wikimedia.org/wiki/File:Absorption-X3.png</a>.
+</div>
+<div id="ref-macadam" class="csl-entry" role="listitem">
+Anonymous. 2009. <span>“<span class="nocase">MacAdam Ellipses in the
+CIE1931 xy chromaticity diagram; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIExy1931_MacAdam.png" class="uri">https://commons.wikimedia.org/wiki/File:CIExy1931_MacAdam.png</a>.
+</div>
+<div id="ref-antipa2017diffusercam" class="csl-entry" role="listitem">
+Antipa, Nick, Grace Kuo, Reinhard Heckel, Ben Mildenhall, Emrah Bostan,
+Ren Ng, and Laura Waller. 2017. <span>“DiffuserCam: Lensless
+Single-Exposure 3D Imaging.”</span> <em>Optica</em> 5 (1): 1–9.
+</div>
+<div id="ref-aoki19822" class="csl-entry" role="listitem">
+Aoki, Masakazu, Haruhisa Ando, Shinya Ohba, Iwao Takemoto, Shusaku
+Nagahara, Toshio Nakano, Masaharu Kubo, and Tsutomu Fujita. 1982.
+<span>“2/3-Inch Format MOS Single-Chip Color Imager.”</span> <em>IEEE
+Transactions on Electron Devices</em> 29 (4): 745–50.
+</div>
+<div id="ref-birefringent_material" class="csl-entry" role="listitem">
+APN MJM. 2011. <span>“<span class="nocase">A calcite crystal displays
+the double refractive properties while sitting on a sheet of graph
+paper; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Crystal_on_graph_paper.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Crystal_on_graph_paper.jpg</a>.
+</div>
+<div id="ref-ir_cam" class="csl-entry" role="listitem">
+Arno / Coen. 2006. <span>“<span class="nocase">Thermogram of a snake
+wrapped around a human arm; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Wiki_stranglesnake.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Wiki_stranglesnake.jpg</a>.
+</div>
+<div id="ref-ashraf2024castlecsf" class="csl-entry" role="listitem">
+Ashraf, Maliha, Rafał K Mantiuk, Alexandre Chapiro, and Sophie Wuerger.
+2024. <span>“castleCSF—a Contrast Sensitivity Function of Color, Area,
+Spatiotemporal Frequency, Luminance and Eccentricity.”</span>
+<em>Journal of Vision</em> 24 (4): 5–5.
+</div>
+<div id="ref-astme28413b" class="csl-entry" role="listitem">
+ASTM International. 2013. <span>“<span class="nocase">ASTM E284-13b
+Standard Terminology of Appearance</span>.”</span> <a href="https://webstore.ansi.org/standards/astm/astme28413b" class="uri">https://webstore.ansi.org/standards/astm/astme28413b</a>.
+</div>
+<div id="ref-overexposure2" class="csl-entry" role="listitem">
+Axel Jacobs. 2006. <span>“<span class="nocase">Open window with armchair
+and manequin. Sample scene for HDRI (standard LDR, single image from a
+set of bracketed exposures); CC BY-SA 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:HDRI_Sample_Scene_Window_-_08.jpg" class="uri">https://commons.wikimedia.org/wiki/File:HDRI_Sample_Scene_Window_-_08.jpg</a>.
+</div>
+<div id="ref-balasubramanian2003device" class="csl-entry" role="listitem">
+Balasubramanian, Raja. 2003. <span>“Device Characterization.”</span> In
+<em>Digital Color Imaging Handbook</em>, edited by Gaurav Sharma,
+269–384. CRC Press.
+</div>
+<div id="ref-barlow1953summation" class="csl-entry" role="listitem">
+Barlow, Horace B. 1953. <span>“Summation and Inhibition in the Frog’s
+Retina.”</span> <em>The Journal of Physiology</em> 119 (1): 69.
+</div>
+<div id="ref-barlow1956retinal" class="csl-entry" role="listitem">
+———. 1956. <span>“Retinal Noise and Absolute Threshold.”</span>
+<em>Josa</em> 46 (8): 634–39.
+</div>
+<div id="ref-barlow1957increment" class="csl-entry" role="listitem">
+———. 1957. <span>“Increment Thresholds at Low Intensities Considered as
+Signal/Noise Discriminations.”</span> <em>The Journal of Physiology</em>
+136 (3): 469.
+</div>
+<div id="ref-barlow1972dark" class="csl-entry" role="listitem">
+———. 1972. <span>“Dark and Light Adaptation: Psychophysics.”</span> In
+<em>Visual Psychophysics</em>, edited by Matthew Alpern, 1–28. Springer.
+</div>
+<div id="ref-barlow1957change" class="csl-entry" role="listitem">
+Barlow, Horace B, Roo Fitzhugh, and SW Kuffler. 1957. <span>“Change of
+Organization in the Receptive Fields of the Cat’s Retina During Dark
+Adaptation.”</span> <em>The Journal of Physiology</em> 137 (3): 338.
+</div>
+<div id="ref-bauml1993ratio" class="csl-entry" role="listitem">
+Bäuml, Karl-Heinz. 1993. <span>“A Ratio Principle for a Red/Green and a
+Yellow/Blue Channel?”</span> <em>Perception &amp; Psychophysics</em> 53
+(3): 338–44.
+</div>
+<div id="ref-bauml1996color" class="csl-entry" role="listitem">
+Bäuml, Karl-Heinz, and Brian A Wandell. 1996. <span>“Color Appearance of
+Mixture Gratings.”</span> <em>Vision Research</em> 36 (18): 2849–64.
+</div>
+<div id="ref-bayer1976color" class="csl-entry" role="listitem">
+Bayer, Bryce E. 1976. <span>“Color Imaging Array.”</span>
+</div>
+<div id="ref-baylor1987photoreceptor" class="csl-entry" role="listitem">
+Baylor, Denis A. 1987. <span>“Photoreceptor Signals and Vision: The
+Proctor Lecture.”</span> <em>Investigative Ophthalmology &amp; Visual
+Science</em> 28 (1): 34–49.
+</div>
+<div id="ref-baylor1970electrical" class="csl-entry" role="listitem">
+Baylor, Denis A, and MGF Fuortes. 1970. <span>“Electrical Responses of
+Single Cones in the Retina of the Turtle.”</span> <em>The Journal of
+Physiology</em> 207 (1): 77–92.
+</div>
+<div id="ref-baylor1973detection" class="csl-entry" role="listitem">
+Baylor, Denis A, and Alan L Hodgkin. 1973. <span>“Detection and
+Resolution of Visual Stimuli by Turtle Photoreceptors.”</span> <em>The
+Journal of Physiology</em> 234 (1): 163–98.
+</div>
+<div id="ref-baylor1974electrical" class="csl-entry" role="listitem">
+Baylor, Denis A, AL Hodgkin, and TD Lamb. 1974. <span>“The Electrical
+Response of Turtle Cones to Flashes and Steps of Light.”</span> <em>The
+Journal of Physiology</em> 242 (3): 685–727.
+</div>
+<div id="ref-baylor1979membrane" class="csl-entry" role="listitem">
+Baylor, Denis A, TD Lamb, and KW Yau. 1979a. <span>“The Membrane Current
+of Single Rod Outer Segments.”</span> <em>The Journal of Physiology</em>
+288 (1): 589–611.
+</div>
+<div id="ref-baylor1979responses" class="csl-entry" role="listitem">
+Baylor, Denis A, Trevor D Lamb, and KW Yau. 1979b. <span>“Responses of
+Retinal Rods to Single Photons.”</span> <em>The Journal of
+Physiology</em> 288 (1): 613–34.
+</div>
+<div id="ref-baylor1980two" class="csl-entry" role="listitem">
+Baylor, Denis A, G Matthews, and KW Yau. 1980. <span>“Two Components of
+Electrical Dark Noise in Toad Retinal Rod Outer Segments.”</span>
+<em>The Journal of Physiology</em> 309 (1): 591–621.
+</div>
+<div id="ref-baylor1984photocurrent" class="csl-entry" role="listitem">
+Baylor, Denis A, BJ Nunn, and JL Schnapf. 1984. <span>“The Photocurrent,
+Noise and Spectral Sensitivity of Rods of the Monkey Macaca
+Fascicularis.”</span> <em>The Journal of Physiology</em> 357 (1):
+575–607.
+</div>
+<div id="ref-baylor1987spectral" class="csl-entry" role="listitem">
+———. 1987. <span>“Spectral Sensitivity of Cones of the Monkey Macaca
+Fascicularis.”</span> <em>The Journal of Physiology</em> 390 (1):
+145–60.
+</div>
+<div id="ref-dofaperture" class="csl-entry" role="listitem">
+BenFrantzDale. 2010a. <span>“<span class="nocase">Effect of aperture on
+blur and DOF; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Depth_of_field_illustration.svg" class="uri">https://commons.wikimedia.org/wiki/File:Depth_of_field_illustration.svg</a>.
+</div>
+<div id="ref-fc" class="csl-entry" role="listitem">
+———. 2010b. <span>“<span class="nocase">Ray diagram showing field
+curvaure; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Field_curvature.svg" class="uri">https://commons.wikimedia.org/wiki/File:Field_curvature.svg</a>.
+</div>
+<div id="ref-cie1931xy" class="csl-entry" role="listitem">
+BenRG. 2009. <span>“<span class="nocase">CIE1931 xy chromaticity plot;
+released into the public domain by the copyright holder</span>.”</span>
+<a href="https://commons.wikimedia.org/wiki/File:CIE1931xy_blank.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931xy_blank.svg</a>.
+</div>
+<div id="ref-bergen1991plenoptic" class="csl-entry" role="listitem">
+Bergen, James R, and Edward H Adelson. 1991. <span>“The Plenoptic
+Function and the Elements of Early Vision.”</span> <em>Computational
+Models of Visual Processing</em> 1 (8): 3.
+</div>
+<div id="ref-berson2002phototransduction" class="csl-entry" role="listitem">
+Berson, David M, Felice A Dunn, and Motoharu Takao. 2002.
+<span>“Phototransduction by Retinal Ganglion Cells That Set the
+Circadian Clock.”</span> <em>Science</em> 295 (5557): 1070–73.
+</div>
+<div id="ref-bhandari2022computational" class="csl-entry" role="listitem">
+Bhandari, Ayush, Achuta Kadambi, and Ramesh Raskar. 2022.
+<em>Computational Imaging</em>. MIT Press.
+</div>
+<div id="ref-bharath2009introductory" class="csl-entry" role="listitem">
+Bharath, Anil. 2009. <em>Introductory Medical Imaging</em>. Morgan &amp;
+Claypool.
+</div>
+<div id="ref-blackbodyct" class="csl-entry" role="listitem">
+Bhutajata. 2015. <span>“<span class="nocase">Color temperature black
+body; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Color_temperature_black_body_800-12200K.svg" class="uri">https://commons.wikimedia.org/wiki/File:Color_temperature_black_body_800-12200K.svg</a>.
+</div>
+<div id="ref-birch2012worldwide" class="csl-entry" role="listitem">
+Birch, Jennifer. 2012. <span>“Worldwide Prevalence of Red-Green Color
+Deficiency.”</span> <em>JOSA A</em> 29 (3): 313–20.
+</div>
+<div id="ref-mcmaster2008wide" class="csl-entry" role="listitem">
+Biretta, John A, and Matt McMaster. 2008. <em>Wide Field and Planetary
+Camera 2 Instrument Handbook v. 10.0</em>. Space Telescope Science
+Institute.
+</div>
+<div id="ref-blakemore1965dark" class="csl-entry" role="listitem">
+Blakemore, CB, and WA Rushton. 1965. <span>“Dark Adaptation and
+Increment Threshold in a Rod Monochromat.”</span> <em>The Journal of
+Physiology</em> 181 (3): 612.
+</div>
+<div id="ref-blinn1982light" class="csl-entry" role="listitem">
+Blinn, James F. 1982. <span>“Light Reflection Functions for Simulation
+of Clouds and Dusty Surfaces.”</span> <em>Acm SIGGRAPH Computer
+Graphics</em> 16 (3): 21–29.
+</div>
+<div id="ref-retina_photoreceptors" class="csl-entry" role="listitem">
+Blume and Garbazza and Spitschan. 2019. <span>“<span class="nocase">Schematic overview of photorecetors; CC BY-SA 4.0
+license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Overview_of_the_retina_photoreceptors_(a).png" class="uri">https://commons.wikimedia.org/wiki/File:Overview_of_the_retina_photoreceptors_(a).png</a>.
+</div>
+<div id="ref-boas2001imaging" class="csl-entry" role="listitem">
+Boas, David A, Dana H Brooks, Eric L Miller, Charles A DiMarzio, Misha
+Kilmer, Richard J Gaudette, and Quan Zhang. 2001. <span>“Imaging the
+Body with Diffuse Optical Tomography.”</span> <em>IEEE Signal Processing
+Magazine</em> 18 (6): 57–75.
+</div>
+<div id="ref-ca" class="csl-entry" role="listitem">
+Bob Mellish. 2006. <span>“<span class="nocase">Chromatic aberration
+diagram; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Chromatic_aberration_lens_diagram.svg" class="uri">https://commons.wikimedia.org/wiki/File:Chromatic_aberration_lens_diagram.svg</a>.
+</div>
+<div id="ref-boettner1962transmission" class="csl-entry" role="listitem">
+Boettner, Edward A, and J Reimer Wolter. 1962. <span>“Transmission of
+the Ocular Media.”</span> <em>Investigative Ophthalmology &amp; Visual
+Science</em> 1 (6): 776–83.
+</div>
+<div id="ref-bohren2006fundamentals" class="csl-entry" role="listitem">
+Bohren, Craig F, and Eugene E Clothiaux. 2006. <em>Fundamentals of
+Atmospheric Radiation: An Introduction with 400 Problems</em>. John
+Wiley &amp; Sons.
+</div>
+<div id="ref-bong2017low" class="csl-entry" role="listitem">
+Bong, Kyeongryeol, Sungpill Choi, Changhyeon Kim, Donghyeon Han, and
+Hoi-Jun Yoo. 2017. <span>“A Low-Power Convolutional Neural Network Face
+Recognition Processor and a CIS Integrated with Always-on Face
+Detector.”</span> <em>IEEE Journal of Solid-State Circuits</em> 53 (1):
+115–23.
+</div>
+<div id="ref-bong201714" class="csl-entry" role="listitem">
+Bong, Kyeongryeol, Sungpill Choi, Changhyeon Kim, Sanghoon Kang,
+Youchang Kim, and Hoi-Jun Yoo. 2017. <span>“14.6 a 0.62 mW
+Ultra-Low-Power Convolutional-Neural-Network Face-Recognition Processor
+and a CIS Integrated with Always-on Haar-Like Face Detector.”</span> In
+<em>2017 IEEE International Solid-State Circuits Conference
+(ISSCC)</em>, 248–49. IEEE.
+</div>
+<div id="ref-boukhayma2018low" class="csl-entry" role="listitem">
+Boukhayma, Assim. 2018. <em>Ultra Low-Noise CMOS Image Sensors</em>.
+Springer.
+</div>
+<div id="ref-bowmaker1998evolution" class="csl-entry" role="listitem">
+Bowmaker, James K. 1998. <span>“Evolution of Colour Vision in
+Vertebrates.”</span> <em>Eye</em> 12 (3): 541–47.
+</div>
+<div id="ref-bowmaker2008evolution" class="csl-entry" role="listitem">
+———. 2008. <span>“Evolution of Vertebrate Visual Pigments.”</span>
+<em>Vision Research</em> 48 (20): 2022–41.
+</div>
+<div id="ref-bowmaker1980visual" class="csl-entry" role="listitem">
+Bowmaker, James K, and HJk Dartnall. 1980. <span>“Visual Pigments of
+Rods and Cones in a Human Retina.”</span> <em>The Journal of
+Physiology</em> 298 (1): 501–11.
+</div>
+<div id="ref-bowmaker1984microspectrophotometry" class="csl-entry" role="listitem">
+Bowmaker, JK. 1984. <span>“Microspectrophotometry of Vertebrate
+Photoreceptors: A Brief Review.”</span> <em>Vision Research</em> 24
+(11): 1641–50.
+</div>
+<div id="ref-bowmaker1978visual" class="csl-entry" role="listitem">
+Bowmaker, JK, HJ Dartnall, JN Lythgoe, and JD Mollon. 1978. <span>“The
+Visual Pigments of Rods and Cones in the Rhesus Monkey, Macaca
+Mulatta.”</span> <em>The Journal of Physiology</em> 274 (1): 329–48.
+</div>
+<div id="ref-boyle1970charge" class="csl-entry" role="listitem">
+Boyle, Willard S, and George E Smith. 1970. <span>“Charge Coupled
+Semiconductor Devices.”</span> <em>Bell System Technical Journal</em> 49
+(4): 587–93.
+</div>
+<div id="ref-brainard1996cone" class="csl-entry" role="listitem">
+Brainard, DH. 1996. <span>“Cone Contrast and Opponent Modulation Color
+Spaces.”</span> In <em>Human Color Vision</em>, 2nd ed., 563–79. Optical
+Society of America.
+</div>
+<div id="ref-rs_artifacts" class="csl-entry" role="listitem">
+BrayLockBoy. 2018. <span>“<span class="nocase">An example of the Rolling
+shutter effect in action at Afton Down, Isle of Wight, taken by a camera
+on a car travelling at approximately 50 miles per hour. CC BY-SA 4.0
+license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Rolling_Shutter_Effect_at_Afton_Down,_21_August_2018.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Rolling_Shutter_Effect_at_Afton_Down,_21_August_2018.jpg</a>.
+</div>
+<div id="ref-brettel1997computerized" class="csl-entry" role="listitem">
+Brettel, Hans, Françoise Viénot, and John D Mollon. 1997.
+<span>“Computerized Simulation of Color Appearance for
+Dichromats.”</span> <em>Josa a</em> 14 (10): 2647–55.
+</div>
+<div id="ref-briggs2020role" class="csl-entry" role="listitem">
+Briggs, Farran. 2020. <span>“Role of Feedback Connections in Central
+Visual Processing.”</span> <em>Annual Review of Vision Science</em> 6
+(1): 313–34.
+</div>
+<div id="ref-brill1998cie" class="csl-entry" role="listitem">
+Brill, Michael H. 1998. <span>“Erratum: How the CIE 1931 Color-Matching
+Functions Were Derived from Wright-Guild Data.”</span> <em>Color
+Research &amp; Application</em> 23 (4): 259–59.
+</div>
+<div id="ref-broadbent2004critical" class="csl-entry" role="listitem">
+Broadbent, Arthur D. 2004. <span>“A Critical Review of the Development
+of the CIE1931 RGB Color-Matching Functions.”</span> <em>Color Research
+&amp; Application</em> 29 (4): 267–72.
+</div>
+<div id="ref-broadbent2008calculation" class="csl-entry" role="listitem">
+———. 2008. <span>“Calculation from the Original Experimental Data of the
+CIE 1931 RGB Standard Observer Spectral Chromaticity Coordinates and
+Color Matching Functions.”</span> <em>Qu<span>é</span>bec, Canada:
+D<span>é</span>partement de g<span>é</span>nie Chimique,
+Universit<span>é</span> de Sherbrooke</em>, 1–17.
+</div>
+<div id="ref-brown1964visual" class="csl-entry" role="listitem">
+Brown, Paul K, and George Wald. 1964. <span>“Visual Pigments in Single
+Rods and Cones of the Human Retina.”</span> <em>Science</em> 144 (3614):
+45–52.
+</div>
+<div id="ref-paintpigmentsize" class="csl-entry" role="listitem">
+Bruce MacEvoy. 2015. <span>“<span class="nocase">The material attributes
+of paints</span>.”</span> <a href="https://www.handprint.com/HP/WCL/pigmt3.html#particlesize" class="uri">https://www.handprint.com/HP/WCL/pigmt3.html#particlesize</a>.
+</div>
+<div id="ref-burns2005beyond" class="csl-entry" role="listitem">
+Burns, Marie E, and Vadim Y Arshavsky. 2005. <span>“Beyond Counting
+Photons: Trials and Trends in Vertebrate Visual Transduction.”</span>
+<em>Neuron</em> 48 (3): 387–401.
+</div>
+<div id="ref-burns2001activation" class="csl-entry" role="listitem">
+Burns, Marie E, and Denis A Baylor. 2001. <span>“Activation,
+Deactivation, and Adaptation in Vertebrate Photoreceptor Cells.”</span>
+<em>Annual Review of Neuroscience</em> 24 (1): 779–805.
+</div>
+<div id="ref-burns2004visual" class="csl-entry" role="listitem">
+Burns, Marie E, and Trevor D Lamb. 2014. <span>“Visual Transduction by
+Rod and Cone Photoreceptors.”</span> In <em>The New Visual
+Neurosciences</em>. MIT Press.
+</div>
+<div id="ref-blindspot" class="csl-entry" role="listitem">
+Caerbannog. 2016. <span>“<span class="nocase">Comparison of structures
+in vertebrate’s eye (left) with octopus’ eye (right); CC BY-SA 3.0
+license</span>.”</span> <a href="https://en.wikipedia.org/wiki/Blind_spot_(vision)#/media/File:Evolution_eye_2.svg" class="uri">https://en.wikipedia.org/wiki/Blind_spot_(vision)#/media/File:Evolution_eye_2.svg</a>.
+</div>
+<div id="ref-canon2006ef" class="csl-entry" role="listitem">
+Canon. 2006. <em>EF Lens Work III: The Eye of EOS</em>. 8th ed. Canon
+Inc. Lens Products Group.
+</div>
+<div id="ref-bayer_cfa" class="csl-entry" role="listitem">
+Cburnett. 2006. <span>“<span class="nocase">A Bayer pattern on a sensor;
+CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Bayer_pattern_on_sensor.svg" class="uri">https://commons.wikimedia.org/wiki/File:Bayer_pattern_on_sensor.svg</a>.
+</div>
+<div id="ref-chandrasekhar1960radiative" class="csl-entry" role="listitem">
+Chandrasekhar, Subrahmanyan. 1960. <em>Radiative Transfer</em>. Courier
+Corporation.
+</div>
+<div id="ref-chen2023bioinspired" class="csl-entry" role="listitem">
+Chen, Cheng, Ziwen Wang, Jiajing Wu, Zhengtao Deng, Tao Zhang, Zhongmin
+Zhu, Yifei Jin, et al. 2023. <span>“Bioinspired, Vertically Stacked, and
+Perovskite Nanocrystal–Enhanced CMOS Imaging Sensors for Resolving UV
+Spectral Signatures.”</span> <em>Science Advances</em> 9 (44): eadk3860.
+</div>
+<div id="ref-burningmirrors" class="csl-entry" role="listitem">
+Chris Rorres. n.d. <span>“<span class="nocase">Burning Mirrors: Refuting
+the Legend</span>.”</span> <a href="https://math.nyu.edu/Archimedes/Mirrors/legend/legend.html" class="uri">https://math.nyu.edu/Archimedes/Mirrors/legend/legend.html</a>.
+</div>
+<div id="ref-clay1995specificity" class="csl-entry" role="listitem">
+Clay Reid, R, and Jose-Manuel Alonso. 1995. <span>“Specificity of
+Monosynaptic Connections from Thalamus to Visual Cortex.”</span>
+<em>Nature</em> 378 (6554): 281–84.
+</div>
+<div id="ref-bayer_ex" class="csl-entry" role="listitem">
+Cmglee. 2018. <span>“<span class="nocase">Images of a garden with some
+tulips and narcissus; CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Colorful_spring_garden_Bayer_%2B_RGB.png" class="uri">https://commons.wikimedia.org/wiki/File:Colorful_spring_garden_Bayer_%2B_RGB.png</a>.
+</div>
+<div id="ref-cis" class="csl-entry" role="listitem">
+———. 2019. <span>“<span class="nocase">Comparison of front- vs.
+back-illuminated sensors; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Comparison_backside_illumination.svg" class="uri">https://commons.wikimedia.org/wiki/File:Comparison_backside_illumination.svg</a>.
+</div>
+<div id="ref-cook1982reflectance" class="csl-entry" role="listitem">
+Cook, Robert L, and Kenneth E. Torrance. 1982. <span>“A Reflectance
+Model for Computer Graphics.”</span> <em>ACM Transactions on Graphics
+(ToG)</em> 1 (1): 7–24.
+</div>
+<div id="ref-cornsweet1970visual" class="csl-entry" role="listitem">
+Cornsweet, Tom. 1970. <em>Visual Perception</em>. Academic press.
+</div>
+<div id="ref-cornsweet1962staircase" class="csl-entry" role="listitem">
+Cornsweet, Tom N. 1962. <span>“The Staircase-Method in
+Psychophysics.”</span> <em>The American Journal of Psychology</em> 75
+(3): 485–91.
+</div>
+<div id="ref-crawford1937change" class="csl-entry" role="listitem">
+Crawford, BH. 1937. <span>“The Change of Visual Sensitivity with
+Time.”</span> <em>Proceedings of the Royal Society of London. Series
+B-Biological Sciences</em> 123 (830): 69–89.
+</div>
+<div id="ref-crawford1947visual" class="csl-entry" role="listitem">
+———. 1947. <span>“Visual Adaptation in Relation to Brief Conditioning
+Stimuli.”</span> <em>Proceedings of the Royal Society of London. Series
+B-Biological Sciences</em> 134 (875): 283–302.
+</div>
+<div id="ref-crawford1949scotopic" class="csl-entry" role="listitem">
+———. 1949. <span>“The Scotopic Visibility Function.”</span>
+<em>Proceedings of the Physical Society. Section B</em> 62 (5): 321.
+</div>
+<div id="ref-crescitelli1953human" class="csl-entry" role="listitem">
+Crescitelli, Frederick, and Herbert JA Dartnall. 1953. <span>“Human
+Visual Purple.”</span> <em>Nature</em> 172 (4370): 195–97.
+</div>
+<div id="ref-curcio1990human" class="csl-entry" role="listitem">
+Curcio, Christine A, Kenneth R Sloan, Robert E Kalina, and Anita E
+Hendrickson. 1990. <span>“Human Photoreceptor Topography.”</span>
+<em>Journal of Comparative Neurology</em> 292 (4): 497–523.
+</div>
+<div id="ref-confusionlines" class="csl-entry" role="listitem">
+Curran919. 2022. <span>“<span class="nocase">Color Blind Confusion
+Lines; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Color_Blind_Confusion_Lines.png" class="uri">https://commons.wikimedia.org/wiki/File:Color_Blind_Confusion_Lines.png</a>.
+</div>
+<div id="ref-absorption_spectra_cvrl" class="csl-entry" role="listitem">
+CVRL. n.d. <span>“<span class="nocase">Photopigment curves based on the
+Stockman &amp; Sharpe (2000) cone fundamentals</span>.”</span> <a href="http://www.cvrl.org/database/text/pigments/ssabance.htm" class="uri">http://www.cvrl.org/database/text/pigments/ssabance.htm</a>.
+</div>
+<div id="ref-dacey1994blue" class="csl-entry" role="listitem">
+Dacey, Dennis M, and Barry B Lee. 1994. <span>“The’blue-on’opponent
+Pathway in Primate Retina Originates from a Distinct Bistratified
+Ganglion Cell Type.”</span> <em>Nature</em> 367 (6465): 731–35.
+</div>
+<div id="ref-dacey2005melanopsin" class="csl-entry" role="listitem">
+Dacey, Dennis M, Hsi-Wen Liao, Beth B Peterson, Farrel R Robinson,
+Vivianne C Smith, Joel Pokorny, King-Wai Yau, and Paul D Gamlin. 2005.
+<span>“Melanopsin-Expressing Ganglion Cells in Primate Retina Signal
+Colour and Irradiance and Project to the LGN.”</span> <em>Nature</em>
+433 (7027): 749–54.
+</div>
+<div id="ref-dacey1992dendritic" class="csl-entry" role="listitem">
+Dacey, Dennis M, and Michael R Petersen. 1992. <span>“Dendritic Field
+Size and Morphology of Midget and Parasol Ganglion Cells of the Human
+Retina.”</span> <em>Proceedings of the National Academy of Sciences</em>
+89 (20): 9666–70.
+</div>
+<div id="ref-have" class="csl-entry" role="listitem">
+Daderot. 2012. <span>“<span class="nocase">Kongens Have, Copenhagen,
+Denmark; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Marble_ball_-_Kongens_Have_-_Copenhagen_-_DSC07898.JPG" class="uri">https://commons.wikimedia.org/wiki/File:Marble_ball_-_Kongens_Have_-_Copenhagen_-_DSC07898.JPG</a>.
+</div>
+<div id="ref-danilova2025effect" class="csl-entry" role="listitem">
+Danilova, MV, and JD Mollon. 2025. <span>“Effect of Stimulus Size on
+Chromatic Discrimination.”</span> <em>Journal of the Optical Society of
+America A</em> 42 (5): B167–77.
+</div>
+<div id="ref-dartnall1972photo" class="csl-entry" role="listitem">
+Dartnall, Herbert J. A. 1972. <span>“Photosensitivity.”</span> In
+<em>Photochemistry of Vision</em>, edited by Herbert J. A. Dartnall,
+122–45. Springer Berlin Heidelberg.
+</div>
+<div id="ref-dartnall1983human" class="csl-entry" role="listitem">
+Dartnall, Herbert JA, James K Bowmaker, and John Dixon Mollon. 1983.
+<span>“Human Visual Pigments: Microspectrophotometric Results from the
+Eyes of Seven Persons.”</span> <em>Proceedings of the Royal Society of
+London. Series B. Biological Sciences</em> 220 (1218): 115–30.
+</div>
+<div id="ref-de1958response" class="csl-entry" role="listitem">
+De Valois, RL, CJ Smith, ST Kitai, and AJ Karoly. 1958. <span>“Response
+of Single Cells in Monkey Lateral Geniculate Nucleus to Monochromatic
+Light.”</span> <em>Science</em> 127 (3292): 238–39.
+</div>
+<div id="ref-de1966analysis" class="csl-entry" role="listitem">
+De Valois, Russell L, Israel Abramov, and Gerald H Jacobs. 1966.
+<span>“Analysis of Response Patterns of LGN Cells.”</span> <em>JOSA</em>
+56 (7): 966–77.
+</div>
+<div id="ref-de1943quantum" class="csl-entry" role="listitem">
+De Vries, HL. 1943. <span>“The Quantum Character of Light and Its
+Bearing Upon Threshold of Vision, the Differential Sensitivity and
+Visual Acuity of the Eye.”</span> <em>Physica</em> 10 (7): 553–64.
+</div>
+<div id="ref-derrington1984spatial" class="csl-entry" role="listitem">
+Derrington, AM, and P Lennie. 1984. <span>“Spatial and Temporal Contrast
+Sensitivities of Neurones in Lateral Geniculate Nucleus of
+Macaque.”</span> <em>The Journal of Physiology</em> 357 (1): 219–40.
+</div>
+<div id="ref-derrington1984chromatic" class="csl-entry" role="listitem">
+Derrington, Andrew M, John Krauskopf, and Peter Lennie. 1984.
+<span>“Chromatic Mechanisms in Lateral Geniculate Nucleus of
+Macaque.”</span> <em>The Journal of Physiology</em> 357 (1): 241–65.
+</div>
+<div id="ref-devalois1990spatial" class="csl-entry" role="listitem">
+DeValois, Russell L, and Karen K DeValois. 1990. <span>“Spatial
+Vision.”</span>
+</div>
+<div id="ref-dimmick1939spectralred" class="csl-entry" role="listitem">
+Dimmick, Forrest L, and Margaret R Hubbard. 1939a. <span>“The Spectral
+Components of Psychologically Unique Red.”</span> <em>The American
+Journal of Psychology</em> 52 (3): 348–53.
+</div>
+<div id="ref-dimmick1939spectralyellow" class="csl-entry" role="listitem">
+———. 1939b. <span>“The Spectral Location of Psychologically Unique
+Yellow, Green, and Blue.”</span> <em>The American Journal of
+Psychology</em> 52 (2): 242–54.
+</div>
+<div id="ref-do2010intrinsically" class="csl-entry" role="listitem">
+Do, Michael Tri Hoang, and KW Yau. 2010. <span>“Intrinsically
+Photosensitive Retinal Ganglion Cells.”</span> <em>Physiological
+Reviews</em>.
+</div>
+<div id="ref-ph_diff_limit" class="csl-entry" role="listitem">
+Dominic Alves. 2006. <span>“<span class="nocase">Pinhole Size Chart; CC
+BY 2.0 license</span>.”</span> <a href="https://www.flickr.com/photos/dominicspics/4589206921" class="uri">https://www.flickr.com/photos/dominicspics/4589206921</a>.
+</div>
+<div id="ref-dong2013material" class="csl-entry" role="listitem">
+Dong, Yue, Stephen Lin, Baining Guo, et al. 2013. <em>Material
+Appearance Modeling: A Data-Coherent Approach</em>. Springer.
+</div>
+<div id="ref-donner1992noise" class="csl-entry" role="listitem">
+Donner, Kristian. 1992. <span>“Noise and the Absolute Thresholds of Cone
+and Rod Vision.”</span> <em>Vision Research</em> 32 (5): 853–66.
+</div>
+<div id="ref-dorsey2010digital" class="csl-entry" role="listitem">
+Dorsey, Julie, Holly Rushmeier, and François Sillion. 2010. <em>Digital
+Modeling of Material Appearance</em>. Elsevier.
+</div>
+<div id="ref-dowling2016vision" class="csl-entry" role="listitem">
+Dowling, John E, and Joseph L Dowling Jr. 2016. <em>Vision: How It Works
+and What Can Go Wrong</em>. MIT Press.
+</div>
+<div id="ref-sellmeier_equ" class="csl-entry" role="listitem">
+DrBob. 2007. <span>“<span class="nocase">Refractive index vs. wavelength
+for BK7 glass; CC BY-SA 3.0 license</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Sellmeier-equation.svg" class="uri">https://en.wikipedia.org/wiki/File:Sellmeier-equation.svg</a>.
+</div>
+<div id="ref-duinkharjav2022color" class="csl-entry" role="listitem">
+Duinkharjav, Budmonde, Kenneth Chen, Abhishek Tyagi, Jiayi He, Yuhao
+Zhu, and Qi Sun. 2022. <span>“Color-Perception-Guided Display Power
+Reduction for Virtual Reality.”</span> <em>ACM Transactions on Graphics
+(TOG)</em> 41 (6): 1–16.
+</div>
+<div id="ref-dunn2007light" class="csl-entry" role="listitem">
+Dunn, Felice A, Martin J Lankheet, and Fred Rieke. 2007. <span>“Light
+Adaptation in Cone Vision Involves Switching Between Receptor and
+Post-Receptor Sites.”</span> <em>Nature</em> 449 (7162): 603–6.
+</div>
+<div id="ref-dyck1968integrated" class="csl-entry" role="listitem">
+Dyck, Rudolph H, and Gene P Weckler. 1968. <span>“Integrated Arrays of
+Silicon Photodetectors for Image Sensing.”</span> <em>IEEE Transactions
+on Electron Devices</em> 15 (4): 196–201.
+</div>
+<div id="ref-eason1978theory" class="csl-entry" role="listitem">
+Eason, G, AR Veitch, RM Nisbet, and FW Turnbull. 1978. <span>“The Theory
+of the Back-Scattering of Light by Blood.”</span> <em>Journal of Physics
+D: Applied Physics</em> 11 (10): 1463.
+</div>
+<div id="ref-einstein1905heuristic" class="csl-entry" role="listitem">
+Einstein, Albert. 1905a. <span>“On a Heuristic Point of View about the
+Creation and Conversion of Light.”</span> <em>Annalen Der Physik</em> 17
+(6): 132–48.
+</div>
+<div id="ref-einstein1905erzeugung" class="csl-entry" role="listitem">
+———. 1905b. <span>“<span>Ü</span>ber Einen Die Erzeugung Und Verwandlung
+Des Lichtes Betreffenden Heuristischen Gesichtspunkt.”</span> Albert
+Einstein-Gesellschaft.
+</div>
+<div id="ref-eki20219" class="csl-entry" role="listitem">
+Eki, Ryoji, Satoshi Yamada, Hiroyuki Ozawa, Hitoshi Kai, Kazuyuki
+Okuike, Hareesh Gowtham, Hidetomo Nakanishi, et al. 2021. <span>“9.6 a
+1/2.3 Inch 12.3 Mpixel with on-Chip 4.97 TOPS/w CNN Processor
+Back-Illuminated Stacked CMOS Image Sensor.”</span> In <em>2021 IEEE
+International Solid-State Circuits Conference (ISSCC)</em>, 64:154–56.
+IEEE.
+</div>
+<div id="ref-el2005cmos" class="csl-entry" role="listitem">
+El Gamal, Abbas, and Helmy Eltoukhy. 2005. <span>“CMOS Image
+Sensors.”</span> <em>IEEE Circuits and Devices Magazine</em> 21 (3):
+6–20.
+</div>
+<div id="ref-emva1288" class="csl-entry" role="listitem">
+EMVA. 2021. <span>“<span class="nocase">EMVA Standard 1288 Standard for
+Characterization of Image Sensors and Cameras</span>.”</span> <a href="https://www.emva.org/wp-content/uploads/EMVA1288General_4.0Release.pdf" class="uri">https://www.emva.org/wp-content/uploads/EMVA1288General_4.0Release.pdf</a>.
+</div>
+<div id="ref-engel2004real" class="csl-entry" role="listitem">
+Engel, Klaus, Markus Hadwiger, Joe M Kniss, Christof Rezk-Salama, and
+Daniel Weiskopf. 2006. <em>Real-Time Volume Graphics</em>. A K Peters,
+Ltd.
+</div>
+<div id="ref-enroth1977cone" class="csl-entry" role="listitem">
+Enroth-Cugell, Christina, B Gevene Hertz, and P Lennie. 1977.
+<span>“Cone Signals in the Cat’s Retina.”</span> <em>The Journal of
+Physiology</em> 269 (2): 273–96.
+</div>
+<div id="ref-ccd_qe" class="csl-entry" role="listitem">
+Eric Bajart. 2010. <span>“<span class="nocase">Quantum efficiency of the
+CCD sensor <span>‘PC1’</span> in the Hubble Space Telescope’s Wide Field
+and Planetary Camera WFPC2; CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Quantum_efficiency_graph_for_WFPC2-en.svg" class="uri">https://commons.wikimedia.org/wiki/File:Quantum_efficiency_graph_for_WFPC2-en.svg</a>.
+</div>
+<div id="ref-fain1976sensitivity" class="csl-entry" role="listitem">
+Fain, Gordon L. 1976. <span>“Sensitivity of Toad Rods: Dependence on
+Wave-Length and Background Illumination.”</span> <em>The Journal of
+Physiology</em> 261 (1): 71–101.
+</div>
+<div id="ref-fain2001adaptation" class="csl-entry" role="listitem">
+Fain, Gordon L, Hugh R Matthews, M Carter Cornwall, and Yiannis
+Koutalos. 2001. <span>“Adaptation in Vertebrate Photoreceptors.”</span>
+<em>Physiological Reviews</em> 81 (1): 117–51.
+</div>
+<div id="ref-fairchild2013color" class="csl-entry" role="listitem">
+Fairchild, Mark D. 2013. <em>Color Appearance Models</em>. 3rd ed. John
+Wiley &amp; Sons.
+</div>
+<div id="ref-fairman1997cie" class="csl-entry" role="listitem">
+Fairman, Hugh S, Michael H Brill, and Henry Hemmendinger. 1997.
+<span>“How the CIE 1931 Color-Matching Functions Were Derived from
+Wright-Guild Data.”</span> <em>Color Research &amp; Application</em> 22
+(1): 11–23.
+</div>
+<div id="ref-farrell1992diffusion" class="csl-entry" role="listitem">
+Farrell, Thomas J, Michael S Patterson, and Brian Wilson. 1992. <span>“A
+Diffusion Theory Model of Spatially Resolved, Steady-State Diffuse
+Reflectance for the Noninvasive Determination of Tissue Optical
+Properties in Vivo.”</span> <em>Medical Physics</em> 19 (4): 879–88.
+</div>
+<div id="ref-fechner1860elemente" class="csl-entry" role="listitem">
+Fechner, Gustav Theodor. 1860. <em>Elemente Der Psychophysik</em>. Vol.
+2. Breitkopf u. H<span>ä</span>rtel.
+</div>
+<div id="ref-feng2024blisscam" class="csl-entry" role="listitem">
+Feng, Yu, Tianrui Ma, Yuhao Zhu, and Xuan Zhang. 2024. <span>“Blisscam:
+Boosting Eye Tracking Efficiency with Learned in-Sensor Sparse
+Sampling.”</span> In <em>2024 ACM/IEEE 51st Annual International
+Symposium on Computer Architecture (ISCA)</em>, 1262–77. IEEE.
+</div>
+<div id="ref-fesenko1985induction" class="csl-entry" role="listitem">
+Fesenko, Evgeniy E, Stanislav S Kolesnikov, and Arkadiy L Lyubarsky.
+1985. <span>“Induction by Cyclic GMP of Cationic Conductance in Plasma
+Membrane of Retinal Rod Outer Segment.”</span> <em>Nature</em> 313
+(6000): 310–13.
+</div>
+<div id="ref-feynman1985qed" class="csl-entry" role="listitem">
+Feynman, R. 1985. <em>QED: The Strange Theory of Light and Matter by
+Richard Feynman</em>. Princeton University Press.
+</div>
+<div id="ref-field2007spatial" class="csl-entry" role="listitem">
+Field, Greg D, Alexander Sher, Jeffrey L Gauthier, Martin Greschner,
+Jonathon Shlens, Alan M Litke, and EJ Chichilnisky. 2007. <span>“Spatial
+Properties and Functional Organization of Small Bistratified Ganglion
+Cells in Primate Retina.”</span> <em>Journal of Neuroscience</em> 27
+(48): 13261–72.
+</div>
+<div id="ref-flatla2015colourid" class="csl-entry" role="listitem">
+Flatla, David R, Alan R Andrade, Ross D Teviotdale, Dylan L Knowles, and
+Craig Stewart. 2015. <span>“ColourID.”</span> In <em>Proceedings of the
+33rd Annual ACM Conference on Human Factors in Computing Systems</em>.
+ACM.
+</div>
+<div id="ref-fong2017production" class="csl-entry" role="listitem">
+Fong, Julian, Magnus Wrenninge, Christopher Kulla, and Ralf Habel. 2017.
+<span>“Production Volume Rendering: Siggraph 2017 Course.”</span> In
+<em>ACM SIGGRAPH 2017 Courses</em>, 1–97.
+</div>
+<div id="ref-fossum1993active" class="csl-entry" role="listitem">
+Fossum, Eric R. 1993. <span>“Active Pixel Sensors: Are CCDs
+Dinosaurs?”</span> In <em>Charge-Coupled Devices and Solid State Optical
+Sensors III</em>, 1900:2–14. SPIE.
+</div>
+<div id="ref-fossum1997cmos" class="csl-entry" role="listitem">
+———. 1997. <span>“CMOS Image Sensors: Electronic
+Camera-on-a-Chip.”</span> <em>IEEE Transactions on Electron Devices</em>
+44 (10): 1689–98.
+</div>
+<div id="ref-fossum2014review" class="csl-entry" role="listitem">
+Fossum, Eric R, and Donald B Hondongwa. 2014. <span>“A Review of the
+Pinned Photodiode for CCD and CMOS Image Sensors.”</span> <em>IEEE
+Journal of the Electron Devices Society</em>.
+</div>
+<div id="ref-fossum2024digital" class="csl-entry" role="listitem">
+Fossum, Eric R, Nobukazu Teranishi, and Albert JP Theuwissen. 2024.
+<span>“Digital Image Sensor Evolution and New Frontiers.”</span>
+<em>Annual Review of Vision Science</em> 10 (1): 171–98.
+</div>
+<div id="ref-fowler1994cmos" class="csl-entry" role="listitem">
+Fowler, Boyd, Abbas El Gamal, and David XD Yang. 1994. <span>“A CMOS
+Area Image Sensor with Pixel-Level a/d Conversion.”</span> In
+<em>Proceedings of IEEE International Solid-State Circuits
+Conference-ISSCC’94</em>, 226–27. IEEE.
+</div>
+<div id="ref-frisvad2020survey" class="csl-entry" role="listitem">
+Frisvad, Jeppe Revall, Soeren A Jensen, Jonas Skovlund Madsen, António
+Correia, Li Yang, Søren Kimmer Schou Gregersen, Youri Meuret, and P-E
+Hansen. 2020. <span>“Survey of Models for Acquiring the Optical
+Properties of Translucent Materials.”</span> In <em>Computer Graphics
+Forum</em>, 39:729–55. 2. Wiley Online Library.
+</div>
+<div id="ref-fu2010phototransduction" class="csl-entry" role="listitem">
+Fu, Yingbin. 2010. <span>“Phototransduction in Rods and Cones.”</span>
+In <em>WebVision: The Organization of the Retina and Visual System</em>,
+edited by Helga Kolb, Eduardo Fernandez, and Ralph Nelson.
+</div>
+<div id="ref-fuortes1961increment" class="csl-entry" role="listitem">
+Fuortes, MGF, RD Gunkel, and WAH Rushton. 1961. <span>“Increment
+Thresholds in a Subject Deficient in Cone Vision.”</span> <em>The
+Journal of Physiology</em> 156 (1): 179.
+</div>
+<div id="ref-geddes202330" class="csl-entry" role="listitem">
+Geddes, Connor, David R Flatla, and Ciabhan L Connelly. 2023. <span>“30
+Years of Solving the Wrong Problem: How Recolouring Tool Design Fails
+Those with Colour Vision Deficiency.”</span> In <em>Proceedings of the
+25th International ACM SIGACCESS Conference on Computers and
+Accessibility</em>, 1–13.
+</div>
+<div id="ref-gegenfurtner2003cortical" class="csl-entry" role="listitem">
+Gegenfurtner, Karl R. 2003. <span>“Cortical Mechanisms of Colour
+Vision.”</span> <em>Nature Reviews Neuroscience</em> 4 (7): 563–72.
+</div>
+<div id="ref-gilbert2013top" class="csl-entry" role="listitem">
+Gilbert, Charles D, and Wu Li. 2013. <span>“Top-down Influences on
+Visual Processing.”</span> <em>Nature Reviews Neuroscience</em> 14 (5):
+350–63.
+</div>
+<div id="ref-giorgianni2009digital" class="csl-entry" role="listitem">
+Giorgianni, Edward J, and Thomas E Madden. 2009. <em>Digital Color
+Management: Encoding Solutions</em>. Vol. 13. John Wiley &amp; Sons.
+</div>
+<div id="ref-glassner1995principles" class="csl-entry" role="listitem">
+Glassner, Andrew S. 1995. <em>Principles of Digital Image
+Synthesis</em>. Elsevier.
+</div>
+<div id="ref-coma" class="csl-entry" role="listitem">
+Glrx. 2018. <span>“<span class="nocase">Ray diagram illustrating a form
+of coma aberration; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Lens-coma.svg" class="uri">https://commons.wikimedia.org/wiki/File:Lens-coma.svg</a>.
+</div>
+<div id="ref-eelt_rendering" class="csl-entry" role="listitem">
+Gnash. 2017. <span>“<span class="nocase">Rendering of the Extremely
+Large Telescope from 2009; CC BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Latest_Rendering_of_the_E-ELT.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Latest_Rendering_of_the_E-ELT.jpg</a>.
+</div>
+<div id="ref-gogliettino2023high" class="csl-entry" role="listitem">
+Gogliettino, Alex R, Sasidhar S Madugula, Lauren E Grosberg, Ramandeep S
+Vilkhu, Jeff Brown, Huy Nguyen, Alexandra Kling, et al. 2023.
+<span>“High-Fidelity Reproduction of Visual Signals by Electrical
+Stimulation in the Central Primate Retina.”</span> <em>Journal of
+Neuroscience</em> 43 (25): 4625–41.
+</div>
+<div id="ref-goldstein2009sensation" class="csl-entry" role="listitem">
+Goldstein, E. Bruce. 2009. <em>Sensation and Perception</em>. 8th ed.
+Cengage Learning.
+</div>
+<div id="ref-goldstein2009sensation10ed" class="csl-entry" role="listitem">
+Goldstein, E. Bruce, and R. James Brockmole. 2017. <em>Sensation and
+Perception</em>. 10th ed. Cengage Learning.
+</div>
+<div id="ref-gomez2018enchroma" class="csl-entry" role="listitem">
+Gómez-Robledo, Luis, EM Valero, R Huertas, MA Martı́nez-Domingo, and
+Javier Hernández-Andrés. 2018. <span>“Do EnChroma Glasses Improve Color
+Vision for Colorblind Subjects?”</span> <em>Optics Express</em> 26 (22):
+28693–703.
+</div>
+<div id="ref-goodale1991neurological" class="csl-entry" role="listitem">
+Goodale, Melvyn A, A David Milner, Lorna S Jakobson, and David P Carey.
+1991. <span>“A Neurological Dissociation Between Perceiving Objects and
+Grasping Them.”</span> <em>Nature</em> 349 (6305): 154–56.
+</div>
+<div id="ref-gortler1996lumigraph" class="csl-entry" role="listitem">
+Gortler, Steven J, Radek Grzeszczuk, Richard Szeliski, and Michael F
+Cohen. 1996. <span>“The Lumigraph.”</span> In <em>ACM Transactions on
+Graphics (ToG)</em>, 43–54. ACM New York, NY, USA.
+</div>
+<div id="ref-gouras1979enhancement" class="csl-entry" role="listitem">
+Gouras, P, and E Zrenner. 1979. <span>“Enhancement of Luminance Flicker
+by Color-Opponent Mechanisms.”</span> <em>Science</em> 205 (4406):
+587–89.
+</div>
+<div id="ref-graham1958color" class="csl-entry" role="listitem">
+Graham, Clarence Henry, and Yun Hsia. 1958. <span>“Color Defect and
+Color Theory: Studies of Normal and Color-Blind Persons, Including a
+Subject Color-Blind in One Eye but Not in the Other.”</span>
+<em>Science</em> 127 (3300): 675–82.
+</div>
+<div id="ref-granit1941retinal" class="csl-entry" role="listitem">
+Granit, Ragnar. 1941. <span>“The Retinal Mechanism of Color
+Reception.”</span> <em>Journal of the Optical Society of America</em> 31
+(9): 570–80.
+</div>
+<div id="ref-granit1943physiological" class="csl-entry" role="listitem">
+———. 1943. <span>“A Physiological Theory of Colour Perception.”</span>
+<em>Nature</em> 151 (3818): 11–14.
+</div>
+<div id="ref-granit1945colour" class="csl-entry" role="listitem">
+———. 1945a. <span>“The Colour Receptors of the Mammalian Retina.”</span>
+<em>Journal of Neurophysiology</em> 8 (3): 195–210.
+</div>
+<div id="ref-granit1945electrophysiological" class="csl-entry" role="listitem">
+———. 1945b. <span>“The Electrophysiological Analysis of the Fundamental
+Problem of Colour Reception.”</span> <em>Proceedings of the Physical
+Society</em> 57 (6): 447–63.
+</div>
+<div id="ref-green1995optical" class="csl-entry" role="listitem">
+Green, Martin A, and Mark J Keevers. 1995. <span>“Optical Properties of
+Intrinsic Silicon at 300 k.”</span> <em>Progress in Photovoltaics:
+Research and Applications</em> 3 (3): 189–92.
+</div>
+<div id="ref-greene1986creating" class="csl-entry" role="listitem">
+Greene, Ned, and Paul S Heckbert. 1986. <span>“Creating Raster Omnimax
+Images from Multiple Perspective Views Using the Elliptical Weighted
+Average Filter.”</span> <em>IEEE Computer Graphics and Applications</em>
+6 (6): 21–27.
+</div>
+<div id="ref-gross2011point" class="csl-entry" role="listitem">
+Gross, Markus, and Hanspeter Pfister. 2011. <em>Point-Based
+Graphics</em>. Elsevier.
+</div>
+<div id="ref-gruhl2023ultrafast" class="csl-entry" role="listitem">
+Gruhl, Thomas, Tobias Weinert, Matthew J Rodrigues, Christopher J Milne,
+Giorgia Ortolani, Karol Nass, Eriko Nango, et al. 2023. <span>“Ultrafast
+Structural Changes Direct the First Molecular Events of Vision.”</span>
+<em>Nature</em> 615 (7954): 939–44.
+</div>
+<div id="ref-guenter2012foveated" class="csl-entry" role="listitem">
+Guenter, Brian, Mark Finch, Steven Drucker, Desney Tan, and John Snyder.
+2012. <span>“Foveated 3D Graphics.”</span> <em>ACM Transactions on
+Graphics (TOG)</em> 31 (6): 1–10.
+</div>
+<div id="ref-guild1931colorimetric" class="csl-entry" role="listitem">
+Guild, John. 1931. <span>“The Colorimetric Properties of the
+Spectrum.”</span> <em>Philosophical Transactions of the Royal Society of
+London. Series A, Containing Papers of a Mathematical or Physical
+Character</em> 230 (681-693): 149–87.
+</div>
+<div id="ref-ksp_focal_plane" class="csl-entry" role="listitem">
+HandWiki. 2024. <span>“<span class="nocase">Kepler space telescope focal
+plane; CC BY-SA 3.0 license</span>.”</span> <a href="https://handwiki.org/wiki/index.php?curid=2015813" class="uri">https://handwiki.org/wiki/index.php?curid=2015813</a>.
+</div>
+<div id="ref-hansen2009color" class="csl-entry" role="listitem">
+Hansen, Thorsten, Lars Pracejus, and Karl R Gegenfurtner. 2009.
+<span>“Color Perception in the Intermediate Periphery of the Visual
+Field.”</span> <em>Journal of Vision</em> 9 (4): 26–26.
+</div>
+<div id="ref-hartline1938response" class="csl-entry" role="listitem">
+Hartline, H Keffer. 1938. <span>“The Response of Single Optic Nerve
+Fibers of the Vertebrate Eye to Illumination of the Retina.”</span>
+<em>American Journal of Physiology-Legacy Content</em> 121 (2): 400–415.
+</div>
+<div id="ref-hartline1939excitation" class="csl-entry" role="listitem">
+———. 1939. <span>“Excitation and Inhibition of the" Off" Response in
+Vertebrate Optic Nerve Fibers.”</span> <em>Am. J. Physiol</em> 126:527.
+</div>
+<div id="ref-hartline1940effects" class="csl-entry" role="listitem">
+———. 1940a. <span>“The Effects of Spatial Summation in the Retina on the
+Excitation of the Fibers of the Optic Nerve.”</span> <em>American
+Journal of Physiology-Legacy Content</em> 130 (4): 700–711.
+</div>
+<div id="ref-hartline1940receptive" class="csl-entry" role="listitem">
+———. 1940b. <span>“The Receptive Fields of Optic Nerve Fibers.”</span>
+<em>American Journal of Physiology-Legacy Content</em> 130 (4): 690–99.
+</div>
+<div id="ref-hartline1949inhibition" class="csl-entry" role="listitem">
+———. 1949. <span>“Inhibition of Activity of Visual Receptors by
+Illuminating Nearby Retinal Areas in the Limulus Eye.”</span>
+<em>Federation Proceedings</em> 8 (1): 69.
+</div>
+<div id="ref-hartline1932nerve" class="csl-entry" role="listitem">
+Hartline, H Keffer, and Clarence Henry Graham. 1932. <span>“Nerve
+Impulses from Single Receptors in the Eye.”</span> <em>Journal of
+Cellular &amp; Comparative Physiology</em>.
+</div>
+<div id="ref-hartline1956inhibition" class="csl-entry" role="listitem">
+Hartline, H Keffer, Henry G Wagner, and Floyd Ratliff. 1956.
+<span>“Inhibition in the Eye of Limulus.”</span> <em>The Journal of
+General Physiology</em> 39 (5): 651–73.
+</div>
+<div id="ref-haruta20174" class="csl-entry" role="listitem">
+Haruta, Tsutomu, Tsutomu Nakajima, Jun Hashizume, Taku Umebayashi,
+Hiroshi Takahashi, Kazuo Taniguchi, Masami Kuroda, et al. 2017.
+<span>“4.6 a 1/2.3 Inch 20Mpixel 3-Layer Stacked CMOS Image Sensor with
+DRAM.”</span> In <em>2017 IEEE International Solid-State Circuits
+Conference (ISSCC)</em>, 76–77. IEEE.
+</div>
+<div id="ref-hasinoff2016burst" class="csl-entry" role="listitem">
+Hasinoff, Samuel W, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan T
+Barron, Florian Kainz, Jiawen Chen, and Marc Levoy. 2016. <span>“Burst
+Photography for High Dynamic Range and Low-Light Imaging on Mobile
+Cameras.”</span> <em>ACM Transactions on Graphics (ToG)</em> 35 (6):
+1–12.
+</div>
+<div id="ref-hattar2002melanopsin" class="csl-entry" role="listitem">
+Hattar, Samer, H-W Liao, Motoharu Takao, David M Berson, and KW Yau.
+2002. <span>“Melanopsin-Containing Retinal Ganglion Cells: Architecture,
+Projections, and Intrinsic Photosensitivity.”</span> <em>Science</em>
+295 (5557): 1065–70.
+</div>
+<div id="ref-hecht2016optics" class="csl-entry" role="listitem">
+Hecht, Eugene. 2016. <em>Optics</em>. 5th ed. Pearson.
+</div>
+<div id="ref-hecht1937influence" class="csl-entry" role="listitem">
+Hecht, Selig, Charles Haig, and Aurin M Chase. 1937. <span>“The
+Influence of Light Adaptation on Subsequent Dark Adaptation of the
+Eye.”</span> <em>The Journal of General Physiology</em> 20 (6): 831–50.
+</div>
+<div id="ref-hecht1942energy" class="csl-entry" role="listitem">
+Hecht, Selig, Simon Shlaer, and Maurice Henri Pirenne. 1942.
+<span>“Energy, Quanta, and Vision.”</span> <em>The Journal of General
+Physiology</em> 25 (6): 819–40.
+</div>
+<div id="ref-heckbert1989fundamentals" class="csl-entry" role="listitem">
+Heckbert, Paul S. 1989. <span>“Fundamentals of Texture Mapping and Image
+Warping. Master’s Thesis.”</span> <em>University of California,
+Berkeley</em>.
+</div>
+<div id="ref-hegarty2014darkroom" class="csl-entry" role="listitem">
+Hegarty, James, John S Brunhaver, Zachary DeVito, Jonathan Ragan-Kelley,
+Noy Cohen, Steven Bell, Artem Vasilyev, Mark Horowitz, and Pat Hanrahan.
+2014. <span>“Darkroom: Compiling High-Level Image Processing Code into
+Hardware Pipelines.”</span> <em>ACM Trans. Graph.</em> 33 (4): 144–41.
+</div>
+<div id="ref-hering1878lehre" class="csl-entry" role="listitem">
+Hering, Ewald. 1878. <em>Zur Lehre Vom Lichtsinne: Sechs Mittheilungen
+an Die Kaiser. Akad. Der Wissenschaften in Wien</em>. C. Gerold’s Sohn.
+</div>
+<div id="ref-hering1964outlines" class="csl-entry" role="listitem">
+———. 1964. <em>Outlines of a Theory of the Light Sense (Translation by
+Jameson and Hurvish; Originally Published in 1878)</em>. Harvard
+University Press.
+</div>
+<div id="ref-hirata20217" class="csl-entry" role="listitem">
+Hirata, Tomoki, Hironobu Murata, Hideaki Matsuda, Yojiro Tezuka, and
+Shiro Tsunai. 2021. <span>“7.8 a 1-Inch 17Mpixel 1000fps
+Block-Controlled Coded-Exposure Back-Illuminated Stacked CMOS Image
+Sensor for Computational Imaging and Adaptive Dynamic Range
+Control.”</span> In <em>2021 IEEE International Solid-State Circuits
+Conference (ISSCC)</em>, 64:120–22. IEEE.
+</div>
+<div id="ref-hodgkin1952quantitative" class="csl-entry" role="listitem">
+Hodgkin, Alan L, and Andrew F Huxley. 1952. <span>“A Quantitative
+Description of Membrane Current and Its Application to Conduction and
+Excitation in Nerve.”</span> <em>The Journal of Physiology</em> 117 (4):
+500.
+</div>
+<div id="ref-hoffman2008vergence" class="csl-entry" role="listitem">
+Hoffman, David M, Ahna R Girshick, Kurt Akeley, and Martin S Banks.
+2008. <span>“Vergence–Accommodation Conflicts Hinder Visual Performance
+and Cause Visual Fatigue.”</span> <em>Journal of Vision</em> 8 (3):
+33–33.
+</div>
+<div id="ref-hofmann2023rhodopsin" class="csl-entry" role="listitem">
+Hofmann, Klaus Peter, and Trevor D Lamb. 2023. <span>“Rhodopsin,
+Light-Sensor of Vision.”</span> <em>Progress in Retinal and Eye
+Research</em> 93:101116.
+</div>
+<div id="ref-hong2025comprehensive" class="csl-entry" role="listitem">
+Hong, Fangfang, Ruby Bouhassira, Jason Chow, Craig Sanders, Michael
+Shvartsman, Phillip Guan, Alex H Williams, and David H Brainard. 2025.
+<span>“Comprehensive Characterization of Human Color Discrimination
+Thresholds.”</span> <em>bioRxiv</em>, 2025–07.
+</div>
+<div id="ref-hsu202005" class="csl-entry" role="listitem">
+Hsu, Tzu-Hsiang, Yi-Ren Chen, Ren-Shuo Liu, Chung-Chuan Lo, Kea-Tiong
+Tang, Meng-Fan Chang, and Chih-Cheng Hsieh. 2020. <span>“A 0.5-v
+Real-Time Computational CMOS Image Sensor with Programmable Kernel for
+Feature Extraction.”</span> <em>IEEE Journal of Solid-State
+Circuits</em> 56 (5): 1588–96.
+</div>
+<div id="ref-hsu1993modulation" class="csl-entry" role="listitem">
+Hsu, Yi-Te, and Robert S Molday. 1993. <span>“Modulation of the
+cGMP-Gated Channel of Rod Photoreceptor Cells by Calmodulin.”</span>
+<em>Nature</em> 361 (6407): 76–79.
+</div>
+<div id="ref-hu2009modern" class="csl-entry" role="listitem">
+Hu, Chenming. 2009. <em>Modern Semiconductor Devices for Integrated
+Circuits</em>. Prentice Hall.
+</div>
+<div id="ref-huang2020mini" class="csl-entry" role="listitem">
+Huang, Yuge, En-Lin Hsiang, Ming-Yang Deng, and Shin-Tson Wu. 2020.
+<span>“Mini-LED, Micro-LED and OLED Displays: Present Status and Future
+Perspectives.”</span> <em>Light: Science &amp; Applications</em> 9 (1):
+105.
+</div>
+<div id="ref-hubel1995eye" class="csl-entry" role="listitem">
+Hubel, David H. 1995. <em>Eye, Brain, and Vision.</em> Scientific
+American Library/Scientific American Books.
+</div>
+<div id="ref-hubel1959receptive" class="csl-entry" role="listitem">
+Hubel, David H, and Torsten N Wiesel. 1959. <span>“Receptive Fields of
+Single Neurones in the Cat’s Striate Cortex.”</span> <em>J Physiol</em>
+148 (3): 574–91.
+</div>
+<div id="ref-hubel1962receptive" class="csl-entry" role="listitem">
+———. 1962. <span>“Receptive Fields, Binocular Interaction and Functional
+Architecture in the Cat’s Visual Cortex.”</span> <em>The Journal of
+Physiology</em> 160 (1): 106.
+</div>
+<div id="ref-hubel1968receptive" class="csl-entry" role="listitem">
+———. 1968. <span>“Receptive Fields and Functional Architecture of Monkey
+Striate Cortex.”</span> <em>The Journal of Physiology</em> 195 (1):
+215–43.
+</div>
+<div id="ref-huggett2009dual" class="csl-entry" role="listitem">
+Huggett, Anthony, Chris Silsby, Sergi Cami, and Jeff Beck. 2009.
+<span>“A Dual-Conversion-Gain Video Sensor with Dewarping and Overlay on
+a Single Chip.”</span> In <em>2009 IEEE International Solid-State
+Circuits Conference-Digest of Technical Papers</em>, 52–53. IEEE.
+</div>
+<div id="ref-hunt1998molecular" class="csl-entry" role="listitem">
+Hunt, David M, Kanwaljit S Dulai, Jill A Cowing, Catherine Julliot, John
+D Mollon, James K Bowmaker, Wen-Hsiung Li, and David Hewett-Emmett.
+1998. <span>“Molecular Evolution of Trichromacy in Primates.”</span>
+<em>Vision Research</em> 38 (21): 3299–3306.
+</div>
+<div id="ref-hurley1978adjustable" class="csl-entry" role="listitem">
+Hurley, Ann C, G David Lange, and Peter H Hartline. 1978. <span>“The
+Adjustable <span>‘Pinhole Camera’</span> Eye of Nautilus.”</span>
+<em>Journal of Experimental Zoology</em> 205 (1): 37–43.
+</div>
+<div id="ref-hurvich1955some" class="csl-entry" role="listitem">
+Hurvich, Leo M, and Dorothea Jameson. 1955. <span>“Some Quantitative
+Aspects of an Opponent-Colors Theory. II. Brightness, Saturation, and
+Hue in Normal and Dichromatic Vision.”</span> <em>JOSA</em> 45 (8):
+602–16.
+</div>
+<div id="ref-hurvich1957opponent" class="csl-entry" role="listitem">
+———. 1957. <span>“An Opponent-Process Theory of Color Vision.”</span>
+<em>Psychological Review</em> 64 (6p1): 384.
+</div>
+<div id="ref-idrees2024biophysical" class="csl-entry" role="listitem">
+Idrees, Saad, Michael B Manookin, Fred Rieke, Greg D Field, and Joel
+Zylberberg. 2024. <span>“Biophysical Neural Adaptation Mechanisms Enable
+Artificial Neural Networks to Capture Dynamic Retinal
+Computation.”</span> <em>Nature Communications</em> 15 (1): 5957.
+</div>
+<div id="ref-iida20180" class="csl-entry" role="listitem">
+Iida, S, Y Sakano, T Asatsuma, M Takami, I Yoshiba, N Ohba, H Mizuno, et
+al. 2018. <span>“A 0.68 e-Rms Random-Noise 121dB Dynamic-Range Sub-Pixel
+Architecture CMOS Image Sensor with LED Flicker Mitigation.”</span> In
+<em>2018 IEEE International Electron Devices Meeting (IEDM)</em>, 10–12.
+IEEE.
+</div>
+<div id="ref-ikeno20224" class="csl-entry" role="listitem">
+Ikeno, Rimon, Kazuya Mori, Masayuki Uno, Ken Miyauchi, Toshiyuki
+Isozaki, Isao Takayanagi, Junichi Nakamura, et al. 2022. <span>“A
+4.6-<span class="math inline"><em>μ</em></span>m, 127-dB Dynamic Range,
+Ultra-Low Power Stacked Digital Pixel Sensor with Overlapped Triple
+Quantization.”</span> <em>IEEE Transactions on Electron Devices</em> 69
+(6): 2943–50.
+</div>
+<div id="ref-immel1986radiosity" class="csl-entry" role="listitem">
+Immel, David S, Michael F Cohen, and Donald P Greenberg. 1986. <span>“A
+Radiosity Method for Non-Diffuse Environments.”</span> <em>Acm Siggraph
+Computer Graphics</em> 20 (4): 133–42.
+</div>
+<div id="ref-airy_disk_func" class="csl-entry" role="listitem">
+Inductiveload. 2009. <span>“<span class="nocase">Mathematical function
+of an airy disk pattern; released into the public domain by the
+copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Airy_Pattern.svg" class="uri">https://commons.wikimedia.org/wiki/File:Airy_Pattern.svg</a>.
+</div>
+<div id="ref-ingram2016rods" class="csl-entry" role="listitem">
+Ingram, Norianne T, Alapakkam P Sampath, and Gordon L Fain. 2016.
+<span>“Why Are Rods More Sensitive Than Cones?”</span> <em>The Journal
+of Physiology</em> 594 (19): 5415–26.
+</div>
+<div id="ref-iccv2" class="csl-entry" role="listitem">
+International Color Consortium. 2019. <span>“<span class="nocase">Specification ICC.2:2019 (Profile version 5.0.0 -
+iccMAX)</span>.”</span> <a href="https://color.org/specification/ICC.2-2019.pdf" class="uri">https://color.org/specification/ICC.2-2019.pdf</a>.
+</div>
+<div id="ref-irds" class="csl-entry" role="listitem">
+IRDS. 2024. <span>“International Roadmap for Devices and
+Systems.”</span> <a href="https://irds.ieee.org/" class="uri">https://irds.ieee.org/</a>.
+</div>
+<div id="ref-ishimaru1977theory" class="csl-entry" role="listitem">
+Ishimaru, Akira. 1977. <span>“Theory and Application of Wave Propagation
+and Scattering in Random Media.”</span> <em>Proceedings of the IEEE</em>
+65 (7): 1030–61.
+</div>
+<div id="ref-ishimaru1978wave" class="csl-entry" role="listitem">
+Ishimaru, Akira et al. 1978. <em>Wave Propagation and Scattering in
+Random Media</em>. Vol. 2. Academic press New York.
+</div>
+<div id="ref-cone_cell" class="csl-entry" role="listitem">
+Ivo Kruusamägi. 2010. <span>“<span class="nocase">Cone cell anatomy; CC
+BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Cone_cell_en.png" class="uri">https://commons.wikimedia.org/wiki/File:Cone_cell_en.png</a>.
+</div>
+<div id="ref-jacobs2008primate" class="csl-entry" role="listitem">
+Jacobs, Gerald H. 2008. <span>“Primate Color Vision: A Comparative
+Perspective.”</span> <em>Visual Neuroscience</em> 25 (5-6): 619–33.
+</div>
+<div id="ref-jacobs2009evolution" class="csl-entry" role="listitem">
+———. 2009. <span>“Evolution of Colour Vision in Mammals.”</span>
+<em>Philosophical Transactions of the Royal Society B: Biological
+Sciences</em> 364 (1531): 2957–67.
+</div>
+<div id="ref-jameson1955some" class="csl-entry" role="listitem">
+Jameson, Dorothea, and Leo M Hurvich. 1955. <span>“Some Quantitative
+Aspects of an Opponent-Colors Theory. I. Chromatic Responses and
+Spectral Saturation.”</span> <em>JOSA</em> 45 (7): 546–52.
+</div>
+<div id="ref-wann2001practical" class="csl-entry" role="listitem">
+Jensen, Henrik Wann, Stephen R Marschner, Marc Levoy, and Pat Hanrahan.
+2001. <span>“A Practical Model for Subsurface Light Transport.”</span>
+<em>ACM SIGGRAPH Computer Graphics</em>, 511–18.
+</div>
+<div id="ref-jiang2016spectral" class="csl-entry" role="listitem">
+Jiang, Haomiao, Joyce Farrell, and Brian Wandell. 2016. <span>“A
+Spectral Estimation Theory for Color Appearance Matching.”</span>
+<em>Electronic Imaging</em> 28:1–4.
+</div>
+<div id="ref-aop" class="csl-entry" role="listitem">
+Johannes Vermeer. 1668a. <span>“<span class="nocase">The Art of
+Painting; released into the public domain</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Jan_Vermeer_-_The_Art_of_Painting_-_Google_Art_Project.jpg" class="uri">https://en.wikipedia.org/wiki/File:Jan_Vermeer_-_The_Art_of_Painting_-_Google_Art_Project.jpg</a>.
+</div>
+<div id="ref-astronomer" class="csl-entry" role="listitem">
+———. 1668b. <span>“<span class="nocase">The Astronomer; released into
+the public domain</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Johannes_Vermeer_-_The_Astronomer_-_1668.jpg" class="uri">https://en.wikipedia.org/wiki/File:Johannes_Vermeer_-_The_Astronomer_-_1668.jpg</a>.
+</div>
+<div id="ref-johnsen2012optics" class="csl-entry" role="listitem">
+Johnsen, Sönke. 2012. <em>The Optics of Life: A Biologist’s Guide to
+Light in Nature</em>. Princeton University Press.
+</div>
+<div id="ref-johnston2001color" class="csl-entry" role="listitem">
+Johnston-Feller, Ruth. 2001. <em>Color Science in the Examination of
+Museum Objects: Nondestructive Procedures</em>. Getty Publications.
+</div>
+<div id="ref-jones2007rendering" class="csl-entry" role="listitem">
+Jones, Andrew, Ian McDowall, Hideshi Yamada, Mark Bolas, and Paul
+Debevec. 2007. <span>“Rendering for an Interactive 360 Light Field
+Display.”</span> In <em>ACM SIGGRAPH 2007 Papers</em>, 40–es.
+</div>
+<div id="ref-jordan2010dimensionality" class="csl-entry" role="listitem">
+Jordan, Gabriele, Samir S Deeb, Jenny M Bosten, and John D Mollon. 2010.
+<span>“The Dimensionality of Color Vision in Carriers of Anomalous
+Trichromacy.”</span> <em>Journal of Vision</em> 10 (8): 12–12.
+</div>
+<div id="ref-judd1949color" class="csl-entry" role="listitem">
+Judd, Deane B. 1949. <span>“The Color Perceptions of Deuteranopic and
+Protanopic Observers.”</span> <em>JOSA</em> 39 (3): 252–56.
+</div>
+<div id="ref-judd1951report" class="csl-entry" role="listitem">
+———. 1951. <span>“Report of US Secretariat Committee on Colorimetry and
+Artificial Daylight.”</span> <em>CIE Proceedings, 1951</em> 1:11.
+</div>
+<div id="ref-judd1964spectral" class="csl-entry" role="listitem">
+Judd, Deane B, David L MacAdam, Günter Wyszecki, HW Budde, HR Condit, ST
+Henderson, and JL Simonds. 1964. <span>“Spectral Distribution of Typical
+Daylight as a Function of Correlated Color Temperature.”</span>
+<em>Josa</em> 54 (8): 1031–40.
+</div>
+<div id="ref-judd1975color" class="csl-entry" role="listitem">
+Judd, Deane B, and Günter Wyszecki. 1975. <em>Color in Business,
+Science, and Industry</em>. 3rd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-ph_motion_blur" class="csl-entry" role="listitem">
+Jürgen Königs. 2006. <span>“<span class="nocase">Analog pinhole
+photography with multiple exposure; CC BY-SA 4.0 license</span>.”</span>
+<a href="https://commons.wikimedia.org/wiki/File:1)_Fenstertisch_mit_R%C3%BChrger%C3%A4t.jpg" class="uri">https://commons.wikimedia.org/wiki/File:1)_Fenstertisch_mit_R%C3%BChrger%C3%A4t.jpg</a>.
+</div>
+<div id="ref-kajiya1986rendering" class="csl-entry" role="listitem">
+Kajiya, James T. 1986. <span>“The Rendering Equation.”</span> In
+<em>Proceedings of the 13th Annual Conference on Computer Graphics and
+Interactive Techniques</em>, 143–50.
+</div>
+<div id="ref-kajiya1984ray" class="csl-entry" role="listitem">
+Kajiya, James T, and Brian P Von Herzen. 1984. <span>“Ray Tracing Volume
+Densities.”</span> <em>ACM SIGGRAPH Computer Graphics</em> 18 (3):
+165–74.
+</div>
+<div id="ref-kameda2012solid" class="csl-entry" role="listitem">
+Kameda, Shinjiro. 2012. <span>“Solid State Image Pickup Device Having
+Optical Black Pixels with Temperature Characteristics Above and Below
+Temperature Characteristics of Aperture Pixels.”</span> Google Patents.
+</div>
+<div id="ref-karaimer2016software" class="csl-entry" role="listitem">
+Karaimer, Hakki Can, and Michael S Brown. 2016. <span>“A Software
+Platform for Manipulating the Camera Imaging Pipeline.”</span> In
+<em>Computer Vision–ECCV 2016: 14th European Conference, Amsterdam, the
+Netherlands, October 11–14, 2016, Proceedings, Part i 14</em>, 429–44.
+Springer.
+</div>
+<div id="ref-kaufman2003volume" class="csl-entry" role="listitem">
+Kaufman, Arie, and Klaus Mueller. 2003. <span>“Volume Visualization and
+Volume Graphics.”</span> <em>Technical Report; Stony Brook
+University</em>.
+</div>
+<div id="ref-kerbl20233d" class="csl-entry" role="listitem">
+Kerbl, Bernhard, Georgios Kopanas, Thomas Leimkühler, and George
+Drettakis. 2023. <span>“3d Gaussian Splatting for Real-Time Radiance
+Field Rendering.”</span> <em>ACM Trans. Graph.</em> 42 (4): 139–31.
+</div>
+<div id="ref-kim2005200" class="csl-entry" role="listitem">
+Kim, Seong-Jin, Kwang-Hyun Lee, Sang-Wook Han, and Euisik Yoon. 2005.
+<span>“A 200/Spl Times/160 Pixel CMOS Fingerprint Recognition SoC with
+Adaptable Column-Parallel Processors.”</span> In <em>ISSCC. 2005 IEEE
+International Digest of Technical Papers. Solid-State Circuits
+Conference, 2005.</em>, 250–596. IEEE.
+</div>
+<div id="ref-klein2010industrial" class="csl-entry" role="listitem">
+Klein, GA. 2010. <span>“Industrial Color Physics.”</span> Springer
+Science+ Business Media.
+</div>
+<div id="ref-knoblauch1995discrimination" class="csl-entry" role="listitem">
+Knoblauch, Kenneth, and Matthew J McMahon. 1995. <span>“Discrimination
+of Binocular Color Mixtures in Dichromacy: Evaluation of the
+Maxwell–Cornsweet Conjecture.”</span> <em>JOSA A</em> 12 (10): 2219–29.
+</div>
+<div id="ref-kobayashi20171" class="csl-entry" role="listitem">
+Kobayashi, Masahiro, Yusuke Onuki, Kazunari Kawabata, Hiroshi Sekine,
+Toshiki Tsuboi, Takashi Muto, Takeshi Akiyama, et al. 2017. <span>“4.5A
+1.8e-Rms Temporal Noise over 110 dB Dynamic Range <span class="math inline">3.4<em>μ</em>m</span> Pixel Pitch Global-Shutter
+CMOS Image Sensor with Dual-Gain Amplifiers SS-ADC, Light Guide
+Structure, and Multiple-Accumulation Shutter.”</span> <em>IEEE Journal
+of Solid-State Circuits</em> 53 (1): 219–28.
+</div>
+<div id="ref-kolb1995realistic" class="csl-entry" role="listitem">
+Kolb, Craig, Don Mitchell, and Pat Hanrahan. 1995. <span>“A Realistic
+Camera Model for Computer Graphics.”</span> In <em>Proceedings of the
+22nd Annual Conference on Computer Graphics and Interactive
+Techniques</em>, 317–24.
+</div>
+<div id="ref-kolb2005organization" class="csl-entry" role="listitem">
+Kolb, Helga, Eduardo Fernandez, and Ralph Nelson. 2005. <span>“The
+Organization of the Retina and Visual System.”</span> <em>Webvision-the
+Organization of the Retina and Visual System</em>.
+</div>
+<div id="ref-kondo20153d" class="csl-entry" role="listitem">
+Kondo, Toru, Yoshiaki Takemoto, Kenji Kobayashi, Mitsuhiro Tsukimura,
+Naohiro Takazawa, Hideki Kato, Shunsuke Suzuki, et al. 2015. <span>“A 3D
+Stacked CMOS Image Sensor with 16Mpixel Global-Shutter Mode and 2Mpixel
+10000fps Mode Using 4 Million Interconnections.”</span> In <em>2015
+Symposium on VLSI Circuits (VLSI Circuits)</em>, C90–91. IEEE.
+</div>
+<div id="ref-rod_cell" class="csl-entry" role="listitem">
+Kosigrim. 2007. <span>“<span class="nocase">Rod cell anatomy; released
+into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Rod%26Cone.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Rod%26Cone.jpg</a>.
+</div>
+<div id="ref-kozlowski1998comparison" class="csl-entry" role="listitem">
+Kozlowski, Lester J, J Luo, WE Kleinhans, and T Liu. 1998.
+<span>“Comparison of Passive and Active Pixel Schemes for CMOS Visible
+Imagers.”</span> In <em>Infrared Readout Electronics IV</em>,
+3360:101–10. SPIE.
+</div>
+<div id="ref-kraft1993visual" class="csl-entry" role="listitem">
+Kraft, TW, DM Schneeweis, and JL Schnapf. 1993. <span>“Visual
+Transduction in Human Rod Photoreceptors.”</span> <em>The Journal of
+Physiology</em> 464 (1): 747–65.
+</div>
+<div id="ref-krauskopf1992color" class="csl-entry" role="listitem">
+Krauskopf, John, and Gegenfurtner Karl. 1992. <span>“Color
+Discrimination and Adaptation.”</span> <em>Vision Research</em> 32 (11):
+2165–75.
+</div>
+<div id="ref-kries1905ubersicht" class="csl-entry" role="listitem">
+Kries, Johannes von. 1905. <span>“<span>Ü</span>bersicht Der Tatsachen,
+Ergebnisse f<span>ü</span>r Die Theoretische Auffassung Des Sehorgans:
+Zonentheorie.”</span> In <em>Handbuch Der Physiologie Des Menschen,
+Dritter Band: Physiologie Der Sinne</em>, edited by Willibald Nagel, 3rd
+ed., 269--274. Vieweg und Sohn, Braunschweig.
+</div>
+<div id="ref-kropf1982photo" class="csl-entry" role="listitem">
+Kropf, Allen. 1982. <span>“Photosensitivity and Quantum Efficiency of
+Photoisomerization in Rhodopsin and Retinal.”</span> In <em>Methods in
+Enzymology</em>, 81:384–92. Elsevier.
+</div>
+<div id="ref-kubelka1948new" class="csl-entry" role="listitem">
+Kubelka, Paul. 1948. <span>“New Contributions to the Optics of Intensely
+Light-Scattering Materials. Part i.”</span> <em>Josa</em> 38 (5):
+448–57.
+</div>
+<div id="ref-kubelka1931article" class="csl-entry" role="listitem">
+Kubelka, Paul, and Franz Munk. 1931a. <span>“An Article on Optics of
+Paint Layers (Translated by Stephen h. Westin).”</span> <em>Z. Tech.
+Phys</em> 12 (593-601): 259–74.
+</div>
+<div id="ref-kubelka1931beitrag" class="csl-entry" role="listitem">
+———. 1931b. <span>“Ein Beitrag Zur Optik Der Farbanstriche.”</span>
+<em>Z. Tech. Phys</em> 12:593–601.
+</div>
+<div id="ref-kuffler1952neurons" class="csl-entry" role="listitem">
+Kuffler, Stephen W. 1952. <span>“Neurons in the Retina: Organization,
+Inhibition and Excitation Problems.”</span> In <em>Cold Spring Harbor
+Symposia on Quantitative Biology</em>, 17:281–92. Cold Spring Harbor
+Laboratory Press.
+</div>
+<div id="ref-kuffler1953discharge" class="csl-entry" role="listitem">
+———. 1953. <span>“Discharge Patterns and Functional Organization of
+Mammalian Retina.”</span> <em>Journal of Neurophysiology</em> 16 (1):
+37–68.
+</div>
+<div id="ref-kumagai20181" class="csl-entry" role="listitem">
+Kumagai, Oichi, Atsumi Niwa, Katsuhiko Hanzawa, Hidetaka Kato,
+Shinichiro Futami, Toshio Ohyama, Tsutomu Imoto, et al. 2018. <span>“A
+1/4-Inch 3.9 Mpixel Low-Power Event-Driven Back-Illuminated Stacked CMOS
+Image Sensor.”</span> In <em>2018 IEEE International Solid-State
+Circuits Conference-(ISSCC)</em>, 86–88. IEEE.
+</div>
+<div id="ref-kumagai2018back" class="csl-entry" role="listitem">
+Kumagai, Y, R Yoshita, N Osawa, H Ikeda, K Yamashita, T Abe, S Kudo, et
+al. 2018. <span>“Back-Illuminated <span class="math inline">2.74<em>μ</em>m</span>-Pixel-Pitch Global Shutter
+CMOS Image Sensor with Charge-Domain Memory Achieving 10k e-Saturation
+Signal.”</span> In <em>2018 IEEE International Electron Devices Meeting
+(IEDM)</em>, 10–16. IEEE.
+</div>
+<div id="ref-kwon2020low" class="csl-entry" role="listitem">
+Kwon, Minho, Seunghyun Lim, Hyeokjong Lee, Il-Seon Ha, Moo-Young Kim,
+Il-Jin Seo, Suho Lee, et al. 2020. <span>“A Low-Power 65/14nm Stacked
+CMOS Image Sensor.”</span> In <em>2020 IEEE International Symposium on
+Circuits and Systems (ISCAS)</em>, 1–4. IEEE.
+</div>
+<div id="ref-lam2015computational" class="csl-entry" role="listitem">
+Lam, Edmund Y. 2015. <span>“Computational Photography with Plenoptic
+Camera and Light Field Capture: Tutorial.”</span> <em>Journal of the
+Optical Society of America A</em> 32 (11): 2021–32.
+</div>
+<div id="ref-lamb1980spontaneous" class="csl-entry" role="listitem">
+Lamb, TD. 1980. <span>“Spontaneous Quantal Events Induced in Toad Rods
+by Pigment Bleaching.”</span> <em>Nature</em> 287 (5780): 349–51.
+</div>
+<div id="ref-lamb1981spatial" class="csl-entry" role="listitem">
+Lamb, TD, PA McNaughton, and K-W Yau. 1981. <span>“Spatial Spread of
+Activation and Background Desensitization in Toad Rod Outer
+Segments.”</span> <em>The Journal of Physiology</em> 319 (1): 463–96.
+</div>
+<div id="ref-lamb2004dark" class="csl-entry" role="listitem">
+Lamb, TD, and Edward N Pugh Jr. 2004. <span>“Dark Adaptation and the
+Retinoid Cycle of Vision.”</span> <em>Progress in Retinal and Eye
+Research</em> 23 (3): 307–80.
+</div>
+<div id="ref-lamb2013evolution" class="csl-entry" role="listitem">
+Lamb, Trevor D. 2013. <span>“Evolution of Phototransduction, Vertebrate
+Photoreceptors and Retina.”</span> <em>Progress in Retinal and Eye
+Research</em> 36:52–119.
+</div>
+<div id="ref-lamb2016rods" class="csl-entry" role="listitem">
+———. 2016. <span>“Why Rods and Cones?”</span> <em>Eye</em> 30 (2):
+179–85.
+</div>
+<div id="ref-lamb2020evolution" class="csl-entry" role="listitem">
+———. 2020. <span>“Evolution of the Genes Mediating Phototransduction in
+Rod and Cone Photoreceptors.”</span> <em>Progress in Retinal and Eye
+Research</em> 76:100823.
+</div>
+<div id="ref-lamb2022photoreceptor" class="csl-entry" role="listitem">
+———. 2022. <span>“Photoreceptor Physiology and Evolution: Cellular and
+Molecular Basis of Rod and Cone Phototransduction.”</span> <em>The
+Journal of Physiology</em> 600 (21): 4585–4601.
+</div>
+<div id="ref-lamb2007evolution" class="csl-entry" role="listitem">
+Lamb, Trevor D, Shaun P Collin, and Edward N Pugh. 2007.
+<span>“Evolution of the Vertebrate Eye: Opsins, Photoreceptors, Retina
+and Eye Cup.”</span> <em>Nature Reviews Neuroscience</em> 8 (12):
+960–76.
+</div>
+<div id="ref-lamb2006phototransduction" class="csl-entry" role="listitem">
+Lamb, Trevor D, and Edward N Pugh. 2006. <span>“Phototransduction, Dark
+Adaptation, and Rhodopsin Regeneration: The Proctor Lecture.”</span>
+<em>Investigative Ophthalmology &amp; Visual Science</em> 47 (12):
+5138–52.
+</div>
+<div id="ref-lambert1760photometria" class="csl-entry" role="listitem">
+Lambert, Jean-Henri. 1760. <em>Photometria Sive de Mensura Et Gradibus
+Luminis, Colorum Et Umbrae</em>. Sumptibus viduae Eberhardi Klett, typis
+Christophori Petri Detleffsen.
+</div>
+<div id="ref-lanevski2022gonioreflectometer" class="csl-entry" role="listitem">
+Lanevski, Dmitri, Farshid Manoocheri, and Erkki Ikonen. 2022.
+<span>“Gonioreflectometer for Measuring 3D Spectral BRDF of Horizontally
+Aligned Samples with Traceability to SI.”</span> <em>Metrologia</em> 59
+(2): 025006.
+</div>
+<div id="ref-lanman2013near" class="csl-entry" role="listitem">
+Lanman, Douglas, and David Luebke. 2013. <span>“Near-Eye Light Field
+Displays.”</span> <em>ACM Transactions on Graphics (TOG)</em> 32 (6):
+1–10.
+</div>
+<div id="ref-larimer1974opponent" class="csl-entry" role="listitem">
+Larimer, James, Carol M Cicerone, et al. 1974. <span>“Opponent-Process
+Additivity-i: Red/Green Equilibria.”</span> <em>Vision Research</em> 14
+(11): 1127–40.
+</div>
+<div id="ref-larimer1975opponent" class="csl-entry" role="listitem">
+Larimer, James, David H Krantz, and Carol M Cicerone. 1975.
+<span>“Opponent Process Additivity—II. Yellow/Blue Equilibria and
+Nonlinear Models.”</span> <em>Vision Research</em> 15 (6): 723–31.
+</div>
+<div id="ref-lavalle2023virtual" class="csl-entry" role="listitem">
+LaValle, Steven M. 2023. <em>Virtual Reality</em>. Cambridge university
+press.
+</div>
+<div id="ref-lazzerini2017mood" class="csl-entry" role="listitem">
+Lazzerini Ospri, Lorenzo, Glen Prusky, and Samer Hattar. 2017.
+<span>“Mood, the Circadian System, and Melanopsin Retinal Ganglion
+Cells.”</span> <em>Annual Review of Neuroscience</em> 40 (1): 539–56.
+</div>
+<div id="ref-lee2008evolution" class="csl-entry" role="listitem">
+Lee, Barry B. 2008. <span>“The Evolution of Concepts of Color
+Vision.”</span> <em>Neurociencias</em> 4 (4): 209.
+</div>
+<div id="ref-lee1988physiological" class="csl-entry" role="listitem">
+Lee, BB, PR Martin, and A Valberg. 1988. <span>“The Physiological Basis
+of Heterochromatic Flicker Photometry Demonstrated in the Ganglion Cells
+of the Macaque Retina.”</span> <em>The Journal of Physiology</em> 404
+(1): 323–47.
+</div>
+<div id="ref-leek2001adaptive" class="csl-entry" role="listitem">
+Leek, Marjorie R. 2001. <span>“Adaptive Procedures in Psychophysical
+Research.”</span> <em>Perception &amp; Psychophysics</em> 63 (8):
+1279–92.
+</div>
+<div id="ref-lennie1993luminance" class="csl-entry" role="listitem">
+Lennie, Peter, Joel Pokorny, and Vivianne C Smith. 1993.
+<span>“Luminance.”</span> <em>JOSA A</em> 10 (6): 1283–93.
+</div>
+<div id="ref-levoy1988display" class="csl-entry" role="listitem">
+Levoy, Marc. 1988. <span>“Display of Surfaces from Volume Data.”</span>
+<em>IEEE Computer Graphics and Applications</em> 8 (3): 29–37.
+</div>
+<div id="ref-levoy1996light" class="csl-entry" role="listitem">
+Levoy, Marc, and Pat Hanrahan. 1996. <span>“Light Field
+Rendering.”</span> In <em>ACM Transactions on Graphics (ToG)</em>,
+31–42. ACM New York, NY, USA.
+</div>
+<div id="ref-levoy1985use" class="csl-entry" role="listitem">
+Levoy, Marc, and Turner Whitted. 1985. <span>“The Use of Points as a
+Display Primitive.”</span> <em>Technical Report; University of North
+Carolina at Chapel Hill</em>.
+</div>
+<div id="ref-li2003ink" class="csl-entry" role="listitem">
+Li, Yang. 2003. <span>“Ink-Paper Interaction-a Study in Ink-Jet Color
+Reproduction.”</span> <em>Institute of
+Technology-Link<span>ö</span>pings University. Norrk<span>ö</span>ping,
+Sweden: UniTryck</em>.
+</div>
+<div id="ref-liao2022bioinspired" class="csl-entry" role="listitem">
+Liao, Fuyou, Zheng Zhou, Beom Jin Kim, Jiewei Chen, Jingli Wang,
+Tianqing Wan, Yue Zhou, et al. 2022. <span>“Bioinspired in-Sensor Visual
+Adaptation for Accurate Perception.”</span> <em>Nature Electronics</em>
+5 (2): 84–91.
+</div>
+<div id="ref-lippmann1908epreuves" class="csl-entry" role="listitem">
+Lippmann, Gabriel. 1908. <span>“Epreuves Reversibles Donnant La
+Sensation Du Relief.”</span> <em>J. Phys. Theor. Appl.</em> 7 (1):
+821–25.
+</div>
+<div id="ref-liu20204" class="csl-entry" role="listitem">
+Liu, Chiao, Lyle Bainbridge, Andrew Berkovich, Song Chen, Wei Gao,
+Tsung-Hsun Tsai, Kazuya Mori, et al. 2020. <span>“A 4.6 <span class="math inline"><em>μ</em></span>m, 512<span class="math inline">×</span> 512, Ultra-Low Power Stacked Digital Pixel
+Sensor with Triple Quantization and 127dB Dynamic Range.”</span> In
+<em>2020 IEEE International Electron Devices Meeting (IEDM)</em>, 16–11.
+IEEE.
+</div>
+<div id="ref-liu2019intelligent" class="csl-entry" role="listitem">
+Liu, Chiao, Andrew Berkovich, Song Chen, Hans Reyserhove, Syed Shakib
+Sarwar, and Tsung-Hsun Tsai. 2019. <span>“Intelligent Vision
+Systems–Bringing Human-Machine Interface to AR/VR.”</span> In <em>2019
+IEEE International Electron Devices Meeting (IEDM)</em>, 10–15. IEEE.
+</div>
+<div id="ref-liu2022augmented" class="csl-entry" role="listitem">
+Liu, Chiao, Song Chen, Tsung-Hsun Tsai, Barbara De Salvo, and Jorge
+Gomez. 2022. <span>“Augmented Reality-the Next Frontier of Image Sensors
+and Compute Systems.”</span> In <em>2022 IEEE International Solid-State
+Circuits Conference (ISSCC)</em>, 65:426–28. IEEE.
+</div>
+<div id="ref-ma2024efficient" class="csl-entry" role="listitem">
+Ma, Tianrui. 2024. <span>“Efficient Data-Driven Machine Vision: A
+Co-Design of Circuit, Algorithm, and Architecture for Edge Vision
+Sensors.”</span> PhD thesis, Washington University in St. Louis.
+</div>
+<div id="ref-ma2023camj" class="csl-entry" role="listitem">
+Ma, Tianrui, Yu Feng, Xuan Zhang, and Yuhao Zhu. 2023. <span>“Camj:
+Enabling System-Level Energy Modeling and Architectural Exploration for
+in-Sensor Visual Computing.”</span> In <em>Proceedings of the 50th
+Annual International Symposium on Computer Architecture</em>, 1–14.
+</div>
+<div id="ref-macadam1942visual" class="csl-entry" role="listitem">
+MacAdam, David L. 1942. <span>“Visual Sensitivities to Color Differences
+in Daylight.”</span> <em>Josa</em> 32 (5): 247–74.
+</div>
+<div id="ref-macadam1943specification" class="csl-entry" role="listitem">
+———. 1943. <span>“Specification of Small Chromaticity
+Differences.”</span> <em>Josa</em> 33 (1): 18–26.
+</div>
+<div id="ref-macleod1976red" class="csl-entry" role="listitem">
+MacLeod, Donald IA, and Peter Lennie. 1976. <span>“Red-Green Blindness
+Confined to One Eye.”</span> <em>Vision Research</em> 16 (7): 691–702.
+</div>
+<div id="ref-mantiuk2022stelacsf" class="csl-entry" role="listitem">
+Mantiuk, Rafał K, Maliha Ashraf, and Alexandre Chapiro. 2022.
+<span>“stelaCSF: A Unified Model of Contrast Sensitivity as the Function
+of Spatio-Temporal Frequency, Eccentricity, Luminance and Area.”</span>
+<em>ACM Transactions on Graphics (TOG)</em> 41 (4): 1–16.
+</div>
+<div id="ref-mantiuk2015high" class="csl-entry" role="listitem">
+Mantiuk, Rafał, Grzegorz Krawczyk, Dorota Zdrojewska, Radosław Mantiuk,
+Karol Myszkowski, and Hans-Peter Seidel. 2015. <span>“High Dynamic Range
+Imaging.”</span> In <em>Wiley Encyclopedia of Electrical and Electronics
+Engineering</em>. Wiley.
+</div>
+<div id="ref-cie1931rgbcmf" class="csl-entry" role="listitem">
+Marco Polo. 2007. <span>“<span class="nocase">CIE1931 RGB CMF; released
+into the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE1931_RGBCMF.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931_RGBCMF.svg</a>.
+</div>
+<div id="ref-marks1964visual" class="csl-entry" role="listitem">
+Marks, WB, William H Dobelle, and Edward F MacNichol Jr. 1964.
+<span>“Visual Pigments of Single Primate Cones.”</span> <em>Science</em>
+143 (3611): 1181–83.
+</div>
+<div id="ref-marschner2000image" class="csl-entry" role="listitem">
+Marschner, Stephen R, Stephen H Westin, Eric PF Lafortune, and Kenneth E
+Torrance. 2000. <span>“Image-Based Bidirectional Reflectance
+Distribution Function Measurement.”</span> <em>Applied Optics</em> 39
+(16): 2592–2600.
+</div>
+<div id="ref-ctscanmouse" class="csl-entry" role="listitem">
+MathiasRav. 2009. <span>“<span class="nocase">Volume rendering of a
+mouse skull (CT) using shear warp algorithm; CC BY-SA 3.0
+license</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:VolRenderShearWarp.gif" class="uri">https://en.wikipedia.org/wiki/File:VolRenderShearWarp.gif</a>.
+</div>
+<div id="ref-matthews1988photoreceptor" class="csl-entry" role="listitem">
+Matthews, HR, RLW Murphy, GL Fain, and TD Lamb. 1988.
+<span>“Photoreceptor Light Adaptation Is Mediated by Cytoplasmic Calcium
+Concentration.”</span> <em>Nature</em> 334 (6177): 67–69.
+</div>
+<div id="ref-matusik2003data" class="csl-entry" role="listitem">
+Matusik, Wojciech. 2003. <span>“A Data-Driven Reflectance Model.”</span>
+PhD thesis, Massachusetts Institute of Technology.
+</div>
+<div id="ref-max1995optical" class="csl-entry" role="listitem">
+Max, Nelson. 1995. <span>“Optical Models for Direct Volume
+Rendering.”</span> <em>IEEE Transactions on Visualization and Computer
+Graphics</em> 1 (2): 99–108.
+</div>
+<div id="ref-maxwell1857xviii" class="csl-entry" role="listitem">
+Maxwell, James Clerk. 1857. <span>“XVIII.—Experiments on Colour, as
+Perceived by the Eye, with Remarks on Colour-Blindness.”</span>
+<em>Earth and Environmental Science Transactions of the Royal Society of
+Edinburgh</em> 21 (2): 275–98.
+</div>
+<div id="ref-mayerhofer2020bouguer" class="csl-entry" role="listitem">
+Mayerhöfer, Thomas G, Susanne Pahlow, and Jürgen Popp. 2020. <span>“The
+Bouguer-Beer-Lambert Law: Shining Light on the Obscure.”</span>
+<em>ChemPhysChem</em> 21 (18): 2029–46.
+</div>
+<div id="ref-psf_ex" class="csl-entry" role="listitem">
+Mdf. 2005. <span>“<span class="nocase">A simulation of spherical
+aberration in an optical system with a circular, unobstructed aperture
+admitting a monochromatic point source; released into the public domain
+by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Spherical-aberration-disk.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Spherical-aberration-disk.jpg</a>.
+</div>
+<div id="ref-psf_conv" class="csl-entry" role="listitem">
+———. 2006. <span>“<span class="nocase">Imaging as a convolution against
+the PSF; released into the public domain by the copyright
+holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Convolution_Illustrated_eng.png" class="uri">https://commons.wikimedia.org/wiki/File:Convolution_Illustrated_eng.png</a>.
+</div>
+<div id="ref-melbourne2004radio" class="csl-entry" role="listitem">
+Melbourne, William G. 2004. <em>Radio Occultations Using Earth
+Satellites: A Wave Theory Treatment</em>. 1st ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-cut_off_filter" class="csl-entry" role="listitem">
+Melentijevic. 2015. <span>“<span>DSLR Internal Cut Filter / Lowpass
+Filter / Hot Mirror Transmission Curves</span>.”</span> <a href="https://kolarivision.com/articles/internal-cut-filter-transmission/" class="uri">https://kolarivision.com/articles/internal-cut-filter-transmission/</a>.
+</div>
+<div id="ref-meyer1988color" class="csl-entry" role="listitem">
+Meyer, Gary W, and Donald P Greenberg. 1988. <span>“Color-Defective
+Vision and Computer Graphics Displays.”</span> <em>IEEE Computer
+Graphics and Applications</em> 8 (5): 28–40.
+</div>
+<div id="ref-spherical_aberration" class="csl-entry" role="listitem">
+Mglg. 2008. <span>“<span class="nocase">Conceptual ray diagrams of
+spherically aberrated lenses; released into the public domain by the
+copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Spherical_aberration_2.svg" class="uri">https://commons.wikimedia.org/wiki/File:Spherical_aberration_2.svg</a>.
+</div>
+<div id="ref-ast" class="csl-entry" role="listitem">
+Michael Schmid. 2008. <span>“<span class="nocase">Graphic illustratic
+the astigmatism phenomenon; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Meridional%2BSaggittalEbene_1.svg" class="uri">https://commons.wikimedia.org/wiki/File:Meridional%2BSaggittalEbene_1.svg</a>.
+</div>
+<div id="ref-mildenhall2021nerf" class="csl-entry" role="listitem">
+Mildenhall, Ben, Pratul P Srinivasan, Matthew Tancik, Jonathan T Barron,
+Ravi Ramamoorthi, and Ren Ng. 2021. <span>“Nerf: Representing Scenes as
+Neural Radiance Fields for View Synthesis.”</span> <em>Communications of
+the ACM</em> 65 (1): 99–106.
+</div>
+<div id="ref-milic2015enhancement" class="csl-entry" role="listitem">
+Milić, Neda, Dragoljub Novaković, and Branko Milosavljević. 2015.
+<span>“Enhancement of Image Content for Observers with Colour Vision
+Deficiencies.”</span> <em>Color Image and Video Enhancement</em>,
+315–43.
+</div>
+<div id="ref-miller2019color" class="csl-entry" role="listitem">
+Miller, Michael E. 2019. <em>Color in Electronic Display Systems</em>.
+Springer.
+</div>
+<div id="ref-mills1992reflections" class="csl-entry" role="listitem">
+Mills, Allan A, and R Clift. 1992. <span>“Reflections of the’burning
+Mirrors of Archimedes’. With a Consideration of the Geometry and
+Intensity of Sunlight Reflected from Plane Mirrors.”</span> <em>European
+Journal of Physics</em> 13 (6): 268.
+</div>
+<div id="ref-milo2015cell" class="csl-entry" role="listitem">
+Milo, Ron, and Rob Phillips. 2015. <em>Cell Biology by the Numbers</em>.
+Garland Science.
+</div>
+<div id="ref-mishkin1983object" class="csl-entry" role="listitem">
+Mishkin, Mortimer, Leslie G Ungerleider, and Kathleen A Macko. 1983.
+<span>“Object Vision and Spatial Vision: Two Cortical Pathways.”</span>
+<em>Trends in Neurosciences</em> 6:414–17.
+</div>
+<div id="ref-miyauchi2020stacked" class="csl-entry" role="listitem">
+Miyauchi, Ken, Kazuya Mori, Toshinori Otaka, Toshiyuki Isozaki, Naoto
+Yasuda, Alex Tsai, Yusuke Sawai, Hideki Owada, Isao Takayanagi, and
+Junichi Nakamura. 2020. <span>“A Stacked Back Side-Illuminated Voltage
+Domain Global Shutter CMOS Image Sensor with a 4.0 <span class="math inline"><em>μ</em></span>m Multiple Gain Readout
+Pixel.”</span> <em>Sensors</em> 20 (2): 486.
+</div>
+<div id="ref-mollon1982colour" class="csl-entry" role="listitem">
+Mollon, John D. 1982. <span>“Colour Vision and Colour Blindness.”</span>
+In <em>The Senses</em>, edited by Horace B Barlow and John D Mollon,
+165–91. Cambridge University Press.
+</div>
+<div id="ref-mollon2003introduction" class="csl-entry" role="listitem">
+———. 2003. <span>“Introduction: Thomas Young and the Trichromatic Theory
+of Colour Vision.”</span> In <em>Normal &amp; Defective Colour
+Vision</em>, edited by John D Mollon, Joel Pokorny, and Ken Knoblauch,
+19--34. Oxford University Press.
+</div>
+<div id="ref-morovivc2008color" class="csl-entry" role="listitem">
+Morovič, Ján. 2008. <em>Color Gamut Mapping</em>. 2nd ed. John Wiley
+&amp; Sons.
+</div>
+<div id="ref-morshedian2015single" class="csl-entry" role="listitem">
+Morshedian, Ala, and Gordon L Fain. 2015. <span>“Single-Photon
+Sensitivity of Lamprey Rods with Cone-Like Outer Segments.”</span>
+<em>Current Biology</em> 25 (4): 484–87.
+</div>
+<div id="ref-murakami20224" class="csl-entry" role="listitem">
+Murakami, Hirotaka, Eric Bohannon, John Childs, Grace Gui, Eric Moule,
+Katsuhiko Hanzawa, Tomofumi Koda, et al. 2022. <span>“A 4.9 Mpixel
+Programmable-Resolution Multi-Purpose CMOS Image Sensor for Computer
+Vision.”</span> In <em>2022 IEEE International Solid-State Circuits
+Conference (ISSCC)</em>, 65:104–6. IEEE.
+</div>
+<div id="ref-muratore2020artificial" class="csl-entry" role="listitem">
+Muratore, Dante G, and EJ Chichilnisky. 2020. <span>“Artificial Retina:
+A Future Cellular-Resolution Brain-Machine Interface.”</span> In
+<em>NANO-CHIPS 2030: On-Chip AI for an Efficient Data-Driven World</em>,
+443–65. Springer.
+</div>
+<div id="ref-adc_survey" class="csl-entry" role="listitem">
+Murmann, Boris. 2014. <span>“<span>ADC Performance Survey
+1997-2024</span>.”</span> <a href="https://github.com/bmurmann/ADC-survey" class="uri">https://github.com/bmurmann/ADC-survey</a>.
+</div>
+<div id="ref-csinxy" class="csl-entry" role="listitem">
+Myndex. 2022. <span>“<span class="nocase">A comparison of RGB gamuts of
+sRGB, P3, Rec2020, etc. using the CIE1931 chromaticity diagram; CC BY-SA
+4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg" class="uri">https://commons.wikimedia.org/wiki/File:CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg</a>.
+</div>
+<div id="ref-naka1966s" class="csl-entry" role="listitem">
+Naka, KI, and William AH Rushton. 1966. <span>“S-Potentials from Colour
+Units in the Retina of Fish (Cyprinidae).”</span> <em>The Journal of
+Physiology</em> 185 (3): 536–55.
+</div>
+<div id="ref-nakamura2006image" class="csl-entry" role="listitem">
+Nakamura, Junichi. 2006. <em>Image Sensors and Signal Processing for
+Digital Still Cameras</em>. CRC press.
+</div>
+<div id="ref-nakatani1988calcium" class="csl-entry" role="listitem">
+Nakatani, K, and KW Yau. 1988. <span>“Calcium and Light Adaptation in
+Retinal Rods and Cones.”</span> <em>Nature</em> 334 (6177): 69–71.
+</div>
+<div id="ref-nassi2009parallel" class="csl-entry" role="listitem">
+Nassi, Jonathan J, and Edward M Callaway. 2009. <span>“Parallel
+Processing Strategies of the Primate Visual System.”</span> <em>Nature
+Reviews Neuroscience</em> 10 (5): 360–72.
+</div>
+<div id="ref-nathans1992rhodopsin" class="csl-entry" role="listitem">
+Nathans, Jeremy. 1992. <span>“Rhodopsin: Structure, Function, and
+Genetics.”</span> <em>Biochemistry</em> 31 (21): 4923–31.
+</div>
+<div id="ref-nathans1986molecular" class="csl-entry" role="listitem">
+Nathans, Jeremy, Darcy Thomas, and David S Hogness. 1986.
+<span>“Molecular Genetics of Human Color Vision: The Genes Encoding
+Blue, Green, and Red Pigments.”</span> <em>Science</em> 232 (4747):
+193–202.
+</div>
+<div id="ref-newton1952opticks" class="csl-entry" role="listitem">
+Newton, Isaac. 1704. <em>Opticks, or, a Treatise of the Reflections,
+Refractions, Inflections &amp; Colours of Light</em>. London: Smith;
+Walford.
+</div>
+<div id="ref-ng2006digital" class="csl-entry" role="listitem">
+Ng, Ren. 2006. <span>“Digital Light Field Photography.”</span> PhD
+thesis, Stanford University.
+</div>
+<div id="ref-nicodemus1977geometrical" class="csl-entry" role="listitem">
+Nicodemus, FE, JC Richmond, JJ Hsia, IW Ginsberg, and T Limperis. 1977.
+<em>Geometrical Considerations and Nomenclature for Reflectance</em>.
+Vol. 160. US Department of Commerce, National Bureau of Standards
+Washington, DC, USA.
+</div>
+<div id="ref-nikonov2000role" class="csl-entry" role="listitem">
+Nikonov, S, TD Lamb, and EN Pugh Jr. 2000. <span>“The Role of Steady
+Phosphodiesterase Activity in the Kinetics and Sensitivity of the
+Light-Adapted Salamander Rod Photoresponse.”</span> <em>The Journal of
+General Physiology</em> 116 (6): 795.
+</div>
+<div id="ref-nitta2006high" class="csl-entry" role="listitem">
+Nitta, Yoshikazu, Yoshinori Muramatsu, Kiyotaka Amano, Takayuki Toyama,
+K Mishina, Atsushi Suzuki, Tadayuki Taura, et al. 2006.
+<span>“High-Speed Digital Double Sampling with Analog CDS on Column
+Parallel ADC Architecture for Low-Noise Active Pixel Sensor.”</span> In
+<em>2006 IEEE International Solid State Circuits Conference-Digest of
+Technical Papers</em>, 2024–31. IEEE.
+</div>
+<div id="ref-noble1968self" class="csl-entry" role="listitem">
+Noble, Peter JW. 1968. <span>“Self-Scanned Silicon Image Detector
+Arrays.”</span> <em>IEEE Transactions on Electron Devices</em> 15 (4):
+202–9.
+</div>
+<div id="ref-normann1979effects" class="csl-entry" role="listitem">
+Normann, Richard A, and I Perlman. 1979. <span>“The Effects of
+Background Illumination on the Photoresponses of Red and Green
+Cones.”</span> <em>The Journal of Physiology</em> 286 (1): 491–507.
+</div>
+<div id="ref-norren1974spectral" class="csl-entry" role="listitem">
+Norren, Dirk V, and Johannes J Vos. 1974. <span>“Spectral Transmission
+of the Human Ocular Media.”</span> <em>Vision Research</em> 14 (11):
+1237–44.
+</div>
+<div id="ref-novak2018monte" class="csl-entry" role="listitem">
+Novák, Jan, Iliyan Georgiev, Johannes Hanika, Jaroslav Křivánek, and
+Wojciech Jarosz. 2018. <span>“<span>Monte</span> <span>Carlo</span>
+Methods for Physically Based Volume Rendering.”</span> In <em>ACM
+SIGGRAPH 2018 Courses</em>.
+</div>
+<div id="ref-colourpython" class="csl-entry" role="listitem">
+NumFOCUS. n.d. <span>“<span class="nocase">Colour: open-source Python
+package for colour science</span>.”</span> <a href="https://github.com/colour-science/colour" class="uri">https://github.com/colour-science/colour</a>.
+</div>
+<div id="ref-o2002attention" class="csl-entry" role="listitem">
+O’Connor, Daniel H, Miki M Fukui, Mark A Pinsk, and Sabine Kastner.
+2002. <span>“Attention Modulates Responses in the Human Lateral
+Geniculate Nucleus.”</span> <em>Nature Neuroscience</em> 5 (11): 1203–9.
+</div>
+<div id="ref-ohta2020smart" class="csl-entry" role="listitem">
+Ohta, Jun. 2020. <em>Smart CMOS Image Sensors and Applications</em>. CRC
+press.
+</div>
+<div id="ref-okano1992primary" class="csl-entry" role="listitem">
+Okano, Toshiyuki, DAISUKE KoJIMA, Yoshitaka Fukada, Yoshinori Shichida,
+and Toru Yoshizawa. 1992. <span>“Primary Structures of Chicken Cone
+Visual Pigments: Vertebrate Rhodopsins Have Evolved Out of Cone Visual
+Pigments.”</span> <em>Proceedings of the National Academy of
+Sciences</em> 89 (13): 5932–36.
+</div>
+<div id="ref-okano1994pinopsin" class="csl-entry" role="listitem">
+Okano, Toshiyuki, Toru Yoshizawa, and Yoshitaka Fukada. 1994.
+<span>“Pinopsin Is a Chicken Pineal Photoreceptive Molecule.”</span>
+<em>Nature</em> 372 (6501): 94–97.
+</div>
+<div id="ref-focal_plane_shutter" class="csl-entry" role="listitem">
+Ommnomnomgulp. 2008. <span>“<span class="nocase">A focal plane shutter
+firing at 1/500 of a second with the <span>‘gap’</span> clearly visible.
+This shutter is on a Nikon film SLR. CC BY-SA 3.0
+license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:1_500_Sec_Focal_P_Shut.jpg" class="uri">https://commons.wikimedia.org/wiki/File:1_500_Sec_Focal_P_Shut.jpg</a>.
+</div>
+<div id="ref-onishi2002variations" class="csl-entry" role="listitem">
+Onishi, Akishi, Satoshi Koike, Miki Ida-Hosonuma, Hiroo Imai, Yoshinori
+Shichida, Osamu Takenaka, Akitoshi Hanazawa, et al. 2002.
+<span>“Variations in Long-and Middle-Wavelength-Sensitive Opsin Gene
+Loci in Crab-Eating Monkeys.”</span> <em>Vision Research</em> 42 (3):
+281–92.
+</div>
+<div id="ref-oren1995generalization" class="csl-entry" role="listitem">
+Oren, Michael, and Shree K Nayar. 1995. <span>“Generalization of the
+Lambertian Model and Implications for Machine Vision.”</span>
+<em>International Journal of Computer Vision</em> 14:227–51.
+</div>
+<div id="ref-plankianlocus" class="csl-entry" role="listitem">
+PAR. 2012. <span>“<span class="nocase">Plankian locus; released into the
+public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:PlanckianLocus.png" class="uri">https://commons.wikimedia.org/wiki/File:PlanckianLocus.png</a>.
+</div>
+<div id="ref-patney2016towards" class="csl-entry" role="listitem">
+Patney, Anjul, Marco Salvi, Joohwan Kim, Anton Kaplanyan, Chris Wyman,
+Nir Benty, David Luebke, and Aaron Lefohn. 2016. <span>“Towards Foveated
+Rendering for Gaze-Tracked Virtual Reality.”</span> <em>ACM Transactions
+on Graphics (TOG)</em> 35 (6): 1–12.
+</div>
+<div id="ref-patterson2022effects" class="csl-entry" role="listitem">
+Patterson, EJ, RR Mastey, JA Kuchenbecker, Jessica Rowlan, Jay Neitz,
+Maureen Neitz, and Joseph Carroll. 2022. <span>“Effects of
+Color-Enhancing Glasses on Color Vision in Congenital Red-Green Color
+Deficiencies.”</span> <em>Optics Express</em> 30 (17): 31182–94.
+</div>
+<div id="ref-pfister2000surfels" class="csl-entry" role="listitem">
+Pfister, Hanspeter, Matthias Zwicker, Jeroen Van Baar, and Markus Gross.
+2000. <span>“Surfels: Surface Elements as Rendering Primitives.”</span>
+In <em>Proceedings of the 27th Annual Conference on Computer Graphics
+and Interactive Techniques</em>, 335–42.
+</div>
+<div id="ref-pharr2018physically" class="csl-entry" role="listitem">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2018. <em>Physically
+Based Rendering: From Theory to Implementation</em>. 3rd ed. MIT Press.
+</div>
+<div id="ref-pharr2023physically" class="csl-entry" role="listitem">
+———. 2023. <em>Physically Based Rendering: From Theory to
+Implementation</em>. 4th ed. MIT Press.
+</div>
+<div id="ref-poirson1993appearance" class="csl-entry" role="listitem">
+Poirson, Allen B, and Brian A Wandell. 1993. <span>“Appearance of
+Colored Patterns: Pattern–Color Separability.”</span> <em>JOSA A</em> 10
+(12): 2458–70.
+</div>
+<div id="ref-polyak1941retina" class="csl-entry" role="listitem">
+Polyak, Stephen Lucian. 1941. <em>The Retina.</em> Univ. Chicago Press.
+</div>
+<div id="ref-lake" class="csl-entry" role="listitem">
+Prabhu B Doss. 2007. <span>“<span class="nocase">Tso Kiagar Lake Ladakh;
+CC BY 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Tso_Kiagar_Lake_Ladakh.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Tso_Kiagar_Lake_Ladakh.jpg</a>.
+</div>
+<div id="ref-gorskycollection" class="csl-entry" role="listitem">
+Prokudin-Gorsky, Sergey. 1948. <span>“<span class="nocase">Library of
+Congress Prokudin-Gorskii Collection</span>.”</span> <a href="https://www.loc.gov/collections/prokudin-gorskii/about-this-collection/" class="uri">https://www.loc.gov/collections/prokudin-gorskii/about-this-collection/</a>.
+</div>
+<div id="ref-pugh1999molecular" class="csl-entry" role="listitem">
+Pugh Jr, EN, S Nikonov, and TD Lamb. 1999. <span>“Molecular Mechanisms
+of Vertebrate Photoreceptor Light Adaptation.”</span> <em>Current
+Opinion in Neurobiology</em> 9 (4): 410–18.
+</div>
+<div id="ref-purves2017neurosciences" class="csl-entry" role="listitem">
+Purves, Dale, George J. Augustine, David Fitzpatrick, William Hall,
+Anthony-Samuel LaMantia, Richard D. Mooney, Michael L. Platt, and
+Leonard E. White. 2017. <em>Neurosciences</em>. 6th ed. Oxford
+University Press.
+</div>
+<div id="ref-rabal2012automatic" class="csl-entry" role="listitem">
+Rabal, Ana M, Alejandro Ferrero, Joaquın Campos, José Luis Fontecha,
+Alicia Pons, Antonio Manuel Rubiño, and Antonio Corróns. 2012.
+<span>“Automatic Gonio-Spectrophotometer for the Absolute Measurement of
+the Spectral BRDF at in-and Out-of-Plane and Retroreflection
+Geometries.”</span> <em>Metrologia</em> 49 (3): 213.
+</div>
+<div id="ref-ramamoorthi2009precomputation" class="csl-entry" role="listitem">
+Ramamoorthi, Ravi. 2009. <span>“Precomputation-Based Rendering.”</span>
+<em>Foundations and Trends<span></span> in Computer Graphics and
+Vision</em> 3 (4): 281–369.
+</div>
+<div id="ref-ramanath2005color" class="csl-entry" role="listitem">
+Ramanath, Rajeev, Wesley E Snyder, Youngjun Yoo, and Mark S Drew. 2005.
+<span>“Color Image Processing Pipeline.”</span> <em>IEEE Signal
+Processing Magazine</em> 22 (1): 34–43.
+</div>
+<div id="ref-rayleigh1879xxxi" class="csl-entry" role="listitem">
+Rayleigh, Lord. 1879. <span>“XXXI. Investigations in Optics, with
+Special Reference to the Spectroscope.”</span> <em>The London,
+Edinburgh, and Dublin Philosophical Magazine and Journal of Science</em>
+8 (49): 261–74.
+</div>
+<div id="ref-reinhard2010high" class="csl-entry" role="listitem">
+Reinhard, Erik. 2010. <em>High Dynamic Range Imaging Acquisition,
+Display, and Image-Based Lighting</em>. 2nd ed. Morgan Kaufmann
+Publishers.
+</div>
+<div id="ref-reinhard2008color" class="csl-entry" role="listitem">
+Reinhard, Erik, Erum Arif Khan, Ahmet Oguz Akyuz, and Garrett Johnson.
+2008. <em>Color Imaging: Fundamentals and Applications</em>. CRC Press.
+</div>
+<div id="ref-reppert2004polarized" class="csl-entry" role="listitem">
+Reppert, Steven M, Haisun Zhu, and Richard H White. 2004.
+<span>“Polarized Light Helps Monarch Butterflies Navigate.”</span>
+<em>Current Biology</em> 14 (2): 155–58.
+</div>
+<div id="ref-rieke1996molecular" class="csl-entry" role="listitem">
+Rieke, F, and Denis A Baylor. 1996. <span>“Molecular Origin of
+Continuous Dark Noise in Rod Photoreceptors.”</span> <em>Biophysical
+Journal</em> 71 (5): 2553–72.
+</div>
+<div id="ref-rieke1998single" class="csl-entry" role="listitem">
+Rieke, Foster, and Denis A Baylor. 1998. <span>“Single-Photon Detection
+by Rod Cells of the Retina.”</span> <em>Reviews of Modern Physics</em>
+70 (3): 1027.
+</div>
+<div id="ref-rieke2000origin" class="csl-entry" role="listitem">
+Rieke, Fred, and Denis A Baylor. 2000. <span>“Origin and Functional
+Impact of Dark Noise in Retinal Cones.”</span> <em>Neuron</em> 26 (1):
+181–86.
+</div>
+<div id="ref-rodieck1998first" class="csl-entry" role="listitem">
+Rodieck, Robert W. 1998. <em>The First Steps in Seeing</em>. Sinauer
+Associates.
+</div>
+<div id="ref-rodriguez2011dichromatic" class="csl-entry" role="listitem">
+Rodriguez-Pardo, Carlos Eduardo, and Gaurav Sharma. 2011.
+<span>“Dichromatic Color Perception in a Two Stage Model: Testing for
+Cone Replacement and Cone Loss Models.”</span> In <em>2011 IEEE 10th
+IVMSP Workshop: Perception and Visual Signal Analysis</em>, 12–17. IEEE.
+</div>
+<div id="ref-rose1948sensitivity" class="csl-entry" role="listitem">
+Rose, Albert. 1948. <span>“The Sensitivity Performance of the Human Eye
+on an Absolute Scale.”</span> <em>Journal of the Optical Society of
+America</em> 38 (2): 196–208.
+</div>
+<div id="ref-rowlands2020color" class="csl-entry" role="listitem">
+Rowlands, D Andrew. 2020a. <span>“Color Conversion Matrices in Digital
+Cameras: A Tutorial.”</span> <em>Optical Engineering</em> 59 (11):
+110801–1.
+</div>
+<div id="ref-rowlands2020physics" class="csl-entry" role="listitem">
+———. 2020b. <em>Physics of Digital Photography</em>. 2nd ed. IOP
+Publishing.
+</div>
+<div id="ref-rushton1972visual" class="csl-entry" role="listitem">
+Rushton, William AH. 1972. <span>“Visual Pigments in Man.”</span> In
+<em>Photochemistry of Vision</em>, edited by Herbert J. A. Dartnall,
+364–94. Springer Berlin Heidelberg.
+</div>
+<div id="ref-rushton1961rhodopsin" class="csl-entry" role="listitem">
+Rushton, William Albert Hugh. 1961. <span>“Rhodopsin Measurement and
+Dark-Adaptation in a Subject Deficient in Cone Vision.”</span> <em>The
+Journal of Physiology</em> 156 (1): 193.
+</div>
+<div id="ref-rushton1963cone" class="csl-entry" role="listitem">
+———. 1963. <span>“Cone Pigment Kinetics in the Protanope.”</span>
+<em>The Journal of Physiology</em> 168 (2): 374.
+</div>
+<div id="ref-rushton1965ferrier" class="csl-entry" role="listitem">
+———. 1965. <span>“The Ferrier Lecture, 1962 Visual Adaptation.”</span>
+<em>Proceedings of the Royal Society of London. Series B. Biological
+Sciences</em> 162 (986): 20–46.
+</div>
+<div id="ref-rushton1972review" class="csl-entry" role="listitem">
+Rushton, WilliamA H. 1972. <span>“Review Lecture. Pigments and Signals
+in Colour Vision.”</span> <em>The Journal of Physiology</em> 220 (3):
+1P.
+</div>
+<div id="ref-sabella1988rendering" class="csl-entry" role="listitem">
+Sabella, Paolo. 1988. <span>“A Rendering Algorithm for Visualizing 3D
+Scalar Fields.”</span> <em>ACM SIGGRAPH Computer Graphics</em> 22 (4):
+51–58.
+</div>
+<div id="ref-sakakibara201283db" class="csl-entry" role="listitem">
+Sakakibara, Masaki, Yusuke Oike, Takafumi Takatsuka, Akihiko Kato,
+Katsumi Honda, Tadayuki Taura, Takashi Machida, et al. 2012. <span>“An
+83dB-Dynamic-Range Single-Exposure Global-Shutter CMOS Image Sensor with
+in-Pixel Dual Storage.”</span> In <em>2012 IEEE International
+Solid-State Circuits Conference</em>, 380–82. IEEE.
+</div>
+<div id="ref-sakmann1969scotopic" class="csl-entry" role="listitem">
+Sakmann, Bert, and Otto D Creutzfeldt. 1969. <span>“Scotopic and Mesopic
+Light Adaptation in the Cat’s Retina.”</span> <em>Pfl<span>ü</span>gers
+Archiv</em> 313:168–85.
+</div>
+<div id="ref-airy_disk_pattern" class="csl-entry" role="listitem">
+Sakurambo. 2007. <span>“<span class="nocase">A computer-generated image
+of an Airy disk (the grayscale intensities have been adjusted to enhance
+the brightness of the outer rings of the Airy pattern); released into
+the public domain by the copyright holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Airy-pattern.svg" class="uri">https://commons.wikimedia.org/wiki/File:Airy-pattern.svg</a>.
+</div>
+<div id="ref-sato2018pinopsin" class="csl-entry" role="listitem">
+Sato, Keita, Takahiro Yamashita, Keiichi Kojima, Kazumi Sakai, Yuki
+Matsutani, Masataka Yanagawa, Yumiko Yamano, et al. 2018.
+<span>“Pinopsin Evolved as the Ancestral Dim-Light Visual Opsin in
+Vertebrates.”</span> <em>Communications Biology</em> 1 (1): 156.
+</div>
+<div id="ref-saunderson1942calculation" class="csl-entry" role="listitem">
+Saunderson, JL. 1942. <span>“Calculation of the Color of Pigmented
+Plastics.”</span> <em>JOSA</em> 32 (12): 727–36.
+</div>
+<div id="ref-schnapf1987spectral" class="csl-entry" role="listitem">
+Schnapf, JL, TW Kraft, and Denis A Baylor. 1987. <span>“Spectral
+Sensitivity of Human Cone Photoreceptors.”</span> <em>Nature</em> 325
+(6103): 439–41.
+</div>
+<div id="ref-schnapf1990visual" class="csl-entry" role="listitem">
+Schnapf, JL, BJ Nunn, M Meister, and Denis A Baylor. 1990. <span>“Visual
+Transduction in Cones of the Monkey Macaca Fascicularis.”</span> <em>The
+Journal of Physiology</em> 427 (1): 681–713.
+</div>
+<div id="ref-schneeweis1995photovoltage" class="csl-entry" role="listitem">
+Schneeweis, David M, and Julie L Schnapf. 1995. <span>“Photovoltage of
+Rods and Cones in the Macaque Retina.”</span> <em>Science</em> 268
+(5213): 1053–56.
+</div>
+<div id="ref-schneeweis1999photovoltage" class="csl-entry" role="listitem">
+———. 1999. <span>“The Photovoltage of Macaque Cone Photoreceptors:
+Adaptation, Noise, and Kinetics.”</span> <em>Journal of
+Neuroscience</em> 19 (4): 1203–16.
+</div>
+<div id="ref-schrodinger1925verhaltnis" class="csl-entry" role="listitem">
+Schrödinger, Erwin. 1925. <span>“<span>Ü</span>ber Das
+Verh<span>ä</span>ltnis Der Vierfarben-Zur Dreifarbentheorie.”</span>
+<em>Sitzungberichte Abt 2a, Mathematik, Astronomie, Physik, Meteorologie
+Und Mechanik Akademie Der Wissenschaften in Wien,
+Mathematisch-Naturwissenschaftliche Klasse</em> 134:471–90.
+</div>
+<div id="ref-schrodinger1994relationship" class="csl-entry" role="listitem">
+———. 1994. <span>“On the Relationship of Four-Color Theory to
+Three-Color Theory (Translation by National Translation Center;
+Originally Published in 1925).”</span> <em>Color Research and
+Application</em> 19 (1): 37.
+</div>
+<div id="ref-schweiger1995finite" class="csl-entry" role="listitem">
+Schweiger, Martin, SR Arridge, M Hiraoka, and DT Delpy. 1995. <span>“The
+Finite Element Method for the Propagation of Light in Scattering Media:
+Boundary and Source Conditions.”</span> <em>Medical Physics</em> 22
+(11): 1779–92.
+</div>
+<div id="ref-ventral_dorsal" class="csl-entry" role="listitem">
+Selket. 2007. <span>“<span class="nocase">The ventral vs. dorsal stream;
+CC BY-SA 3.0</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg" class="uri">https://commons.wikimedia.org/wiki/File:Ventral-dorsal_streams.svg</a>.
+</div>
+<div id="ref-service2016the" class="csl-entry" role="listitem">
+Service, Phil. 2016. <span>“The Wright – Guild Experiments and the
+Development of the CIE 1931 RGB and XYZ Color Spaces.”</span>
+</div>
+<div id="ref-shannon1949communication" class="csl-entry" role="listitem">
+Shannon, Claude Elwood. 1949. <span>“Communication in the Presence of
+Noise.”</span> <em>Proceedings of the IRE</em> 37 (1): 10–21.
+</div>
+<div id="ref-hsl" class="csl-entry" role="listitem">
+SharkD. 2010a. <span>“<span class="nocase">HSL color solid cylinder; CC
+BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder_saturation_gray.png" class="uri">https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder_saturation_gray.png</a>.
+</div>
+<div id="ref-rgb" class="csl-entry" role="listitem">
+———. 2010b. <span>“<span class="nocase">RGB Color Cube; CC BY-SA 3.0
+license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:RGB_Cube_Show_lowgamma_cutout_a.png" class="uri">https://commons.wikimedia.org/wiki/File:RGB_Cube_Show_lowgamma_cutout_a.png</a>.
+</div>
+<div id="ref-sharma2018understanding" class="csl-entry" role="listitem">
+Sharma, Abhay. 2018. <em>Understanding Color Management</em>. John Wiley
+&amp; Sons.
+</div>
+<div id="ref-sharma2003color" class="csl-entry" role="listitem">
+Sharma, Gaurav. 2003. <span>“Color Fundamentals for Digital
+Imaging.”</span> In <em>Digital Color Imaging Handbook</em>, edited by
+Gaurav Sharma, 14–127. CRC Press.
+</div>
+<div id="ref-sharma2005ciede2000" class="csl-entry" role="listitem">
+Sharma, Gaurav, Wencheng Wu, and Edul N Dalal. 2005. <span>“The
+CIEDE2000 Color-Difference Formula: Implementation Notes, Supplementary
+Test Data, and Mathematical Observations.”</span> <em>Color Research
+&amp; Application</em> 30 (1): 21–30.
+</div>
+<div id="ref-sharpe2005luminous" class="csl-entry" role="listitem">
+Sharpe, Lindsay T, Andrew Stockman, Wolfgang Jagla, and Herbert Jägle.
+2005. <span>“A Luminous Efficiency Function, v*(<span class="math inline"><em>λ</em></span>), for Daylight Adaptation.”</span>
+<em>Journal of Vision</em> 5 (11): 3–3.
+</div>
+<div id="ref-sharpe2011luminous" class="csl-entry" role="listitem">
+———. 2011. <span>“A Luminous Efficiency Function, VD65*(<span class="math inline"><em>λ</em></span>), for Daylight Adaptation: A
+Correction.”</span> <em>Color Research &amp; Application</em> 36 (1):
+42–46.
+</div>
+<div id="ref-sharpe1999opsin" class="csl-entry" role="listitem">
+Sharpe, Lindsay T, Andrew Stockman, Herbert Jägle, and Jeremy Nathans.
+1999. <span>“Opsin Genes, Cone Photopigments, Color Vision, and Color
+Blindness.”</span> <em>Color Vision: From Genes to Perception</em>
+351:3–52.
+</div>
+<div id="ref-sherman1986control" class="csl-entry" role="listitem">
+Sherman, SM, and Christof Koch. 1986. <span>“The Control of
+Retinogeniculate Transmission in the Mammalian Lateral Geniculate
+Nucleus.”</span> <em>Experimental Brain Research</em> 63:1–20.
+</div>
+<div id="ref-shevell1977saturation" class="csl-entry" role="listitem">
+Shevell, Steven K. 1977. <span>“Saturation in Human Cones.”</span>
+<em>Vision Research</em> 17 (3): 427–34.
+</div>
+<div id="ref-shevell2017color" class="csl-entry" role="listitem">
+Shevell, Steven K, and Paul R Martin. 2017. <span>“Color Opponency:
+Tutorial.”</span> <em>JOSA A</em> 34 (7): 1099–1108.
+</div>
+<div id="ref-shichida2009evolution" class="csl-entry" role="listitem">
+Shichida, Yoshinori, and Take Matsuyama. 2009. <span>“Evolution of
+Opsins and Phototransduction.”</span> <em>Philosophical Transactions of
+the Royal Society B: Biological Sciences</em> 364 (1531): 2881–95.
+</div>
+<div id="ref-simunovic2010colour" class="csl-entry" role="listitem">
+Simunovic, MP. 2010. <span>“Colour Vision Deficiency.”</span>
+<em>Eye</em> 24 (5): 747–55.
+</div>
+<div id="ref-ctscan" class="csl-entry" role="listitem">
+Sjschen. 2025. <span>“<span class="nocase">Volume rendered CT scan of a
+forearm with different color schemes for muscle, fat, bone, and blood;
+released into the public domain by the copyright holder</span>.”</span>
+<a href="https://commons.wikimedia.org/wiki/File:CTWristImage.png" class="uri">https://commons.wikimedia.org/wiki/File:CTWristImage.png</a>.
+</div>
+<div id="ref-sloan1948case" class="csl-entry" role="listitem">
+Sloan, Louise L, and Lorraine Wollach. 1948. <span>“A Case of Unilateral
+Deuteranopia.”</span> <em>JOSA</em> 38 (6): 502–9.
+</div>
+<div id="ref-smith1995alpha" class="csl-entry" role="listitem">
+Smith, Alvy Ray. 1995. <span>“Alpha and the History of Digital
+Compositing.”</span> Citeseer.
+</div>
+<div id="ref-smith1975spectral" class="csl-entry" role="listitem">
+Smith, Vivianne C, and Joel Pokorny. 1975. <span>“Spectral Sensitivity
+of the Foveal Cone Photopigments Between 400 and 500 Nm.”</span>
+<em>Vision Research</em> 15 (2): 161–71.
+</div>
+<div id="ref-snodderly1984macular" class="csl-entry" role="listitem">
+Snodderly, DM, PK Brown, FC Delori, and JD Auran. 1984. <span>“The
+Macular Pigment. I. Absorbance Spectra, Localization, and Discrimination
+from Other Yellow Pigments in Primate Retinas.”</span> <em>Investigative
+Ophthalmology &amp; Visual Science</em> 25 (6): 660–73.
+</div>
+<div id="ref-solhusvik20191280" class="csl-entry" role="listitem">
+Solhusvik, Johannes, T Willassent, Sindre Mikkelsen, Mathias Wilhelmsen,
+Sohei Manabe, Duli Mao, Zhaoyu He, Keiji Mabuchi, and TA Hasegawa. 2019.
+<span>“1280<span class="math inline">×</span> 960 2.8 <span class="math inline"><em>μ</em></span>m HDR CIS with DCG and Split-Pixel
+Combined.”</span> In <em>Proceedings of the International Image Sensor
+Workshop (IISW), Snowbird, UT, USA</em>, 23–27.
+</div>
+<div id="ref-stam1995multiple" class="csl-entry" role="listitem">
+Stam, Jos. 1995. <span>“Multiple Scattering as a Diffusion
+Process.”</span> In <em>Rendering Techniques’ 95: Proceedings of the
+Eurographics Workshop in Dublin, Ireland, June 12–14, 1995 6</em>,
+41–50. Springer.
+</div>
+<div id="ref-stark2018back" class="csl-entry" role="listitem">
+Stark, Laurence, Jeffrey M Raynor, Frederic Lalanne, and Robert K
+Henderson. 2018. <span>“A Back-Illuminated Voltage-Domain Global Shutter
+Pixel with Dual in-Pixel Storage.”</span> <em>IEEE Transactions on
+Electron Devices</em> 65 (10): 4394–4400.
+</div>
+<div id="ref-sheffield" class="csl-entry" role="listitem">
+Steve Fareham. 2007. <span>“<span class="nocase">Heart of the City water
+feature Sheffield; CC BY-SA 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Heart_of_the_City_water_feature_Sheffield_-_geograph.org.uk_-_618552.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Heart_of_the_City_water_feature_Sheffield_-_geograph.org.uk_-_618552.jpg</a>.
+</div>
+<div id="ref-stevens1957psychophysical" class="csl-entry" role="listitem">
+Stevens, Stanley S. 1957. <span>“On the Psychophysical Law.”</span>
+<em>Psychological Review</em> 64 (3): 153.
+</div>
+<div id="ref-stevens1961honor" class="csl-entry" role="listitem">
+Stevens, Stanley Smith. 1961. <span>“To Honor Fechner and Repeal His
+Law: A Power Function, Not a Log Function, Describes the Operating
+Characteristic of a Sensory System.”</span> <em>Science</em> 133 (3446):
+80–86.
+</div>
+<div id="ref-stiles1959npl" class="csl-entry" role="listitem">
+Stiles, Walter Stanley, and Jennifer M Burch. 1959. <span>“NPL
+Colour-Matching Investigation: Final Report (1958).”</span> <em>Optica
+Acta: International Journal of Optics</em> 6 (1): 1–26.
+</div>
+<div id="ref-stiles1939directional" class="csl-entry" role="listitem">
+Stiles, WS. 1939. <span>“The Directional Sensitivity of the Retina and
+the Spectral Sensitivities of the Rods and Cones.”</span>
+<em>Proceedings of the Royal Society of London. Series B-Biological
+Sciences</em> 127 (846): 64–105.
+</div>
+<div id="ref-stiles1959color" class="csl-entry" role="listitem">
+———. 1959. <span>“Color Vision: The Approach Through Increment-Threshold
+Sensitivity.”</span> <em>Proceedings of the National Academy of
+Sciences</em> 45 (1): 100–114.
+</div>
+<div id="ref-stiles1964appendix" class="csl-entry" role="listitem">
+———. 1964. <span>“Appendix by WS Stiles: Foveal Threshold Sensitivity on
+Fields of Different Colors.”</span> <em>Science</em> 145 (3636):
+1016–17.
+</div>
+<div id="ref-stiles1955interim" class="csl-entry" role="listitem">
+Stiles, WS, and JM Burch. 1955. <span>“Interim Report to the Commission
+Internationale de l’eclairage, Zurich, 1955, on the National Physical
+Laboratory’s Investigation of Colour-Matching (1955).”</span> <em>Optica
+Acta: International Journal of Optics</em> 2 (4): 168–81.
+</div>
+<div id="ref-stockman2000spectral" class="csl-entry" role="listitem">
+Stockman, Andrew, and Lindsay T Sharpe. 2000. <span>“The Spectral
+Sensitivities of the Middle-and Long-Wavelength-Sensitive Cones Derived
+from Measurements in Observers of Known Genotype.”</span> <em>Vision
+Research</em> 40 (13): 1711–37.
+</div>
+<div id="ref-stockman1999spectral" class="csl-entry" role="listitem">
+Stockman, Andrew, Lindsay T Sharpe, and Clemens Fach. 1999. <span>“The
+Spectral Sensitivity of the Human Short-Wavelength Sensitive Cones
+Derived from Thresholds and Color Matches.”</span> <em>Vision
+Research</em> 39 (17): 2901–27.
+</div>
+<div id="ref-stoppa2002novel" class="csl-entry" role="listitem">
+Stoppa, David, Andrea Simoni, Lorenzo Gonzo, Massimo Gottardi, and G-F
+Dalla Betta. 2002. <span>“Novel CMOS Image Sensor with a 132-dB Dynamic
+Range.”</span> <em>IEEE Journal of Solid-State Circuits</em> 37 (12):
+1846–52.
+</div>
+<div id="ref-sugawa2005100" class="csl-entry" role="listitem">
+Sugawa, Shigetoshi, Nana Akahane, Satoru Adachi, Kazuya Mori, Toshiyuki
+Ishiuchi, and Koichi Mizobuchi. 2005. <span>“A 100 dB Dynamic Range CMOS
+Image Sensor Using a Lateral Overflow Integration Capacitor.”</span> In
+<em>ISSCC. 2005 IEEE International Digest of Technical Papers.
+Solid-State Circuits Conference, 2005.</em>, 352–603. IEEE.
+</div>
+<div id="ref-svaetichin1953cone" class="csl-entry" role="listitem">
+Svaetichin, G. 1953. <span>“The Cone Action Potential.”</span> <em>Acta
+Physiol Scand 29</em> 29:565–600.
+</div>
+<div id="ref-svaetichin1956spectral" class="csl-entry" role="listitem">
+Svaetichin, G. 1956. <span>“Spectral Response Curves from Single
+Cones.”</span> <em>Acta Physiol Scand</em> 39:17–46.
+</div>
+<div id="ref-svaetichin1958retinal" class="csl-entry" role="listitem">
+Svaetichin, G., and Edward F MacNichol Jr. 1958. <span>“Retinal
+Mechanisms for Chromatic and Achromatic Vision.”</span> <em>Annals of
+the New York Academy of Sciences</em> 74 (2): 385–404.
+</div>
+<div id="ref-swain2008back" class="csl-entry" role="listitem">
+Swain, PK, and David Cheskis. 2008. <span>“Back-Illuminated Image
+Sensors Come to the Forefront.”</span> <em>Photonics Spectra</em> 42
+(8): 46.
+</div>
+<div id="ref-takanaka1998light" class="csl-entry" role="listitem">
+Takanaka, Yoko, Toshiyuki Okano, Masayuki Iigo, and Yoshitaka Fukada.
+1998. <span>“Light-Dependent Expression of Pinopsin Gene in Chicken
+Pineal Gland.”</span> <em>Journal of Neurochemistry</em> 70 (3): 908–13.
+</div>
+<div id="ref-takayanagi2019120" class="csl-entry" role="listitem">
+Takayanagi, Isao, Ken Miyauchi, Shunsuke Okura, Kazuya Mori, Junichi
+Nakamura, and Shigetoshi Sugawa. 2019. <span>“A 120-Ke- Full-Well
+Capacity 160-<span class="math inline"><em>μ</em></span>v/e- Conversion
+Gain 2.8-<span class="math inline"><em>μ</em></span>m
+Backside-Illuminated Pixel with a Lateral Overflow Integration
+Capacitor.”</span> <em>Sensors</em> 19 (24): 5572.
+</div>
+<div id="ref-takayanagi2018over" class="csl-entry" role="listitem">
+Takayanagi, Isao, Norio Yoshimura, Kazuya Mori, Shinichiro Matsuo,
+Shunsuke Tanaka, Hirofumi Abe, Naoto Yasuda, et al. 2018. <span>“An over
+90 dB Intra-Scene Single-Exposure Dynamic Range CMOS Image Sensor Using
+a 3.0 <span class="math inline"><em>μ</em></span>m Triple-Gain Pixel
+Fabricated in a Standard BSI Process.”</span> <em>Sensors</em> 18 (1):
+203.
+</div>
+<div id="ref-ast_ex" class="csl-entry" role="listitem">
+Tallfred. 2005. <span>“<span class="nocase">Text blurred by different
+focal positions of an astigmatic lens; 3-clause BSD
+License</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Astigmatism_text_blur.png" class="uri">https://commons.wikimedia.org/wiki/File:Astigmatism_text_blur.png</a>.
+</div>
+<div id="ref-tamura1991calcium" class="csl-entry" role="listitem">
+Tamura, Tarnura, K Nakatani, and KW Yau. 1991. <span>“Calcium Feedback
+and Sensitivity Regulation in Primate Rods.”</span> <em>The Journal of
+General Physiology</em> 98 (1): 95–130.
+</div>
+<div id="ref-teranishi2015effect" class="csl-entry" role="listitem">
+Teranishi, Nobukazu. 2015. <span>“Effect and Limitation of Pinned
+Photodiode.”</span> <em>IEEE Transactions on Electron Devices</em> 63
+(1): 10–15.
+</div>
+<div id="ref-teranishi1982no" class="csl-entry" role="listitem">
+Teranishi, Nobukazu, Akiyoshi Kohono, Yasuo Ishihara, Eiji Oda, and
+Kouichi Arai. 1982. <span>“No Image Lag Photodiode Structure in the
+Interline CCD Image Sensor.”</span> In <em>1982 International Electron
+Devices Meeting</em>, 324–27. IEEE.
+</div>
+<div id="ref-spd_incan" class="csl-entry" role="listitem">
+Thorseth. 2015. <span>“<span class="nocase">Spectral power distribution
+of a 25 W incandescent light bulb; CC BY-SA 4.0 license</span>.”</span>
+<a href="https://commons.wikimedia.org/wiki/File:Spectral_power_distribution_of_a_25_W_incandescent_light_bulb.png" class="uri">https://commons.wikimedia.org/wiki/File:Spectral_power_distribution_of_a_25_W_incandescent_light_bulb.png</a>.
+</div>
+<div id="ref-ph_defocus_blur" class="csl-entry" role="listitem">
+Thycoop/photographs. 2022. <span>“<span class="nocase">Small park in
+logatec made with matchbox pinhole camera on kodak portra 400 film; CC
+BY-SA 4.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Small_park_in_logatec_matchbox_pinhole_camera.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Small_park_in_logatec_matchbox_pinhole_camera.jpg</a>.
+</div>
+<div id="ref-otf_ex" class="csl-entry" role="listitem">
+Tom.vettenburg. 2017. <span>“<span class="nocase">Illustration of the
+optical transfer function and its relation to image quality; CC BY-SA
+4.0 license</span>.”</span> <a href="https://en.wikipedia.org/wiki/File:Illustration_of_the_optical_transfer_function_and_its_relation_to_image_quality.svg" class="uri">https://en.wikipedia.org/wiki/File:Illustration_of_the_optical_transfer_function_and_its_relation_to_image_quality.svg</a>.
+</div>
+<div id="ref-torrance1967theory" class="csl-entry" role="listitem">
+Torrance, Kenneth E, and Ephraim M Sparrow. 1967. <span>“Theory for
+Off-Specular Reflection from Roughened Surfaces.”</span> <em>Josa</em>
+57 (9): 1105–14.
+</div>
+<div id="ref-tournier2018hdr" class="csl-entry" role="listitem">
+Tournier, Arnaud, F Roy, Y Cazaux, F Lalanne, P Malinge, M Mcdonald, G
+Monnot, and N Roux. 2018. <span>“A HDR 98dB <span class="math inline">3.2<em>μ</em>m</span> Charge Domain Global Shutter
+CMOS Image Sensor.”</span> In <em>2018 IEEE International Electron
+Devices Meeting (IEDM)</em>, 10–14. IEEE.
+</div>
+<div id="ref-treutwein1995adaptive" class="csl-entry" role="listitem">
+Treutwein, Bernhard. 1995. <span>“Adaptive Psychophysical
+Procedures.”</span> <em>Vision Research</em> 35 (17): 2503–22.
+</div>
+<div id="ref-trussell2008fundamentals" class="csl-entry" role="listitem">
+Trussell, H Joel, and Michael J Vrhel. 2008. <em>Fundamentals of Digital
+Imaging</em>. Cambridge University Press.
+</div>
+<div id="ref-tsugawa2017pixel" class="csl-entry" role="listitem">
+Tsugawa, H, H Takahashi, R Nakamura, T Umebayashi, T Ogita, H Okano, K
+Iwase, et al. 2017. <span>“Pixel/DRAM/Logic 3-Layer Stacked CMOS Image
+Sensor Technology.”</span> In <em>2017 IEEE International Electron
+Devices Meeting (IEDM)</em>, 3–2. IEEE.
+</div>
+<div id="ref-ungerleider1982two" class="csl-entry" role="listitem">
+Ungerleider, Leslie G, and Mortimer Mishkin. 1982. <span>“Two Cortical
+Visual Systems.”</span> In <em>Analysis of Visual Behavior</em>, edited
+by David J Ingle, Melvyn A Goodale, Richard JW Mansfield, et al.,
+549–86. Mit Press Cambridge, MA.
+</div>
+<div id="ref-vienot1999digital" class="csl-entry" role="listitem">
+Viénot, Françoise, Hans Brettel, and John D Mollon. 1999. <span>“Digital
+Video Colourmaps for Checking the Legibility of Displays by
+Dichromats.”</span> <em>Color Research &amp; Application</em> 24 (4):
+243–52.
+</div>
+<div id="ref-volz2001industrial" class="csl-entry" role="listitem">
+Volz, Hans G, and Frederick T Simon. 2001. <em>Industrial Color
+Testing</em>. Vol. 2. Wiley-VCH New York.
+</div>
+<div id="ref-diffusebrdf" class="csl-entry" role="listitem">
+VonHaarberg. 2018a. <span>“<span class="nocase">Illustration of a
+diffuse BRDF; CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_diffuse.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_diffuse.svg</a>.
+</div>
+<div id="ref-glossybrdf" class="csl-entry" role="listitem">
+———. 2018b. <span>“<span class="nocase">Illustration of a glossy BRDF;
+CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_glossy.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_glossy.svg</a>.
+</div>
+<div id="ref-specularbrdf" class="csl-entry" role="listitem">
+———. 2018c. <span>“<span class="nocase">Illustration of a mirror BRDF;
+CC0 1.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:BRDF_mirror.svg" class="uri">https://commons.wikimedia.org/wiki/File:BRDF_mirror.svg</a>.
+</div>
+<div id="ref-vos1978colorimetric" class="csl-entry" role="listitem">
+Vos, Johannes J. 1978. <span>“Colorimetric and Photometric Properties of
+a 2 Fundamental Observer.”</span> <em>Color Research &amp;
+Application</em> 3 (3): 125–28.
+</div>
+<div id="ref-wadhwa2018synthetic" class="csl-entry" role="listitem">
+Wadhwa, Neal, Rahul Garg, David E Jacobs, Bryan E Feldman, Nori
+Kanazawa, Robert Carroll, Yair Movshovitz-Attias, Jonathan T Barron,
+Yael Pritch, and Marc Levoy. 2018. <span>“Synthetic Depth-of-Field with
+a Single-Camera Mobile Phone.”</span> <em>ACM Transactions on Graphics
+(ToG)</em> 37 (4): 1–13.
+</div>
+<div id="ref-wald1933vitamin" class="csl-entry" role="listitem">
+Wald, George. 1933. <span>“<span class="nocase">Vitamin A in the
+Retina</span>.”</span> <em>Nature</em> 132 (3330): 316–17.
+</div>
+<div id="ref-wald1945human" class="csl-entry" role="listitem">
+———. 1945. <span>“Human Vision and the Spectrum.”</span>
+<em>Science</em> 101 (2635): 653–58.
+</div>
+<div id="ref-wald1964receptors" class="csl-entry" role="listitem">
+———. 1964. <span>“The Receptors of Human Color Vision: Action Spectra of
+Three Visual Pigments in Human Cones Account for Normal Color Vision and
+Color-Blindness.”</span> <em>Science</em> 145 (3636): 1007–16.
+</div>
+<div id="ref-wald1968molecular" class="csl-entry" role="listitem">
+———. 1968. <span>“Molecular Basis of Visual Excitation.”</span>
+<em>Science</em> 162 (3850): 230–39.
+</div>
+<div id="ref-walter2007microfacet" class="csl-entry" role="listitem">
+Walter, Bruce, Stephen R Marschner, Hongsong Li, and Kenneth E Torrance.
+2007. <span>“Microfacet Models for Refraction Through Rough
+Surfaces.”</span> <em>Rendering Techniques</em> 2007:18th.
+</div>
+<div id="ref-wandell1995foundations" class="csl-entry" role="listitem">
+Wandell, Brian A. 1995. <em>Foundations of Vision</em>. Sinauer
+Associates.
+</div>
+<div id="ref-wann1995natural" class="csl-entry" role="listitem">
+Wann, John P, Simon Rushton, and Mark Mon-Williams. 1995. <span>“Natural
+Problems for Stereoscopic Depth Perception in Virtual
+Environments.”</span> <em>Vision Research</em> 35 (19): 2731–36.
+</div>
+<div id="ref-ward1992measuring" class="csl-entry" role="listitem">
+Ward, Gregory J. 1992. <span>“Measuring and Modeling Anisotropic
+Reflection.”</span> In <em>Proceedings of the 19th Annual Conference on
+Computer Graphics and Interactive Techniques</em>, 265–72.
+</div>
+<div id="ref-weckler1967operation" class="csl-entry" role="listitem">
+Weckler, Gene P. 1967. <span>“Operation of Pn Junction Photodetectors in
+a Photon Flux Integrating Mode.”</span> <em>IEEE Journal of Solid-State
+Circuits</em> 2 (3): 65–73.
+</div>
+<div id="ref-westover1990footprint" class="csl-entry" role="listitem">
+Westover, Lee. 1990. <span>“Footprint Evaluation for Volume
+Rendering.”</span> In <em>Proceedings of the 17th Annual Conference on
+Computer Graphics and Interactive Techniques</em>, 367–76.
+</div>
+<div id="ref-wetzstein2012tensor" class="csl-entry" role="listitem">
+Wetzstein, Gordon, Douglas R Lanman, Matthew Waggener Hirsch, and Ramesh
+Raskar. 2012. <span>“Tensor Displays: Compressive Light Field Synthesis
+Using Multilayer Displays with Directional Backlighting.”</span>
+</div>
+<div id="ref-wiesel1966spatial" class="csl-entry" role="listitem">
+Wiesel, Torsten N, and David H Hubel. 1966. <span>“Spatial and Chromatic
+Interactions in the Lateral Geniculate Body of the Rhesus
+Monkey.”</span> <em>Journal of Neurophysiology</em> 29 (6): 1115–56.
+</div>
+<div id="ref-willassen20151280" class="csl-entry" role="listitem">
+Willassen, Trygve, Johannes Solhusvik, Robert Johansson, Sohrab Yaghmai,
+Howard Rhodes, Sohei Manabe, Duli Mao, et al. 2015. <span>“A 1280<span class="math inline">×</span> 1080 4.2 <span class="math inline"><em>μ</em></span>m Split-Diode Pixel Hdr Sensor in
+110 Nm Bsi Cmos Process.”</span> In <em>Proceedings of the International
+Image Sensor Workshop, Vaals, the Netherlands</em>, 8–11.
+</div>
+<div id="ref-williams1992volume" class="csl-entry" role="listitem">
+Williams, Peter L, and Nelson Max. 1992. <span>“A Volume Density Optical
+Model.”</span> In <em>Proceedings of the 1992 Workshop on Volume
+Visualization</em>, 61–68.
+</div>
+<div id="ref-wodnicki1995foveated" class="csl-entry" role="listitem">
+Wodnicki, Robert, Gordon W Roberts, and Martin D Levine. 1995. <span>“A
+Foveated Image Sensor in Standard CMOS Technology.”</span> In
+<em>Proceedings of the IEEE 1995 Custom Integrated Circuits
+Conference</em>, 357–60. IEEE.
+</div>
+<div id="ref-barrel" class="csl-entry" role="listitem">
+WolfWings. 2008a. <span>“<span class="nocase">Barrel distortion visual
+example; released into the public domain by the copyright
+holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Barrel_distortion.svg" class="uri">https://commons.wikimedia.org/wiki/File:Barrel_distortion.svg</a>.
+</div>
+<div id="ref-pincushion" class="csl-entry" role="listitem">
+———. 2008b. <span>“<span class="nocase">Pincushion distortion visual
+example; released into the public domain by the copyright
+holder</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:Pincushion_distortion.svg" class="uri">https://commons.wikimedia.org/wiki/File:Pincushion_distortion.svg</a>.
+</div>
+<div id="ref-wrenninge2011production" class="csl-entry" role="listitem">
+Wrenninge, Magnus, and Nafees Bin Zafar. 2011. <span>“Production Volume
+Rendering: Siggraph 2011 Course.”</span> In <em>ACM SIGGRAPH 2011
+Courses</em>, 1–71.
+</div>
+<div id="ref-wright1928trichromatic" class="csl-entry" role="listitem">
+Wright, WD. 1928. <span>“A Trichromatic Colorimeter with Spectral
+Primaries.”</span> <em>Transactions of the Optical Society</em> 29 (5):
+225.
+</div>
+<div id="ref-wright1930re" class="csl-entry" role="listitem">
+———. 1930. <span>“A Re-Determination of the Mixture Curves of the
+Spectrum.”</span> <em>Transactions of the Optical Society</em> 31 (4):
+201.
+</div>
+<div id="ref-wright1929re" class="csl-entry" role="listitem">
+Wright, William David. 1929. <span>“A Re-Determination of the
+Trichromatic Coefficients of the Spectral Colours.”</span>
+<em>Transactions of the Optical Society</em> 30 (4): 141.
+</div>
+<div id="ref-wyszecki1982color" class="csl-entry" role="listitem">
+Wyszecki, Günther, and WS Stiles. 1982. <em>Color Science: Concepts and
+Methods, Quantitative Data and Formulae</em>. John wiley &amp; sons.
+</div>
+<div id="ref-xu2021senputing" class="csl-entry" role="listitem">
+Xu, Han, Ningchao Lin, Li Luo, Qi Wei, Runsheng Wang, Cheng Zhuo,
+Xunzhao Yin, Fei Qiao, and Huazhong Yang. 2021. <span>“Senputing: An
+Ultra-Low-Power Always-on Vision Perception Chip Featuring the Deep
+Fusion of Sensing and Computing.”</span> <em>IEEE Transactions on
+Circuits and Systems I: Regular Papers</em> 69 (1): 232–43.
+</div>
+<div id="ref-xu2022analysis" class="csl-entry" role="listitem">
+Xu, Jiangtao, Liuqin Shu, Zhiyuan Gao, Quanmin Chen, and Kaiming Nie.
+2022. <span>“Analysis and Parameter Optimization of High Dynamic Range
+Pixels for Split Photodiode in CMOS Image Sensors.”</span> <em>IEEE
+Sensors Journal</em> 22 (7): 6748–54.
+</div>
+<div id="ref-yantis2017sensation" class="csl-entry" role="listitem">
+Yantis, Steven, and Richard A Abrams. 2017. <em>Sensation and
+Perception</em>. 2nd ed. Worth Publishers.
+</div>
+<div id="ref-yasutomi2011two" class="csl-entry" role="listitem">
+Yasutomi, Keita, Shinya Itoh, and Shoji Kawahito. 2011. <span>“A
+Two-Stage Charge Transfer Active Pixel CMOS Image Sensor with Low-Noise
+Global Shuttering and a Dual-Shuttering Mode.”</span> <em>IEEE
+Transactions on Electron Devices</em> 58 (3): 740–47.
+</div>
+<div id="ref-yau1994phototransduction" class="csl-entry" role="listitem">
+Yau, KW. 1994. <span>“Phototransduction Mechanism in Retinal Rods and
+Cones. The Friedenwald Lecture.”</span> <em>Investigative Ophthalmology
+&amp; Visual Science</em> 35 (1): 9–32.
+</div>
+<div id="ref-yau1989cyclic" class="csl-entry" role="listitem">
+Yau, KW, and Denis A Baylor. 1989. <span>“Cyclic GMP-Activated
+Conductance of Retinal Photoreceptor Cells.”</span> <em>Annual Review of
+Neuroscience</em> 12 (1): 289–327.
+</div>
+<div id="ref-yau2009phototransduction" class="csl-entry" role="listitem">
+Yau, KW, and Roger C Hardie. 2009. <span>“Phototransduction Motifs and
+Variations.”</span> <em>Cell</em> 139 (2): 246–64.
+</div>
+<div id="ref-yifan2019differentiable" class="csl-entry" role="listitem">
+Yifan, Wang, Felice Serena, Shihao Wu, Cengiz Öztireli, and Olga
+Sorkine-Hornung. 2019. <span>“Differentiable Surface Splatting for
+Point-Based Geometry Processing.”</span> <em>ACM Transactions On
+Graphics (TOG)</em> 38 (6): 1–14.
+</div>
+<div id="ref-yokoyama2018high" class="csl-entry" role="listitem">
+Yokoyama, Toshifumi, Masafumi Tsutsui, Yoshiaki Nishi, Ikuo Mizuno,
+Veinger Dmitry, and Assaf Lahav. 2018. <span>“High Performance <span class="math inline">2.5<em>μ</em>m</span> Global Shutter Pixel with New
+Designed Light-Pipe Structure.”</span> In <em>2018 IEEE International
+Electron Devices Meeting (IEDM)</em>, 10–15. IEEE.
+</div>
+<div id="ref-young2019data" class="csl-entry" role="listitem">
+Young, Christopher, Alex Omid-Zohoor, Pedram Lajevardi, and Boris
+Murmann. 2019. <span>“A Data-Compressive 1.5/2.75-Bit Log-Gradient QVGA
+Image Sensor with Multi-Scale Readout for Always-on Object
+Detection.”</span> <em>IEEE Journal of Solid-State Circuits</em> 54
+(11): 2932–46.
+</div>
+<div id="ref-young1802ii" class="csl-entry" role="listitem">
+Young, Thomas. 1802. <span>“II. The Bakerian Lecture. On the Theory of
+Light and Colours.”</span> <em>Philosophical Transactions of the Royal
+Society of London</em>, no. 92, 12–48.
+</div>
+<div id="ref-zhang2021genome" class="csl-entry" role="listitem">
+Zhang, Yang, Fan Mao, Huawei Mu, Minwei Huang, Yongbo Bao, Lili Wang,
+Nai-Kei Wong, et al. 2021. <span>“The Genome of Nautilus Pompilius
+Illuminates Eye Evolution and Biomineralization.”</span> <em>Nature
+Ecology &amp; Evolution</em> 5 (7): 927–38.
+</div>
+<div id="ref-zhu2020how" class="csl-entry" role="listitem">
+Zhu, Yuhao. 2020. <span>“<span class="nocase">How the CIE 1931 RGB Color
+Matching Functions Were Developed from the Initial Color Matching
+Experiments</span>.”</span> <a href="https://yuhaozhu.com/blog/cmf.html" class="uri">https://yuhaozhu.com/blog/cmf.html</a>.
+</div>
+<div id="ref-zhu2021ca" class="csl-entry" role="listitem">
+———. 2021. <span>“<span class="nocase">Principles and Practices of
+Chromatic Adaptation</span>.”</span> <a href="https://yuhaozhu.com/blog/chromatic-adaptation.html" class="uri">https://yuhaozhu.com/blog/chromatic-adaptation.html</a>.
+</div>
+<div id="ref-zhu2022isp" class="csl-entry" role="listitem">
+———. 2022a. <span>“<span class="nocase">A pedagogical ISP pipeline in
+Python</span>.”</span> <a href="https://github.com/horizon-research/isp" class="uri">https://github.com/horizon-research/isp</a>.
+</div>
+<div id="ref-zhu2022cam" class="csl-entry" role="listitem">
+———. 2022b. <span>“<span class="nocase">Exploring Camera Color Space and
+Color Correction</span>.”</span> <a href="https://horizon-lab.org/colorvis/camcolor.html" class="uri">https://horizon-lab.org/colorvis/camcolor.html</a>.
+</div>
+<div id="ref-zhu2022cube" class="csl-entry" role="listitem">
+———. 2022c. <span>“<span class="nocase">Interative Tutorial: Building a
+Color Cube</span>.”</span> <a href="https://horizon-lab.org/colorvis/colorcube.html" class="uri">https://horizon-lab.org/colorvis/colorcube.html</a>.
+</div>
+<div id="ref-zhu2022cone2cmf" class="csl-entry" role="listitem">
+———. 2022d. <span>“<span class="nocase">Interative Tutorial: Building a
+Color Space From Cone Fundamentals</span>.”</span> <a href="https://horizon-lab.org/colorvis/cone2cmf.html" class="uri">https://horizon-lab.org/colorvis/cone2cmf.html</a>.
+</div>
+<div id="ref-zhu2022chromaticity" class="csl-entry" role="listitem">
+———. 2022e. <span>“<span class="nocase">Interative Tutorial:
+Chromaticity, Gamut, and the Scary World of Imaginary
+Colors</span>.”</span> <a href="https://horizon-lab.org/colorvis/chromaticity.html" class="uri">https://horizon-lab.org/colorvis/chromaticity.html</a>.
+</div>
+<div id="ref-zhu2022xyz" class="csl-entry" role="listitem">
+———. 2022f. <span>“<span>Interative Tutorial: CIE 1931 XYZ Color
+Space</span>.”</span> <a href="https://horizon-lab.org/colorvis/xyz.html" class="uri">https://horizon-lab.org/colorvis/xyz.html</a>.
+</div>
+<div id="ref-zhu2022cvd" class="csl-entry" role="listitem">
+———. 2022g. <span>“<span class="nocase">Interative Tutorial:
+Understanding and Modeling Color Blindness</span>.”</span> <a href="https://horizon-lab.org/colorvis/colorblind.html" class="uri">https://horizon-lab.org/colorvis/colorblind.html</a>.
+</div>
+<div id="ref-zhu2022gamut" class="csl-entry" role="listitem">
+———. 2022h. <span>“<span>Interative Tutorial: Visualizing Human Visual
+Gamut</span>.”</span> <a href="https://horizon-lab.org/colorvis/gamutvis.html" class="uri">https://horizon-lab.org/colorvis/gamutvis.html</a>.
+</div>
+<div id="ref-zhu2024computational" class="csl-entry" role="listitem">
+Zhu, Yuhao, Ethan Chen, Colin Hascup, Yukang Yan, and Gaurav Sharma.
+2024. <span>“Computational Trichromacy Reconstruction: Empowering the
+Color-Vision Deficient to Recognize Colors Using Augmented
+Reality.”</span> In <em>Proceedings of the 37th Annual ACM Symposium on
+User Interface Software and Technology</em>, 1–17.
+</div>
+<div id="ref-zwicker2001ewa" class="csl-entry" role="listitem">
+Zwicker, Matthias, Hanspeter Pfister, Jeroen Van Baar, and Markus Gross.
+2001a. <span>“EWA Volume Splatting.”</span> In <em>Proceedings
+Visualization, 2001. VIS’01.</em>, 29–538. IEEE.
+</div>
+<div id="ref-zwicker2001surface" class="csl-entry" role="listitem">
+———. 2001b. <span>“Surface Splatting.”</span> In <em>Proceedings of the
+28th Annual Conference on Computer Graphics and Interactive
+Techniques</em>, 371–78.
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./display-impl.html" class="pagination-link" aria-label="Implementation Technologies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Implementation Technologies</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
