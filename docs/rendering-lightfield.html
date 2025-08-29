@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>19&nbsp; Image Signal Processing – Foundations of Visual Computing</title>
+<title>10&nbsp; Light Field – Foundations of Visual Computing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -50,8 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./display.html" rel="next">
-<link href="./imaging-noise.html" rel="prev">
+<link href="./rendering-re.html" rel="next">
+<link href="./rendering-radiometry.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -131,7 +131,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./imaging.html">Imaging</a></li><li class="breadcrumb-item"><a href="./imaging-isp.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-lightfield.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -238,7 +238,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rendering-lightfield.html" class="sidebar-item-text sidebar-link">
+  <a href="./rendering-lightfield.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></span></a>
   </div>
 </li>
@@ -303,7 +303,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link active">
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
   </div>
 </li>
@@ -348,17 +348,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#general-pipeline" id="toc-general-pipeline" class="nav-link active" data-scroll-target="#general-pipeline"><span class="header-section-number">19.1</span> General Pipeline</a></li>
-  <li><a href="#two-trends" id="toc-two-trends" class="nav-link" data-scroll-target="#two-trends"><span class="header-section-number">19.2</span> Two Trends</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-cam" id="toc-sec-chpt-mat-basics-radiometry-cam" class="nav-link active" data-scroll-target="#sec-chpt-mat-basics-radiometry-cam"><span class="header-section-number">10.1</span> The Measurement Equation</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-lf" id="toc-sec-chpt-mat-basics-radiometry-lf" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lf"><span class="header-section-number">10.2</span> Light Field</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-mat-basics-radiometry-lf-im" id="toc-sec-chpt-mat-basics-radiometry-lf-im" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lf-im"><span class="header-section-number">10.2.1</span> Light-Field Imaging</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-lf-ren" id="toc-sec-chpt-mat-basics-radiometry-lf-ren" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lf-ren"><span class="header-section-number">10.2.2</span> Light-Field Rendering</a></li>
+  <li><a href="#radiance-field-rendering" id="toc-radiance-field-rendering" class="nav-link" data-scroll-target="#radiance-field-rendering"><span class="header-section-number">10.2.3</span> Radiance-Field Rendering</a></li>
+  <li><a href="#light-field-display" id="toc-light-field-display" class="nav-link" data-scroll-target="#light-field-display"><span class="header-section-number">10.2.4</span> Light-Field Display</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./imaging.html">Imaging</a></li><li class="breadcrumb-item"><a href="./imaging-isp.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-lightfield.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-chpt-imaging-isp" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></h1>
+<h1 class="title"><span id="sec-chpt-mat-basics-radiometry-lf" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></span></h1>
 </div>
 
 
@@ -375,84 +381,161 @@ window.Quarto = {
 </header>
 
 
-<p>This chapter reviews basics imaging signal processing algorithms. The output of an image sensor is what we usually call the raw pixels. The raw pixels are not the usual RGB images we are used to see. For starters, if we use the common CFA approach for color sensing, each raw pixel has only one color channel response — the two missing channel responses must be recovered. We have also ignored noises, which are introduced every step along the signal transduction chain from incident lights to raw values. Therefore, the raw pixels usually go through a post-processing pipeline before raw sensor can be consumed, whether it is by a human observer or, increasingly, machine vision algorithms.</p>
-<p>That pipeline in modern cameras is implemented by a special hardware accelerator called the Image Signal Processor (ISP), which is an Intellectual Property (IP) block in a mobile System-on-a-Chip (SoC). Implementing the post-processing algorithms in dedicated hardware makes a lot of sense from an efficiency perspective: when you press a button to capture an image, you certainly do not want to wait for a long time or burn a lot of energy before the image is shown to you. As many mobile vendors do not actually control the optics and the sensor, the ISP increasingly has become the key product differentiator. As a result, many companies have their custom ISP designs; for instance, Qualcomm’s Snapdragon SoC has their own Spectra ISP.</p>
-<p>Many texts exist on the general ISP algorithm <span class="citation" data-cites="ramanath2005color karaimer2016software">(<a href="references.html#ref-ramanath2005color" role="doc-biblioref">Ramanath et al. 2005</a>; <a href="references.html#ref-karaimer2016software" role="doc-biblioref">Karaimer and Brown 2016</a>)</span> and the hardware design <span class="citation" data-cites="hegarty2014darkroom">(<a href="references.html#ref-hegarty2014darkroom" role="doc-biblioref">Hegarty et al. 2014</a>)</span>, which we refer you to. We also have a pedagogical ISP written in Python <span class="citation" data-cites="zhu2022isp">(<a href="references.html#ref-zhu2022isp" role="doc-biblioref">Zhu 2022a</a>)</span> that is a good reference, too. The goal of this section is to walk through the general pipeline and point out main ideas. One thing worth emphasizing here is that the ISP design is strongly influenced by the downstream task that consumes the output of the ISP. The two main consumers are human vision and machine vision. The former cares about visually pleasing images while the latter does not — as long as the key semantic information is retained and can be extracted.</p>
-<section id="general-pipeline" class="level2" data-number="19.1">
-<h2 data-number="19.1" class="anchored" data-anchor-id="general-pipeline"><span class="header-section-number">19.1</span> General Pipeline</h2>
-<p><a href="#fig-isp" class="quarto-xref">Figure&nbsp;<span>19.1</span></a> shows a general ISP pipeline and how it fits into the entire imaging pipeline. The ISP takes the raw pixels generated by the sensor and generates two types of output: the finished image, usually encoded in sRGB color space and compressed, and statistics of the image that are used to drive the so-called “3A” algorithms, i.e., auto white balance (AWB), auto exposure (AE), and auto focus (AF). We will not have much time to discuss the 3A algorithms, but they can be thought of as feedback controls over the rest of the imaging system: AWB controls the white balancing stage in the ISP, AE controls the exposure time of the image sensor, and AF controls the lens movement in the optics. The 3A algorithms usually run on the host CPU or an MCU because they are relatively simple computationally.</p>
-<div id="fig-isp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>Given that we have the basic understanding of radiometry, now seems like a good time to show how radiometry is of fundamental importance to computer graphics and imaging. We do so by building two important concepts using radiometry: the camera measurement equation (<a href="#sec-chpt-mat-basics-radiometry-cam" class="quarto-xref"><span>Section 10.1</span></a>) and the light field (<a href="#sec-chpt-mat-basics-radiometry-lf" class="quarto-xref"><span>Section 10.2</span></a>).</p>
+<section id="sec-chpt-mat-basics-radiometry-cam" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-cam"><span class="header-section-number">10.1</span> The Measurement Equation</h2>
+<p>For simplicity, let’s just consider one single pixel with a setup illustrated in <a href="#fig-cam_measurement_setup" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>.</p>
+<div id="fig-cam_measurement_setup" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-isp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/isp.svg" class="img-fluid figure-img" style="width:100.0%">
+<div aria-describedby="fig-cam_measurement_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/cam_measurement_setup.svg" class="img-fluid figure-img" style="width:30.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-isp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.1: A general ISP pipeline. The exact stages and arrangement of the stages are proprietary. The ISP pipeline outputs both the RGB (or other color spaces) images and image statistics; the latter is used to drive the so-called “3A” algorithms, which are feedback controls over the lens, sensor, and the ISP.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cam_measurement_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: Geometric setting for the camera measurement equation. Calculating the pixel value requires integrating the energy of all the rays hitting the pixel area, which requires knowing the light field inside the camera, which, in turn, requires knowing the light field in the scene and how the camera optics transfer the external light field to the internal light field.
 </figcaption>
 </figure>
 </div>
-<p>The ISP pipeline shown here is a general architecture that covers roughly what an ISP has to do. Keep in mind that the exact stages and their arrangements are proprietary and vary by vendors. Regardless, all ISPs operate on a set of basic principles.</p>
-<ul>
-<li><p>Recall that the raw pixel values output by the sensor should ideally be proportional to the scene luminance, but this is hardly the case in reality. The first thing an ISP does is to recover luminance-proportional values from the raw sensor output; this includes three main steps.</p>
-<ul>
-<li>The first step is called dark signal subtraction (DSS) or back-light subtraction. This is necessary because even when pixels receive no light at all, their raw values are usually not zero. This is because of “dark current”, formed by thermally dislodged electrons even in the absence of incident photons. Measuring the raw values of “optical black” pixels <span class="citation" data-cites="kameda2012solid">(<a href="references.html#ref-kameda2012solid" role="doc-biblioref">Kameda 2012</a>)</span> per frame and subtracting those values would allow us to eliminate the effect of the dark current<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
-<li>The second step is called flat-field correction or lens-shading correction (LSC). It accounts for the fact that the raw pixel values (with dark current subtracted) are spatially non-uniform, a phenomenon called “vignetting”, where even under uniform (flat-field) illumination peripheral pixels receive fewer photons. It is caused by a variety of reasons: the mechanical design (including microlenses) of the camera blocks more lights toward the edge of the pixel array, the radiance fall-off (the <span class="math inline">\(\cos\theta\)</span> term) when rays incident in an oblique angles, etc. We can pre-calibrate this non-uniformity, store it in an image, and compensate for the non-uniformity for each frame.</li>
-<li>The final step is denoising. Many excellent discussions of noise sources exist, such as <span class="citation" data-cites="boukhayma2018low">Boukhayma (<a href="references.html#ref-boukhayma2018low" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="nakamura2006image">Nakamura (<a href="references.html#ref-nakamura2006image" role="doc-biblioref">2006</a>, Chpt. 3.3)</span>, and <span class="citation" data-cites="rowlands2020physics">Rowlands (<a href="references.html#ref-rowlands2020physics" role="doc-biblioref">2020b</a>, Chpt. 3.8-3.9)</span>, which we refer you to. Regardless of the noise source, the general strategy of denoising is low-pass filtering: blurs are subjectively less objectionable than noises.</li>
-</ul>
-<p>It is important that these steps are taken at the very beginning of an ISP: if the pixel values are noisy, any subsequent manipulations on the pixels also manipulate, sometimes amplify, the noise.</p></li>
-<li><p>After that, we can assume that the raw pixels carry physical meanings: they are proportional to luminance, but of course because of the CFA, the color information is spatially sampled. The raw pixels before demosaicing are usually called pixels in the Bayer domain. The next stage is demosaicing, which essentially reconstructs the color information (all three channels) from the single-channel samples. While many reconstruction filters/kernels exist, the easiest and most commonly used filter is the bilinear filter.</p></li>
-<li><p>The demosaiced color information is encoded in the sensor’s native color space, because the sensor’s SSFs almost certainly do not match the cone fundamentals. So the next stage is to transform color from the sensor’s native color space to a typical color space such as the CIE XYZ space. We build an interactive tutorial to walk you through this correction process that you are invited to play with <span class="citation" data-cites="zhu2022cam">(<a href="references.html#ref-zhu2022cam" role="doc-biblioref">Zhu 2022b</a>)</span>. White balancing usually is implemented along with color correction, because both involve linear transformations of colors <span class="citation" data-cites="rowlands2020color zhu2021ca">(<a href="references.html#ref-rowlands2020color" role="doc-biblioref">Rowlands 2020a</a>; <a href="references.html#ref-zhu2021ca" role="doc-biblioref">Zhu 2021</a>)</span>.</p></li>
-<li><p>Usually there is a tone mapping stage in the ISP. The dynamic range of the raw pixels is usually (but not always) larger than that of a typical output medium (e.g., a display or a print). Tone mapping operators map signals between the two dynamic ranges so that the output image is visually appealing.</p></li>
-<li><p>The final output is usually compressed, either through an image compression algorithm (e.g., JPEG) or, in the case of video capturing, a video compression algorithm (e.g., H264).</p></li>
-</ul>
+<p>Each pixel is very small, but it has a finite area, say <span class="math inline">\(A_p\)</span>. Each pixel is constantly being bombarded by lights that enter the aperture, which has an area <span class="math inline">\(V\)</span>. The raw pixel value is roughly proportional to the energy it receives during the exposure time<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. So using the basic radiometry, we can write the total energy received by a pixel during the exposure time <span class="math inline">\(T\)</span> as:</p>
+<p><span id="eq-cam"><span class="math display">\[
+\begin{align}
+    Q = \int^{T} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega) \cos\theta~\text{d}\omega~\text{d}p~\text{d}t,
+\end{align}
+\tag{10.1}\]</span></span></p>
+<p>where <span class="math inline">\(\Omega(p, V)\)</span> explicitly expresses that a solid angle is determined by the aperture <span class="math inline">\(V\)</span> and a point <span class="math inline">\(p\)</span> on the pixel surface. Of course this quantity changes with <span class="math inline">\(p\)</span>. We sometimes omit <span class="math inline">\(p\)</span> and <span class="math inline">\(V\)</span> when it is clear what <span class="math inline">\(\Omega\)</span> refers to, but here, since the solid angle changes with the dummy variable <span class="math inline">\(p\)</span> in the integral equation, we express it explicitly. <!-- %similar to Equ 6.65b in CIFA. --> In graphics literature, this equation is sometimes called the <strong>measurement equation</strong> of an image sensor <span class="citation" data-cites="kolb1995realistic reinhard2008color pharr2023physically">(<a href="references.html#ref-kolb1995realistic" role="doc-biblioref">Kolb, Mitchell, and Hanrahan 1995</a>; <a href="references.html#ref-reinhard2008color" role="doc-biblioref">Reinhard et al. 2008</a>, Chpt. 6.8.1; <a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 5.4)</span>.</p>
+<p>The inner integral in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> is expressed over the solid angle, which varies with <span class="math inline">\(p\)</span>. A more common, but equivalent, formulation of the measurement equation is to re-express the inner integral over the aperture area <span class="math inline">\(V\)</span>:</p>
+<p><span id="eq-cam_area"><span class="math display">\[
+\begin{align}
+    Q = \frac{1}{d^2} \int^{T} \int^{A_p} \int^{V} L(p, \omega) |\cos^4\theta|~\text{d}p'~\text{d}p~\text{d}t,
+\end{align}
+\tag{10.2}\]</span></span></p>
+<p>where <span class="math inline">\(d\)</span> is the distance between the aperture plane and the sensor plane, and <span class="math inline">\(p'\)</span> is a point on the aperture plane. The derivation is available in standard texts <span class="citation" data-cites="pharr2023physically">(<a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 5.4.1)</span> and is omitted here.</p>
+<p>The measurement equation is concerned with the radiance distribution inside a camera, but the only reason there is a radiance distribution inside the camera is because there is an external radiance distribution in the scene impinging upon the camera optics, which act as a transfer function that turns external radiance into internal radiance. The transfer function is determined by the material properties of the camera optics (e.g., lenses, filters, etc.), whose effects are nothing more than surface scattering and volume scattering, topics of the next two chapters.</p>
+<p>Using <a href="#fig-cam_measurement_setup" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> as a concrete example, to know the radiance <span class="math inline">\(L(p, \omega)\)</span> inside the camera, we need to know <span class="math inline">\(L(p', \omega')\)</span>, the corresponding radiance in the scene and how the latter is transferred to the former. If the camera is an ideal pinhole, we have <span class="math inline">\(\omega = \omega'\)</span> and <span class="math inline">\(L(p, \omega) = L(p', \omega')\)</span> (ignoring diffraction). If the camera uses an ideal convex lens, the relationship between the two rays is governed by the Gauss lens equation (<a href="imaging-optics.html#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 16.3.1</span></a>) and, with some simplifications, <span class="math inline">\(L(p, \omega) = L(p', \omega')\)</span> still holds (<a href="imaging-optics.html#sec-chpt-imaging-optics-lens-rad" class="quarto-xref"><span>Section 16.3.5</span></a>). The transfer function is more complicated when as the camera optics become more complicated. Imaging we replace the lenses with a duck tape — how would the radiance be transferred?</p>
+<p>The measurement equation is important because it fundamentally allows us to, in theory, synthesize/render any image taken by any camera at any viewpoint — given that we know the radiance distribution of the scene. Using <a href="#fig-lf_setup" class="quarto-xref">Figure&nbsp;<span>10.2</span></a> as an example, let us simulate a new camera where the sensor is moved closer to the lens. To calculate the pixel value <span class="math inline">\(p_c\)</span> of this new camera imaging the scene, it requires nothing more than invoking the measurement equation <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> at <span class="math inline">\(p_c\)</span>, integrating over all the incident rays, which is a portion of the overall radiance distribution. This is why having access to the underlying radiance field allows us to synthesize new images.</p>
+<div id="fig-lf_setup" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_setup.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: The light field is described by the plenoptic function, which describes the radiance of any ray, i.e., the energy at any position, along any ray direction, at any wavelength, and at any time. In free space, the plenoptic function is invariant to traversal along the ray propagation direction (<span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> share the same radiance but not with <span class="math inline">\(P_3\)</span>). Having access to the entire light field allows us to synthesize any image taken by any camera (e.g., moving the sensor closer to the lens). A lens-based camera, however, is a poor device to capture the light field, since each pixel necessarily integrates many rays.
+</figcaption>
+</figure>
+</div>
+<p>Critically, observe that two of the rays that <span class="math inline">\(p_c\)</span> needs are already captured by <span class="math inline">\(p_a\)</span> and <span class="math inline">\(p_b\)</span> in the current camera. So it is only natural to ask: can we synthesize new images from images taken from the same scene? How do we systematically reason about this? Read on.</p>
 </section>
-<section id="two-trends" class="level2" data-number="19.2">
-<h2 data-number="19.2" class="anchored" data-anchor-id="two-trends"><span class="header-section-number">19.2</span> Two Trends</h2>
-<p>First, it has become increasingly common to co-design ISP algorithms, along with optics and image sensor design, with the downstream tasks. This is particularly important for machine vision, which is not concerned with the traditional goal of an ISP, i.e., generating visually pleasing images. A co-design between the ISP and the machine vision algorithms could potentially improve both task quality and efficiency.</p>
-<p>Second, a huge amount of recent efforts have been spent on exploring the notion of “neural ISP”, which is nothing more than replacing part, or the entirety, of the ISP pipeline with deep neural networks (DNNs). The learning paradigm has two main advantages: it replaces some of the heuristics in traditional ISP designs, and it allows the algorithm to be more easily updated without having to wait until the next generation of the product. The latter point is possible because a neural ISP pipeline can run on a DNN accelerator that almost all modern mobile SoCs have, and updating the algorithm is nothing more than updating the model weights.</p>
-<p>The key issue with neural ISP is speed and efficiency: a neural ISP model executed on a generic DNN accelerator is likely much slower and more energy hungry than traditional ISPs. So it is more likely that neural ISPs will find their main uses in offline image processing and photo finishing rather than in the real-time imaging pipeline.</p>
+<section id="sec-chpt-mat-basics-radiometry-lf" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lf"><span class="header-section-number">10.2</span> Light Field</h2>
+<p>There is a name for the distribution of the radiance in the space — it is called the <strong>light field</strong>, which refers to the complete set of all the possible radiances flowing through every possible direction. The light field is thus a function <span class="math inline">\(L(p, \omega, \lambda, t)\)</span>, describing the energy of a ray passing the position <span class="math inline">\(p\)</span>, along the direction <span class="math inline">\(\omega\)</span>, at time <span class="math inline">\(t\)</span> and wavelength <span class="math inline">\(\lambda\)</span>. This function is also called the <strong>plenoptic function</strong> <span class="citation" data-cites="bergen1991plenoptic gortler1996lumigraph levoy1996light">(<a href="references.html#ref-bergen1991plenoptic" role="doc-biblioref">Bergen and Adelson 1991</a>; <a href="references.html#ref-gortler1996lumigraph" role="doc-biblioref">Gortler et al. 1996</a>; <a href="references.html#ref-levoy1996light" role="doc-biblioref">Levoy and Hanrahan 1996</a>)</span>. <a href="#fig-lf_setup" class="quarto-xref">Figure&nbsp;<span>10.2</span></a> shows a tiny portion of the light field — six rays in fact; three inside the camera and three outside the camera.</p>
+<section id="sec-chpt-mat-basics-radiometry-lf-im" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lf-im"><span class="header-section-number">10.2.1</span> Light-Field Imaging</h3>
+<p>The field of <strong>light-field imaging</strong> is concerned with measuring the light field of a scene, which is a task impossible — we cannot possibly measure the radiance of every single ray. There are some simplifications we can make. For instance, we can assume that a ray’s energy does not change in free space during propagation, so the plenoptic function is invariant along the ray traversal direction; we can also assume that the light field is time-invariant during the period of interest. But still, the task of measuring the entire field is a daunting one.</p>
+<p>The next best thing is to sample the light field. A lens-based camera does a poor job of sampling the light field. The pixel <span class="math inline">\(p_a\)</span> integrates a bundle of rays, two of which are shown. Even assuming that the ray’s radiance remains unchanged as it passes through the lens, the inherent integration by the pixel (i.e., the measurement equation in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>10.1</span></a>) still means from the pixel value itself we could not decouple the radiance of the incident rays. Therefore, the ray that <span class="math inline">\(p_c\)</span> wants cannot be easily extracted from <span class="math inline">\(p_a\)</span>. Using an ideal pinhole helps, but pinhole imaging comes with its own limitations that make it infeasible in practice (<a href="imaging-optics.html#sec-chpt-imaging-optics-pinhole" class="quarto-xref"><span>Section 16.2</span></a>).</p>
+<div id="fig-lf_microlens_array" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_microlens_array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_microlens_array.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_microlens_array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.3: A pixel in a conventional camera (e.g., <span class="math inline">\(q\)</span>) integrates over a large portion of the light field. By placing a microlens array (here at where the sensor plane would have been in lieu of the microlens array), each pixel (e.g., <span class="math inline">\(p\)</span>) now integrates over a small portion of the light field.
+</figcaption>
+</figure>
+</div>
+<p>A vast literature exists in effective light-field sampling <span class="citation" data-cites="lam2015computational">(<a href="references.html#ref-lam2015computational" role="doc-biblioref">Lam 2015, sec. 3</a>)</span>. A good trade-off in practice is to insert a lenticular array or a microlens array between the main imaging lens and the sensor plane <span class="citation" data-cites="ng2006digital adelson1992single">(<a href="references.html#ref-ng2006digital" role="doc-biblioref">Ng 2006</a>; <a href="references.html#ref-adelson1992single" role="doc-biblioref">Adelson and Wang 1992</a>)</span>. The idea was first conceptualized by Gabriel Lippmann <span class="citation" data-cites="lippmann1908epreuves">(<a href="references.html#ref-lippmann1908epreuves" role="doc-biblioref">Lippmann 1908</a>)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a href="#fig-lf_microlens_array" class="quarto-xref">Figure&nbsp;<span>10.3</span></a> shows one such example. Without the microlens array, a pixel (e.g., <span class="math inline">\(q\)</span>) would integrate over all the rays that are subtended by the main lens, which is relatively large. Now we insert a microlens array and move the sensor plane a little farther back; each pixel (e.g., <span class="math inline">\(q\)</span>) now integrates over a much smaller portion of the light field (rays subtended by a microlens), providing a higher angular resolution in light-field measurement.</p>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-lf-ren" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lf-ren"><span class="header-section-number">10.2.2</span> Light-Field Rendering</h3>
+<p>The main reason we want to measure the light field is so that we can render new images. <strong>Light-field rendering</strong> is concerned with rendering a new image at a novel perspective (or by a novel camera configuration) given a set of images from other perspectives/configurations. It is a form of <strong>image-based rendering</strong>. In this sense, many familiar tasks such as interpolating between video frames, panoramic photography, and (stereoscopic) 360<span class="math inline">\(^\circ\)</span> video rendering are all light-field rendering in disguise.</p>
+<p>Given that each image is a sample of a portion of the light field followed by a low-pass filter (i.e., the integration in <a href="#eq-cam" class="quarto-xref">Equation&nbsp;<span>10.1</span></a>), rendering an image at a new perspective is nothing more than estimating another sample of the light field. As with any signal re-sampling task, the ideal solution to light-field rendering is to first reconstruct the underlying light field from a set of samples and then re-sample the light field given the new perspective. Signal filtering is necessary for both signal reconstruction and anti-aliasing, and the name of the game is to design good filters that are practically useful and computationally tractable <span class="citation" data-cites="pharr2023physically">(<a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>, Chpt. 8.8)</span>.</p>
+<p>Of course, modern image-based rendering, known under the name (neural) radiance-field rendering <span class="citation" data-cites="mildenhall2021nerf kerbl20233d">(<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">Mildenhall et al. 2021</a>; <a href="references.html#ref-kerbl20233d" role="doc-biblioref">Kerbl et al. 2023</a>)</span>, approaches the whole problem through machine learning and learns to reconstruct from massive amounts of data. To be precise, these methods do not reconstruct the light field; they reconstruct the radiance field.</p>
+</section>
+<section id="radiance-field-rendering" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="radiance-field-rendering"><span class="header-section-number">10.2.3</span> Radiance-Field Rendering</h3>
+<p><strong>Radiance field</strong>, popularized by <span class="citation" data-cites="mildenhall2021nerf">Mildenhall et al. (<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">2021</a>)</span>, applies a simplification and an addition to a light field. A radiance field is described by a function <span class="math inline">\(R(p, \omega, r, g, b, \sigma)\)</span>, describing the <span class="math inline">\((r, g, b)\)</span> color and the density <span class="math inline">\(\sigma\)</span> of a ray passing through a position <span class="math inline">\(p\)</span> along the direction <span class="math inline">\(\omega\)</span>. Compare that with the plenoptic function, we can see that the radiance field function simplifies the the energy spectrum into just the tristimulus color values and assumes that the energy is time-invariant.</p>
+<p>Importantly, the radiance field incorporates a new quantity, density, that is absent in the light field. Density has nothing to do with the energy of a ray; rather, it is/models an intrinsic property of the material (at position <span class="math inline">\(p\)</span> along ray direction <span class="math inline">\(\omega\)</span>). Materials are important for imaging and rendering, because they change the light field of the scene — through surface scattering and volume scattering. After all, rendering is a process of simulating the light-matter interactions.</p>
+<p>In essence, a radiance field combines both a (simplified) light field, a property of the light, and a density field, a property of the materials. This simple extension from light to materials allows radiance-field methods to model (in fact, learn) material properties, which in turn enables more effective light-field rendering. Conventional light-field rendering, in contrast, does not attempt to decouple the light field from the material properties.</p>
+<p>Radiance-field methods learn, from offline captured images (hence image-based rendering), to predict the tristimulus color values and density of a given point along a given direction:</p>
+<p><span class="math display">\[
+f: (p, \omega) \mapsto r, g, b, \sigma.
+\]</span></p>
+<p>The function <span class="math inline">\(f\)</span> can be parameterized in many ways. Two of most popular parameterizations are to use either a neural network <span class="citation" data-cites="mildenhall2021nerf">(<a href="references.html#ref-mildenhall2021nerf" role="doc-biblioref">Mildenhall et al. 2021</a>)</span> or a mixture of Gaussians <span class="citation" data-cites="kerbl20233d">(<a href="references.html#ref-kerbl20233d" role="doc-biblioref">Kerbl et al. 2023</a>)</span>. With <span class="math inline">\(f\)</span>, we can then synthesize/rendering any image — by co-opting the classic volume rendering. We will study density and radiance field in much greater detail in <a href="rendering-rte.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
+</section>
+<section id="light-field-display" class="level3" data-number="10.2.4">
+<h3 data-number="10.2.4" class="anchored" data-anchor-id="light-field-display"><span class="header-section-number">10.2.4</span> Light-Field Display</h3>
+<p><strong>Light-field display</strong> is a 3D display technology that attempts to reproduce the light field of a scene <span class="citation" data-cites="jones2007rendering wetzstein2012tensor lanman2013near">(<a href="references.html#ref-jones2007rendering" role="doc-biblioref">Jones et al. 2007</a>; <a href="references.html#ref-wetzstein2012tensor" role="doc-biblioref">Wetzstein et al. 2012</a>; <a href="references.html#ref-lanman2013near" role="doc-biblioref">Lanman and Luebke 2013</a>)</span>. Reproducing the light field provides the depth information of a scene that is missing in conventional 2D displays and can, thus, accurately drive the accommodation of eye lens in immersive (AR/VR) environment <span class="citation" data-cites="wann1995natural hoffman2008vergence">(<a href="references.html#ref-wann1995natural" role="doc-biblioref">Wann, Rushton, and Mon-Williams 1995</a>; <a href="references.html#ref-hoffman2008vergence" role="doc-biblioref">Hoffman et al. 2008</a>)</span>. Other technologies include varifocal displays, multi-focal displays, and holographic displays.</p>
+<div id="fig-lf_disp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lf_disp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/lf_disp.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lf_disp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.4: We first capture the light field (here using a pinhole array) and then reproduce the light field (by placing the displays on the other side of the pinhole array), offering depth cues.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-lf_disp" class="quarto-xref">Figure&nbsp;<span>10.4</span></a> shows a usual two-stage process of displaying a light-field. The first step is to capture the light field using some form of light-field imaging technique discussed in <a href="#sec-chpt-mat-basics-radiometry-lf-im" class="quarto-xref"><span>Section 10.2.1</span></a>; here we use a pinhole array placed in front of the sensor plane. Each pinhole covers a small group of the pixels on the sensor; the image captured by the group of pixels under each pinhole is called an <em>elemental image</em>. Once we have recorded the light field, we can then reproduce it. This is done by displaying the elemental images, each with a display placed on the other side of the pinhole array. Note that the relative positions of the display pixels are reversed from that of the the image pixels during light-field recording.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-boukhayma2018low" class="csl-entry" role="listitem">
-Boukhayma, Assim. 2018. <em>Ultra Low-Noise CMOS Image Sensors</em>. Springer.
+<div id="ref-adelson1992single" class="csl-entry" role="listitem">
+Adelson, Edward H, and John YA Wang. 1992. <span>“Single Lens Stereo with a Plenoptic Camera.”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> 14 (2): 99–106.
 </div>
-<div id="ref-hegarty2014darkroom" class="csl-entry" role="listitem">
-Hegarty, James, John S Brunhaver, Zachary DeVito, Jonathan Ragan-Kelley, Noy Cohen, Steven Bell, Artem Vasilyev, Mark Horowitz, and Pat Hanrahan. 2014. <span>“Darkroom: Compiling High-Level Image Processing Code into Hardware Pipelines.”</span> <em>ACM Trans. Graph.</em> 33 (4): 144–41.
+<div id="ref-bergen1991plenoptic" class="csl-entry" role="listitem">
+Bergen, James R, and Edward H Adelson. 1991. <span>“The Plenoptic Function and the Elements of Early Vision.”</span> <em>Computational Models of Visual Processing</em> 1 (8): 3.
 </div>
-<div id="ref-kameda2012solid" class="csl-entry" role="listitem">
-Kameda, Shinjiro. 2012. <span>“Solid State Image Pickup Device Having Optical Black Pixels with Temperature Characteristics Above and Below Temperature Characteristics of Aperture Pixels.”</span> Google Patents.
+<div id="ref-gortler1996lumigraph" class="csl-entry" role="listitem">
+Gortler, Steven J, Radek Grzeszczuk, Richard Szeliski, and Michael F Cohen. 1996. <span>“The Lumigraph.”</span> In <em>ACM Transactions on Graphics (ToG)</em>, 43–54. ACM New York, NY, USA.
 </div>
-<div id="ref-karaimer2016software" class="csl-entry" role="listitem">
-Karaimer, Hakki Can, and Michael S Brown. 2016. <span>“A Software Platform for Manipulating the Camera Imaging Pipeline.”</span> In <em>Computer Vision–ECCV 2016: 14th European Conference, Amsterdam, the Netherlands, October 11–14, 2016, Proceedings, Part i 14</em>, 429–44. Springer.
+<div id="ref-hoffman2008vergence" class="csl-entry" role="listitem">
+Hoffman, David M, Ahna R Girshick, Kurt Akeley, and Martin S Banks. 2008. <span>“Vergence–Accommodation Conflicts Hinder Visual Performance and Cause Visual Fatigue.”</span> <em>Journal of Vision</em> 8 (3): 33–33.
 </div>
-<div id="ref-nakamura2006image" class="csl-entry" role="listitem">
-Nakamura, Junichi. 2006. <em>Image Sensors and Signal Processing for Digital Still Cameras</em>. CRC press.
+<div id="ref-jones2007rendering" class="csl-entry" role="listitem">
+Jones, Andrew, Ian McDowall, Hideshi Yamada, Mark Bolas, and Paul Debevec. 2007. <span>“Rendering for an Interactive 360 Light Field Display.”</span> In <em>ACM SIGGRAPH 2007 Papers</em>, 40–es.
 </div>
-<div id="ref-ramanath2005color" class="csl-entry" role="listitem">
-Ramanath, Rajeev, Wesley E Snyder, Youngjun Yoo, and Mark S Drew. 2005. <span>“Color Image Processing Pipeline.”</span> <em>IEEE Signal Processing Magazine</em> 22 (1): 34–43.
+<div id="ref-kerbl20233d" class="csl-entry" role="listitem">
+Kerbl, Bernhard, Georgios Kopanas, Thomas Leimkühler, and George Drettakis. 2023. <span>“3d Gaussian Splatting for Real-Time Radiance Field Rendering.”</span> <em>ACM Trans. Graph.</em> 42 (4): 139–31.
 </div>
-<div id="ref-rowlands2020color" class="csl-entry" role="listitem">
-Rowlands, D Andrew. 2020a. <span>“Color Conversion Matrices in Digital Cameras: A Tutorial.”</span> <em>Optical Engineering</em> 59 (11): 110801–1.
+<div id="ref-kolb1995realistic" class="csl-entry" role="listitem">
+Kolb, Craig, Don Mitchell, and Pat Hanrahan. 1995. <span>“A Realistic Camera Model for Computer Graphics.”</span> In <em>Proceedings of the 22nd Annual Conference on Computer Graphics and Interactive Techniques</em>, 317–24.
 </div>
-<div id="ref-rowlands2020physics" class="csl-entry" role="listitem">
-———. 2020b. <em>Physics of Digital Photography</em>. 2nd ed. IOP Publishing.
+<div id="ref-lam2015computational" class="csl-entry" role="listitem">
+Lam, Edmund Y. 2015. <span>“Computational Photography with Plenoptic Camera and Light Field Capture: Tutorial.”</span> <em>Journal of the Optical Society of America A</em> 32 (11): 2021–32.
 </div>
-<div id="ref-zhu2021ca" class="csl-entry" role="listitem">
-Zhu, Yuhao. 2021. <span>“<span class="nocase">Principles and Practices of Chromatic Adaptation</span>.”</span> <a href="https://yuhaozhu.com/blog/chromatic-adaptation.html" class="uri">https://yuhaozhu.com/blog/chromatic-adaptation.html</a>.
+<div id="ref-lanman2013near" class="csl-entry" role="listitem">
+Lanman, Douglas, and David Luebke. 2013. <span>“Near-Eye Light Field Displays.”</span> <em>ACM Transactions on Graphics (TOG)</em> 32 (6): 1–10.
 </div>
-<div id="ref-zhu2022isp" class="csl-entry" role="listitem">
-———. 2022a. <span>“<span class="nocase">A pedagogical ISP pipeline in Python</span>.”</span> <a href="https://github.com/horizon-research/isp" class="uri">https://github.com/horizon-research/isp</a>.
+<div id="ref-levoy1996light" class="csl-entry" role="listitem">
+Levoy, Marc, and Pat Hanrahan. 1996. <span>“Light Field Rendering.”</span> In <em>ACM Transactions on Graphics (ToG)</em>, 31–42. ACM New York, NY, USA.
 </div>
-<div id="ref-zhu2022cam" class="csl-entry" role="listitem">
-———. 2022b. <span>“<span class="nocase">Exploring Camera Color Space and Color Correction</span>.”</span> <a href="https://horizon-lab.org/colorvis/camcolor.html" class="uri">https://horizon-lab.org/colorvis/camcolor.html</a>.
+<div id="ref-lippmann1908epreuves" class="csl-entry" role="listitem">
+Lippmann, Gabriel. 1908. <span>“Epreuves Reversibles Donnant La Sensation Du Relief.”</span> <em>J. Phys. Theor. Appl.</em> 7 (1): 821–25.
+</div>
+<div id="ref-mildenhall2021nerf" class="csl-entry" role="listitem">
+Mildenhall, Ben, Pratul P Srinivasan, Matthew Tancik, Jonathan T Barron, Ravi Ramamoorthi, and Ren Ng. 2021. <span>“Nerf: Representing Scenes as Neural Radiance Fields for View Synthesis.”</span> <em>Communications of the ACM</em> 65 (1): 99–106.
+</div>
+<div id="ref-ng2006digital" class="csl-entry" role="listitem">
+Ng, Ren. 2006. <span>“Digital Light Field Photography.”</span> PhD thesis, Stanford University.
+</div>
+<div id="ref-pharr2023physically" class="csl-entry" role="listitem">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2023. <em>Physically Based Rendering: From Theory to Implementation</em>. 4th ed. MIT Press.
+</div>
+<div id="ref-reinhard2008color" class="csl-entry" role="listitem">
+Reinhard, Erik, Erum Arif Khan, Ahmet Oguz Akyuz, and Garrett Johnson. 2008. <em>Color Imaging: Fundamentals and Applications</em>. CRC Press.
+</div>
+<div id="ref-wann1995natural" class="csl-entry" role="listitem">
+Wann, John P, Simon Rushton, and Mark Mon-Williams. 1995. <span>“Natural Problems for Stereoscopic Depth Perception in Virtual Environments.”</span> <em>Vision Research</em> 35 (19): 2731–36.
+</div>
+<div id="ref-wetzstein2012tensor" class="csl-entry" role="listitem">
+Wetzstein, Gordon, Douglas R Lanman, Matthew Waggener Hirsch, and Ramesh Raskar. 2012. <span>“Tensor Displays: Compressive Light Field Synthesis Using Multilayer Displays with Directional Backlighting.”</span>
 </div>
 </div>
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Note, however, that DSS does not eliminate the effect of dark current <em>shot noise</em>, which results from fluctuations in dark current during the exposure time (so the dark current is in theory different for different pixels even if they have the exact temperature), and the effect of dark current <em>non-uniformity</em>, which results from spatial differences in dark current across pixels (because of, for instance, the spatial temperature differences).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Assuming there is no noise and there is no quantization error in converting analog signals to digital signals.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Lippmann did not get to implement the idea. He won the Nobel Prize in Physics in 1908 for inventing, for the first time, a method for color photography.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -858,13 +941,13 @@ Zhu, Yuhao. 2021. <span>“<span class="nocase">Principles and Practices of Chro
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./imaging-noise.html" class="pagination-link" aria-label="Noise">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Noise</span></span>
+      <a href="./rendering-radiometry.html" class="pagination-link" aria-label="Radiometry and Photometry">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Radiometry and Photometry</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./display.html" class="pagination-link" aria-label="Display">
-        <span class="nav-page-text">Display</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rendering-re.html" class="pagination-link" aria-label="Rendering Equation">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
