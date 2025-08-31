@@ -89,6 +89,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -147,6 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -245,7 +254,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -263,7 +272,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Radiative Transfer Equation and Volume Rendering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -357,14 +366,14 @@ window.Quarto = {
   <li><a href="#light-field-display" id="toc-light-field-display" class="nav-link" data-scroll-target="#light-field-display"><span class="header-section-number">10.2.4</span> Light-Field Display</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-lightfield.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-chpt-mat-basics-radiometry-lf" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></span></h1>
+<h1 class="title"><span id="sec-chpt-mat-basics-lf" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></span></h1>
 </div>
 
 
@@ -946,8 +955,8 @@ Wetzstein, Gordon, Douglas R Lanman, Matthew Waggener Hirsch, and Ramesh Raskar.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rendering-re.html" class="pagination-link" aria-label="Rendering Equation">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rendering-re.html" class="pagination-link" aria-label="Rendering Surface Scattering">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -956,4 +965,4 @@ Wetzstein, Gordon, Douglas R Lanman, Matthew Waggener Hirsch, and Ramesh Raskar.
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

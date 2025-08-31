@@ -89,6 +89,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -147,6 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -245,7 +254,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -263,7 +272,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Radiative Transfer Equation and Volume Rendering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -371,7 +380,7 @@ window.Quarto = {
   <li><a href="#sec-chpt-hvs-percept-postretina-cortex" id="toc-sec-chpt-hvs-percept-postretina-cortex" class="nav-link" data-scroll-target="#sec-chpt-hvs-percept-postretina-cortex"><span class="header-section-number">2.5.2</span> Visual Cortex</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -443,7 +452,7 @@ Figure&nbsp;2.2: Much of the optical bending power in the eye is contributed by 
 <p>The main goal of the eye is to focus light on the retina. To focus light the optics need to bend light, which is achieved collectively by all the ocular media in the eye, including the cornea, aqueous humour, lens, and vitreous humour. This is illustrated in <a href="#fig-eye_optics_focus" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>. Lights bend because of the difference in refractive index between adjacent ocular media. Most of the bending is done by the cornea because there is a large difference in the refractive index between the cornea and the air. The lens also contributes to light bending, albeit with a lower contribution, because the differences in refractive index between the lens and its adjacent media (aqueous fluid and vitreous fluid) are relatively small.</p>
 <p>The cornea is fixed in shape. Lens, in contrast, is malleable in its shape. The ciliary muscle controls the contraction and relaxation of the lens, which changes the focal length, and thus bending power, of the lens, and by extension the entire eye optical system. Adjusting the focal length to bring an object into focus is called <strong>accommodation</strong>.</p>
 <p>But if the ciliary muscle cannot properly adjust the lens, we get defocused blur, which is a form of optical <strong>aberration</strong>. There are a number of other optical aberrations; astigmatism and chromatic aberration are two common ones found in eyes. While not an optical aberration, diffraction also contributes substantially to visible blurs when the pupil size is very small (e.g., under strong illumination).</p>
-<p>For our purpose, ``imperfections’’ introduced by eye optics (aberration and diffraction) can be modeled by the Point Spread Function (PSF) of the optical system, which we will see later in .</p>
+<p>For our purpose, “imperfections” introduced by eye optics (aberration and diffraction) can be modeled by the Point Spread Function (PSF) of the optical system, which we will see later in <a href="imaging-optics.html#sec-chpt-imaging-optics-modeling" class="quarto-xref"><span>Section 16.5</span></a>.</p>
 </section>
 <section id="sec-chpt-hvs-percept-absorb" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="sec-chpt-hvs-percept-absorb"><span class="header-section-number">2.2.2</span> Ocular Media Absorb Light Selectively</h3>
@@ -468,7 +477,7 @@ Figure&nbsp;2.3: Transmittance spectra of ocular media. Adapted from <span class
 <p>Interestingly, while we might be used to neurons communicating through spikes, i.e., action potentials <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the RGCs are the only type of neurons on the retina that spike. The rest of the neurons are non-spiking neurons; they communicate through graded potentials.</p>
 <section id="optical-to-electrical-signal-transduction-takes-place-in-photoreceptors" class="level4">
 <h4 class="anchored" data-anchor-id="optical-to-electrical-signal-transduction-takes-place-in-photoreceptors">Optical-to-Electrical Signal Transduction Takes Place in Photoreceptors</h4>
-<p>Photoreceptors are where optical signals are transformed into electrical signals. Photoreceptors absorb incident photons; once a photon is absorbed, it could generate electrical responses through the process of <strong>phototransduction</strong> cascade <span class="citation" data-cites="wald1968molecular">(<a href="references.html#ref-wald1968molecular" role="doc-biblioref">Wald 1968</a>)</span> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The electrical response can be represented as photocurrents or, equivalently, photovoltages across the cell membrane of the photoreceptor. We will have a lot to say about this process later in .</p>
+<p>Photoreceptors are where optical signals are transformed into electrical signals. Photoreceptors absorb incident photons; once a photon is absorbed, it could generate electrical responses through the process of <strong>phototransduction</strong> cascade <span class="citation" data-cites="wald1968molecular">(<a href="references.html#ref-wald1968molecular" role="doc-biblioref">Wald 1968</a>)</span> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The electrical response can be represented as photocurrents or, equivalently, photovoltages across the cell membrane of the photoreceptor. We will have a lot to say about this process later in <a href="hvs-receptor.html" class="quarto-xref"><span>Chapter 3</span></a>.</p>
 <div id="fig-retinal_nn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-retinal_nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -513,7 +522,7 @@ Figure&nbsp;2.5: Vertebrate eyes have a blind spot (scotoma) because the RGC axo
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-rodcone"><span class="header-section-number">2.4.1</span> Rod vs.&nbsp;Cone Specialization</h3>
 <section id="sensitivity-and-kinetics" class="level4">
 <h4 class="anchored" data-anchor-id="sensitivity-and-kinetics">Sensitivity and Kinetics</h4>
-<p>There are two types of photoreceptors: rods and cones. Perhaps the most important difference between the two is that rods are much more sensitive to light than cones. This is evident in <a href="#fig-rod_cone_response" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>, which compares the single-photon response of rods and cones in primates. The response here is represented by the photocurrent, the change of current that flows into the photoreceptor as a result of photon absorption, which we will talk about in detail later in .</p>
+<p>There are two types of photoreceptors: rods and cones. Perhaps the most important difference between the two is that rods are much more sensitive to light than cones. This is evident in <a href="#fig-rod_cone_response" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>, which compares the single-photon response of rods and cones in primates. The response here is represented by the photocurrent, the change of current that flows into the photoreceptor as a result of photon absorption, which we will talk about in detail later in <a href="hvs-receptor.html" class="quarto-xref"><span>Chapter 3</span></a>.</p>
 <div id="fig-rod_cone_response" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rod_cone_response-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -540,7 +549,7 @@ Figure&nbsp;2.7: Sensitivity range of rod-mediated vision and cone-mediated visi
 </section>
 <section id="sec-chpt-hvs-percept-retinafunc-rodcone-spectral" class="level4">
 <h4 class="anchored" data-anchor-id="sec-chpt-hvs-percept-retinafunc-rodcone-spectral">Spectral Sensitivity and Color Vision</h4>
-<p>Yet another important difference between rods and cones is that the cone-mediated vision provides color information whereas rod-mediated vision encodes only light intensity but not color. This is because there is only one class of rods but three different classes of cones, each with a different (linearly independent) wavelength sensitivity function. Fundamentally, color arises from the wavelength information in incident lights. Having three types allows cones to have a stronger capability of encoding wavelength information than rods. The entire is devoted to color vision; for now, let us just appreciate how different cones have different wavelength selectivities.</p>
+<p>Yet another important difference between rods and cones is that the cone-mediated vision provides color information whereas rod-mediated vision encodes only light intensity but not color. This is because there is only one class of rods but three different classes of cones, each with a different (linearly independent) wavelength sensitivity function. Fundamentally, color arises from the wavelength information in incident lights. Having three types allows cones to have a stronger capability of encoding wavelength information than rods. The entire <a href="hvs-color.html" class="quarto-xref"><span>Chapter 4</span></a> is devoted to color vision; for now, let us just appreciate how different cones have different wavelength selectivities.</p>
 <div id="fig-receptor_sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-receptor_sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1481,4 +1490,4 @@ Wodnicki, Robert, Gordon W Roberts, and Martin D Levine. 1995. <span>“A Foveat
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

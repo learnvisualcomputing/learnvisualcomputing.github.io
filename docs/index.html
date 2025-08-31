@@ -90,6 +90,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
 
 </head>
@@ -119,6 +125,9 @@ div.csl-indent {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -217,7 +226,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -235,7 +244,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Radiative Transfer Equation and Volume Rendering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -324,10 +333,12 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#why-this-book" id="toc-why-this-book" class="nav-link" data-scroll-target="#why-this-book">Why This Book</a></li>
   <li><a href="#what-do-we-not-cover" id="toc-what-do-we-not-cover" class="nav-link" data-scroll-target="#what-do-we-not-cover">What Do We Not Cover</a></li>
+  <li><a href="#book-structure" id="toc-book-structure" class="nav-link" data-scroll-target="#book-structure">Book Structure</a></li>
   <li><a href="#other-books" id="toc-other-books" class="nav-link" data-scroll-target="#other-books">Other Books</a></li>
+  <li><a href="#a-live-document" id="toc-a-live-document" class="nav-link" data-scroll-target="#a-live-document">A Live Document</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -370,7 +381,7 @@ div.csl-indent {
 <p>But wait, we are still not done! The light emitted by the display enters our eyes, where photoreceptors in the retina convert the optical signals back into electrical ones. The retina and, further downstream, the brain, process these signals, eventually giving rise to our perception and cognition: we see a virtual mug sitting naturally on a real table.</p>
 <section id="why-this-book" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-book">Why This Book</h2>
-<p>Visual computing is a wonderfully broad field, touching everything from the sciences of human vision to the engineering of sensors, optics, displays, and rendering. The main motivation for writing the book grew out of a simple observation: while each of these areas is well covered in excellent texts, they are rarely explored together in a single, coherent story.</p>
+<p>Visual computing is wonderfully broad, touching everything from the sciences of human vision to the engineering of sensors, optics, displays, and rendering systems. The main motivation for writing the book grew out of a simple observation: while each of these areas is well covered in excellent texts, they are rarely explored together in a single, coherent story.</p>
 <p>Why bring them together? If you are an engineer, the ability to move comfortably “across the stack” let you see the whole system at once, finding connections and optimizations that are otherwise not obvious when working in isolation. For the scientifically curious, there is joy in understanding the fundamentals even without immediate application. As Edwin H. Land once put it, the true application of science is that “we finally know what we are doing.”</p>
 <p>Every so often I ask myself: why write this book at all, when none of the material is new and so many fine resources already exist? Then I remind myself that most textbooks contain no new results; by the time knowledge reaches a textbook, it is already established. What books do is to <em>offer perspectives</em>, and that always reveals the idiosyncrasies of the author.</p>
 <p>The perspective I most want to convey is this: every conclusion is drawn based on a set of precisely defined terms and assumptions, which, unfortunately, are not always announced. By taking a first-principles approach, I hope to make those definitions and assumptions explicit, so it is always clear when each conclusion applies and when it does not.</p>
@@ -383,12 +394,24 @@ div.csl-indent {
 <p>In imaging and display, we review basic principles (optical-electrical signal transductions) while being intentionally light on implementation details — these evolve quickly and are often proprietary.</p>
 <p>In rendering, we focus on the classical computational models of light-matter interactions while completely ignoring the implementation issues such as the modern graphics pipelines (e.g., programming Vulkan) and GPU hardware. We will not cover the emerging (neural) rendering paradigm in detail, but will explore its connections to the classical theories.</p>
 </section>
+<section id="book-structure" class="level2">
+<h2 class="anchored" data-anchor-id="book-structure">Book Structure</h2>
+<p>The book starts with an overview of or, rather, an invitation to visual computing, putting different topics we will discuss into a unified framework. The rest of the book is then divided into four major parts.</p>
+<p><strong>Part I</strong> is concerned with the human visual system. The output of an imaging system, a display, or a rendering system is ultimately consumed by humans. Even computer vision algorithms that analyze visual inputs take inspirations from human vision.</p>
+<p><strong>Part II</strong> discusses rendering, focusing on modeling light-matter interactions. We will mostly be taking a geometrical optics perspective, using radiometry and radiative transfer (or light transport) as our main theoretical tool.</p>
+<p><strong>Part III</strong> discusses imaging, where we will cover how a modern digital camera forms an image from a real-world scene. We will discuss the imaging optics, the image sensor architecture, and the post-sensing image signal processing. Along the way, we focus on computational modeling of the image formation process, taking a linear system perspective and accounting for the presence of noise.</p>
+<p><strong>Part IV</strong> discusses displays. We will discuss modern display architectures, both its optical components that turn pixels to lights and electrical components that orchestrate the optical components. We will see how different architecture control light intensity and color production.</p>
+</section>
 <section id="other-books" class="level2">
 <h2 class="anchored" data-anchor-id="other-books">Other Books</h2>
 <p>This is necessarily an incomplete list, because I can mention only books that I find myself reviewing from time to time.</p>
 <p>For human vision, the monumental book by <span class="citation" data-cites="wandell1995foundations">Wandell (<a href="references.html#ref-wandell1995foundations" role="doc-biblioref">1995</a>)</span> is a must read; it is <a href="https://wandell.github.io/FOV-1995/">freely available</a>, and a second version is in the works. <span class="citation" data-cites="cornsweet1970visual">Cornsweet (<a href="references.html#ref-cornsweet1970visual" role="doc-biblioref">1970</a>)</span>, while slightly dated, is an all-time classic that has inspired a whole generation of vision scientists. <span class="citation" data-cites="rodieck1998first">Rodieck (<a href="references.html#ref-rodieck1998first" role="doc-biblioref">1998</a>)</span> is a breathtaking walk-through of the early stages in vision (eye optics and retinal processing), where every step is described <em>operationally</em> rather than conceptually. In the end, you get the feeling that <em>there is no magic</em>. I also like <span class="citation" data-cites="nelson2017photon">Nelson (<a href="references.html#ref-nelson2017photon" role="doc-biblioref">2017</a>)</span>, covering light, imaging, and vision — written by a physicist and from a physical perspective. What’s most powerful about these books is that none of them relies on complicated equations — they focus on building intuitions and basic principles first. <span class="citation" data-cites="bass2009handbook">Bass et al. (<a href="references.html#ref-bass2009handbook" role="doc-biblioref">2009</a>)</span> provides a comprehensive and authoritative coverage of various topics in vision and visual optics. <span class="citation" data-cites="goldstein2009sensation10ed">Goldstein and Brockmole (<a href="references.html#ref-goldstein2009sensation10ed" role="doc-biblioref">2017</a>)</span> and <span class="citation" data-cites="yantis2017sensation">Yantis and Abrams (<a href="references.html#ref-yantis2017sensation" role="doc-biblioref">2017</a>)</span> are popular introductory texts to human perception (vision and beyond).</p>
-<p>For rendering, <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>)</span> is a golden reference, and <span class="citation" data-cites="dorsey2010digital">Dorsey, Rushmeier, and Sillion (<a href="references.html#ref-dorsey2010digital" role="doc-biblioref">2010</a>)</span> provides a comprehensive coverage of light-matter in the graphics context. <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995</a>)</span> is bit dated but a classic. <span class="citation" data-cites="thompson2011visual">Thompson et al. (<a href="references.html#ref-thompson2011visual" role="doc-biblioref">2011</a>)</span> provides a good survey of aspects of visual perception that are most relevant to computer graphics and, thus, must be considered when designing rendering systems. For a gentle discussion of light-matter interactions, I would highly recommend <span class="citation" data-cites="johnsen2012optics">Johnsen (<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">2012</a>)</span>, which is written in the biological context, but the intuitions built are general. For a technical treatment in the realm of classical electromagnetic theory, read <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>)</span>. It is written for atmospheric scientists but, again, the principles apply broadly. Of course, for a quantum treatment of light-matter interactions, I’d be remiss not to mention <span class="citation" data-cites="feynman1985qed">Feynman (<a href="references.html#ref-feynman1985qed" role="doc-biblioref">1985</a>)</span>.</p>
-<p>There are comparatively fewer texts on imaging. The one I particularly like is <span class="citation" data-cites="rowlands2020physics">Rowlands (<a href="references.html#ref-rowlands2020physics" role="doc-biblioref">2020</a>)</span>, which covers almost every single component in imaging, with rigor, from optics to image sensors and image signal processing. <span class="citation" data-cites="trussell2008fundamentals">Trussell and Vrhel (<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="nakamura2006image">Nakamura (<a href="references.html#ref-nakamura2006image" role="doc-biblioref">2006</a>)</span> are two excellent references; the former focuses more on the principles (of both imaging and display) and the latter is heavier on the hardware implementations of image sensors.</p>
+<p>For rendering, <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>)</span> is a golden reference, and <span class="citation" data-cites="dorsey2010digital">Dorsey, Rushmeier, and Sillion (<a href="references.html#ref-dorsey2010digital" role="doc-biblioref">2010</a>)</span> provides a comprehensive coverage of light-matter interactions in the graphics context. <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995</a>)</span> is bit dated but a classic. For a gentle discussion of light-matter interactions, I would highly recommend <span class="citation" data-cites="johnsen2012optics">Johnsen (<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">2012</a>)</span>, which is written in the biological context, but the intuitions built are general. For a technical treatment in the realm of classical electromagnetic theory, read <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>)</span>. It is written for atmospheric scientists but, again, the principles apply broadly. Of course, for a quantum treatment of light-matter interactions, I’d be remiss not to mention <span class="citation" data-cites="feynman1985qed">Feynman (<a href="references.html#ref-feynman1985qed" role="doc-biblioref">1985</a>)</span>. <span class="citation" data-cites="thompson2011visual">Thompson et al. (<a href="references.html#ref-thompson2011visual" role="doc-biblioref">2011</a>)</span> provides a good survey of visual perception and how explicitly accounting for it can help design better rendering systems.</p>
+<p>There are comparatively fewer texts on imaging. The one I particularly like is <span class="citation" data-cites="rowlands2020physics">Rowlands (<a href="references.html#ref-rowlands2020physics" role="doc-biblioref">2020</a>)</span>, which covers almost every single component in imaging, with rigor, from optics to image sensors and image signal processing. <span class="citation" data-cites="trussell2008fundamentals">Trussell and Vrhel (<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="nakamura2006image">Nakamura (<a href="references.html#ref-nakamura2006image" role="doc-biblioref">2006</a>)</span> are two excellent references; the former focuses more on the principles (of both imaging and display) and the latter is heavier on the hardware implementations (of image sensors).</p>
+</section>
+<section id="a-live-document" class="level2">
+<h2 class="anchored" data-anchor-id="a-live-document">A Live Document</h2>
+<p>One nice thing about publishing a book online is that it can be a live document, which means two things. First, it allows me to keep working on the book. In fact, you might notice that some chapters are to-be-written. Second, <em>you</em> can contribute too! If you see a typo, a technical error, or just an exposition that could use clarification, feel free to open an issue. As mentioned above, the book is necessarily incompletely, so if you think of a topic that warrants coverage, send me an email so that we can expand the book <em>together</em>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -861,4 +884,4 @@ Yantis, Steven, and Richard A Abrams. 2017. <em>Sensation and Perception</em>. 2
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

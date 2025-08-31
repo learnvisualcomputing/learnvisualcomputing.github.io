@@ -89,6 +89,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -147,6 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -245,7 +254,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -263,7 +272,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Radiative Transfer Equation and Volume Rendering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -357,7 +366,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-chpt-mat-basics-model" id="toc-sec-chpt-mat-basics-model" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-model"><span class="header-section-number">8.3</span> Observed Reflection and Transmission</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -454,7 +463,7 @@ Figure&nbsp;8.1: At the Air-Material<sub>1</sub> interface, photons are either r
 </section>
 <section id="oil-painting-example" class="level4">
 <h4 class="anchored" data-anchor-id="oil-painting-example">Oil Painting Example</h4>
-<p>To put things together, consider a painting. One way paintings are characterized is by how they were painted, and we might see things like ``oil on canvas’’. Oil means the paint is oil paint, where paint pigments are dispersed into (usually linseed) oil, which is usually called the binder or the vehicle. Canvas is the substrate, which is nothing more than another material that is right beneath the painting.</p>
+<p>To put things together, consider a painting. One way paintings are characterized is by how they were painted, and we might see things like “oil on canvas”. Oil means the paint is oil paint, where paint pigments are dispersed into (usually linseed) oil, which is usually called the binder or the vehicle. Canvas is the substrate, which is nothing more than another material that is right beneath the painting.</p>
 <p>The oil itself is somewhat transparent, especially when you just apply a thin layer on the canvas. But with the paint pigments, the entire oil paint becomes a translucent material. When photons leave the oil paints, they immediately interact with the canvas. If the paint layer is thick enough, virtually no photon can ever reach the canvas. But if the paint is relatively thin, the property of the substrate will contribute to the overall color of the paint. For instance, if the canvas is white-ish, a good percentage of the photons will be reflected back. The same paint would look much darker if the canvas is black, which absorbs a lot of photons.</p>
 </section>
 </section>
@@ -931,4 +940,4 @@ Johnston-Feller, Ruth. 2001. <em>Color Science in the Examination of Museum Obje
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
