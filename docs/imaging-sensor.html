@@ -155,6 +155,29 @@ window.Quarto = {
       <a href="./">Foundations of Visual Computing</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
 </div>
     </div>
       </div>
@@ -379,7 +402,10 @@ window.Quarto = {
   <li><a href="#sec-chpt-imaging-sensor-optics-ml" id="toc-sec-chpt-imaging-sensor-optics-ml" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-ml"><span class="header-section-number">17.4.2</span> Microlenses</a></li>
   <li><a href="#sec-chpt-imaging-sensor-optics-aa" id="toc-sec-chpt-imaging-sensor-optics-aa" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-aa"><span class="header-section-number">17.4.3</span> Anti-Aliasing Filters</a></li>
   </ul></li>
-  <li><a href="#sec-chpt-imaging-sensor-optics-monomodel" id="toc-sec-chpt-imaging-sensor-optics-monomodel" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-monomodel"><span class="header-section-number">17.5</span> Monochromatic, Noise-Free Sensor Model</a></li>
+  <li><a href="#sec-chpt-imaging-sensor-optics-monomodel" id="toc-sec-chpt-imaging-sensor-optics-monomodel" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-monomodel"><span class="header-section-number">17.5</span> Monochromatic, Noise-Free Sensor Model</a>
+  <ul class="collapse">
+  <li><a href="#sec-chpt-imaging-sensor-optics-monomodel-ssf" id="toc-sec-chpt-imaging-sensor-optics-monomodel-ssf" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-monomodel-ssf"><span class="header-section-number">17.5.1</span> Spectral Sensitivity Function</a></li>
+  </ul></li>
   <li><a href="#sec-chpt-imaging-sensor-optics-pixel" id="toc-sec-chpt-imaging-sensor-optics-pixel" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-optics-pixel"><span class="header-section-number">17.6</span> What is a Pixel?</a></li>
   <li><a href="#sec-chpt-imaging-sensor-color" id="toc-sec-chpt-imaging-sensor-color" class="nav-link" data-scroll-target="#sec-chpt-imaging-sensor-color"><span class="header-section-number">17.7</span> Color Sensing</a>
   <ul class="collapse">
@@ -872,8 +898,8 @@ Figure&nbsp;17.17: (a): a birefringent material that, through double refraction,
 \end{align}
 \tag{17.12}\]</span></span></p>
 <p>We have implicitly assumed here that the effects of the in-sensor optics can simply be modeled by the spectral transmittance <span class="math inline">\(T(\lambda)\)</span>. This is largely reasonable because 1) in-sensor optics are mostly transparent and 2) they are very close to the pixels, so we can ignore rays that are incident on the edge of the optics and, after refractions, miss the pixels.</p>
-<section id="spectral-sensitivity-function" class="level4">
-<h4 class="anchored" data-anchor-id="spectral-sensitivity-function">Spectral Sensitivity Function</h4>
+<section id="sec-chpt-imaging-sensor-optics-monomodel-ssf" class="level3" data-number="17.5.1">
+<h3 data-number="17.5.1" class="anchored" data-anchor-id="sec-chpt-imaging-sensor-optics-monomodel-ssf"><span class="header-section-number">17.5.1</span> Spectral Sensitivity Function</h3>
 <p>We can make a few assumptions to simplify our discussion. First, we assume the ADC quantization error is negligible. Second, we assume that the irradiance within a pixel is spatially and temporally uniform during a short exposure time. The raw pixel value <span class="math inline">\(n\)</span> in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a> is then simplified to:</p>
 <p><span id="eq-mono_model_quan_1"><span class="math display">\[
 \begin{align}

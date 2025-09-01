@@ -155,6 +155,29 @@ window.Quarto = {
       <a href="./">Foundations of Visual Computing</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
 </div>
     </div>
       </div>
@@ -519,6 +542,7 @@ Figure&nbsp;12.1: Left: a specular material and its BRDF. Middle: a diffuse mate
 <p>To derive a microfacet model, we need to first define the orientation of each microfacet. Given a beam of incident lights from a particular direction, we can then trace, following the laws governing specular reflection, how the lights are scattered by the collection of the microfacets given their orientations. In the end, we obtain the collection of outgoing directions, from which we can derive the BRDF.</p>
 <p>There are many variants of the microfacet model. They have one thing in common: they do not explicitly model the scattering of each ray at each microfacet but, rather, model the scattering of the microfacets <em>statistically</em> given the <em>distribution</em> of the microfacet orientations. In the end, they can either have an analytical form of the BRDF (Lambertian surface being an extreme example), have a close approximation of the analytical form, or can numerically estimate the BRDF efficiently (mostly through sampling).</p>
 <p>Without going into the details, we will refer you to <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 9.6)</span> for a mathematical treatment of the general idea and to <span class="citation" data-cites="torrance1967theory">Torrance and Sparrow (<a href="references.html#ref-torrance1967theory" role="doc-biblioref">1967</a>)</span>, <span class="citation" data-cites="cook1982reflectance">Cook and Torrance (<a href="references.html#ref-cook1982reflectance" role="doc-biblioref">1982</a>)</span>, <span class="citation" data-cites="ward1992measuring">Ward (<a href="references.html#ref-ward1992measuring" role="doc-biblioref">1992</a>)</span>, <span class="citation" data-cites="oren1995generalization">Oren and Nayar (<a href="references.html#ref-oren1995generalization" role="doc-biblioref">1995</a>)</span>, and <span class="citation" data-cites="walter2007microfacet">Walter et al. (<a href="references.html#ref-walter2007microfacet" role="doc-biblioref">2007</a>)</span> for the classical models.</p>
+<!-- show the Cook–Torrance with GGX parameterization and point out how albedo is used, connecting back to the albedo section. -->
 <section id="sec-chpt-mat-ss-para-model" class="level3" data-number="12.2.1">
 <h3 data-number="12.2.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-para-model"><span class="header-section-number">12.2.1</span> Nature of Microfacets Models</h3>
 <p>If the microfacet theory does not sound weird to you, it should! In a microfacet model, we are still modeling surface scattering using discrete objects (microfacets) and events (perfect mirror-like reflection on each microfacet). Is it surprising that we can use the discrete microfacet model to reason about the behavior of a <em>continuous</em> surface? Given any point <span class="math inline">\(p\)</span> on a surface, wouldn’t <span class="math inline">\(p\)</span> correspond to one single microfacet, and the behavior of <span class="math inline">\(p\)</span> simply be the result of a perfect mirror reflection there? If so, how can the microfacet model describe non-specular surface scattering of glossy and diffuse materials?</p>

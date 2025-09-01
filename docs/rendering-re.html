@@ -155,6 +155,29 @@ window.Quarto = {
       <a href="./">Foundations of Visual Computing</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
 </div>
     </div>
       </div>
@@ -414,7 +437,7 @@ window.Quarto = {
 \]</span></p>
 </div>
 <p>When a group of photons arrives at a material surface, some of the photons might be immediately turned away (i.e., reflected) while others might penetrate into the material (i.e., refracted). The refracted portion is scattered further inside the material, giving rise to subsurface scattering. Let’s focus first on surface scattering, ignoring the contribution of surface scattering to an object’s appearance.</p>
-<p>There are two properties we care about in surface scattering: the directions of the reflection and the (spectral) energy along each direction. The direction is important because, as far as rendering, human vision, or camera imaging are concerned, only the photons that will eventually captured by a detector matter. The (spectral) energy is important because it dictates the perceived color. These two properties are captured by what is known as the BRDF, the protagonist of this chapter. We will then derive a few very useful equations and properties based on BRDF.</p>
+<p>There are two properties we care about in surface scattering: the directions of the reflection and the (spectral) energy along each direction. The direction is important because, as far as rendering, human vision, or camera imaging are concerned, only the photons that will eventually captured by a detector matter. The (spectral) energy is important because it dictates the perceived color. These two properties are captured by what is known as the BRDF (<a href="#sec-chpt-mat-ss-brdf" class="quarto-xref"><span>Section 11.1</span></a>). We will then derive a few very useful equations and properties based on BRDF (<a href="#sec-chpt-mat-ss-reflectance" class="quarto-xref"><span>Section 11.2</span></a>). Given the BRDF, we will introduce the rendering equation, the theoretical tool for rendering surface scattering (<a href="#sec-chpt-mat-ss-re" class="quarto-xref"><span>Section 11.3</span></a>).</p>
 <section id="sec-chpt-mat-ss-brdf" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-brdf"><span class="header-section-number">11.1</span> BRDF</h2>
 <p>Generally, the energy distribution of the surface scattering is captured by the Bidirectional Reflectance Distribution Function (<strong>BRDF</strong>) <span class="citation" data-cites="nicodemus1977geometrical">(<a href="references.html#ref-nicodemus1977geometrical" role="doc-biblioref">Nicodemus et al. 1977</a>)</span>. Informally, it tells us how the incident energy from a particular direction is distributed to different exiting directions. The BRDF is parameterized by three parameters: a surface point <span class="math inline">\(p\)</span>, the direction of light incident on <span class="math inline">\(p\)</span>, denoted <span class="math inline">\(\oi\)</span>, and the direction of light leaving <span class="math inline">\(p\)</span>, denoted <span class="math inline">\(\os\)</span>. So the BRDF is usually written as <span class="math inline">\(f_r(p, \os, \oi)\)</span>.</p>

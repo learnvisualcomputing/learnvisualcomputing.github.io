@@ -155,6 +155,29 @@ window.Quarto = {
       <a href="./">Foundations of Visual Computing</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
 </div>
     </div>
       </div>
@@ -357,15 +380,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#radiometry-quantities" id="toc-radiometry-quantities" class="nav-link active" data-scroll-target="#radiometry-quantities"><span class="header-section-number">9.1</span> Radiometry Quantities</a>
+  <li><a href="#sec-chpt-mat-basics-radiometry-concepts" id="toc-sec-chpt-mat-basics-radiometry-concepts" class="nav-link active" data-scroll-target="#sec-chpt-mat-basics-radiometry-concepts"><span class="header-section-number">9.1</span> Key Radiometric Concepts</a>
   <ul class="collapse">
   <li><a href="#energy-and-power" id="toc-energy-and-power" class="nav-link" data-scroll-target="#energy-and-power"><span class="header-section-number">9.1.1</span> Energy and Power</a></li>
   <li><a href="#sec-chpt-mat-basics-radiometry-irradiance" id="toc-sec-chpt-mat-basics-radiometry-irradiance" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-irradiance"><span class="header-section-number">9.1.2</span> Irradiance</a></li>
   <li><a href="#solid-angle" id="toc-solid-angle" class="nav-link" data-scroll-target="#solid-angle"><span class="header-section-number">9.1.3</span> Solid Angle</a></li>
   <li><a href="#sec-chpt-mat-basics-radiometry-radiance" id="toc-sec-chpt-mat-basics-radiometry-radiance" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-radiance"><span class="header-section-number">9.1.4</span> Radiance</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-lamb" id="toc-sec-chpt-mat-basics-radiometry-lamb" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">9.1.5</span> Radiant Intensity and Lambert’s Cosine Law</a></li>
   </ul></li>
-  <li><a href="#sec-chpt-mat-basics-radiometry-lamb" id="toc-sec-chpt-mat-basics-radiometry-lamb" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">9.2</span> Lambert’s Cosine Law</a></li>
-  <li><a href="#sec-chpt-mat-basics-radiometry-pm" id="toc-sec-chpt-mat-basics-radiometry-pm" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">9.3</span> Photometric Quantities</a></li>
+  <li><a href="#sec-chpt-mat-basics-radiometry-pm" id="toc-sec-chpt-mat-basics-radiometry-pm" class="nav-link" data-scroll-target="#sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">9.2</span> Photometric Quantities</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -410,10 +433,11 @@ window.Quarto = {
 \newcommand{\cL}{\mathcal{L}}
 \]</span></p>
 </div>
-<p>To be more formal about surface and volume scattering, we need to scientifically define a few physical properties pertaining to light propagation spatially and angularly. This is called <strong>radiometry</strong>, which operates completely at the geometric optics level, so we will be describing light as a collection of photons, each of which can travel along a particular direction with certain energy associated with it. <span class="citation" data-cites="reinhard2008color">Reinhard et al. (<a href="references.html#ref-reinhard2008color" role="doc-biblioref">2008</a>, Chpt. 6)</span> and <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4)</span> have more rigorous treatments of radiometry. Here, we introduce the language and a few important radiometric quantities that are relevant to our discussion.</p>
-<section id="radiometry-quantities" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="radiometry-quantities"><span class="header-section-number">9.1</span> Radiometry Quantities</h2>
-<p>We will start by defining a few key radiometry quantities.</p>
+<p>To rigorously model surface and volume scattering, we must first define a set of physical quantities that characterize light in space, time, angle, and spectrum. The study of these quantities is called <strong>radiometry</strong>, which operates entirely within the domain of geometric optics, treating light as a collection of photons, each traveling in a particular direction and carrying a specific amount of energy (<a href="#sec-chpt-mat-basics-radiometry-concepts" class="quarto-xref"><span>Section 9.1</span></a>). Radiometry allows us to model light-matter interactions using the framework of <strong>radiative transfer</strong> or <strong>light transport</strong>, which describes how energy is transferred between points in space and is the key tool we will use in rendering both surface and subsurface/volume scattering.</p>
+<p>The counterpart of radiometry is photometry (<a href="#sec-chpt-mat-basics-radiometry-pm" class="quarto-xref"><span>Section 9.2</span></a>), which deals with the measurement of radiometric quantities and thus is affected by the sensitivity of the measurement device itself (e.g., retina, a photodetector). <span class="citation" data-cites="reinhard2008color">Reinhard et al. (<a href="references.html#ref-reinhard2008color" role="doc-biblioref">2008</a>, Chpt. 6)</span> and <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4)</span> are good references for radiometry and photometry.</p>
+<section id="sec-chpt-mat-basics-radiometry-concepts" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-concepts"><span class="header-section-number">9.1</span> Key Radiometric Concepts</h2>
+<p>We will start by defining a few key quantities in radiometry.</p>
 <section id="energy-and-power" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="energy-and-power"><span class="header-section-number">9.1.1</span> Energy and Power</h3>
 <p>Each photon carries a certain amount of energy that is determined by its wavelength governed by:</p>
@@ -531,9 +555,8 @@ Figure&nbsp;9.2: Left: the baffle limits the directions through which incident p
 <p>Here we write the irradiance as <span class="math inline">\(E(p, \Omega)\)</span> to explicitly signify that the irradiance depends not only on the specific position <span class="math inline">\(p\)</span> but also the solid angle <span class="math inline">\(\Omega\)</span> over which the lights are coming.</p>
 <p>Using the interpretation of radiance in <a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>9.5</span></a>, we can also give a more operational interpretation of <a href="#eq-int_radiance" class="quarto-xref">Equation&nbsp;<span>9.6</span></a>: we first calculate the infinitesimal irradiance <span class="math inline">\(\d E_\bot(p) = L(p, \omega)\do\)</span> made by lights at the direction <span class="math inline">\(\omega\)</span>, then “transfer” that to the infinitesimal irradiance at the detector surface through the <span class="math inline">\(\cos\theta\)</span> factor, and then repeat this for all the directions to accumulate the contributions from all directions.</p>
 </section>
-</section>
-<section id="sec-chpt-mat-basics-radiometry-lamb" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">9.2</span> Lambert’s Cosine Law</h2>
+<section id="sec-chpt-mat-basics-radiometry-lamb" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">9.1.5</span> Radiant Intensity and Lambert’s Cosine Law</h3>
 <p>A <strong>Lambertian emitter</strong> or an ideal <em>diffuse emitter</em> is a flux-emitting point whose emitted radiance is constant regardless of the outgoing direction. A related concept is a <strong>Lambertian scatterer</strong> or an ideal <em>diffuse surface</em>, which is a surface point where the scattered radiance is independent of the scattering direction.</p>
 <p>It might come as a surprise that the flux emitted by a Lambertian emitter through a fixed solid angle is different for different emission directions. Consider a setup where a Lambertian emitter has an infinitesimal area <span class="math inline">\(\d A\)</span>. The power emitted by <span class="math inline">\(\d A\)</span> toward its normal direction in an infinitesimal solid angle of <span class="math inline">\(\do\)</span> is <span class="math inline">\(\d\Phi_0 = L\do\d A\)</span>, where <span class="math inline">\(L\)</span> is the radiance. The power emitted toward an oblique direction <span class="math inline">\(\omega\)</span> through the same solid angle is <span class="math inline">\(\d\Phi_\theta = L \do \cos\theta \d A\)</span>.</p>
 <p>In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the <strong>radiant intensity</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, denoted <span class="math inline">\(I\)</span>:</p>
@@ -555,8 +578,9 @@ Figure&nbsp;9.3: Comparison between the radiance distribution (constant w.r.t. v
 </div>
 <p><a href="#fig-intensity_vs_radiance_lobe" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> compares the radiance distribution and radiant intensity distribution of a Lambertian emitter/scatterer. Both distributions are over the entire hemisphere, but we show only a cross section. The distributions are visualized as two lobes, and the distance of a point on the lobe to the origin is proportional to the value at that point. The radiance distribution is constant regardless of <span class="math inline">\(\omega\)</span> but the radiant intensity is proportional to <span class="math inline">\(\cos\theta\)</span>. This difference stems from the fact that intensity is defined with respect to the power at the detector/emission area (<span class="math inline">\(\d A\)</span>) while radiance is defined with respect to power at the effective area (<span class="math inline">\(\d A \cos\theta\)</span>).</p>
 </section>
-<section id="sec-chpt-mat-basics-radiometry-pm" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">9.3</span> Photometric Quantities</h2>
+</section>
+<section id="sec-chpt-mat-basics-radiometry-pm" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-pm"><span class="header-section-number">9.2</span> Photometric Quantities</h2>
 <p>Spectral radiant flux (power), irradiance, radiant intensity, and radiance are all radiometric quantities. They all have a <strong>photometric</strong> counterpart, which weighs the radiometric quantity by the luminous efficiency function (LEF). The LEF, as we have discussed in <a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a>, at a particular wavelength is inversely proportional to the radiometric quantity at each wavelength needed to produce the same level of perceptual brightness.</p>
 <p>For instance, given a spectral radiant flux <span class="math inline">\(\Phi(\lambda)\)</span>, the corresponding photometric counterpart is then:</p>
 <p><span class="math display">\[
@@ -570,14 +594,14 @@ Figure&nbsp;9.3: Comparison between the radiance distribution (constant w.r.t. v
     \Phi_v = \int_\lambda K \Phi(\lambda) V(\lambda) \d \lambda.
 \end{align}
 \]</span></p>
-<p>Luminous flux has a unit of <strong>lumen</strong> (<span class="math inline">\(\text{lm}\)</span>), so K has a unit of <span class="math inline">\(\text{lm}/\text{W}\)</span>. We can also weigh the radiant power by the scotopic LEF, in which case <span class="math inline">\(\text{K} = 1700\)</span> (<span class="math inline">\(\text{lm}/\text{W}\)</span>).</p>
+<p>Luminous flux has a unit of <strong>lumen</strong> (<span class="math inline">\(\text{lm}\)</span>), so <span class="math inline">\(K\)</span> has a unit of <span class="math inline">\(\text{lm}/\text{W}\)</span>. We can also weigh the radiant power by the scotopic LEF, in which case <span class="math inline">\(\text{K} = 1700\)</span> (<span class="math inline">\(\text{lm}/\text{W}\)</span>).</p>
 <p>Other radiometric quantities can be similarly converted to the photometric counterparts. Specifically:</p>
 <ul>
 <li>the photometric counterpart of irradiance is <strong>illumination</strong>, which has a unit of <span class="math inline">\(\text{lx} = \text{lm}/\text{m}^2\)</span>, which is also called the <strong>lux</strong>;</li>
 <li>the photometric counterpart of radiance intensity is <strong>luminous intensity</strong>, which has a unit of <span class="math inline">\(\text{cd} = \text{lm}/\text{sr}\)</span>, which is called the <strong>candela</strong>;</li>
 <li>the photometric counterpart of radiance is <strong>luminance</strong>, which has a unit of <span class="math inline">\(\text{lm}/(\text{m}^2\text{sr}) = \text{cd}/(\text{m}^2)\)</span>, which is also called the <strong>nit</strong>.</li>
 </ul>
-<p>Sometimes radiometric vs.&nbsp;photometric quantities are also called the radiant vs.&nbsp;luminous quantities. The way to interpret the photometric quantities is that they take into account the spectral sensitivity of a particular photodetector, which in our case is the photoreceptors on the retina. But if we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different. We will study the spectral sensitivity of image sensors in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 17.5</span></a>.</p>
+<p>Sometimes radiometric vs.&nbsp;photometric quantities are also called the radiant vs.&nbsp;luminous quantities. The way to interpret the photometric quantities is that they take into account the spectral sensitivity of a particular photodetector, which in our discussion above is the photoreceptors on the retina, so the spectral sensitivity function of the detector is the LEF. If we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different. We will study the spectral sensitivity of image sensors in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 17.5</span></a>.</p>
 <p>A <strong>radiometer</strong> measures the absolute radiometric quantities, whereas a <strong>photometer</strong> reports photometric quantities. An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination.</p>
 
 
