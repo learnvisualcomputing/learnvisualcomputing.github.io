@@ -153,8 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Foundations-of-Visual-Computing.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -420,7 +421,6 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
 <p><span class="math display">\[
 \def\oi{{\omega_i}}
 \def\os{{\omega_s}}
@@ -438,7 +438,6 @@ window.Quarto = {
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cL}{\mathcal{L}}
 \]</span></p>
-</div>
 <p>Now we turn our attention to subsurface scattering and volume scattering. While superficially different, they involve the same forms of light-matter interaction and are modeled in the same way. This chapter is concerned with local events — absorbing (<a href="#sec-chpt-mat-vs-abs" class="quarto-xref"><span>Section 13.1</span></a>) and scattering (<a href="#sec-chpt-mat-vs-sca" class="quarto-xref"><span>Section 13.2</span></a>) photons by particles at a particular point in a medium. Understanding the local behaviors will then allow us to build a general framework in the next chapter to reason about subsurface and volume scattering globally.</p>
 <section id="sec-chpt-mat-vs-abs" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="sec-chpt-mat-vs-abs"><span class="header-section-number">13.1</span> Absorption</h2>
@@ -458,37 +457,27 @@ Figure&nbsp;13.1: Conceptual model to help reason about photon absorption. (a): 
 </div>
 <p>Say the slice has a depth of <span class="math inline">\(\D s\)</span> and a geometrical cross-sectional area of <span class="math inline">\(E\)</span>. All the particles have the same geometrical cross-sectional area of <span class="math inline">\(\epsilon_g\)</span>. In the simplest model, a photon is absorbed whenever it hits a particle. In reality, the chance of absorption can be higher or lower. The <em>effective</em> area available for absorption is:</p>
 <p><span class="math display">\[
-\begin{align}
     \epsilon = \epsilon_g Q_a,
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(Q_a\)</span> is called the <strong>absorption efficiency</strong> and is usually smaller than 1 for molecules (which have small <span class="math inline">\(\epsilon_g\)</span>) and greater than 1 for large particles (whose <span class="math inline">\(\epsilon_g\)</span> can be large). <span class="math inline">\(Q_a\)</span> is wavelength dependent, so we should have written it as <span class="math inline">\(Q_a(\lambda)\)</span>, but we will omit the wavelength in our notations for simplicity’s sake. In physics, <span class="math inline">\(\epsilon\)</span> is called the <strong>absorption cross section</strong> of the particle; it characterizes the intrinsic capability of a particle to absorb photons. Mind the subtle but important difference between the geometrical cross-sectional area and the cross section of a particle.</p>
 <p>The question we are interested in is, if the incident radiance is <span class="math inline">\(L\)</span>, what is the radiance leaving the slice <span class="math inline">\(L+\D L\)</span>? By convention, <span class="math inline">\(\D L\)</span> is defined as the exitant radiance minus the incident radiance and, in this case, has to be negative. The percentage of photons that are absorbed by this slice of particles (<span class="math inline">\(-\frac{\D L}{L}\)</span>) is equivalent to the cross-sectional area of the slice that is covered by the total cross sections of the particles:</p>
 <p><span id="eq-abs_1"><span class="math display">\[
-\begin{align}
-    -\frac{\D L}{L} &amp;= \frac{cE\D s\epsilon}{E},
-\end{align}
+    -\frac{\D L}{L} = \frac{cE\D s\epsilon}{E},
 \tag{13.1}\]</span></span></p>
 <p>where <span class="math inline">\(c\)</span> is the particle concentration of the slice, and <span class="math inline">\(E\D s\)</span> is the total volume of the slice. So <span class="math inline">\(cE\D s\)</span> is the number of particles in this thin slice, and <span class="math inline">\(cE\D s\epsilon\)</span> is the total cross section of all the particles. Given the assumption that no particles are covering each other, <span class="math inline">\(\frac{cE\D l\epsilon}{E}\)</span> is then the percentage of the thin slice’s cross-sectional area that is available for photon absorption and, thus, the percentage of the incident photons that are absorbed. The negative sign on the left-hand side of <a href="#eq-abs_1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a> signals the fact that <span class="math inline">\(\D L\)</span> is negative.</p>
 <p>We rewrite <a href="#eq-abs_1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a> as <a href="#eq-abs_2" class="quarto-xref">Equation&nbsp;<span>13.2</span></a>: <span id="eq-abs_2"><span class="math display">\[
-\begin{align}
-    \frac{\D L}{\D s} &amp;= -c\epsilon L = -\sigma_a L,
-\end{align}
+    \frac{\D L}{\D s} = -c\epsilon L = -\sigma_a L,
 \tag{13.2}\]</span></span></p>
 <p>which shows that the amount of photon absorption per unit length (<span class="math inline">\(\frac{\D L}{\D s}\)</span>) is proportional to the current amount of photons up to a scaling factor <span class="math inline">\(c\epsilon\)</span>. In the computer graphics literature, <span class="math inline">\(c\epsilon\)</span> is called the <strong>absorption coefficient</strong>, denoted <span class="math inline">\(\sigma_a\)</span>.</p>
 <section id="bouguer-beer-lamberts-law" class="level4">
 <h4 class="anchored" data-anchor-id="bouguer-beer-lamberts-law">Bouguer-Beer-Lambert’s Law</h4>
 <p>When <span class="math inline">\(\D s\)</span> approaches infinity, we can rewrite <a href="#eq-abs_2" class="quarto-xref">Equation&nbsp;<span>13.2</span></a> as a differential equation:</p>
 <p><span id="eq-abs_3"><span class="math display">\[
-\begin{align}
     \frac{\d L}{\d s} = \lim_{\D s \rightarrow 0}\frac{\D L}{\D s} = -\sigma_a L
-\end{align}
 \tag{13.3}\]</span></span></p>
 <p>This equation is a classic case of exponential decay, and its solution is given by:</p>
 <p><span id="eq-abs_4"><span class="math display">\[
-\begin{align}
     L(s) = L_0 e^{-\sigma_a s}.
-\end{align}
 \tag{13.4}\]</span></span></p>
 <p>where <span class="math inline">\(L_0 = L(0)\)</span> is the initial radiance of the light before interacting with the particles, as visualized in <a href="#fig-absorption_model" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> (b), <span class="math inline">\(L(s)\)</span> denotes the radiance at a particular length <span class="math inline">\(s\)</span>.</p>
 <p><a href="#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a> allows us to calculate the remaining radiance after the light travels a length <span class="math inline">\(s\)</span>. <a href="#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a> is called the <strong>Bouguer-Beer-Lambert’s law</strong> (BBL), which is a geometrical optics’ simplification of the electromagnetic theory of light-matter interaction where the matter is purely absorptive <span class="citation" data-cites="mayerhofer2020bouguer">(<a href="references.html#ref-mayerhofer2020bouguer" role="doc-biblioref">Mayerhöfer, Pahlow, and Popp 2020</a>)</span>.</p>
@@ -497,15 +486,11 @@ Figure&nbsp;13.1: Conceptual model to help reason about photon absorption. (a): 
 <h4 class="anchored" data-anchor-id="an-alternative-derivation">An Alternative Derivation</h4>
 <p>An equivalent way of deriving the BBL law is the following. We divide the entire volume (with a total length of <span class="math inline">\(s\)</span>) into <span class="math inline">\(N\)</span> thin slices, each with a length of <span class="math inline">\(\D s\)</span>. After the first slice, the surviving portion of the initial radiance is <span class="math inline">\(L = L_0(1-\sigma_a \D s)\)</span>, so after going through all the <span class="math inline">\(N\)</span> slices, the remaining radiance is given by:</p>
 <p><span id="eq-alt_abs_1"><span class="math display">\[
-\begin{align}
     L_N = L_0(1-\sigma_a \D s)^N = L_0(1-\sigma_a \frac{s}{N})^N.
-\end{align}
 \tag{13.5}\]</span></span></p>
 <p>Now when <span class="math inline">\(\D s\)</span> becomes infinitesimally small, <span class="math inline">\(N\)</span> approaches infinity, so the limit of the remaining radiance as a function of the total length <span class="math inline">\(s\)</span> is given in <a href="#eq-alt_abs_2" class="quarto-xref">Equation&nbsp;<span>13.6</span></a>, which is the same as <a href="#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>.</p>
 <p><span id="eq-alt_abs_2"><span class="math display">\[
-\begin{align}
     L(s) = \lim_{N \rightarrow \infty}L_0(1-\sigma_a \frac{s}{N})^N = L_0 e^{-\sigma_a s}.
-\end{align}
 \tag{13.6}\]</span></span></p>
 </section>
 </section>
@@ -513,50 +498,34 @@ Figure&nbsp;13.1: Conceptual model to help reason about photon absorption. (a): 
 <h3 data-number="13.1.2" class="anchored" data-anchor-id="absorption-coefficient"><span class="header-section-number">13.1.2</span> Absorption Coefficient</h3>
 <p>The absorption coefficient is an important measure of the medium’s ability to absorb photons. It has a unit of <span class="math inline">\(\text{m}^\text{-1}\)</span>, which means it is not bound by 0 and 1. One way to interpret the absorption coefficient is to observe that <span class="math inline">\(\sigma_a \d s = \d L/L\)</span>, which is the fraction of the radiance absorbed or the probability of light absorption by an infinitesimal slice. So <span class="math inline">\(\sigma_a = (\d L/L)/\d s\)</span> can be interpreted as the probability <em>density</em> of photon absorption, i.e., the probability of absorption per unit length traveled:</p>
 <p><span class="math display">\[
-\begin{align}
     \sigma_a = \lim_{\D s \rightarrow 0} \frac{\D L}{L}/\D s = \frac{\d L}{L \d s}.
-\end{align}
 \]</span></p>
 <p>Like any density measure, absorption coefficient is most useful when it is integrated: when we integrate <span class="math inline">\(\sigma_a\)</span> over the length that light travels, we get the fraction/percentage of the light absorbed. One can also show that <span class="math inline">\(1/\sigma_a\)</span> is the expected value of the distance a photon can travel before being absorbed <span class="citation" data-cites="bohren2006fundamentals">(<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">Bohren and Clothiaux 2006</a>, Chpt. 5.1.3)</span>; this quantity is given the name <strong>mean free path</strong> (l). To derive <span class="math inline">\(l\)</span>, observe that the probability that a photon is absorbed after traveling a distance <span class="math inline">\(s\)</span> is <span class="math inline">\(1-e^{-\sigma_as}\)</span>. So the probability <em>density</em> of absorption as a function of the distance <span class="math inline">\(s\)</span> is:</p>
 <p><span class="math display">\[
-\begin{align}
     f(s) = \frac{\text{d}(1-e^{-\sigma_a s})}{\text{d}s} = \sigma_ae^{-\sigma_a s}.
-\end{align}
 \]</span></p>
 <p>So the expected value of <span class="math inline">\(s\)</span>, which we can interpret as the distance a photon can travel on average before being absorbed, is:</p>
 <p><span id="eq-mfp"><span class="math display">\[
-\begin{align}
     l = \int_0^\infty sf(s)\text{d}s = 1/\sigma_a.
-\end{align}
 \tag{13.7}\]</span></span></p>
 </section>
 <section id="sec-chpt-mat-vs-abs-quan" class="level3" data-number="13.1.3">
 <h3 data-number="13.1.3" class="anchored" data-anchor-id="sec-chpt-mat-vs-abs-quan"><span class="header-section-number">13.1.3</span> A Few Important Quantities</h3>
 <p>We can now define a few other commonly used quantities (omitting the wavelength dependence for simplicity). The <strong>transmittance</strong> <span class="math inline">\(T\)</span> of a volume with a total thickness of <span class="math inline">\(s\)</span> is defined as the percentage of the transmitted/unabsorbed photons after traveling the length of <span class="math inline">\(s\)</span> (<a href="#eq-trans" class="quarto-xref">Equation&nbsp;<span>13.8</span></a>): <span id="eq-trans"><span class="math display">\[
-\begin{align}
     T = \frac{L(s)}{L_0} = e^{-\sigma_a s}.
-\end{align}
 \tag{13.8}\]</span></span></p>
 <p>The <strong>absorbance</strong> <span class="math inline">\(A\)</span> is the product of <span class="math inline">\(\sigma_a s\)</span>: <span id="eq-absorbance"><span class="math display">\[
-\begin{align}
     A = -\ln T = \ln\frac{L(s)}{L_0} = \sigma_a s.
-\end{align}
 \tag{13.9}\]</span></span></p>
 <p>The <strong>absorptance</strong> <span class="math inline">\(a\)</span> of a volume is defined as the percentage of the absorbed photons by the volume, which relates to <span class="math inline">\(T\)</span> and <span class="math inline">\(A\)</span> by <a href="#eq-absorbance" class="quarto-xref">Equation&nbsp;<span>13.9</span></a>: <span id="eq-absorptance"><span class="math display">\[
-\begin{align}
     a = 1 - T = 1 - e^{-A}.
-\end{align}
 \tag{13.10}\]</span></span></p>
 <p>We have seen these definitions in <a href="hvs-receptor.html#sec-chpt-hvs-receptor-absorb-msp" class="quarto-xref"><span>Section 3.2.1</span></a>. One very nice thing about the absorbance <span class="math inline">\(A\)</span> is that it is approximately equivalent to absorptance <span class="math inline">\(a\)</span> when <span class="math inline">\(A\)</span> is small (which would be true when, e.g., the length <span class="math inline">\(s\)</span> is very small, as is the case when discussing how a photoreceptor absorbs photons when illuminated transversely).</p>
 <p>Another nice thing about absorbance is that absorbances add, because <em>absorption coefficients add</em>. Imagine you have <span class="math inline">\(n\)</span> kinds of particles mixed up in a medium, each with a different absorption coefficient <span class="math inline">\(\sigma_a^i\)</span>. The overall absorbance of the medium is the sum of the individual absorbance <span class="math inline">\(A^i\)</span> derived as if the medium is made up of only one kind of particles. That is: <span id="eq-absorbances_add"><span class="math display">\[
-\begin{align}
     A = \sum_i^n A^i = s\sum_i^n\sigma_a^i = s\sum_i^n c^i\epsilon^i,
-\end{align}
 \tag{13.11}\]</span></span></p>
 <p>where <span class="math inline">\(c^i\)</span> and <span class="math inline">\(\epsilon^i\)</span> are the concentration and absorption cross section of the <span class="math inline">\(i^{th}\)</span> particles. Specifically, <span class="math inline">\(c^i\)</span> is defined as: <span class="math display">\[
-\begin{align}
     c^i = \frac{n_i}{V},
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(n_i\)</span> is the number of the <span class="math inline">\(i^{th}\)</span> kind of particles in the material, and <span class="math inline">\(V\)</span> is the material volume.</p>
 <p>This is not a surprising result. As long as particles in a thin slice of this new heterogeneous medium do not cover each other, we can easily extend <a href="#eq-abs_1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a> and the rest of the derivation to consider multiple kinds of particles; eventually <a href="#eq-absorbances_add" class="quarto-xref">Equation&nbsp;<span>13.11</span></a> would be a natural conclusion. We will omit the derivation here for simplicity sake.</p>
@@ -586,15 +555,11 @@ Figure&nbsp;13.2: A conceptual model to help reason about photon absorption in t
 </div>
 <p>Effectively, our conceptual model, shown in <a href="#fig-absorption_model_general" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>, has to be changed to one where the entire body of particles is divided into many equally-sized volumes (with a length <span class="math inline">\(\D s\)</span> and an area <span class="math inline">\(\D A\)</span>), each of which is so small that particles do not cover each other from any direction. The radiance reduction per unit length in a small volume is then expressed as:</p>
 <p><span id="eq-abs_dif_cont"><span class="math display">\[
-\begin{align}
     \frac{\D L(p, \omega)}{\D s} = -\sigma_a(p, \omega)L.
-\end{align}
 \tag{13.12}\]</span></span></p>
 <p>Given this model, we can calculate the exitant radiance after light travels a length <span class="math inline">\(s\)</span> through the medium:</p>
 <p><span id="eq-abs_cont"><span class="math display">\[
-\begin{align}
     L(p+s\omega, \omega) = L(p, \omega) e^{-\int_0^s \sigma_a(p+t\omega, \omega) \d t},
-\end{align}
 \tag{13.13}\]</span></span></p>
 <p>where <span class="math inline">\(\omega\)</span> is the (unit) direction of the incident radiance, <span class="math inline">\(L(p, \omega)\)</span> is the incident radiance, and <span class="math inline">\(L(p+s\omega, \omega)\)</span> is the exitance radiance (radiance toward <span class="math inline">\(\omega\)</span> leaving the entire medium after traveling <span class="math inline">\(s\)</span>).</p>
 <p>You would notice that for a beam with an oblique incident direction, the distance traveled, say <span class="math inline">\(\D s'\)</span>, can be different (longer or shorter than) from <span class="math inline">\(\D s\)</span>. Our model can account for this by folding the factor <span class="math inline">\(\D s'/\D s\)</span> specific to a particular direction <span class="math inline">\(\omega'\)</span> into the absorption coefficient <span class="math inline">\(\sigma_a(p, \omega')\)</span>. Note that the <span class="math inline">\(\D s'/\D s\)</span> factor should be the average for all the incident photons with the same direction <span class="math inline">\(\omega'\)</span> across the entire <span class="math inline">\(\D A\)</span>.</p>
@@ -605,7 +570,7 @@ Figure&nbsp;13.2: A conceptual model to help reason about photon absorption in t
 <p><a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> seems to suggest that absorption coefficient <span class="math inline">\(\sigma_a(p, \omega)\)</span> is continuously defined at any position <span class="math inline">\(p\)</span> in the medium along any direction <span class="math inline">\(\omega\)</span>. It is not true. For starters, concentration <span class="math inline">\(c\)</span> is not continuous. Rather, it exhibits the triphasic profile shown in <a href="rendering-surface.html#fig-model_scale" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>. As we keep shrinking the size of the volume to the molecular scale, eventually the concentration depends on whether the tiny volume contains any molecules or not, so it becomes wildly discontinuous, not to mention the headache of dealing with a partial molecule in a volume — should it be counted or not? In general, the absorption coefficient can be an arbitrary discontinuous function that is not integrable.</p>
 <p>What about <a href="#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a> where the absorption coefficient is uniform so we do not have to take the integral? Well, that is a lie too: concentration is not continuous, so it cannot be uniform everywhere, and, by extension, the absorption coefficient cannot be a constant everywhere either. So <a href="#eq-abs_3" class="quarto-xref">Equation&nbsp;<span>13.3</span></a> is technically wrong when we let <span class="math inline">\(\D s \rightarrow 0\)</span> (i.e., <span class="math inline">\(N \rightarrow \infty\)</span>), which is necessary for us to construct the differential equation (or take the limit in <a href="#eq-alt_abs_2" class="quarto-xref">Equation&nbsp;<span>13.6</span></a>). For <a href="#eq-abs_3" class="quarto-xref">Equation&nbsp;<span>13.3</span></a> to be true, the concentration/absorption coefficient must be a constant everywhere, which can be true only if the volume is continuous.</p>
 <p>What has to happen is that the limit of <span class="math inline">\(\D s\)</span> cannot be literally 0 and the limit of <span class="math inline">\(N\)</span> cannot be infinity. What we do is to keep reducing <span class="math inline">\(\D s\)</span> to the point where the concentration (and thus absorption coefficient) is insensitive to slight perturbation of <span class="math inline">\(\D s\)</span> (i.e., operating in the stable range in <a href="rendering-surface.html#fig-model_scale" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>), and call it the concentration/absorption coefficient of that specific <span class="math inline">\(\D s\)</span>. And we repeat this for all the <span class="math inline">\(\D s\)</span>. This certainly applies to the general-case models in <a href="#eq-abs_dif_cont" class="quarto-xref">Equation&nbsp;<span>13.12</span></a> and <a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a>, where we iterate over not the thin slices <span class="math inline">\(\D s\)</span> but all the tiny volumes (<span class="math inline">\(\D A \times \D s\)</span>). So all the integral symbols are secretly summing over an extremely fine-grained grid.</p>
-<p>How big of an error are we introducing here? Technically, we should sum all <span class="math inline">\(N\)</span> slices across the total traversal length <span class="math inline">\(s\)</span> in <a href="#eq-alt_abs_1" class="quarto-xref">Equation&nbsp;<span>13.5</span></a>. If we assume <span class="math inline">\(\D s\)</span> to be very small (even though not infinitesimal) compared to <span class="math inline">\(s\)</span>, <span class="math inline">\(N\)</span> would be large, so taking the integration (equivalent to letting <span class="math inline">\(N \rightarrow \infty\)</span>) would be very close to summing over <span class="math inline">\(N\)</span>. Similarly, the integral in should have been a summation of the concentration in each of the <span class="math inline">\(N\)</span> slices. If you want to be pedantic, however, the integration there is exact: we can model <span class="math inline">\(c\)</span> as a piece-wise function, where the value at each piece is the concentration of the corresponding volume. Integrating over a piece-wise function is the same as summing all the pieces. Only the exponential expression in <a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> is inexact.</p>
+<p>How big of an error are we introducing here? Technically, we should sum all <span class="math inline">\(N\)</span> slices across the total traversal length <span class="math inline">\(s\)</span> in <a href="#eq-alt_abs_1" class="quarto-xref">Equation&nbsp;<span>13.5</span></a>. If we assume <span class="math inline">\(\D s\)</span> to be very small (even though not infinitesimal) compared to <span class="math inline">\(s\)</span>, <span class="math inline">\(N\)</span> would be large, so taking the integration (equivalent to letting <span class="math inline">\(N \rightarrow \infty\)</span>) would be very close to summing over <span class="math inline">\(N\)</span>. Similarly, the integral in <a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> should have been a summation of the concentration in each of the <span class="math inline">\(N\)</span> slices. If you want to be pedantic, however, the integration there is exact: we can model <span class="math inline">\(c\)</span> as a piece-wise function, where the value at each piece is the concentration of the corresponding volume. Integrating over a piece-wise function is the same as summing all the pieces. Only the exponential expression in <a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> is inexact.</p>
 <p>The discontinuity of the medium is, of course, orthogonal to the discontinuity and non-uniformity in the light field itself. For instance, the fact that we use <span class="math inline">\(\frac{cE\D l\epsilon}{E}\)</span> as the percentage of photon absorption in <a href="#eq-abs_1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a> (and implicitly in <a href="#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>) assumes that the irradiance of the incident illumination is continuous and uniform in the small volume. This is technically not true because photons are discrete packets of energy. But in practice this is not a concern because we can assume that there is an enormous amount of photons incident on the small volume, and these photons are randomly distributed. <!-- %on the same point, Bohren p. 110 ``Implicit in the definition of cross sections is that the irradiance of the incident illumination be constant over lateral dimensions large compared with the size of the particle.'' --></p>
 <p>In essence, we are using the aggregated behavior of many photons to model the behavior of a small volume. This is similar to the microfacet models, where we use the aggregated behavior of many microfacets to statistically model the behavior of a small macro-surface.</p>
 <p>This sort of modeling strategy is a weird case where the discrete model provides the “ground truth”, which is approximated by a continuous model. I say ground truth — to the extent that the geometrical optics can approximate the electromagnetic theory of light-matter interaction. The BBL law fails when the wave nature of photons has to be considered <span class="citation" data-cites="mayerhofer2020bouguer">(<a href="references.html#ref-mayerhofer2020bouguer" role="doc-biblioref">Mayerhöfer, Pahlow, and Popp 2020</a>)</span>.</p>
@@ -628,7 +593,7 @@ Figure&nbsp;13.2: A conceptual model to help reason about photon absorption in t
 <img src="figs/haze_scattering.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-haze_scattering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the Sahara during Harmattan glows in the sun and gives a hazy view of the remote mountains. Nigeria’s National Mosque is in the foreground; from . Right: illustrations of the glow of the sun and the haze. Both are due to scattering, and the difference is purely visual but not fundamental.
+Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the Sahara during Harmattan glows in the sun and gives a hazy view of the remote mountains. Nigeria’s National Mosque is in the foreground; from <span class="citation" data-cites="haze">Kipp Jones (<a href="references.html#ref-haze" role="doc-biblioref">2005</a>)</span>. Right: illustrations of the glow of the sun and the haze. Both are due to scattering, and the difference is purely visual but not fundamental.
 </figcaption>
 </figure>
 </div>
@@ -667,30 +632,22 @@ Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the S
 <p>Similar to the situation in absorption, the intrinsic capability of a particle to scatter photons is defined by the particle’s <strong>scattering cross section</strong> <span class="math inline">\(\epsilon_s\)</span>, which itself is the product of the geometrical cross-sectional area of the particle <span class="math inline">\(\epsilon_g\)</span> and the <strong>scattering efficiency</strong> <span class="math inline">\(Q_s\)</span>. We can then define the <strong>scattering coefficient</strong> <span class="math inline">\(\sigma_s\)</span> of a medium (a large collection of particles), which characterizes the ability of the medium to scatter photons away from its incident radiance. <span class="math inline">\(\sigma_s\)</span> is the product of the particle concentration of the medium <span class="math inline">\(c\)</span> and the particle’s scattering cross section <span class="math inline">\(\epsilon_s\)</span>. Again, <span class="math inline">\(\sigma_s\)</span> has a unit <span class="math inline">\(\text{m}^\text{-1}\)</span> and is not bound by 0 and 1; it is best interpreted as the probability density (i.e., probability per unit length) of light being scattered away. Of course, both the scattering efficiency and scattering coefficient can vary spatially, angularly, and spectrally.</p>
 <p>The effects of scattering and absorption add up, because they both weaken a radiance. We can extend <a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> to consider scattering (again omitting the wavelength from the equations):</p>
 <p><span id="eq-scat_cont"><span class="math display">\[
-\begin{align}
     L(p+s\omega, \omega) = L(p, \omega) e^{-\int_0^s (\sigma_a(p+t\omega, \omega) + \sigma_s(p+t\omega, \omega)) \d t},
-\end{align}
 \tag{13.14}\]</span></span></p>
 <p>where <span class="math inline">\(\sigma_s(p, \omega)\)</span> is the scattering coefficient at <span class="math inline">\(p\)</span> toward the direction <span class="math inline">\(\omega\)</span>.</p>
 <p>Rearranging the terms, we can express the <strong>transmittance</strong> between <span class="math inline">\(p\)</span> and <span class="math inline">\(p+s\omega\)</span> along the direction <span class="math inline">\(\omega\)</span>, denoted <span class="math inline">\(T(p \rightarrow p+s\omega)\)</span>: <span id="eq-transmittance"><span class="math display">\[
-\begin{align}
     T(p \rightarrow p+s\omega) = \frac{L(p+s\omega, \omega)}{L(p, \omega)} = e^{-\int_0^s (\sigma_a(p+t\omega, \omega) + \sigma_s(p+t\omega, \omega)) \d t}.
-\end{align}
 \tag{13.15}\]</span></span></p>
 <p><a href="#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a> can be derived using the same idea as that used for deriving the absorption equation in <a href="#sec-chpt-mat-vs-abs-simple" class="quarto-xref"><span>Section 13.1.1</span></a> by modeling a thin layer <span class="math inline">\(\D x\)</span> — with an additional assumption that <span class="math inline">\(\D x\)</span> is so thin that a photon is scattered at most once before leaving <span class="math inline">\(\D x\)</span>. Therefore, scattering by a single particle has the same effect as absorption: they both take the photon out of the radiance, and that is why the absorption equation (<a href="#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a>) can be directly extended here.</p>
 <p>Think of the applicability of <a href="#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a>: it says that the radiance of a ray can only be weakened. If the incident light has only one direction (e.g., a collimated beam), <a href="#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a> is true when a photon is scattered at most once in the medium. This is because a scattered photon will not have a chance to get back to the ray. If the incident light is not mono-directional, e.g., diffuse illumination, <a href="#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a> in general does not apply — even if we consider only single scattering. This is because photons originally not along the direction <span class="math inline">\(\omega\)</span> can be scattered toward it through just one single scattering event. We can see how limited <a href="#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a> is: it applies only when the illumination is collimated and we assume only single scattering. We will relax this constraint later. <!-- %same as the text above Equ 3.108 in Bohren. --></p>
 <p>Just like the absorption case (<a href="#eq-absorbances_add" class="quarto-xref">Equation&nbsp;<span>13.11</span></a>), if a medium is mixed with different particles, each with a different scattering coefficient, the overall scattering coefficient is the sum of the individual scattering coefficients as if the medium is made up of a particular kind of particles.</p>
 <p>The sum of the scattering coefficient and absorption coefficient is called the <strong>extinction coefficient</strong> or <strong>attenuation coefficient</strong>, denoted <span class="math inline">\(\sigma_t(p, \omega)\)</span>:</p>
 <p><span class="math display">\[
-\begin{align}
     \sigma_t(p, \omega) = \sigma_a(p, \omega) + \sigma_s(p, \omega).
-\end{align}
 \]</span></p>
 <p>The ratio between the scattering coefficient and the attenuation coefficient is called the <strong>single-scattering albedo</strong> of the medium:</p>
 <p><span class="math display">\[
-\begin{align}
     \rho = \frac{\sigma_s(p, \omega)}{\sigma_t(p, \omega)}.
-\end{align}
 \]</span></p>
 <p>This albedo can be seen as the volumetric counterpart of the surface albedo discussed in <a href="rendering-re.html#eq-albedo_1" class="quarto-xref">Equation&nbsp;<span>11.11</span></a>. The two forms of albedo have the same physical meaning: the fraction of the incident energy that is scattered away (i.e., not absorbed). A dark medium (e.g., smoke) has a lower albedo, and a bright medium (e.g., mist) has a higher albedo.</p>
 <p>The sum of the scattering and absorption cross sections is called the <strong>extinction cross section</strong> or <strong>attenuation cross section</strong>, denoted <span class="math inline">\(\epsilon_t = \epsilon_a + \epsilon_s\)</span>. And of course <span class="math inline">\(1/\sigma_t\)</span> is the mean free path in a medium where both absorption and scattering take place, i.e., the mean distance a photon can travel without being absorbed or scattered away.</p>
@@ -701,31 +658,25 @@ Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the S
 <p>While the scattering efficiency (coefficient) characterizes how well a particle (medium) is able to scatter photons, it tells us nothing about the <em>direction</em> of scattering. The direction of a single scattering event is characterized by the <strong>phase function</strong> <span class="math inline">\(f_p(p, \os, \oi)\)</span>, which can be interpreted as the probability <em>density</em> function that a photon incident from a direction <span class="math inline">\(\oi\)</span> is scattered toward a direction <span class="math inline">\(\os\)</span>. We will omit <span class="math inline">\(p\)</span> and write the phase function as <span class="math inline">\(f_p(\os, \oi)\)</span> when the discussion is unconcerned of <span class="math inline">\(p\)</span>.</p>
 <p><span class="math inline">\(f_p(\os, \oi)\)</span> is defined as the fraction of the irradiance incident from an infinitesimal solid angle <span class="math inline">\(\doi\)</span> that is scattered toward an infinitesimal solid angle <span class="math inline">\(\dos\)</span> per unit solid angle:</p>
 <p><span id="eq-phase_func_def"><span class="math display">\[
-\begin{align}
     f_p(\os, \oi) = \lim_{\Dos \rightarrow 0} \lim_{\Doi \rightarrow 0} \frac{\D E_o(\os)}{\D E_i(\oi)} / \Dos = \frac{\d^2 E_o(\os)}{\d E_i(\oi)\dos} = \frac{\d^2 E_o(\os)}{L(\oi) \doi \dos}.
-\end{align}
 \tag{13.16}\]</span></span></p>
 <p><span class="math inline">\(\D E_i(\oi)\)</span> is the incident irradiance over a small solid angle <span class="math inline">\(\Doi\)</span> and scatters in all directions. <span class="math inline">\(\D E_o(\oi)\)</span> is the outgoing irradiance over a small solid angle <span class="math inline">\(\Dos\)</span>, so <span class="math inline">\(\frac{\D E_o(\os)}{\D E_i(\oi)}\)</span> is the fraction of the photons incident from <span class="math inline">\(\Doi\)</span> that are scattered over <span class="math inline">\(\Dos\)</span> or, alternatively, the probability that a photon incident from <span class="math inline">\(\Doi\)</span> is scattered toward <span class="math inline">\(\Dos\)</span>; this ratio/fraction is clearly a value between 0 and 1. Dividing that fraction by <span class="math inline">\(\Dos\)</span> gets us the probability per unit solid angle. When both the incident solid angle <span class="math inline">\(\Doi\)</span> and the outgoing solid angle <span class="math inline">\(\Dos\)</span> approach 0, the fraction can be interpreted as the directional-directional reflectance (<a href="rendering-re.html#sec-chpt-mat-ss-reflectance" class="quarto-xref"><span>Section 11.2</span></a>), and the probability per solid angle within <span class="math inline">\(\Dos\)</span> becomes the probability <em>density</em> toward <span class="math inline">\(\os\)</span>.</p>
 <p>Like all density functions, the meaning of a phase function is most clear when it is integrated to compute some other quantity. Integrating <a href="#eq-phase_func_def" class="quarto-xref">Equation&nbsp;<span>13.16</span></a> over all the outgoing directions <span class="math inline">\(\os\)</span>:</p>
 <p><span id="eq-energy_con_phase_func_1"><span class="math display">\[
-\begin{align}
-    \d E_o &amp;= \int^{\Omega = 4\pi} f_p(\os, \oi)L(\oi)\doi\dos \label{eq:energy_con_phase_func_1a} \\
-    &amp;= L(\oi)\doi\int^{\Omega = 4\pi} f_p(\os, \oi)\dos \label{eq:energy_con_phase_func_1b} \\
-    &amp;= \d E_i\int^{\Omega = 4\pi} f_p(\os, \oi)\dos \label{eq:energy_con_phase_func_1c}.
-\end{align}
+\begin{aligned}
+    \d E_o &amp;= \int^{\Omega = 4\pi} f_p(\os, \oi)L(\oi)\doi\dos, \\
+    &amp;= L(\oi)\doi\int^{\Omega = 4\pi} f_p(\os, \oi)\dos, \\
+    &amp;= \d E_i\int^{\Omega = 4\pi} f_p(\os, \oi)\dos.
+\end{aligned}
 \tag{13.17}\]</span></span></p>
 <p>To interpret this integration, consider a point that receives an incident radiance of <span class="math inline">\(L(\oi)\)</span> over an infinitesimal solid angle <span class="math inline">\(\doi\)</span>. The point receives a total irradiance of <span class="math inline">\(\d E_i = L(\oi)\doi\)</span>, which is scattered in all directions. The density of the irradiance scattered toward a particular direction <span class="math inline">\(\os\)</span> is <span class="math inline">\(f_p(\os, \oi)L(\oi)\doi\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, which when multiplied by <span class="math inline">\(\dos\)</span> gives us the actual irradiance scattered over a small solid angle <span class="math inline">\(\dos\)</span> around <span class="math inline">\(\os\)</span>. Integrating all outgoing directions over the entire sphere (<span class="math inline">\(4\pi\)</span>) we have <a href="#eq-energy_con_phase_func_1" class="quarto-xref">Equation&nbsp;<span>13.17</span></a>.</p>
 <p>Now, of course, some of the photons in <span class="math inline">\(\d E_i\)</span> might not be scattered; they could be absorbed, or they could simply not hit the cross section of any particle. So technically <span class="math inline">\(\d E_o \leq \d E_i\)</span> in <a href="#eq-energy_con_phase_func_1" class="quarto-xref">Equation&nbsp;<span>13.17</span></a>, just like how energy conservation is expressed in surface scattering in <a href="rendering-re.html#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>11.8</span></a>. By the convention in the volume scattering literature, however, the phase function is defined such that <span class="math inline">\(\d E_i\)</span> refers to only the portion of the incident irradiance that does get scattered. Therefore, <span class="math inline">\(\d E_o = \d E_i\)</span>, so we have:</p>
 <p><span id="eq-energy_con_phase_func_2"><span class="math display">\[
-\begin{align}
     \int^{\Omega = 4\pi} f_p(\os, \oi) \dos = \int^{\Omega = 4\pi} f_p(\os, \oi) \doi = 1.
-\end{align}
 \tag{13.18}\]</span></span></p>
 <p>That is, the phase function integrates to 1; the second integral can be derived using the Helmholtz reciprocity (since we are still dealing with geometrical optics):</p>
 <p><span class="math display">\[
-\begin{align}
     f_p(\oi, \os) = f_p(\os, \oi).
-\end{align}
 \]</span></p>
 <p>One way to interpret the fact that the phase function integrates to 1 is that the phase function is the <em>conditional</em> probability density function of scattering: given that a photon is scattered, what is the probability (density) of scattering to a particular direction?</p>
 <section id="phase-function-vs.-brdf" class="level4">
@@ -737,9 +688,7 @@ Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the S
 <p>Ultimately, the difference is a conscious choice of modeling strategy even though the underlying physics is exactly the same. That is why models based on BRDF and phase function are phenomenological models. If you deal with electromagnetic theories and QED, you would not have to have this distinction between modeling surface and volume scattering.</p>
 <p>With the understanding that there is no cosine fall-off in volume scattering, <a href="#eq-phase_func_def" class="quarto-xref">Equation&nbsp;<span>13.16</span></a> can be re-written as:</p>
 <p><span id="eq-phase_func_def2"><span class="math display">\[
-\begin{align}
     f_p(\os, \oi) = \frac{\d^2 E_o(\os)}{\d E_i(\oi)\dos} = \frac{\d}{\d E_i(\oi)}\frac{\d E_o(\os)}{\dos} = \frac{\d L_o(\os)}{\d E_i(\oi)} = \frac{\d L_o(\os)}{L_i(\oi)\doi},
-\end{align}
 \tag{13.19}\]</span></span></p>
 <p>where <span class="math inline">\(\d L_o(\os)\)</span> is the infinitesimal outgoing radiance toward <span class="math inline">\(\os\)</span>. In this sense, the phase function operates in exactly the same way as the BRDF (<a href="rendering-surface.html#eq-brdf" class="quarto-xref">Equation&nbsp;<span>12.15</span></a>): they both operate on irradiance and turn infinitesimal irradiance into infinitesimal radiance.</p>
 </section>
@@ -747,15 +696,11 @@ Figure&nbsp;13.3: Left: The atmospheric scattering of the sand coming from the S
 <h4 class="anchored" data-anchor-id="sec-chpt-mat-vs-sca-single-pf-iso">Isotropic Medium and Isotropic Scatters</h4>
 <p>Given the normalization in the phase function, the scattering efficiency should actually be parameterized as <span class="math inline">\(\bar{Q_s}(p, \os, \oi)\)</span>:</p>
 <p><span id="eq-sca_eff_phase"><span class="math display">\[
-\begin{align}
     \bar{Q_s}(p, \os, \oi) = Q_s(p, \oi) f_p(p, \os, \oi),
-\end{align}
 \tag{13.20}\]</span></span></p>
 <p>where <span class="math inline">\(Q_s(p, \oi)\)</span> should be be interpreted as the <em>total</em> scattering efficiency at <span class="math inline">\(p\)</span> over all outgoing directions for a given incident direction <span class="math inline">\(\oi\)</span>. Similarly, the scattering coefficient would be expressed as:</p>
 <p><span id="eq-sca_coeff_phase"><span class="math display">\[
-\begin{align}
     \bar{\sigma_s}(p, \os, \oi) = \sigma_s(p, \oi) f_p(p, \os, \oi),
-\end{align}
 \tag{13.21}\]</span></span></p>
 <p>where <span class="math inline">\(\sigma_s(p, \oi)\)</span> is interpreted as the <em>total</em> scattering coefficient at <span class="math inline">\(p\)</span> over all outgoing directions for a given incident direction <span class="math inline">\(\oi\)</span>.</p>
 <div id="fig-phase_function" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -799,11 +744,11 @@ Figure&nbsp;13.5: The phase function of a spherical particle is 1) invariant to 
 <p>The main theory or model for a single scattering event is called the <strong>Mie scattering</strong> theory, which, strictly speaking, applies only when the particle is spherical <span class="citation" data-cites="sharma2003color bohren2006fundamentals melbourne2004radio">(<a href="references.html#ref-sharma2003color" role="doc-biblioref">Sharma 2003</a>, Chpt. 3.5.2; <a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">Bohren and Clothiaux 2006</a>, Chpt 3.5; <a href="references.html#ref-melbourne2004radio" role="doc-biblioref">Melbourne 2004</a>, Chpt. 3)</span>. Mie scattering is <em>not</em> somehow a different scattering process from any other scattering, and the Mie theory is nothing more than the solution to the Maxwell’s equations under certain conditions<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
 <p>The Mie theory predicts that the overall scattering efficiency <span class="math inline">\(Q_s\)</span> is:</p>
 <p><span id="eq-mie_1"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     Q_s &amp;= \frac{8}{3}\gamma^4\big(\frac{m^2-1}{m^2+2}\big)\big[1+\frac{6}{5}\big(\frac{m^2-1}{m^2+2}\big)\gamma^2 + \cdots \big]\\
     \gamma &amp;= \frac{r}{\lambda_m}, \\
     m &amp;= \frac{n}{n_m},
-\end{align}
+\end{aligned}
 \tag{13.22}\]</span></span></p>
 <p>where <span class="math inline">\(m\)</span> is the the relative refractive index between the particle and the medium surrounding the particle, and <span class="math inline">\(\gamma\)</span> is the ratio between the particle radius <span class="math inline">\(r\)</span> and the incident light wavelength in the surrounding medium <span class="math inline">\(\lambda_m\)</span>. The notion of surrounding media might come across as a little surprising: doesn’t the material consist merely of its particles? Hardly. For instance, in paints, pigments are surrounded by binders (e.g., linseed oil in oil paints, egg yolk in tempera paints, and beeswax in encaustic paints) and usually some amount of water (except oil paints). When paint dries, some water might be evaporated, leaving pockets of air, which also contributes to the surrounding media.</p>
 <p>We can draw a few general conclusions from the model.</p>
@@ -811,31 +756,29 @@ Figure&nbsp;13.5: The phase function of a spherical particle is 1) invariant to 
 <h4 class="anchored" data-anchor-id="small-particle-rayleigh-scattering">Small-Particle (Rayleigh) Scattering</h4>
 <p>For small particles where <span class="math inline">\(\gamma \ll 1\)</span> (generally when the radius is ten times smaller than the wavelength of the incident light), only the first term in <a href="#eq-mie_1" class="quarto-xref">Equation&nbsp;<span>13.22</span></a>’s bracket matters, so the scattering efficiency is inversely proportional to <span class="math inline">\(\lambda_m^{-4}\)</span>. The inverse proportionality to <span class="math inline">\(\lambda_m^{-4}\)</span> <em>largely</em> (but apparently not entirely) explains why the sky is blue and why the sun is red <span class="citation" data-cites="bohren2006fundamentals">(<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">Bohren and Clothiaux 2006</a>, Chpt. 8.1)</span>. Why? First, recognize that individual molecules, such as air molecules, are usually sub-nm in size, so they scatter in this small-particle regime. Short wavelength lights from the sun are scattered by the atmospheric molecules more toward the sky and eventually enter your eyes, so if you look at the sky (against the sun) it would appear blue; when you look at the sun directly, the photons entering your eyes are mostly those unscattered ones that transmit directly through the atmosphere, and they are mostly longer-wavelength photons.</p>
 <p>By then water molecules are also similarly small, so why would water look so different from the air? It is because water molecules are very densely packed, so their scatterings are coherent. In fact, the end result of such coherent scatterings by a collection of water molecules is that water appears specular.</p>
-<p>The photopigments in a photoreceptor are very small in size compared to the wavelengths of visible light (each rhodopsin has a cross-section area of about <span class="citation" data-cites="milo2015cell">(<a href="references.html#ref-milo2015cell" role="doc-biblioref">Milo and Phillips 2015, p. 144</a>)</span>), so they almost do not scatter lights at all, only absorption. That is why we could use microspectrophotometry (MSP) to measure a photoreceptor’s (transverse) absorption rate (<a href="hvs-receptor.html#sec-chpt-hvs-receptor-absorb-msp" class="quarto-xref"><span>Section 3.2.1</span></a>): MSP measures the amount of light transmitted through a photoreceptor, and if there is little scattering, then all the photons that are not measured must be absorbed by the photoreceptor.</p>
+<p>The photopigments in a photoreceptor are very small in size compared to the wavelengths of visible light (each rhodopsin has a cross-section area of about 10<sup>-2</sup> <span class="math inline">\(\text{nm}^\text{2}\)</span> <span class="citation" data-cites="milo2015cell">(<a href="references.html#ref-milo2015cell" role="doc-biblioref">Milo and Phillips 2015, p. 144</a>)</span>), so they almost do not scatter lights at all, only absorption. That is why we could use microspectrophotometry (MSP) to measure a photoreceptor’s (transverse) absorption rate (<a href="hvs-receptor.html#sec-chpt-hvs-receptor-absorb-msp" class="quarto-xref"><span>Section 3.2.1</span></a>): MSP measures the amount of light transmitted through a photoreceptor, and if there is little scattering, then all the photons that are not measured must be absorbed by the photoreceptor.</p>
 <p>Scattering in the small-particle regime is also called <strong>Rayleigh scattering</strong>, which, again, is <em>not</em> somehow a fundamentally different scattering process, and the Rayleigh scattering theory<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> is nothing more than a special case of the Mie scattering theory <span class="citation" data-cites="sharma2003color bohren2006fundamentals">(<a href="references.html#ref-sharma2003color" role="doc-biblioref">Sharma 2003</a>, Chpt. 3.5.1; <a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">Bohren and Clothiaux 2006</a>. Chpt. 3.2)</span>.</p>
 <p>The phase function in the Rayleigh regime is proportional to <span class="math inline">\(1+\cos^2\theta\)</span>, so the backward and forward scatterings are roughly equally probable. Taking the phase function into account, the scattering efficiency (in the form defined in <a href="#eq-sca_eff_phase" class="quarto-xref">Equation&nbsp;<span>13.20</span></a>) in Rayleigh scattering is proportional to:</p>
 <p><span class="math display">\[
-\begin{align}
     Q_s \propto (\frac{r}{\lambda_m})^4 \frac{m^2-1}{m^2+2} (1 + \cos^2\theta).
-\end{align}
 \]</span></p>
 </section>
 <section id="impact-of-particle-size" class="level4">
 <h4 class="anchored" data-anchor-id="impact-of-particle-size">Impact of Particle Size</h4>
-<p>When the particle size increases, the scattering efficiency increases, initially very quickly, but eventually saturates. In fact, the Mie theory predicts that when the particle size is much larger than the wavelength (e.g., more than 100 times larger), the scattering efficiency approaches a constant 2 regardless of <span class="math inline">\(m\)</span> and <span class="math inline">\(\lambda_m\)</span> <span class="citation" data-cites="johnsen2012optics">(<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">Johnsen 2012, fig. 5.4</a>)</span>. This is evident in <a href="#fig-scattering_efficiency_m" class="quarto-xref">Figure&nbsp;<span>13.6</span></a>, which shows the scattering efficiency of a kind of particle as a function of particle radius (<span class="math inline">\(x\)</span>-axis) under different <span class="math inline">\(m\)</span> (different curves); the incident light wavelength is 500 nm.</p>
+<p>When the particle size increases, the scattering efficiency increases, initially very quickly, but eventually saturates. In fact, the Mie theory predicts that when the particle size is much larger than the wavelength (e.g., more than 100 times larger), the scattering efficiency approaches a constant 2 regardless of <span class="math inline">\(m\)</span> and <span class="math inline">\(\lambda_m\)</span> <span class="citation" data-cites="johnsen2012optics">(<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">Johnsen 2012, fig. 5.4</a>)</span>. This is evident in <a href="#fig-scattering_efficiency_m" class="quarto-xref">Figure&nbsp;<span>13.6</span></a>, which shows the scattering efficiency of a kind of particle as a function of particle radius (<span class="math inline">\(x\)</span>-axis) under different <span class="math inline">\(m\)</span> (different curves); the incident light wavelength is 500 <span class="math inline">\(\text{nm}\)</span>.</p>
 <div id="fig-scattering_efficiency_m" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-scattering_efficiency_m-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/scattering_efficiency_m.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scattering_efficiency_m-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.6: Scattering efficiency as a function of particle radius under different relative refractive index <span class="math inline">\(m\)</span>; the incident light wavelength is 500~nm. From <span class="citation" data-cites="johnsen2012optics">Johnsen (<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">2012, fig. 5.4</a>)</span>.
+Figure&nbsp;13.6: Scattering efficiency as a function of particle radius under different relative refractive index <span class="math inline">\(m\)</span>; the incident light wavelength is 500 <span class="math inline">\(\text{nm}\)</span>. From <span class="citation" data-cites="johnsen2012optics">Johnsen (<a href="references.html#ref-johnsen2012optics" role="doc-biblioref">2012, fig. 5.4</a>)</span>.
 </figcaption>
 </figure>
 </div>
 <p>The particle size also affects the phase function. As we have discussed above, small particles in the Rayleigh regime tend to scatter photons equally in the forward and backward directions, while large particles primarily scatter photons in the forward directions. The last two graphs in <a href="#fig-phase_function" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> show the phase functions predicted by the Mie scattering theory under different particle sizes (both are larger than that in the Rayleigh regime). The forward fraction increases as the particle size increases.</p>
 <p>Consider the scenario in <a href="rendering-overview.html#fig-photon_particle_interactions" class="quarto-xref">Figure&nbsp;<span>8.1</span></a>, where Material<sub>1</sub> sits on top of Material<sub>2</sub>, and our goal is to hide Material 2 so that the color of Material 1 is dependent only on the illumination (not the property of Material 2). There is an interesting trade-off between scattering efficiency and scattering direction here. If we want Material 1 to hide Material 2, we want the particles in Material 1 to scatter a lot of light (high scattering efficiency) backwards. If the scattering efficiency is low (so photons march on and are hindered only by absorption) or the scattering is heavy in the forward directions, photons penetrate through Material 1 and reach Material 2, which would then contribute to the overall color.</p>
-<p>Now, to scatter a lot of light, we need the particles to be large, but then the scattering will be mostly in the forward directions. So there exists a sweet spot of the particle size that provides the highest “hiding power” for a material per unit volume. If we work out the math, we will see that the sweet spot falls roughly in the visible wavelength range. That is why most paint pigments have a diameter between 100 nm and <span class="citation" data-cites="paintpigmentsize">(<a href="references.html#ref-paintpigmentsize" role="doc-biblioref">Bruce MacEvoy 2015</a>)</span>. Of course, no matter how poor the hiding power is for a particular paint, if you apply enough of it, it will eventually hide whatever is behind it. Dye pigments are rather small in size (nm range), so they scatter few photons and that is why dye solutions look relatively transparent.</p>
+<p>Now, to scatter a lot of light, we need the particles to be large, but then the scattering will be mostly in the forward directions. So there exists a sweet spot of the particle size that provides the highest “hiding power” for a material per unit volume. If we work out the math, we will see that the sweet spot falls roughly in the visible wavelength range. That is why most paint pigments have a diameter between 100 <span class="math inline">\(\text{nm}\)</span> and 1 <span class="math inline">\(\mu\text{m}\)</span> <span class="citation" data-cites="paintpigmentsize">(<a href="references.html#ref-paintpigmentsize" role="doc-biblioref">Bruce MacEvoy 2015</a>)</span>. Of course, no matter how poor the hiding power is for a particular paint, if you apply enough of it, it will eventually hide whatever is behind it. Dye pigments are rather small in size (<span class="math inline">\(\text{nm}\)</span> range), so they scatter few photons and that is why dye solutions look relatively transparent.</p>
 </section>
 <section id="impact-of-refractive-index" class="level4">
 <h4 class="anchored" data-anchor-id="impact-of-refractive-index">Impact of Refractive Index</h4>
@@ -847,9 +790,7 @@ Figure&nbsp;13.6: Scattering efficiency as a function of particle radius under d
 <p>What if the particle is not spherical? The Mie theory does not apply. Analytical or even numerical solutions to the Maxwell’s equations would be difficult, so perhaps a better approach is just to parameterize a model and fit it with the experimental data.</p>
 <p>One popular one-parameter parameterization of the phase function is the <strong>Henyey–Greenstein</strong> phase function <span class="citation" data-cites="pharr2018physically bohren2006fundamentals">(<a href="references.html#ref-pharr2018physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2018</a>, Chpt. 11.3.1; <a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">Bohren and Clothiaux 2006</a>, Chpt. 6.3.2)</span>, which takes the form:</p>
 <p><span class="math display">\[
-\begin{align}
     p(\theta) = \frac{1}{4\pi} \frac{1-g^2}{(1+g^2-2g\cos\theta)^{3/2}},
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(g\)</span> is the free parameter and is usually called the <strong>asymmetry parameter</strong>.</p>
 <p>We hasten to emphasize that the Henyey–Greenstein function has absolutely zero physical meaning; it is designed for fitting experimental phase function data, so in the modern deep learning era, you might as well try a deep neural network. The second graph in <a href="#fig-phase_function" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows one instantiation of the Henyey–Greenstein function.</p>
@@ -867,6 +808,9 @@ Bruce MacEvoy. 2015. <span>“<span class="nocase">The material attributes of pa
 </div>
 <div id="ref-johnsen2012optics" class="csl-entry" role="listitem">
 Johnsen, Sönke. 2012. <em>The Optics of Life: A Biologist’s Guide to Light in Nature</em>. Princeton University Press.
+</div>
+<div id="ref-haze" class="csl-entry" role="listitem">
+Kipp Jones. 2005. <span>“<span class="nocase">The sand/dust from the harmattan coming from the Sahara gives the Nigeria’s National Mosque in Abuja, a nice glow; CC BY-SA 2.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:MosqueinAbuja.jpg" class="uri">https://commons.wikimedia.org/wiki/File:MosqueinAbuja.jpg</a>.
 </div>
 <div id="ref-mayerhofer2020bouguer" class="csl-entry" role="listitem">
 Mayerhöfer, Thomas G, Susanne Pahlow, and Jürgen Popp. 2020. <span>“The Bouguer-Beer-Lambert Law: Shining Light on the Obscure.”</span> <em>ChemPhysChem</em> 21 (18): 2029–46.

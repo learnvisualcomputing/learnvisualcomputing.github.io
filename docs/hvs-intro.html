@@ -631,16 +631,12 @@ Figure&nbsp;2.10: Weber contrast is often used for detecting objects against a u
 <p>Before discussing how the RGCs meet these requirements, we must first define contrast more rigorously. Intuitively, contrast describes how much <em>variation</em> there is in a signal relative to the average strength of the signal. There are two commonly used definitions, both of which are compatible with this intuition. They are usually used in different scenarios. <a href="#fig-contrast" class="quarto-xref">Figure&nbsp;<span>2.10</span></a> illustrates the two definitions.</p>
 <p>Weber contrast is often used in scenarios where there is a small object against a relatively uniform background. The contrast <span class="math inline">\(C_w\)</span> is defined as:</p>
 <p><span id="eq-weber_contrast"><span class="math display">\[
-\begin{align}
     C_w = \frac{I-I_b}{I_b},
-\end{align}
 \tag{2.1}\]</span></span></p>
 <p>where <span class="math inline">\(I_b\)</span> is the background luminance and <span class="math inline">\(I\)</span> is the object luminance. If the object is small, the mean luminance of the entire field is approximately the background luminance, and naturally <span class="math inline">\(I-I_b\)</span> is the maximal variance over the mean.</p>
 <p>The Michelson contrast is used in scenarios where we want to detect patterned signals. Taking a sinusoidal pattern as an example (and recall any arbitrary pattern can be decomposed into sinusoidal basis patterns), the contrast <span class="math inline">\(C_m\)</span> of a sinusoidal signal is usually defined as:</p>
 <p><span id="eq-michelson_contrast"><span class="math display">\[
-\begin{align}
     C_m = \frac{I_{max} - I_{min}}{I_{max} + I_{min}},
-\end{align}
 \tag{2.2}\]</span></span></p>
 <p>where <span class="math inline">\(I_{max}\)</span> and <span class="math inline">\(I_{min}\)</span> are the highest and lowest luminance, respectively, of the signal. We can see that <span class="math inline">\(C_m\)</span> can also be interpreted as the ratio between the variation and the mean of the signal. A higher <span class="math inline">\(C_m\)</span> would mean that the pattern is more easily detected, and vice versa.</p>
 </section>
@@ -733,24 +729,20 @@ Figure&nbsp;2.15: Illustration of the RGC adaptation. Through the increment-thre
 <h4 class="anchored" data-anchor-id="webers-law-fails-at-low-and-high-intensities">Weber’s Law Fails at Low and High Intensities</h4>
 <p>Sharp readers like you have most definitely noticed that Weber’s law does not hold at all background illumination levels <span class="citation" data-cites="kolb2005organization">(<a href="references.html#ref-kolb2005organization" role="doc-biblioref">Kolb, Fernandez, and Nelson 2005, pt. VIII</a> Light and Dark Adaptation)</span>. The extended dashed line in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> indicates that Weber’s law fails at very low background levels. When the ambient light level is very low, Weber’s law fails because the retinal responses are dominated by noise, both retinal internal noise (called dark light or dark noise) <span class="citation" data-cites="barlow1957increment blakemore1965dark donner1992noise">(<a href="references.html#ref-barlow1957increment" role="doc-biblioref">Barlow 1957</a>; <a href="references.html#ref-blakemore1965dark" role="doc-biblioref">Blakemore and Rushton 1965</a>; <a href="references.html#ref-donner1992noise" role="doc-biblioref">Donner 1992</a>)</span> and external photon shot noise <span class="citation" data-cites="rose1948sensitivity de1943quantum">(<a href="references.html#ref-rose1948sensitivity" role="doc-biblioref">Rose 1948</a>; <a href="references.html#ref-de1943quantum" role="doc-biblioref">De Vries 1943</a>)</span>. At extremely high background levels, Weber’s law also fails because of photoreceptor saturation. All in all, however, Weber’s law holds reasonably well under a very wide range of normal lighting conditions that we encounter in every life.</p>
 <p><span id="eq-weber"><span class="math display">\[
-\begin{align}
     \Delta I =kI_b,
-\end{align}
 \tag{2.3}\]</span></span></p>
 <p>where <span class="math inline">\(k\)</span> is a constant representing how fast the threshold increases with the background and is called the Weber’s constant.</p>
-<p>When is written in the log-log domain, as is plotted in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a>, we have:</p>
+<p>When <a href="#eq-weber" class="quarto-xref">Equation&nbsp;<span>2.3</span></a> is written in the log-log domain, as is plotted in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a>, we have:</p>
 <p><span id="eq-weber_log"><span class="math display">\[
-\begin{align}
     \log(\Delta I) = \log(k) + \log(I_b).
-\end{align}
 \tag{2.4}\]</span></span></p>
 <p>We can see that in the log-log plot, the Weber’s constant affects the intercept of the threshold-vs-background line (the intersection of the dashed line and the <span class="math inline">\(y\)</span>-axis; not shown in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a>).</p>
 <p>For the Weber’s law to hold exactly, the slope of the threshold-vs-background line in the log-log plot must be 1, which is roughly the case in <a href="#fig-rgc_adaptation" class="quarto-xref">Figure&nbsp;<span>2.15</span></a> (for the range where the relationship is linear). In many measurements, the slope fit from the data is not exactly 1. To account for this, the Weber’s law is extended, phenomenologically, to take the following form, which is also called the Stevens’s power law <span class="citation" data-cites="stevens1957psychophysical stevens1961honor">(<a href="references.html#ref-stevens1957psychophysical" role="doc-biblioref">Stanley S. Stevens 1957</a>; <a href="references.html#ref-stevens1961honor" role="doc-biblioref">Stanley Smith Stevens 1961</a>)</span>:</p>
 <p><span id="eq-weber_fechner"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     \Delta I =kI_b^d, \\
     \log(\Delta I) = \log(k) + d\log(I_b),
-\end{align}
+\end{aligned}
 \tag{2.5}\]</span></span></p>
 <p>where <span class="math inline">\(d\)</span> is a free parameter that permits this additional degree of freedom.</p>
 </section>

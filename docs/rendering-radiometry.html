@@ -442,23 +442,17 @@ window.Quarto = {
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="energy-and-power"><span class="header-section-number">9.1.1</span> Energy and Power</h3>
 <p>Each photon carries a certain amount of energy that is determined by its wavelength governed by:</p>
 <p><span class="math display">\[
-\begin{align}
     Q = \frac{hc}{\lambda},
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(c\)</span> is the speed of light, <span class="math inline">\(\lambda\)</span> is the photon wavelength, and <span class="math inline">\(h\)</span> is the Planck’s constant.</p>
 <p>Power, or more formally in radiometry, <strong>radiant flux</strong> (or simply flux) is the total amount of energy passing through some surface in space per unit time. Or, taking a calculus perspective, power <span class="math inline">\(\Phi\)</span> is defined as:</p>
 <p><span class="math display">\[
-\begin{align}
     \Phi = \lim_{\Delta t \rightarrow 0}\frac{\Delta Q}{\Delta t} = \frac{\text{d}Q}{\text{d}t}.
-\end{align}
 \]</span></p>
 <p>The way to think about this is that each photon carries a certain amount of energy so if you monitor photons passing across a surface over a period of time <span class="math inline">\(\Delta t\)</span>, you can calculate the average power of that period by dividing the total energy passed by by <span class="math inline">\(\Delta t\)</span>. As <span class="math inline">\(\Delta t\)</span> approaches 0, we get the instantaneous power.</p>
 <p>Of course, energy/power is a function of wavelength, so more rigorously we should be talking about <em>spectral</em> power <span class="math inline">\(\Phi(\lambda)\)</span>, which has a unit of <span class="math inline">\(\text{W}/\text{nm}\)</span>:</p>
 <p><span class="math display">\[
-\begin{align}
     \Phi(\lambda) = \lim_{\Delta \lambda \rightarrow 0}\frac{\Delta \Phi}{\Delta \lambda} = \frac{\d \Phi}{\d \lambda},
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(\Delta \Phi\)</span> is the total power within a wavelength interval <span class="math inline">\(\Delta \lambda\)</span>.</p>
 </section>
@@ -467,15 +461,11 @@ window.Quarto = {
 <p>Our power calculation is done with respect to a surface area, but how about the power at each point on the surface area? You can imagine that some points get more photons and others get fewer, so it is useful to characterize the power at any given point. Technically, the answer to the question “how many photons hit a particular point” is <em>zero</em>, since the area of a single point is 0<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The meaningful question is: what is the power <em>density</em> of a particular point <span class="math inline">\(p\)</span>? <strong>Irradiance</strong> is such a quantity.</p>
 <p>Imagine again that you are monitoring photons crossing a surface for a period <span class="math inline">\(\Delta t\)</span>; you can calculate the average power received per unit area by dividing the average power by the surface area, and when you shrink the surface area to an infinitesimal point <span class="math inline">\(p\)</span>, we can calculate the power density, i.e., the irradiance, of <span class="math inline">\(p\)</span> by:</p>
 <p><span id="eq-irradiance"><span class="math display">\[
-\begin{align}
     E(p) = \lim_{\Delta A \rightarrow 0}\frac{\Delta \Phi(p)}{\Delta A} = \frac{\text{d}\Phi(p)}{\text{d}A}.
-\end{align}
 \tag{9.1}\]</span></span></p>
 <p>Irradiance is a more primitive measure than power: in calculus terms, irradiance is a power density function, which means we can derive the power of a surface by integrating the irradiance over the surface area:</p>
 <p><span class="math display">\[
-\begin{align}
     \Phi = \int^{A}E(p)dA.
-\end{align}
 \]</span></p>
 <p>Irradiance has a unit of <span class="math inline">\(\text{W}/\text{m}^\text{2}\)</span>, and <em>spectral</em> irradiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2} \cdot \text{nm})\)</span>.</p>
 </section>
@@ -496,9 +486,7 @@ Figure&nbsp;9.1: (a): a solid angle is a measure of the size of a collection of 
 <p>How do we count the number of directions? In 2D, we use a <em>planar angle</em> to measure the amount of directions. Given an origin <span class="math inline">\(O\)</span> and a vector, we rotate it to generate an arc. The angle subtended by the arc and <span class="math inline">\(O\)</span> is a measure of the amount of directions we have just covered. The angle can also be mathematically given by the ratio <span class="math inline">\(s/r\)</span>, where <span class="math inline">\(s\)</span> is the arc length and <span class="math inline">\(r\)</span> is the radius of the circle. This matches our intuition that if we increase the radius of the circle, we would get a longer arc but the same angle. A full circle has a planar angle of <span class="math inline">\(2\pi\)</span>.</p>
 <p>We can similarly define the size of a set of directions in 3D. We draw a sphere around <span class="math inline">\(O\)</span>, and imagine that we have some area on the spherical surface. Connecting <span class="math inline">\(O\)</span> to every point on that area represents a direction in 3D. So the spherical surface area is a measure of the amount of 3D directions. Like in the 2D case, we want the measure to be invariant to the spherical radius, so we define <strong>solid angle</strong>, a measure of the size of a set of 3D directions, as:</p>
 <p><span id="eq-solid_angle"><span class="math display">\[
-\begin{align}
     \Omega = \frac{A}{r^2},
-\end{align}
 \tag{9.2}\]</span></span></p>
 <p>where <span class="math inline">\(A\)</span> is an area on a spherical surface and <span class="math inline">\(r\)</span> is the radius. The unit of a solid angle is the <strong>steradian</strong> (<span class="math inline">\(sr\)</span>), and the entire sphere subtends a solid angle of <span class="math inline">\(4\pi\)</span>.</p>
 <p>Sometimes we want to know the size of the set of directions from a point <span class="math inline">\(O\)</span> to an arbitrary surface. We would project that surface to a sphere and get a projected spherical area <span class="math inline">\(A\)</span>, using which we can invoke <a href="#eq-solid_angle" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> to estimate the solid angle subtended by the surface. One useful trick that might help sometimes is to project the surface to the unit sphere (i.e., <span class="math inline">\(r=1\)</span>), and the solid angle is mathematically equivalent to the projected area on the unit sphere. But the most useful intuition I use whenever I am confused about what a particular solid angle means is to always think of the set of directions/vectors that are represented by that solid angle.</p>
@@ -521,36 +509,26 @@ Figure&nbsp;9.2: Left: the baffle limits the directions through which incident p
 </div>
 <p>This setup is illustrated in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> (left). The total flux collected by the detector is <span class="math inline">\(\Delta \Phi\)</span>, the detector size is <span class="math inline">\(\D A\)</span>, and the solid angle subtended by the baffle is <span class="math inline">\(\D \omega\)</span>. The average power collected per unit “effective area” per unit direction by the detector is then:</p>
 <p><span class="math display">\[
-\begin{align}
     \frac{\D \Phi}{\D A \cos\theta \D \omega}.
-\end{align}
 \]</span></p>
 <p>The baffle does a good job of rejecting many directions that are outside <span class="math inline">\(\D \omega\)</span>, but unless it is infinitely long, the detector will still collect some photons traveling through directions outside <span class="math inline">\(\D \omega\)</span>. But as we reduce the detector size and the baffle size, the baffle becomes a very thin cylinder over a very small detector, which collects light from a very small area along a very small solid angle, visualized in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> (right)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In calculus terms, when we let the detector size and baffle’s solid angle approach 0, we obtain the quantity called <strong>radiance</strong>:</p>
 <p><span id="eq-radiance_2"><span class="math display">\[
-\begin{align}
     L(p, \omega) = \lim_{\D \omega \rightarrow 0} \lim_{\D A \rightarrow 0} \frac{\D \Phi}{\D A \cos\theta \D \omega}
     = \frac{\text{d}}{\text{d}\omega}\frac{\text{d}\Phi(p)}{\text{d}A \cos\theta} = \frac{\text{d}^2\Phi(p)}{\text{d}\omega\text{d}A \cos\theta}.
-\end{align}
 \tag{9.3}\]</span></span></p>
 <p><a href="#eq-radiance_2" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> is the definition of radiance, and it can be rewritten to <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a> given the definition of irradiance (see <a href="#eq-irradiance" class="quarto-xref">Equation&nbsp;<span>9.1</span></a>).</p>
 <p><span id="eq-radiance_3"><span class="math display">\[
-\begin{align}
     L(p, \omega) = \frac{\text{d}E(p)}{\text{d}\omega\cos\theta}.
-\end{align}
 \tag{9.4}\]</span></span></p>
 <p>Radiance is an intrinsic property of the radiation field, and the reason we have the <span class="math inline">\(\cos\theta\)</span> term in the definition is merely due to the way we have chosen to measure the property (using a detector that is <span class="math inline">\(\theta\)</span>-oriented). Radiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2}\cdot \text{sr})\)</span>, and <em>spectral</em> radiance has a unit of <span class="math inline">\(\text{W}/(\text{m}^\text{2}\cdot \text{sr} \cdot \text{nm})\)</span>.</p>
 <p>Looking at the effective area in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>, if the irradiance at the infinitesimal area <span class="math inline">\(p\)</span> is <span class="math inline">\(\d E(p)\)</span>, the irradiance at the (infinitesimal) effective area (projected from <span class="math inline">\(\d A\)</span> along <span class="math inline">\(\omega\)</span>) is <span class="math inline">\(\frac{\d E(p)}{\cos\theta}\)</span>, which we denote <span class="math inline">\(\d E_\bot(p)\)</span>. Combining this with <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a>, radiance <span class="math inline">\(L(p, \omega)\)</span> can also be defined as:</p>
 <p><span id="eq-radiance_4"><span class="math display">\[
-\begin{align}
     L(p, \omega) = \frac{\text{d}E_\bot(p)}{\text{d}\omega}.
-\end{align}
 \tag{9.5}\]</span></span></p>
 <p><a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>9.5</span></a> and <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a> each corresponds to a concrete way of measuring the radiance. <a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>9.5</span></a> places the detector perpendicular to the direction of light that we care to measure, and the detector used by <a href="#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a> is <span class="math inline">\(\theta\)</span>-oriented with respect to the direction of interest. They give us an identical radiance result because radiance, again, is an inherent property of the radiation field invariant to how we measure it.</p>
 <p>Radiance is a density function: the density of power at a point along a direction. As with any density function, it is useful when it gets integrated to compute some other quantities. For instance, given the radiance <span class="math inline">\(L(p, \omega)\)</span>, the irradiance at <span class="math inline">\(p\)</span> is given by:</p>
 <p><span id="eq-int_radiance"><span class="math display">\[
-\begin{align}
     E(p, \Omega) = \int^{\Omega}L(p, \omega)\cos\theta\text{d}\omega.
-\end{align}
 \tag{9.6}\]</span></span></p>
 <p>Here we write the irradiance as <span class="math inline">\(E(p, \Omega)\)</span> to explicitly signify that the irradiance depends not only on the specific position <span class="math inline">\(p\)</span> but also the solid angle <span class="math inline">\(\Omega\)</span> over which the lights are coming.</p>
 <p>Using the interpretation of radiance in <a href="#eq-radiance_4" class="quarto-xref">Equation&nbsp;<span>9.5</span></a>, we can also give a more operational interpretation of <a href="#eq-int_radiance" class="quarto-xref">Equation&nbsp;<span>9.6</span></a>: we first calculate the infinitesimal irradiance <span class="math inline">\(\d E_\bot(p) = L(p, \omega)\do\)</span> made by lights at the direction <span class="math inline">\(\omega\)</span>, then “transfer” that to the infinitesimal irradiance at the detector surface through the <span class="math inline">\(\cos\theta\)</span> factor, and then repeat this for all the directions to accumulate the contributions from all directions.</p>
@@ -561,9 +539,7 @@ Figure&nbsp;9.2: Left: the baffle limits the directions through which incident p
 <p>It might come as a surprise that the flux emitted by a Lambertian emitter through a fixed solid angle is different for different emission directions. Consider a setup where a Lambertian emitter has an infinitesimal area <span class="math inline">\(\d A\)</span>. The power emitted by <span class="math inline">\(\d A\)</span> toward its normal direction in an infinitesimal solid angle of <span class="math inline">\(\do\)</span> is <span class="math inline">\(\d\Phi_0 = L\do\d A\)</span>, where <span class="math inline">\(L\)</span> is the radiance. The power emitted toward an oblique direction <span class="math inline">\(\omega\)</span> through the same solid angle is <span class="math inline">\(\d\Phi_\theta = L \do \cos\theta \d A\)</span>.</p>
 <p>In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the <strong>radiant intensity</strong><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, denoted <span class="math inline">\(I\)</span>:</p>
 <p><span id="eq-intensity"><span class="math display">\[
-\begin{align}
     I(\omega) = \frac{\d\Phi}{\do}.
-\end{align}
 \tag{9.7}\]</span></span></p>
 <p><span class="math inline">\(I\)</span> is a meaningful measure only for a point source (e.g., our infinitesimal Lambertian emitter here). We can see that for a Lambertian emitter, the radiant intensity decays by a factor of <span class="math inline">\(\cos\theta\)</span>: <span class="math inline">\(\frac{\d\Phi_\theta}{\d\omega} = \frac{\d\Phi_0}{\d\omega}\cos\theta\)</span>. This is usually called the <strong>Lambert’s cosine law</strong>, named after Johann Heinrich Lambert, from his Photometria <span class="citation" data-cites="lambert1760photometria">(<a href="references.html#ref-lambert1760photometria" role="doc-biblioref">Lambert 1760</a>)</span>. Similarly, if we have a Lambertian scatterer, its scattered radiant intensity will also decay by <span class="math inline">\(\cos\theta\)</span> as the polar angle <span class="math inline">\(\theta\)</span> of the viewing direction <span class="math inline">\(\omega\)</span> increases.</p>
 <div id="fig-intensity_vs_radiance_lobe" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -584,15 +560,11 @@ Figure&nbsp;9.3: Comparison between the radiance distribution (constant w.r.t. v
 <p>Spectral radiant flux (power), irradiance, radiant intensity, and radiance are all radiometric quantities. They all have a <strong>photometric</strong> counterpart, which weighs the radiometric quantity by the luminous efficiency function (LEF). The LEF, as we have discussed in <a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a>, at a particular wavelength is inversely proportional to the radiometric quantity at each wavelength needed to produce the same level of perceptual brightness.</p>
 <p>For instance, given a spectral radiant flux <span class="math inline">\(\Phi(\lambda)\)</span>, the corresponding photometric counterpart is then:</p>
 <p><span class="math display">\[
-\begin{align}
     \Phi_v(\lambda) = K \Phi(\lambda) V(\lambda),
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(\Phi_v(\lambda)\)</span> is the spectral <strong>luminous flux</strong>, <span class="math inline">\(V(\lambda)\)</span> is the LEF, and <span class="math inline">\(K\)</span> is a constant that, for historical reasons, takes the value of 683.002. The total luminous flux is then:</p>
 <p><span class="math display">\[
-\begin{align}
     \Phi_v = \int_\lambda K \Phi(\lambda) V(\lambda) \d \lambda.
-\end{align}
 \]</span></p>
 <p>Luminous flux has a unit of <strong>lumen</strong> (<span class="math inline">\(\text{lm}\)</span>), so <span class="math inline">\(K\)</span> has a unit of <span class="math inline">\(\text{lm}/\text{W}\)</span>. We can also weigh the radiant power by the scotopic LEF, in which case <span class="math inline">\(\text{K} = 1700\)</span> (<span class="math inline">\(\text{lm}/\text{W}\)</span>).</p>
 <p>Other radiometric quantities can be similarly converted to the photometric counterparts. Specifically:</p>

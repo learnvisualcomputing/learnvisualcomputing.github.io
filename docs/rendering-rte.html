@@ -454,50 +454,40 @@ window.Quarto = {
 </ul>
 <p>The attenuation (reduction) of the radiance over <span class="math inline">\(\D s\)</span> is:</p>
 <p><span id="eq-radiance_sub"><span class="math display">\[
-\begin{align}
     -L(p, \os) \sigma_t(p, \os) \D s.
-\end{align}
 \tag{14.1}\]</span></span></p>
 <p>The radiance augmentation due to in-scattering is given by:</p>
 <p><span id="eq-radiance_add_insca"><span class="math display">\[
-\begin{align}
     \int^{\Omega = 4\pi} f_p(p, \os, \oi) \sigma_s(p, \os) \D s L(\oi) \doi = \sigma_s(p, \os) \D s \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi.
-\end{align}
 \tag{14.2}\]</span></span></p>
 <!-- %\fixme{different oi will have different optical length, but that can be folded into sigma. the fact that we are integrating over 4pi means we should absolutely consider photons that hit all six faces of the cube. also recall that we considering single scattering, so a scattered photon will not go through other scatterings in that volume/entire medium.} -->
 <p>The way to interpret <a href="#eq-radiance_add" class="quarto-xref">Equation&nbsp;<span>14.5</span></a> is the following. <span class="math inline">\(L(p, \oi)\)</span> is the incident radiance from a direction <span class="math inline">\(\oi\)</span>, <span class="math inline">\(L(p, \oi) \doi\)</span> is the irradiance received from <span class="math inline">\(\doi\)</span>, of which <span class="math inline">\(\sigma_s(p, \oi)\D s L(p, \os) \doi\)</span> is the irradiance scattered in all directions after traveling a distance <span class="math inline">\(\D s\)</span>. That portion of the scattered irradiance is multiplied by <span class="math inline">\(f_p(\os, \oi)\)</span> to give us the radiance toward <span class="math inline">\(\os\)</span> (see <a href="rendering-sss.html#eq-phase_func_def2" class="quarto-xref">Equation&nbsp;<span>13.19</span></a>). We then integrate over the entire sphere, accounting for the fact that lights can come from anywhere over the space, to obtain the total augmented radiance toward <span class="math inline">\(\os\)</span>.</p>
 <p>If we consider emission, the total radiance augmentation is:</p>
 <p><span id="eq-radiance_add_total"><span class="math display">\[
-\begin{align}
     \sigma_a(p, \os) \D s L_e(p, \os) + \sigma_s(p, \os) \D s \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi,
-\end{align}
 \tag{14.3}\]</span></span></p>
 <p>where <span class="math inline">\(L_e(p, \os)\)</span> is the emitted radiance at <span class="math inline">\(p\)</span> toward <span class="math inline">\(\os\)</span>, so the first term represents the total emission over <span class="math inline">\(\D s\)</span>. If we let:</p>
 <p><span id="eq-source_term_em"><span class="math display">\[
-\begin{align}
     L_s(p, \os) = \sigma_a(p, \os) L_e(p, \os) + \sigma_s(p, \os) \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi,
-\end{align}
 \tag{14.4}\]</span></span></p>
 <p>the total augmentation can be simplified to:</p>
 <p><span id="eq-radiance_add"><span class="math display">\[
-\begin{align}
     L_s(p, \os) \D s,
-\end{align}
 \tag{14.5}\]</span></span></p>
 <p>where the <span class="math inline">\(L_s\)</span> term is sometimes called the <strong>source term</strong> or <strong>source function</strong> in computer graphics, because it is the source of power at <span class="math inline">\(p\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>Combining <a href="#eq-radiance_sub" class="quarto-xref">Equation&nbsp;<span>14.1</span></a> and <a href="#eq-radiance_add" class="quarto-xref">Equation&nbsp;<span>14.5</span></a>, the net radiance change is<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
 <p><span id="eq-rte_1"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     \D L(p, \os) &amp;= L(p + \D s \os, \os) - L(p, \os) \\
     &amp;= -L(p, \os) \sigma_t(p, \os) \D s + L_s(p, \os) \D s.
-\end{align}
+\end{aligned}
 \tag{14.6}\]</span></span></p>
 <p>As <span class="math inline">\(\D s\)</span> approaches 0, we get (assuming <span class="math inline">\(\os\)</span> is a unit vector as in <a href="rendering-sss.html#eq-abs_cont" class="quarto-xref">Equation&nbsp;<span>13.13</span></a> and <a href="rendering-sss.html#eq-scat_cont" class="quarto-xref">Equation&nbsp;<span>13.14</span></a>):</p>
 <p><span id="eq-rte_2"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     \os \cdot \nabla_p L(p, \os) &amp;= \frac{\d L(p, \os)}{\d s} = \lim_{\D s \rightarrow 0} \frac{L(p + \D s \os, \os) - L(p, \os)}{\D s} \nonumber \\
     &amp;= -\sigma_t(p, \os) L(p, \os) + L_s(p, \os),
-\end{align}
+\end{aligned}
 \tag{14.7}\]</span></span></p>
 <p>where <span class="math inline">\(\nabla_p\)</span> denotes the gradient of <span class="math inline">\(L\)</span> with respect to <span class="math inline">\(p\)</span>, and <span class="math inline">\(\os \cdot \nabla_p\)</span> denotes the directional derivative, which is used because technically <span class="math inline">\(p\)</span> and <span class="math inline">\(\os\)</span> are both defined in a three-dimensional space, so what we are really calculating is the rate of radiance change at <span class="math inline">\(p\)</span> along <span class="math inline">\(\os\)</span>.</p>
 <p><a href="#eq-rte_2" class="quarto-xref">Equation&nbsp;<span>14.7</span></a> is the RTE, which is an integro-differential equation, because it is a differential equation with an integral embedded. The RTE has an intuitive interpretation: if we think of radiance as the power of a ray, as a ray propagates, its power is attenuated by the medium but also augmented by “stray photons” from other rays. The latter is given by <span class="math inline">\(L_s(p, \os)\)</span>, which can be thought of as the augmentation of the radiance per unit length.</p>
@@ -524,16 +514,14 @@ Figure&nbsp;14.1: (a): Illustration of the continuous VRE (<a href="#eq-vre" cla
 <p>The way to think of this is that in order to calculate any given radiance <span class="math inline">\(L(p, \os)\)</span>, we need to integrate all the changes along the direction <span class="math inline">\(\os\)</span> up until <span class="math inline">\(p\)</span>. Where do we start the integration? We can start anywhere. <a href="#fig-vre" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> (a) visualizes the integration process. Let’s say we want to start from a point <span class="math inline">\(p_0\)</span>, whose initial radiance toward <span class="math inline">\(\os\)</span> is <span class="math inline">\(L_0(p_0, \os)\)</span>. Let <span class="math inline">\(p = p_0 + s\os\)</span>, where <span class="math inline">\(\os\)</span> is a unit vector and <span class="math inline">\(s\)</span> is the distance between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span>. An arbitrary point <span class="math inline">\(p'\)</span> between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> would then be <span class="math inline">\(p' = p_0 + s' \os\)</span><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>Now we need to integrate from <span class="math inline">\(p_0\)</span> to <span class="math inline">\(p\)</span> by running <span class="math inline">\(s'\)</span> from 0 to <span class="math inline">\(s\)</span>. Observe that the RTE is a form of a <em>non-homogeneous</em> linear differential equation, whose solution is firmly established in calculus. Without going through the derivations, its solution is:</p>
 <p><span id="eq-vre"><span class="math display">\[
-\begin{align}
     L(p, \os) = T(p_0 \rightarrow p)L_0(p_0, \os) + \int_{0}^{s} T(p' \rightarrow p) L_s(p', \os)\d s',
-\end{align}
 \tag{14.8}\]</span></span></p>
 <p>where <span class="math inline">\(T(p_0 \rightarrow p)\)</span> is the transmittance between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> along <span class="math inline">\(\os\)</span>, and <span class="math inline">\(T(p' \rightarrow p)\)</span> is the transmittance between <span class="math inline">\(p'\)</span> and <span class="math inline">\(p\)</span> along <span class="math inline">\(\os\)</span>. Recall the definition of transmittance in <a href="rendering-sss.html#eq-transmittance" class="quarto-xref">Equation&nbsp;<span>13.15</span></a>: it is the remaining fraction of the radiance after attenuation by the medium after traveling the distance between two points. In our case here:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     T(p' \rightarrow p) = \frac{L(p+s\os, \os)}{L(p+s'\os, \os)} = e^{-\int_{s'}^s \sigma_t(p+t\omega, \omega) \d t}, \\
     T(p_0 \rightarrow p) = \frac{L(p+s\os, \os)}{L(p, \os)} = e^{-\int_{0}^s \sigma_t(p+t\omega, \omega) \d t},
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>The integral equation <a href="#eq-vre" class="quarto-xref">Equation&nbsp;<span>14.8</span></a> in the graphics literature is called the <strong>volume rendering equation</strong> (VRE) or the <strong>volumetric light transport equation</strong> — the counterpart of the surface LTE (<a href="rendering-re.html#sec-chpt-mat-ss-re" class="quarto-xref"><span>Section 11.3</span></a>). Looking at the visualization in <a href="#fig-vre" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> (a), the VRE has an intuitive interpretation: the radiance at <span class="math inline">\(p\)</span> along <span class="math inline">\(\os\)</span> is the the contribution of <span class="math inline">\(p_0\)</span> plus and contribution of every single point between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span>.</p>
 <ul>
@@ -541,7 +529,7 @@ Figure&nbsp;14.1: (a): Illustration of the continuous VRE (<a href="#eq-vre" cla
 <li>Why would a point <span class="math inline">\(p'\)</span> between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> make any contribution? It is because of the source term (<a href="#eq-source_term_em" class="quarto-xref">Equation&nbsp;<span>14.4</span></a>): <span class="math inline">\(p'\)</span> might emit lights, and some of the in-scattered photons at <span class="math inline">\(p'\)</span> will be scattered toward <span class="math inline">\(\os\)</span>. The contribution of <span class="math inline">\(p'\)</span> is thus given by the source term <span class="math inline">\(L_s\)</span> weakened by the transmittance between <span class="math inline">\(p'\)</span> and <span class="math inline">\(p\)</span>.</li>
 </ul>
 <p>The form of the VRE might appear to suggest that it is enough to accumulate along only the <em>direct</em> path between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span>, which is surprising given that there are infinitely many scattering paths between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> (due to multiple scattering). For instance, it appears that we consider only the outgoing radiance toward <span class="math inline">\(\os\)</span> from <span class="math inline">\(p_0\)</span>, but <span class="math inline">\(p_0\)</span> might have outgoing radiances over other directions, which might eventually contribute to <span class="math inline">\(L(p, \os)\)</span> through multiple scattering. Are we ignoring them?</p>
-<p>The answer is that the VRE <em>implicitly</em> accounts for all the potential paths between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> because of the <span class="math inline">\(L_s\)</span> term, which expands to . That is, every time we accumulate the contribution of a point between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span>, we have to consider the in-scattering from all the directions at that point. Another way to interpret this is to observe that the radiance term <span class="math inline">\(L\)</span> appears on both sides of the equation. Therefore, the VRE must be solved recursively by evaluating it everywhere in space.</p>
+<p>The answer is that the VRE <em>implicitly</em> accounts for all the potential paths between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> because of the <span class="math inline">\(L_s\)</span> term, which expands to <a href="#eq-source_term_em" class="quarto-xref">Equation&nbsp;<span>14.4</span></a>. That is, every time we accumulate the contribution of a point between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span>, we have to consider the in-scattering from all the directions at that point. Another way to interpret this is to observe that the radiance term <span class="math inline">\(L\)</span> appears on both sides of the equation. Therefore, the VRE must be solved recursively by evaluating it everywhere in space.</p>
 <p>Does this remind you of the rendering equation (<a href="rendering-re.html#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a>)? Indeed, the VRE can be thought of as the volumetric counterpart of the rendering equation. Similarly, we can use Monte Carlo integration to estimate it, just like how the rendering equation is dealt with — with an extra complication: the VRE has two integrals: the outer integral runs from <span class="math inline">\(p_0\)</span> to <span class="math inline">\(p\)</span> and, for any intermediate point <span class="math inline">\(p'\)</span>, there is an inner integral that runs from <span class="math inline">\(p'\)</span> to <span class="math inline">\(p\)</span> to evaluate the transmittance <span class="math inline">\(T(p' \rightarrow p)\)</span>. Therefore, we have to sample both integrands.</p>
 <p>Similar to the situation of the rendering equation, sampling recursively would exponentially increase the number of rays to be tracked. Put it another way, since there are infinitely many paths from which a ray gains its energy due to multiple scattering, we have to integrate infinitely many paths. Again, a common solution is path tracing, for which <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 14)</span> is a great reference.</p>
 <p>A simplification that is commonly used is to assume that there is only single scattering directly from the light source. In this way, the <span class="math inline">\(L_s\)</span> term does not have to integrate infinitely many incident rays over the sphere but only a fixed amount of rays emitted from the light source <em>non-recursively</em>. This strategy is sometimes called <strong>local illumination</strong> in volume rendering, as opposed to <strong>global illumination</strong>, where one needs to consider all the possible paths of light transport. The distinction is similar to that in modeling surface scattering (<a href="rendering-re.html#sec-chpt-mat-ss-re" class="quarto-xref"><span>Section 11.3</span></a>).</p>
@@ -550,9 +538,7 @@ Figure&nbsp;14.1: (a): Illustration of the continuous VRE (<a href="#eq-vre" cla
 <h2 data-number="14.3" class="anchored" data-anchor-id="sec-chpt-mat-vs-rte-vis"><span class="header-section-number">14.3</span> Discrete VRE and Scientific Volume Visualization</h2>
 <p>Sometimes the VRE takes the following discrete form:</p>
 <p><span id="eq-vre_1a"><span class="math display">\[
-\begin{align}
     L = \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}t_j\big).
-\end{align}
 \tag{14.9}\]</span></span></p>
 <p><a href="#eq-vre_1a" class="quarto-xref">Equation&nbsp;<span>14.9</span></a> is the discrete version of <a href="#eq-vre" class="quarto-xref">Equation&nbsp;<span>14.8</span></a>: the former turns the two integrals in the latter (both the outer integral and the inner one carried by <span class="math inline">\(T(\cdot)\)</span>) to discrete summations using the Riemann sum over <span class="math inline">\(N\)</span> discrete points along the ray between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p\)</span> at an interval of <span class="math inline">\(\D s = \frac{s}{N}\)</span>.</p>
 <p>The notations are slightly different; <a href="#fig-vre" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> (b) visualizes how this discrete VRE is expressed with the new notations.</p>
@@ -564,68 +550,55 @@ Figure&nbsp;14.1: (a): Illustration of the continuous VRE (<a href="#eq-vre" cla
 </ul>
 <p>See <span class="citation" data-cites="max1995optical">Max (<a href="references.html#ref-max1995optical" role="doc-biblioref">1995</a>, Sect. 4)</span> or <span class="citation" data-cites="kaufman2003volume">Kaufman and Mueller (<a href="references.html#ref-kaufman2003volume" role="doc-biblioref">2003</a>, Sect. 6.1)</span> for a relatively straightforward derivation of <a href="#eq-vre_1a" class="quarto-xref">Equation&nbsp;<span>14.9</span></a>, but hopefully this form of the VRE is equally intuitive to interpret from <a href="#fig-vre" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> (b). It is nothing more than accumulating the contribution of each point<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> along the ray, but now we also need to accumulate the attenuation along the way just because of how opacity is defined by convention (per step), hence the product of a sequence of the opacity residuals.</p>
 <p>We can also re-express <a href="#eq-vre_1a" class="quarto-xref">Equation&nbsp;<span>14.9</span></a> using opacity rather than transmittance: <span id="eq-vre_1b"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     L &amp;= \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big) \\
     &amp;= L_{N-1} \D s + L_{N-2} \D s(1-\alpha_{N-1}) + L_{N-3} \D s(1-\alpha_{N-1})(1-\alpha_{N-2}) +~\cdots~  \\
     &amp;~~~+ L_1\D s\prod_{j=2}^{N-1}(1-\alpha_j)+ L_0\D s\prod_{j=1}^{N-1}(1-\alpha_j).
-\end{align}
+\end{aligned}
 \tag{14.10}\]</span></span></p>
 <p>The discrete VRE is usually used in the scientific visualization literature, where people are interested in visualizing data obtained from, e.g., computer tomography (CT) scans or magnetic resonance imaging (MRI). There, it is the relative color that people usually care about, not the physical quantity such as the radiance, so people sometimes lump <span class="math inline">\(L_i\D s\)</span> together as <span class="math inline">\(C_i\)</span> and call it the “color” of the <span class="math inline">\(i^{th}\)</span> point. The VRE is then written as:</p>
 <p><span id="eq-vre_2"><span class="math display">\[
-\begin{align}
     C = \sum_{i=0}^{N-1}\big(C_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
-\end{align}
 \tag{14.11}\]</span></span></p>
 <p>The <span class="math inline">\(C\)</span> terms are defined in a three-dimensional RGB space, and <a href="#eq-vre_2" class="quarto-xref">Equation&nbsp;<span>14.11</span></a> is evaluated for the three channels separately, similar to how <a href="#eq-vre_1a" class="quarto-xref">Equation&nbsp;<span>14.9</span></a> and <a href="#eq-vre" class="quarto-xref">Equation&nbsp;<span>14.8</span></a> are meant to be evaluated for each wavelength independently. Since color is a linear projection from the spectral radiance, the so-calculated <span class="math inline">\(C\)</span> (all three channels) is indeed proportional to the true color, although in visualization one usually does not care about the true colors anyway (see <a href="#sec-chpt-mat-vs-rte-vis-vis" class="quarto-xref"><span>Section 14.3.3</span></a>).</p>
 <p><a href="#eq-vre_2" class="quarto-xref">Equation&nbsp;<span>14.11</span></a> is also called the <em>back-to-front</em> compositing formula in volume rendering, since it starts from <span class="math inline">\(p_0\)</span>, the farthest point on the ray to <span class="math inline">\(p\)</span>. We can easily turn the order around to start from <span class="math inline">\(p\)</span> and end at <span class="math inline">\(p_0\)</span> in a <em>front-to-back</em> fashion (<span class="math inline">\(C_{N-1}\)</span> now corresponds to <span class="math inline">\(p_0\)</span>):</p>
 <p><span id="eq-vre2_front"><span class="math display">\[
-\begin{align}
     C = \sum_{i=0}^{N-1}\big(C_i\prod_{j=0}^{i-1}t_j\big).
-\end{align}
 \tag{14.12}\]</span></span></p>
 <p>While theoretically equivalent, the latter is better in practice because it allows us to opportunistically terminate the integration early when, for instance, the accumulated opacity is high enough (transmittance is low enough), at which point integrating further makes little numerical contribution to the result.</p>
 <section id="another-discrete-form-of-vre" class="level3" data-number="14.3.1">
 <h3 data-number="14.3.1" class="anchored" data-anchor-id="another-discrete-form-of-vre"><span class="header-section-number">14.3.1</span> Another Discrete Form of VRE</h3>
 <p>A perhaps more common way to express the discrete VRE is to approximate the transmittance <span class="math inline">\(t\)</span> using the first two terms of its Taylor series expansion and further assume that the medium has a low albedo, i.e., <span class="math inline">\(\sigma_t \approx \sigma_a\)</span> and <span class="math inline">\(\sigma_s \approx 0\)</span> (that is, the medium emits and absorbs <em>only</em>); we have:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     &amp; 1 - \alpha_i = t_i = t(p_{i} \rightarrow p_{i+1}) = e^{-\sigma_t(p_i, \os) \D s} = 1 - \sigma_t(p_i, \os) \D s + \frac{(\sigma_t(p_i, \os) \D s)^2}{2} - \cdots \\
     \approx &amp; 1 - \sigma_t(p_i, \os) \D s \\
     \approx &amp; 1 - \sigma_a(p_i, \os) \D s.
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>Therefore:</p>
 <p><span id="eq-vre_alpha_approx"><span class="math display">\[
-\begin{align}
 \alpha_i \approx \sigma_a(p_i, \os) \D s.
-\end{align}
 \tag{14.13}\]</span></span></p>
 <p>Now, observe that the <span class="math inline">\(L_i\)</span> term in <a href="#eq-vre_1a" class="quarto-xref">Equation&nbsp;<span>14.9</span></a> is the source term in <a href="#eq-source_term_em" class="quarto-xref">Equation&nbsp;<span>14.4</span></a>, which under the low albedo assumption has only the emission term, so:</p>
 <p><span id="eq-vre_3b"><span class="math display">\[
-\begin{align}
-\label{eq:vre_3}
+\begin{aligned}
     L &amp;= \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big) \\
     &amp;=  \sum_{i=0}^{N-1}\big(\sigma_a(p_i, \os) L_e(p_i, \os)\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
-\end{align}
+\end{aligned}
 \tag{14.14}\]</span></span></p>
 <p>Now plug in <a href="#eq-vre_alpha_approx" class="quarto-xref">Equation&nbsp;<span>14.13</span></a>, we have:</p>
 <p><span id="eq-vre_3c"><span class="math display">\[
-\begin{align}
     L =  \sum_{i=0}^{N-1}\big(L_e(p_i, \os)\alpha_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
-\end{align}
 \tag{14.15}\]</span></span></p>
 <p>If we let <span class="math inline">\(C_i = L_e(p_i, \os)\)</span>, the discrete VRE is then expressed as <span class="citation" data-cites="levoy1988display">(<a href="references.html#ref-levoy1988display" role="doc-biblioref">Levoy 1988</a>)</span>:</p>
 <p><span id="eq-vre_4"><span class="math display">\[
-\begin{align}
     C = \sum_{i=0}^{N-1}\big(C_i\alpha_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
-\end{align}
 \tag{14.16}\]</span></span></p>
 <p>This can be interpreted as a form of <strong>alpha blending</strong> <span class="citation" data-cites="smith1995alpha">(<a href="references.html#ref-smith1995alpha" role="doc-biblioref">Smith 1995</a>)</span>, a typical trick in graphics to render transparent materials. It makes sense for our discrete VRE to reduce to alpha blending: our derivation assumes that the volume does not scatter lights, so translucent materials become transparent.</p>
 <p>Again, <a href="#eq-vre_4" class="quarto-xref">Equation&nbsp;<span>14.16</span></a> is the back-to-front equation, and the front-to-back counterpart looks like:</p>
 <p><span id="eq-vre4_front"><span class="math display">\[
-\begin{align}
     C = \sum_{i=0}^{N-1}\big(C_i\alpha_i\prod_{j=0}^{i-1}t_j\big).
-\end{align}
 \tag{14.17}\]</span></span></p>
 <p>If you compare the two discrete forms in <a href="#eq-vre_2" class="quarto-xref">Equation&nbsp;<span>14.11</span></a> and <a href="#eq-vre_4" class="quarto-xref">Equation&nbsp;<span>14.16</span></a>, it would appear that the two are not mutually consistent! Of course we know why: 1) <a href="#eq-vre_4" class="quarto-xref">Equation&nbsp;<span>14.16</span></a> applies two further approximations (low albedo and Taylor series expansion) <em>and</em> 2) the two <span class="math inline">\(C\)</span> terms in the two equations refer to different physical quantities (compare <a href="#eq-vre_1b" class="quarto-xref">Equation&nbsp;<span>14.10</span></a> with <a href="#eq-vre_3c" class="quarto-xref">Equation&nbsp;<span>14.15</span></a>).</p>
 </section>
@@ -705,15 +678,11 @@ Figure&nbsp;14.3: (a): directly projecting discrete points to the image plane wo
 <p>Conceptually nothing new needs to be introduced to deal with the two forms of light transport together. Say we have an opaque surface (a wall) located with a volume (smoke) in the scene. If we want to calculate the radiance of a ray leaving a point on the wall, we would evaluate the rendering equation there, and for each incident ray, we might have to evaluate the VRE since that ray might come from the volume. In practice it amounts to extending the path tracing algorithm to account for the fact that a path might go through a volume and bounce off between surface points. See <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 14.2)</span> and <span class="citation" data-cites="fong2017production">Fong et al. (<a href="references.html#ref-fong2017production" role="doc-biblioref">2017</a>, Sect. 3)</span> for detailed discussions.</p>
 <p>Another approach, which is perhaps more common when dealing with translucent materials (whose appearance, of course, depends on both the surface and subsurface scattering), is through a phenomenological model based on the notion of Bidirectional Scattering Surface Reflectance Distribution Function (<strong>BSSRDF</strong>) <span class="citation" data-cites="nicodemus1977geometrical">(<a href="references.html#ref-nicodemus1977geometrical" role="doc-biblioref">Nicodemus et al. 1977</a>)</span>. The BSSRDF is parameterized as <span class="math inline">\(f_s(p_s, \os, p_i, \oi)\)</span>, describing the infinitesimal outgoing radiance at <span class="math inline">\(p_s\)</span> toward <span class="math inline">\(\os\)</span> given the infinitesimal power incident on <span class="math inline">\(p_i\)</span> from the direction <span class="math inline">\(\oi\)</span>:</p>
 <p><span id="eq-bssrdf"><span class="math display">\[
-\begin{align}
     f_s(p_s, \os, p_i, \oi) = \frac{\text{d}L(p_s, \os)}{\text{d}\Phi(p_i, \oi)}.
-\end{align}
 \tag{14.18}\]</span></span></p>
 <p>BSSRDF can be seen as an extension of BRDF in that it considers the possibility that the radiance of a ray leaving <span class="math inline">\(p_s\)</span> could be influenced by a ray incident on another point <span class="math inline">\(p_i\)</span> due to SSS/volume scattering. Given the BSSRDF, the rendering equation can be generalized to:</p>
 <p><span id="eq-re_sss"><span class="math display">\[
-\begin{align}
     L(p_o, \os) = \int^A\int^{\Omega=2\pi} f_s(p_s, \os, p_i, \oi) L(p_i, \oi) \cos\theta_i \doi \d A,
-\end{align}
 \tag{14.19}\]</span></span></p>
 <p>where <span class="math inline">\(L(p_o, \os)\)</span> is the outgoing radiance at <span class="math inline">\(p_o\)</span> toward <span class="math inline">\(\os\)</span>, <span class="math inline">\(L(p_i, \oi)\)</span> is the incident radiance at <span class="math inline">\(p_i\)</span> from <span class="math inline">\(\oi\)</span>, <span class="math inline">\(A\)</span> in the outer integral is the surface area that is under illumination, and <span class="math inline">\(\Omega=2\pi\)</span> means that each surface point receives illumination from the entire hemisphere.</p>
 <p>We can again use path tracing and Monte Carlo integration to evaluate <a href="#eq-re_sss" class="quarto-xref">Equation&nbsp;<span>14.19</span></a> if we know the BSSRDF, which can, again, either be analytically derived given certain constraints and assumptions or measured <span class="citation" data-cites="frisvad2020survey">(<a href="references.html#ref-frisvad2020survey" role="doc-biblioref">Frisvad et al. 2020</a>)</span>. To analytically derive it, one has to consider the fact that the transfer of energy from an incident ray to an outgoing ray is the consequence of a cascade of three factors: two surface scattering (refraction) factors, one entering the material surface <span class="math inline">\(p_i\)</span> from <span class="math inline">\(\oi\)</span> and the other leaving the material surface at <span class="math inline">\(p_i\)</span> toward <span class="math inline">\(p_o\)</span>, and a volume scattering factor that accounts for the subsurface scattering between the incident ray at <span class="math inline">\(p_i\)</span> and the exiting ray at <span class="math inline">\(p_o\)</span> <span class="citation" data-cites="pharr2018physically">(<a href="references.html#ref-pharr2018physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2018</a>, Chpt. 11.4)</span>. If all three factors have an analytical form, the final BSSRDF has an analytical form too. This is the approach that, for instance, <span class="citation" data-cites="wann2001practical">Jensen et al. (<a href="references.html#ref-wann2001practical" role="doc-biblioref">2001</a>)</span> takes.</p>
@@ -863,7 +832,7 @@ Zwicker, Matthias, Hanspeter Pfister, Jeroen Van Baar, and Markus Gross. 2001a. 
 <li id="fn1"><p>Subrahmanyan Chandrasekhar won the Nobel Prize in physics in 1983 (not for the RTE).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Technically, even single scattering can lead to augmentation if there is illumination coming from anywhere outside the ray direction.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Some definitions do not include emission in the source term, while in other definitions the source term is what is defined here divided by <span class="math inline">\(\sigma_t\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>A subtlety you might have noticed is that not all the out-scattering of <span class="math inline">\(L(p, \os)\)</span> attenuates the radiance; some of the scattering could be toward <span class="math inline">\(\os\)</span> so should augment the radiance. This is not a concern since our augmentation term integrates over the entire sphere, so it considers <span class="math inline">\(L(p, \os)\)</span> again as part of in-scattering and accounts for the forward-scattered portion of <span class="math inline">\(L(p, \os)\)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>A subtlety you might have noticed is that not all the out-scattering of <span class="math inline">\(L(p, \os)\)</span> attenuates the radiance; some of the scattering could be toward <span class="math inline">\(\os\)</span> so should augment the radiance. This is not a concern since our augmentation term <a href="#eq-radiance_add" class="quarto-xref">Equation&nbsp;<span>14.5</span></a> integrates over the entire sphere, so it considers <span class="math inline">\(L(p, \os)\)</span> again as part of in-scattering and accounts for the forward-scattered portion of <span class="math inline">\(L(p, \os)\)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>There are two alternative parameterizations, both of which are common in graphics literature. The first <span class="citation" data-cites="pharr2023physically">(<a href="references.html#ref-pharr2023physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2023</a>)</span> is to express <span class="math inline">\(p_0 = p + s\os\)</span> (<span class="math inline">\(s\)</span> being positive), but then the initial radiance would have to be expressed as <span class="math inline">\(L(p_0, -\os)\)</span>, since <span class="math inline">\(\os\)</span> now points from <span class="math inline">\(p\)</span> to <span class="math inline">\(p_0\)</span>. The other is to express <span class="math inline">\(p_0 = p - s\os\)</span> (<span class="math inline">\(s\)</span> again being positive) <span class="citation" data-cites="fong2017production">(<a href="references.html#ref-fong2017production" role="doc-biblioref">Fong et al. 2017</a>)</span>; this avoids the need to switch directions but uses a negative sign. It is a matter of taste which one to use, but be alert to the different conventions.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>technically it is the contribution of each small segment between two discrete points because of the Reimann sum.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Some (color) transfer functions could have physical underpinnings, such as applying a single-scattering shading algorithms (i.e., local illumination); see, e.g., <span class="citation" data-cites="levoy1988display">Levoy (<a href="references.html#ref-levoy1988display" role="doc-biblioref">1988</a>, Sect. 3)</span> or <span class="citation" data-cites="max1995optical">Max (<a href="references.html#ref-max1995optical" role="doc-biblioref">1995</a>, Sect. 5)</span>, but the goal there is not to precisely model physics but for better, subjective visualization.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

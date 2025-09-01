@@ -469,9 +469,7 @@ Figure&nbsp;17.2: Image sensor can be seen as a chain of processing, or a transf
 </div>
 <p>From a computational perspective, we can model an image sensor as a signal processing chain, a transfer function <span class="math inline">\(f\)</span>, that transfers the optical signal to the electrical signal. <a href="#fig-sensor_signal_processing" class="quarto-xref">Figure&nbsp;<span>17.2</span></a> visualizes this chain of signal processing. This chain of processing is best understood as computing on random variables. The input optical signal can be seen a random variable <span class="math inline">\(R_o(\mu_o, \sigma_o)\)</span> with a mean and standard deviation of <span class="math inline">\(\mu_o\)</span> and <span class="math inline">\(\sigma_o\)</span>, respectively. Every step in the signal processing chain not only manipulates the signal itself but also introduces/affects the noise. As a result, the output electrical signal is another random variable <span class="math inline">\(R_e(\mu_e, \sigma_e)\)</span>. So the transfer function, viewed this way, is:</p>
 <p><span class="math display">\[
-\begin{align}
     f: (\mu_o, \sigma_o) \mapsto (\mu_e, \sigma_e),
-\end{align}
 \]</span></p>
 <p>Any imaging session can be seen as drawing a concrete value from the distribution of <span class="math inline">\(R_o\)</span>, and its output (raw pixel values) can be seen as drawing a value from the distribution of <span class="math inline">\(R_e\)</span>. An important goal of our study is to build an analytical model for this transfer function <span class="math inline">\(f\)</span>. For simplicity, we will first ignore noise as if <span class="math inline">\(f\)</span> operates only on the mean signal. We will then discuss the sources of noise and how to model them.</p>
 <p>There are two ways the pixels and the wires that read out the pixel outputs are physically arranged, shown in <a href="#fig-sensor_overview" class="quarto-xref">Figure&nbsp;<span>17.1</span></a> (b). In the <strong>back-side illumination</strong> (BSI) arrangement, the wiring of the circuitries is behind the photodiodes, which directly interface with the lights. In the <strong>front-side illumination</strong> (FSI) arrangement, the metal wiring sits between the light and the photodiodes. This means light could be absorbed and scattered through the metal layer before reaching the photodiodes, reducing the chance of a photon being properly captured. While earlier image sensors used FSI because it is easier to manufacture, almost all commercial image sensors use BSI now <span class="citation" data-cites="swain2008back">(<a href="references.html#ref-swain2008back" role="doc-biblioref">Swain and Cheskis 2008</a>)</span>.</p>
@@ -485,9 +483,7 @@ Figure&nbsp;17.2: Image sensor can be seen as a chain of processing, or a transf
 <p>What turns optical signals to electrical signals is the light-sensitive photodiode in a pixel. A photodiode is a p-n junction made of silicon, a semiconductor material. When a photon hits silicon and is absorbed, an electron from the silicon <em>might</em> be freed/emitted, transforming optical signals to electrical signals. This is called the <strong>photoelectric effect</strong> <span class="citation" data-cites="einstein1905erzeugung einstein1905heuristic">(<a href="references.html#ref-einstein1905erzeugung" role="doc-biblioref">Einstein 1905b</a>, <a href="references.html#ref-einstein1905heuristic" role="doc-biblioref">1905a</a>)</span>, the discovery of which won Albert Einstein his Nobel Prize.</p>
 <p>In particular, when a photon is absorbed, if its energy is greater than or equal to the <strong>work function</strong> <span class="math inline">\(\phi\)</span> of the material, which is the minimum energy needed to free an electron from the surface of the material, the photon can transfer its energy to an electron and free the electron. A photon’s energy is given by the <strong>Planck’s relation</strong>:</p>
 <p><span id="eq-photon_energy"><span class="math display">\[
-\begin{align}
     \mathcal{E} = h f = \frac{hc}{\lambda},
-\end{align}
 \tag{17.1}\]</span></span></p>
 <p>where <span class="math inline">\(h\)</span> is the Planck constant, <span class="math inline">\(f\)</span> is the photon frequency, and <span class="math inline">\(c\)</span> is the speed of light. So if <span class="math inline">\(h f &gt; \phi\)</span>, an absorbed photon can free an electron. Interestingly, the residual energy <span class="math inline">\(hf - \phi\)</span> becomes the kinetic energy of the electron, so a photon with a shorter wavelength (i.e., higher frequency) would allow the emitted electron to move faster.</p>
 <p>It is clear that there is a frequency threshold <span class="math inline">\(\phi/h\)</span>, lower than which a photon would never be able to free an electron. Higher than the threshold, there is generally a one-to-one mapping between an absorbed photon and an emitted electron: an absorbed photon always frees an electron. Since the work function of silicon is about 1.1 eV (electron volt), absorption of photons with wavelengths longer than 1,100 nm would not emit any electron.</p>
@@ -495,9 +491,7 @@ Figure&nbsp;17.2: Image sensor can be seen as a chain of processing, or a transf
 <h4 class="anchored" data-anchor-id="sec-chpt-imaging-sensor-pixel-pe-qe">Quantum Efficiency</h4>
 <p>A key figure of merit in image sensing is the notion of <strong>quantum efficiency</strong> (QE), which is the ratio between the number of electrons collected and the number of incident photons:</p>
 <p><span id="eq-qe"><span class="math display">\[
-\begin{align}
     QE = \frac{\#\text{~of electrons collected}}{\#\text{~of incident photons}}.
-\end{align}
 \tag{17.2}\]</span></span></p>
 <p><a href="#fig-silicon_abs_qe" class="quarto-xref">Figure&nbsp;<span>17.3</span></a> (a) shows the QE spectrum of an image sensor in the Hubble Space Telescope. It might come as a surprise that QE is lower than 1 (even for wavelengths well within the 1,000 nm threshold) and is actually wavelength dependent: shouldn’t every absorbed photon (within the wavelength threshold) always free an electron? There are two reasons.</p>
 <div id="fig-silicon_abs_qe" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -510,21 +504,17 @@ Figure&nbsp;17.3: (a): quantum efficiency of a sensor on the Hubble Space Telesc
 </figcaption>
 </figure>
 </div>
-<p>First, the denominator in the QE definition is the number of <em>incident</em> photons, not the number of absorbed photons. Not all photons that hit the photodetector will be absorbed. <a href="#fig-silicon_abs_qe" class="quarto-xref">Figure&nbsp;<span>17.3</span></a> (b) shows the spectral absorption coefficient <span class="math inline">\(\sigma\)</span> (unit 1/cm) of silicon on the left <span class="math inline">\(y\)</span>-axis, and the right <span class="math inline">\(y\)</span>-axis shows the corresponding mean free path <span class="math inline">\(l\)</span> (i.e., the expected length a photon can travel within silicon before being absorbed) at different wavelengths; recall from that <span class="math inline">\(l = 1/\sigma\)</span>. We can see that absorption is strongest for the blue-ish lights but decays very rapidly toward the longer wavelengths. This definition of QE is different from how QE is defined in human vision. Recall from <a href="hvs-receptor.html#sec-chpt-hvs-receptor-counting" class="quarto-xref"><span>Section 3.1</span></a>; there, QE is the probability of pigment excitation once the pigment actually absorbs a photon; there, the QE of photopigment is roughly two-thirds and is not wavelength-sensitive.</p>
+<p>First, the denominator in the QE definition is the number of <em>incident</em> photons, not the number of absorbed photons. Not all photons that hit the photodetector will be absorbed. <a href="#fig-silicon_abs_qe" class="quarto-xref">Figure&nbsp;<span>17.3</span></a> (b) shows the spectral absorption coefficient <span class="math inline">\(\sigma\)</span> (unit 1/cm) of silicon on the left <span class="math inline">\(y\)</span>-axis, and the right <span class="math inline">\(y\)</span>-axis shows the corresponding mean free path <span class="math inline">\(l\)</span> (i.e., the expected length a photon can travel within silicon before being absorbed) at different wavelengths; recall from <a href="rendering-sss.html#eq-mfp" class="quarto-xref">Equation&nbsp;<span>13.7</span></a> that <span class="math inline">\(l = 1/\sigma\)</span>. We can see that absorption is strongest for the blue-ish lights but decays very rapidly toward the longer wavelengths. This definition of QE is different from how QE is defined in human vision. Recall from <a href="hvs-receptor.html#sec-chpt-hvs-receptor-counting" class="quarto-xref"><span>Section 3.1</span></a>; there, QE is the probability of pigment excitation once the pigment actually absorbs a photon; there, the QE of photopigment is roughly two-thirds and is not wavelength-sensitive.</p>
 <p>Second, the nominator in the QE definition is the number of <em>collected</em>, not emitted, electrons: even if an electron is freed by an absorbed photon, that electron might not actually be collected and contribute to the electrical signal. Depending on where the electrons are freed, some of them need to go through a random walk (think of it as Brownian motion) before being collected, and you can imagine some electrons can be recombined with the holes during the walk. <!-- %https://hamamatsu.magnet.fsu.edu/articles/quantumefficiency.html
 %https://isl.stanford.edu/~abbas/ee392b/lect01.pdf; the QE derived is the number of collected electrons over the number of incident photons on the photodetector (so it ignores any photon loss before reaching the PD but includes absorption spectrum and random walks) --></p>
 <p>Given QE, the total number of emitted electrons after an exposure time <span class="math inline">\(t_{exp}\)</span> is given by:</p>
 <p><span id="eq-int_n_a"><span class="math display">\[
-\begin{align}
     N = \int_{\lambda} QE(\lambda) Y(\lambda) \text{d}\lambda,
-\end{align}
 \tag{17.3}\]</span></span></p>
 <p>where <span class="math inline">\(Y(\lambda)\)</span> is the number of photons incident on a photodiode at a particular wavelength <span class="math inline">\(\lambda\)</span> at time <span class="math inline">\(t\)</span> during the exposure time <span class="math inline">\(t_{exp}\)</span>, assuming that <span class="math inline">\(Y\)</span> is invariant during <span class="math inline">\(t_{exp}\)</span> here.</p>
 <p>According to the Planck’s relation (<a href="#eq-photon_energy" class="quarto-xref">Equation&nbsp;<span>17.1</span></a>), <span class="math inline">\(Y(\lambda)\)</span> is related to the spectral power distribution (SPD) of the incident light <span class="math inline">\(\Phi(\lambda)\)</span> by: <span class="math inline">\(Y(\lambda) = \frac{\Phi(\lambda, t) t_{exp} \lambda}{hc}\)</span>, where <span class="math inline">\(\Phi(\lambda) t_{exp}\)</span> is spectral energy distribution. Therefore, we have:</p>
 <p><span id="eq-int_n_b"><span class="math display">\[
-\begin{align}
     N = \int_\lambda QE(\lambda) \frac{\Phi(\lambda) t_{exp} \lambda}{hc}  \text{d}\lambda.
-\end{align}
 \tag{17.4}\]</span></span></p>
 <p>Note that we define QE for the photodiode itself: the denominator in <a href="#eq-qe" class="quarto-xref">Equation&nbsp;<span>17.2</span></a> refers to the number of photons incident on the photodiode, not those that enter the camera system. This is an important distinction, because many photons that enter the camera would not even make their way to the photodiode; some of them are reflected at the lens surfaces, and others are absorbed by the various filters (<a href="#sec-chpt-imaging-sensor-optics" class="quarto-xref"><span>Section 17.4</span></a>). In many contexts, the QE is reported with respect to the entire camera system, where the denominator <em>is</em> the number of photons entering the camera, in which case the QE would be lower than that of the photodiode. Always ask what the precise definition of a QE is when reading the literature.</p>
 </section>
@@ -535,18 +525,14 @@ Figure&nbsp;17.3: (a): quantum efficiency of a sensor on the Hubble Space Telesc
 <h4 class="anchored" data-anchor-id="basic-principle">Basic Principle</h4>
 <p>Now that we have turned photons to charges — the freed electrons move to the n region and the holes move to the p region of the p-n junction — the next step is to measure the charges. The basic principle of doing so is using a capacitor: we use the electrons to discharge a capacitor with a known capacitance; by measuring the voltage difference before and after the discharge, we can then estimate the number of emitted electrons:</p>
 <p><span id="eq-charge_measure"><span class="math display">\[
-\begin{align}
     \Delta V = \frac{\mathcal{Q}_{sig}}{C_{FD}} \times g = \frac{N q}{C_{FD}} \times g,
-\end{align}
 \tag{17.5}\]</span></span></p>
 <p>where <span class="math inline">\(\mathcal{Q}_{sig}\)</span> is the charge in the signal used to discharge the capacitor, which is usually a floating diffusion (see later) that has a capacitance of <span class="math inline">\(C_{FD}\)</span>, and <span class="math inline">\(g\)</span> is the voltage gain of whatever device is used to read out the voltage, usually a source follower (see later). <span class="math inline">\(\mathcal{Q}_{sig}\)</span> itself is the product of <span class="math inline">\(N\)</span>, the number of charges in the signal, and <span class="math inline">\(q\)</span>, the elementary charge.</p>
 <p><span class="math inline">\(\frac{q}{C_{FD}}\)</span> is also called the <strong>conversion gain</strong> (CG) of the pixel. CG has a unit of <span class="math inline">\(\text{Volt}/\text{e}^-\)</span> and can be interpreted as the amount of voltage change per charge. CG is a very important quantity. A high CG means the output voltage change is very sensitive to small amount of input light change, which is good for improving the signal-to-noise ratio (SNR). In contrast, a small CG means the output voltage change is small given the same amount of light change, and that small voltage change becomes very difficult to detect in the presence of noises, resulting in a low SNR. While desirable from a noise perspective, a high CG necessarily means a smaller capacitor, which is easier to fill up (saturate). We will get back to this point when discussing dynamic range (<a href="#sec-chpt-imaging-sensor-pixel-dr" class="quarto-xref"><span>Section 17.2.4</span></a>).</p>
 <p>We can see that once we can measure <span class="math inline">\(\Delta V\)</span>, we can get an estimate of <span class="math inline">\(N\)</span>. Why do we care about <span class="math inline">\(N\)</span>? Intuitively, the incident light luminance is positively related to <span class="math inline">\(N\)</span>: more incident photons means higher luminance. Luminance <span class="math inline">\(L\)</span>, if we are interested in only grayscale, monochromatic imaging, is ultimately what we want to estimate.</p>
 <p>It is important to realize that the actual relationship between <span class="math inline">\(L\)</span> and <span class="math inline">\(N\)</span> is not linear. We know that luminance is defined as:</p>
 <p><span id="eq-lum"><span class="math display">\[
-\begin{align}
     L = \int_{\lambda} V(\lambda) \Phi(\lambda) \text{d}\lambda,
-\end{align}
 \tag{17.6}\]</span></span></p>
 <p>where <span class="math inline">\(V(\lambda)\)</span> is the luminance efficiency function (LEF) and <span class="math inline">\(\Phi(\lambda)\)</span> is the SPD of the incident light. Taking <a href="#eq-lum" class="quarto-xref">Equation&nbsp;<span>17.6</span></a> and <a href="#eq-int_n_b" class="quarto-xref">Equation&nbsp;<span>17.4</span></a> together, we can see that given <span class="math inline">\(N\)</span>, we cannot quite estimate <span class="math inline">\(L\)</span>, because <span class="math inline">\(L\)</span> depends on <span class="math inline">\(\Phi(\lambda)\)</span>, but estimating <span class="math inline">\(\Phi(\lambda)\)</span> from <span class="math inline">\(N\)</span> is an under-determined problem, as <a href="#eq-int_n_b" class="quarto-xref">Equation&nbsp;<span>17.4</span></a> shows. To be exact, <span class="math inline">\(L\)</span> does not necessarily scale linearly with <span class="math inline">\(N\)</span> — it does not even necessarily scale positively with <span class="math inline">\(N\)</span>, but it is perhaps not terribly wrong to informally say a higher charge count means a higher luminance in the scene.</p>
 </section>
@@ -639,9 +625,7 @@ Figure&nbsp;17.8: Illustration of dynamic range, which is the ratio of the FWC a
 <p>A larger FWC leads to a higher sensor <strong>dynamic range</strong>, which, informally, refers to the range of scene luminance that a sensor can capture. Formally, the dynamic range is defined as the ratio between the highest and the lowest luminance level that can be <em>faithfully</em> captured. The highest level is the FWC, but what about the lowest level? Wouldn’t that simply be 0 and, if so, wouldn’t the dynamic range of any image sensor be infinity?</p>
 <p>The answer is that at very low light levels the charges collected by a pixel are dominated by noise. We call the charges collected when there is no incident light the “noise floor”, which can be measured by taking an image when the camera is in dark. The dynamic range is thus the ratio between the FWC and the noise floor <span class="citation" data-cites="nakamura2006image">(<a href="references.html#ref-nakamura2006image" role="doc-biblioref">Nakamura 2006</a>, Chpt. 3.4.2.1)</span>:</p>
 <p><span class="math display">\[
-\begin{align}
     \text{DR} = \frac{\text{FWC}}{\text{Noise Floor}}
-\end{align}
 \]</span></p>
 <p>We discuss noise in detail in <a href="imaging-noise.html" class="quarto-xref"><span>Chapter 18</span></a> and will not get into it too much here, but briefly, the noise floor is dominated by “dark noise”, which is caused by the thermally dislodged electrons, and the “read noise”, which is the noise introduced by the read-out circuitry.</p>
 <p>Not only can saturation occur at a PD’s well, it can also occur when transferring the charges from the PD to the FD during read-out. As we have briefly alluded to when discussing the conversion gain (CG) in <a href="#sec-chpt-imaging-sensor-pixel-charge" class="quarto-xref"><span>Section 17.2.2</span></a>, when the CG is low, the SNR is high but we need to use a small FD, whose capacity could sometimes be smaller than that of the PD, in which case the charge transfer might saturate the FD. Alternatively, a large FD will not saturate (during charge transfer) but will lead to a low CG and, thus, lower SNR.</p>
@@ -676,9 +660,7 @@ Figure&nbsp;17.9: Illustration of how the split-pixel architecture, where a pixe
 <p>We could also combine the split-pixel architecture with DCG <span class="citation" data-cites="iida20180 solhusvik20191280 willassen20151280">(<a href="references.html#ref-iida20180" role="doc-biblioref">Iida et al. 2018</a>; <a href="references.html#ref-solhusvik20191280" role="doc-biblioref">Solhusvik et al. 2019</a>; <a href="references.html#ref-willassen20151280" role="doc-biblioref">Willassen et al. 2015</a>)</span>, where usually the large pixels are read-out with twice with DCG and the small pixels are read-out with only LCG; this is because large pixels are meant to sample low-luminance information so they benefit more from HCG. This is shown in <a href="#fig-sp_dcg_dr" class="quarto-xref">Figure&nbsp;<span>17.9</span></a>, where <span class="math inline">\(S_1\)</span> is the capacity of the LPD’s FD node, which saturates at a lower intensity than <span class="math inline">\(L_1\)</span> and is the measurement node in the HCG read-out. The LCG read-out can read all the charges in the FWC (with the help of an additional FD) at the cost of a lower conversion gain.</p>
 <p>Another approach is the <strong>time-to-saturation</strong> (TTS) technology <span class="citation" data-cites="stoppa2002novel">(<a href="references.html#ref-stoppa2002novel" role="doc-biblioref">Stoppa et al. 2002</a>)</span>, which uses a counter to measure the time it takes for each pixel to saturate and use that time to extrapolate the information given the actual exposure time:</p>
 <p><span class="math display">\[
-\begin{align}
     Q_{\text{act}} = Q_{\text{sat}} \frac{T_{\text{exp}}}{T_{\text{sat}}},
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(Q_{\text{act}}\)</span> is the actual number of charges a pixel would have collected without saturation, <span class="math inline">\(Q_{\text{sat}}\)</span> is the FWC, <span class="math inline">\(T_{\text{exp}}\)</span> is the exposure time, and <span class="math inline">\(T_{\text{sat}}\)</span> is the saturation time. One could combine TTS with DCG and LOFIC <span class="citation" data-cites="ikeno20224 liu20204 liu2022augmented">(<a href="references.html#ref-ikeno20224" role="doc-biblioref">Ikeno et al. 2022</a>; <a href="references.html#ref-liu20204" role="doc-biblioref">Liu et al. 2020</a>, <a href="references.html#ref-liu2022augmented" role="doc-biblioref">2022</a>)</span>.</p>
 </section>
@@ -830,15 +812,11 @@ Figure&nbsp;17.16: (a): a birefringent material that, through double refraction,
 <p>The birefringent material acts as a low-pass filter. The intuition is that if an incident ray is spread over, say, 4 sensor-plane points, then each sensor-plane point, equivalently, integrates information from 4 incident rays, each coming from a distinct scene point (assuming a pinhole aperture). We know integration is essentially low-pass filtering.</p>
 <p>The way to understand the effect of the AA filter is to analyze its Point Spread Function (PSF) and Modulation Transfer Function (MTF), which we have seen in <a href="imaging-optics.html#sec-chpt-imaging-optics-modeling-mtf" class="quarto-xref"><span>Section 16.5.3</span></a>. Assuming a pinhole aperture, a 4-dot beam-splitting AA filter essentially imposes a PSF where a scene point is spread over 4 sensor-plane points. The PSF is the sum of 4 Dirac Delta functions placed on a regular grid with an offset <span class="math inline">\(d\)</span> between adjacent grid points (which depends on the difference in refractive indices and the relative positions between the two splitting planes):</p>
 <p><span class="math display">\[
-\begin{align}
     f(x, y) = \frac{1}{4}[\delta(x, y) + \delta(x-d, y) + \delta(x, y-d) + \delta(x-d, y-d)].
-\end{align}
 \]</span></p>
 <p>With a little math, which we omit here, we can show that the MTF of this PSF is:</p>
 <p><span class="math display">\[
-\begin{align}
     MTF(f_x, f_y) = |\cos(\pi d f_x)||\cos(\pi d f_y)|.
-\end{align}
 \]</span></p>
 <p>An example of this MTF is shown in <a href="#fig-aa_psf" class="quarto-xref">Figure&nbsp;<span>17.16</span></a> (c), where the <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis are the two spatial frequencies <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span>, and the <span class="math inline">\(a\)</span>-axis is the MTF. We can see that this particular MTF passes low frequencies and cuts off at a frequency of, in the case where <span class="math inline">\(d=1\)</span>, 0.5. Interestingly, the MTF also passes high frequencies, which is generally not a huge concern because power at high frequencies is usually already attenuated by the PSFs of other optical elements (e.g., the main imaging lens). Of course, in reality the aperture is not a pinhole, so the PSF is not simply a sum of four Delta functions but can nevertheless still be similarly analyzed.</p>
 <div id="fig-aa_filter" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -858,74 +836,56 @@ Figure&nbsp;17.17: (a): a birefringent material that, through double refraction,
 <h2 data-number="17.5" class="anchored" data-anchor-id="sec-chpt-imaging-sensor-optics-monomodel"><span class="header-section-number">17.5</span> Monochromatic, Noise-Free Sensor Model</h2>
 <p>Each in-sensor optical element adds its own spectral transmittance, so the overall transmittance of the in-sensor optics is the product of them. We will simply use <span class="math inline">\(T(\lambda)\)</span> to represent the overall transmittance. Given what we have discussed so far, we can build an analytical model for a monochromatic, noise-free image sensor. The raw pixel value, also known as the Digital Number, <span class="math inline">\(n\)</span> of a pixel <span class="math inline">\(p\)</span> of size <span class="math inline">\(A_p\)</span> and is exposed for a duration of <span class="math inline">\(t_{exp}\)</span> is given by:</p>
 <p><span id="eq-mono_model"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     N &amp;= \int_{\lambda} \int^{t_{exp}} \int^{A_p} Y(p, \lambda, t) T(\lambda) QE(\lambda) \text{d}p \text{d}t \text{d}\lambda, \label{eq:mono_model_1} \\
     \Delta V &amp;= \frac{Nq}{C_{FD}} \times g, \label{eq:mono_model_2} \\
     n &amp;= \lfloor \frac{\Delta V}{V_{max}} (2^{L} - 1) \rfloor, \label{eq:mono_model_3}
-\end{align}
+\end{aligned}
 \tag{17.7}\]</span></span></p>
 <p>where <span class="math inline">\(Y(p, \lambda, t)\)</span> is the number of photons incident on position <span class="math inline">\(p\)</span> at a particular wavelength <span class="math inline">\(\lambda\)</span> at a particular time <span class="math inline">\(t\)</span>, so it is a quantal counterpart of the spectral irradiance; <span class="math inline">\(T(\lambda)\)</span> is the overall spectral transmittance of the in-sensor optics, <span class="math inline">\(QE(\lambda)\)</span> is the quantum efficiency, and <span class="math inline">\(q\)</span> is the elementary charge.</p>
 <p>The first equation in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a> models <span class="math inline">\(N\)</span>, the total amount of charges collected at the particular pixel, where we integrate spatially, temporally, and spectrally. The second equation in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a> is essentially <a href="#eq-charge_measure" class="quarto-xref">Equation&nbsp;<span>17.5</span></a>, and models the voltage difference sensed before and after the exposure. The last equation in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a> is a crude ADC model, assuming that the voltage range <span class="math inline">\([0, v_{max}]\)</span> is quantized into <span class="math inline">\(L\)</span> bits, and the output of the ADC model is the digital number, a.k.a., the raw pixel value.</p>
 <p>How do we express <span class="math inline">\(Y(p, \lambda, t)\)</span>, the quantal counterpart of irradiance? The spectral irradiance at position <span class="math inline">\(p\)</span> and time <span class="math inline">\(t\)</span> is:</p>
 <p><span id="eq-irra"><span class="math display">\[
-\begin{align}
     E(p, \lambda, t) = \int^{\Omega(p, V)} L(p, \omega, \lambda, t) \cos\theta~\text{d}\omega,
-\end{align}
 \tag{17.8}\]</span></span></p>
 <p>where <span class="math inline">\(\Omega(p, V)\)</span> is the solid angle subtended by <span class="math inline">\(p\)</span> and the aperture <span class="math inline">\(V\)</span>; <span class="math inline">\(L(p, \omega, \lambda, t)\)</span> is the radiance with a wavelength <span class="math inline">\(\lambda\)</span> incident on <span class="math inline">\(p\)</span> from the direction <span class="math inline">\(\omega\)</span> at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(\theta\)</span> is the polar angle subtended by <span class="math inline">\(\omega\)</span> and the pixel normal vector.</p>
 <p>Given Planck’s equation (<a href="#eq-photon_energy" class="quarto-xref">Equation&nbsp;<span>17.1</span></a>), we can turn irradiance <span class="math inline">\(E\)</span> (energy per unit area per unit time) into the quantity <span class="math inline">\(Y\)</span> (photon quantity per unit area per unit time):</p>
 <p><span id="eq-irra_to_quan"><span class="math display">\[
-\begin{align}
     Y(p, \lambda, t) = \frac{E(p, \lambda, t) \lambda}{hc}.
-\end{align}
 \tag{17.9}\]</span></span></p>
 <p>Plugging <a href="#eq-irra" class="quarto-xref">Equation&nbsp;<span>17.8</span></a> and <a href="#eq-irra_to_quan" class="quarto-xref">Equation&nbsp;<span>17.9</span></a> into the <span class="math inline">\(N\)</span> expression in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a>, we have:</p>
 <p><span id="eq-cam_measurement_1"><span class="math display">\[
-\begin{align}
     N = \int_{\lambda} \int^{t_{exp}} \int^{A_p} \int^{\Omega(p, V)} \frac{L(p, \omega, \lambda, t) \cos\theta \text{d}\omega T(\lambda) QE(\lambda) \lambda}{hc} \text{d}p \text{d}t \text{d}\lambda.
-\end{align}
 \tag{17.10}\]</span></span></p>
 <p>Rearranging the terms a bit we get:</p>
 <p><span id="eq-cam_measurement_2"><span class="math display">\[
-\begin{align}
     N = \int_{\lambda} \Big( \int^{t_{exp}} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega, \lambda, t) \cos\theta \text{d}\omega \text{d}p \text{d}t \Big) T(\lambda) QE(\lambda) \frac{\lambda}{hc} \text{d}\lambda \label{eq:cam_measurement_2}.
-\end{align}
 \tag{17.11}\]</span></span></p>
 <p>Recall from <a href="rendering-lightfield.html#sec-chpt-mat-basics-radiometry-cam" class="quarto-xref"><span>Section 10.1</span></a>, the inner four integrals in <a href="#eq-cam_measurement_2" class="quarto-xref">Equation&nbsp;<span>17.11</span></a> collectively form the so-called camera measurement equation, which calculates <span class="math inline">\(Q(\lambda)\)</span>, the energy at wavelength <span class="math inline">\(\lambda\)</span> collected by the pixel during the exposure<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Therefore, we get:</p>
 <p><span id="eq-cam_measurement_3"><span class="math display">\[
-\begin{align}
     N = \int_{\lambda} Q(\lambda) T(\lambda) QE(\lambda) \frac{\lambda}{hc} \text{d}\lambda.
-\end{align}
 \tag{17.12}\]</span></span></p>
 <p>We have implicitly assumed here that the effects of the in-sensor optics can simply be modeled by the spectral transmittance <span class="math inline">\(T(\lambda)\)</span>. This is largely reasonable because 1) in-sensor optics are mostly transparent and 2) they are very close to the pixels, so we can ignore rays that are incident on the edge of the optics and, after refractions, miss the pixels.</p>
 <section id="sec-chpt-imaging-sensor-optics-monomodel-ssf" class="level3" data-number="17.5.1">
 <h3 data-number="17.5.1" class="anchored" data-anchor-id="sec-chpt-imaging-sensor-optics-monomodel-ssf"><span class="header-section-number">17.5.1</span> Spectral Sensitivity Function</h3>
 <p>We can make a few assumptions to simplify our discussion. First, we assume the ADC quantization error is negligible. Second, we assume that the irradiance within a pixel is spatially and temporally uniform during a short exposure time. The raw pixel value <span class="math inline">\(n\)</span> in <a href="#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>17.7</span></a> is then simplified to:</p>
 <p><span id="eq-mono_model_quan_1"><span class="math display">\[
-\begin{align}
     n \approx k \int_{\lambda} Y(p, \lambda, t) T(\lambda) QE(\lambda) \text{d}\lambda,
-\end{align}
 \tag{17.13}\]</span></span></p>
 <p>where <span class="math inline">\(Y(p, \lambda, t)\)</span> is the (average) number of incident photons at wavelength <span class="math inline">\(\lambda\)</span> hitting position <span class="math inline">\(p\)</span> at time <span class="math inline">\(t\)</span>; <span class="math inline">\(k = uvt_{exp}\frac{qg}{C_{FD}}\frac{2^N-1}{V_{max}}\)</span> is a constant.</p>
 <p>Let’s define a convenient term: <strong>Spectral Sensitivity Function</strong> (SSF), which is the product of <span class="math inline">\(T(\lambda)\)</span> and <span class="math inline">\(QE(\lambda)\)</span>. Therefore, we can rewrite <span class="math inline">\(n\)</span> as:</p>
 <p><span id="eq-mono_model_quan_2"><span class="math display">\[
-\begin{align}
     n \approx k \int_{\lambda} Y(p, \lambda, t) SSF_{quantal}(\lambda) \text{d}\lambda.
-\end{align}
 \tag{17.14}\]</span></span></p>
 <p>SSF is the only spectral (wavelength-dependent) term in <a href="#eq-mono_model_quan_2" class="quarto-xref">Equation&nbsp;<span>17.14</span></a> other than the incident light itself; it represents the phenomenological light sensitivity of the sensor over wavelength. SSF is sometimes also called the camera response function.</p>
 <p>The SSF defined in <a href="#eq-mono_model_quan_2" class="quarto-xref">Equation&nbsp;<span>17.14</span></a> is an “equal-quantal” function because it tells us the relative responses between different wavelengths under the same amount of incident photons. We can turn it into an “equal-energy” or “equal-power” function that operates on energy or power. We first express the raw pixel value <span class="math inline">\(n\)</span> in terms of the spectral power distribution <span class="math inline">\(\Phi(\lambda)\)</span> rather than the spectral quantity distrubition <span class="math inline">\(Y(\lambda)\)</span> and rewrite <a href="#eq-mono_model_quan_2" class="quarto-xref">Equation&nbsp;<span>17.14</span></a> as:</p>
-<p><span class="math display">\[
-\begin{align}
-    n \approx k \int_{\lambda} \frac{\Phi(p, \lambda, t)}{t_{exp}\frac{hc}{\lambda}} SSF_{quantal}(\lambda) \text{d}\lambda, \label{eq:mono_model_pow_2}
-\end{align}
-\]</span></p>
+<p><span id="eq-mono_model_pow_2"><span class="math display">\[
+    n \approx k \int_{\lambda} \frac{\Phi(p, \lambda, t)}{t_{exp}\frac{hc}{\lambda}} SSF_{quantal}(\lambda) \text{d}\lambda,
+\tag{17.15}\]</span></span></p>
 <p>where <span class="math inline">\(\Phi(p, \lambda, t)\)</span> denotes the spectral power distribution of the light hitting position <span class="math inline">\(p\)</span> at time <span class="math inline">\(t\)</span>. Now let’s absorb <span class="math inline">\(t_{exp}hc\)</span> into <span class="math inline">\(k\)</span> and define <span class="math inline">\(k' = uv\frac{qg}{C_{FD}}\frac{2^N-1}{V_{max}}\frac{1}{hc}\)</span> and <span class="math inline">\(SSF_{power}(\lambda) = SSF_{quantal}(\lambda)\lambda\)</span>, we get:</p>
 <p><span id="eq-mono_model_pow_3"><span class="math display">\[
-\begin{align}
     n \approx k' \int_{\lambda} \Phi(p, \lambda, t)SSF_{power}(\lambda) \text{d}\lambda.
-\end{align}
-\tag{17.15}\]</span></span></p>
+\tag{17.16}\]</span></span></p>
 <p><span class="math inline">\(SSF_{power}(\lambda)\)</span> is the equal-power SSF. The subscript is usually omitted in the literature because it is usually clear what SSF is being used (e.g., from the quantity that is being multiplied with the SSF). Also note that in some literature, the SSF is used interchangeably with QE, so be very careful.</p>
 </section>
 </section>
@@ -974,15 +934,11 @@ Figure&nbsp;17.19: The goal of color sensing is to form a color space from the r
 <p>Where do the three classes of spectral sensitivities come? Examine our monochromatic sensing model in <a href="#eq-mono_model_quan_2" class="quarto-xref">Equation&nbsp;<span>17.14</span></a>; it appears that all the pixels share the same response function and, thus, have the same spectral sensitivity: every pixel has the same quantum efficiency and the same optical elements sitting above them (so the same spectral transmittance of the optics).</p>
 <p>There are a variety of ways to introduce sensitivity differences across pixels, which we will discuss shortly in <a href="#sec-chpt-imaging-sensor-color-impl" class="quarto-xref"><span>Section 17.7.2</span></a>. Assuming, for now, that we have somehow introduced the three classes of SSFs, denoted <span class="math inline">\(SSF_R(\lambda)\)</span>, <span class="math inline">\(SSF_G(\lambda)\)</span>, and <span class="math inline">\(SSF_B(\lambda)\)</span>. Given an incident light with an SPD <span class="math inline">\(\Phi(\lambda)\)</span>, the camera responses are:</p>
 <p><span class="math display">\[
-\begin{align}
     [\int_{\lambda} \Phi(\lambda)SSF_{R}(\lambda) \text{d}\lambda, \int_{\lambda} \Phi(\lambda)SSF_{G}(\lambda) \text{d}\lambda, \int_{\lambda} \Phi(\lambda)SSF_{B}(\lambda) \text{d}\lambda].
-\end{align}
 \]</span></p>
-<p>This is a direct invocation of <a href="#eq-mono_model_pow_3" class="quarto-xref">Equation&nbsp;<span>17.15</span></a> with the constant omitted. The color of the light expressed in the LMS cone space is:</p>
+<p>This is a direct invocation of <a href="#eq-mono_model_pow_3" class="quarto-xref">Equation&nbsp;<span>17.16</span></a> with the constant omitted. The color of the light expressed in the LMS cone space is:</p>
 <p><span class="math display">\[
-\begin{align}
     [\int_{\lambda} \Phi(\lambda)L(\lambda) \text{d}\lambda, \int_{\lambda} \Phi(\lambda)M(\lambda) \text{d}\lambda, \int_{\lambda} \Phi(\lambda)S(\lambda) \text{d}\lambda].
-\end{align}
 \]</span></p>
 <p>If the cone responses form a 3D cone space, the camera raw responses also form a color space, which is sometimes called the camera’s native color space. We provide an interactive tutorial that allows you to interactively explore and compare the native color spaces of various cameras and the LMS cone space. <a href="#fig-camera_ssf" class="quarto-xref">Figure&nbsp;<span>17.20</span></a> (left) shows the SSFs of iPhone 11 (solid lines) and the cone fundamentals. The SSFs are normalized so that <span class="math inline">\(SSF_G\)</span> is peaked at unity, and the cone fundamentals are each normalized to peak at unity, so you could compare the relative sensitivity between the three SSFs in iPhone 11 but could not between the cone classes. Usually the SSF of a camera depends on a variety of factors such as the materials of the optical elements and the photodiodes as well as the pixel design, so it is almost impossible for the three SSFs to match exactly the cone fundamentals. <a href="#fig-camera_ssf" class="quarto-xref">Figure&nbsp;<span>17.20</span></a> (right) shows the spectral locus in iPhone 11’s native color space and in the cone space; they evidently do not overlap.</p>
 <div id="fig-camera_ssf" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -997,7 +953,7 @@ Figure&nbsp;17.20: Left: Spectral sensitivity functions of iPhone 11 (the RGB fi
 </div>
 <p>A major task in sensor calibration is to identify a transformation matrix <span class="math inline">\(M\)</span> such that the following (approximately) holds:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
     \int_{\lambda} \Phi(\lambda)SSF_{R}(\lambda) \text{d}\lambda\\
     \int_{\lambda} \Phi(\lambda)SSF_{G}(\lambda) \text{d}\lambda\\
@@ -1009,7 +965,7 @@ Figure&nbsp;17.20: Left: Spectral sensitivity functions of iPhone 11 (the RGB fi
     \int_{\lambda} \Phi(\lambda)M(\lambda) \text{d}\lambda\\
     \int_{\lambda} \Phi(\lambda)S(\lambda) \text{d}\lambda
 \end{bmatrix}
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>The transformation matrix is then applied in the post-processing pipeline of the raw pixels to turn raw pixel responses into a color value. We will discuss the calibration and the post-processing pipeline in greater details in <a href="imaging-isp.html" class="quarto-xref"><span>Chapter 19</span></a>.</p>
 </section>
@@ -1054,9 +1010,7 @@ Figure&nbsp;17.22: Illustration of the Foveon X3 pixel, which has three PDs made
 <p>The idea is that the silicon absorption spectrum is wavelength sensitive, as shown in the right panel of <a href="#fig-silicon_abs_qe" class="quarto-xref">Figure&nbsp;<span>17.3</span></a>. Blue-ish lights have a much shorter mean free length than do green-ish lights, which have a shorter mean free length than do red-ish lights. This means most short-wavelength lights will be absorbed after the first photodiode, leaving mostly medium- to long-wavelength lights. Those lights will go through the second photodiode, which absorbs mostly the medium-wavelength lights, leaving mostly long-wavelength lights to the third photodiode. As a result, each PD actually receives a different light spectrum, effectively creating three different responses for the same light incident on the pixel.</p>
 <p>Let’s assume that the three PDs have a depth of <span class="math inline">\(d_B\)</span>, <span class="math inline">\(d_G\)</span>, and <span class="math inline">\(d_R\)</span>, respectively. The incident light impinging on the pixel (i.e., the first PD surface) has a SPD <span class="math inline">\(\Phi(\lambda)\)</span>. The light impinging on the second PD then has a spectrum <span class="math inline">\(\Phi(\lambda)e^{-\sigma(\lambda)d_B}\)</span>, where <span class="math inline">\(\sigma(\lambda)\)</span> is the silicon’s absorption coefficient spectrum. This is easily derived from the fact that pure absorption (no scattering and emission) leads to an exponential decay of the input signal (<a href="rendering-sss.html#eq-abs_4" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>). Similarly, the light impinging on the third PD then has a spectrum <span class="math inline">\(\Phi(\lambda)e^{-\sigma(\lambda)(d_B+d_G)}\)</span>. The responses produced by the three PDs are thus (in the order of R, G, and G):</p>
 <p><span class="math display">\[
-\begin{align}
     [\int_{\lambda}\Phi(\lambda)\eta_R(\lambda)e^{-\sigma(\lambda)(d_B+d_G)}, \int_{\lambda}\Phi(\lambda)\eta_G(\lambda)e^{-\sigma(\lambda)(d_B)}, \int_{\lambda}\Phi(\lambda)\eta_B(\lambda)],
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(\eta_R(\lambda)\)</span>, <span class="math inline">\(\eta_G(\lambda)\)</span>, and <span class="math inline">\(\eta_B(\lambda)\)</span> are QE spectra of the three PDs (where we consider only photons that reach a PD as the denominator in <a href="#eq-qe" class="quarto-xref">Equation&nbsp;<span>17.2</span></a> while ignoring photons that are reflected/absorbed before the photons hit the PD), respectively, and <span class="math inline">\(\Phi(\lambda)\)</span> is the SPD of the light incident on the pixel surface. The three PDs use identical material (so they share the same silicon absorption spectrum) but can still have different <span class="math inline">\(\eta(\lambda)\)</span>s because of the thickness differences — due to the differences in the lengths of the depletion and neutral regions in the PD p-n junctions. Can you guess why the thickness tends to increase for deeper PDs in <a href="#fig-foveon_x3_pixel" class="quarto-xref">Figure&nbsp;<span>17.22</span></a> (right)?</p>
 <p>Compared to using the CFA, the vertical PD stacking approach is much more complicated to fabricate and more costly, so it is much less commonly used. It avoids color sampling (and the resulting aliasing) and the need for demosaicing, and in theory could also have a higher overall quantum efficiency (and signal-to-noise ratio) since there are no color filters, so it might find uses in scientific imaging <span class="citation" data-cites="chen2023bioinspired">(<a href="references.html#ref-chen2023bioinspired" role="doc-biblioref">Chen et al. 2023</a>)</span>.</p>

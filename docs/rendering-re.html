@@ -417,7 +417,6 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
 <p><span class="math display">\[
 \def\oi{{\omega_i}}
 \def\os{{\omega_s}}
@@ -435,7 +434,6 @@ window.Quarto = {
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cL}{\mathcal{L}}
 \]</span></p>
-</div>
 <p>When a group of photons arrives at a material surface, some of the photons might be immediately turned away (i.e., reflected) while others might penetrate into the material (i.e., refracted). The refracted portion is scattered further inside the material, giving rise to subsurface scattering. Let’s focus first on surface scattering, ignoring the contribution of surface scattering to an object’s appearance.</p>
 <p>There are two properties we care about in surface scattering: the directions of the reflection and the (spectral) energy along each direction. The direction is important because, as far as rendering, human vision, or camera imaging are concerned, only the photons that will eventually captured by a detector matter. The (spectral) energy is important because it dictates the perceived color. These two properties are captured by what is known as the BRDF (<a href="#sec-chpt-mat-ss-brdf" class="quarto-xref"><span>Section 11.1</span></a>). We will then derive a few very useful equations and properties based on BRDF (<a href="#sec-chpt-mat-ss-reflectance" class="quarto-xref"><span>Section 11.2</span></a>). Given the BRDF, we will introduce the rendering equation, the theoretical tool for rendering surface scattering (<a href="#sec-chpt-mat-ss-re" class="quarto-xref"><span>Section 11.3</span></a>).</p>
 <section id="sec-chpt-mat-ss-brdf" class="level2" data-number="11.1">
@@ -444,39 +442,27 @@ window.Quarto = {
 <p>The way to understand BRDF <span class="math inline">\(f_r(p, \os, \oi)\)</span> is to consider the following. <span class="math inline">\(L(p, \os)\)</span>, i.e., the radiance leaving <span class="math inline">\(p\)</span> toward <span class="math inline">\(\os\)</span>, is dependent on the light incident on <span class="math inline">\(p\)</span>. When the incident light on <span class="math inline">\(p\)</span> comes from only the direction <span class="math inline">\(\oi\)</span>, the irradiance at <span class="math inline">\(p\)</span> is zero, since the solid angle of a single direction <span class="math inline">\(\oi\)</span> is zero, so naturally <span class="math inline">\(L(p, \os)\)</span> is 0 (assuming there is no other light hitting <span class="math inline">\(p\)</span>). When <span class="math inline">\(p\)</span> receives light from a non-zero solid angle of directions <span class="math inline">\(\Delta\oi\)</span> (centered around <span class="math inline">\(\oi\)</span>), the irradiance of <span class="math inline">\(p\)</span> is increased by <span class="math inline">\(\Delta E(p, \oi)\)</span>. At the same time, due to this increase in incident light, <span class="math inline">\(L(p, \os)\)</span> is no longer zero; the increase in the radiance leaving <span class="math inline">\(p\)</span> over <span class="math inline">\(\os\)</span> is denoted <span class="math inline">\(\Delta L(p, \os)\)</span>.</p>
 <p>As we increase <span class="math inline">\(\Delta \oi\)</span>, both <span class="math inline">\(\Delta E(p, \oi)\)</span> and <span class="math inline">\(\Delta L(p, \os)\)</span> increase. BRDF is defined as the ratio of the two <em>increments</em> when <span class="math inline">\(\Delta \oi\)</span> approaches 0 (when the radiance along all directions in <span class="math inline">\(\Delta \oi\)</span> can be thought of as a constant):</p>
 <p><span id="eq-brdf"><span class="math display">\[
-\begin{align}
     f_r(p, \os, \oi) = \lim_{\Delta \oi \rightarrow 0}\frac{\Delta L(p, \os)}{\Delta E(p, \oi)} = \frac{\text{d}L(p, \os)}{\text{d}E(p, \oi)} = \frac{\text{d}L(p, \os)}{L(p, \oi)\cos\theta_i \text{d}\oi}.
-\end{align}
 \tag{11.1}\]</span></span></p>
 <section id="sec-chpt-mat-ss-brdf-approx" class="level3" data-number="11.1.1">
 <h3 data-number="11.1.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-brdf-approx"><span class="header-section-number">11.1.1</span> A Useful Approximation</h3>
 <p>Now assume that we illuminate <span class="math inline">\(p\)</span> through a finite, but small, solid angle <span class="math inline">\(\Oi\)</span>. Turning the differential equation into an integral equation, we get:</p>
 <p><span id="eq-brdf_finite_1"><span class="math display">\[
-\begin{align}
     L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) \text{d}E(p, \oi).
-\end{align}
 \tag{11.2}\]</span></span></p>
 <p>Using the definition of radiance in <a href="rendering-radiometry.html#eq-radiance_3" class="quarto-xref">Equation&nbsp;<span>9.4</span></a>, we get: <span id="eq-brdf_finite_2"><span class="math display">\[
-\begin{align}
     L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) L(p, \oi)\cos\theta_i \text{d}\oi.
-\end{align}
 \tag{11.3}\]</span></span></p>
 <p>If we assume that the BRDF is a constant over all the directions in <span class="math inline">\(\Oi\)</span>, <a href="#eq-brdf_finite_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> is simplified to:</p>
 <p><span id="eq-brdf_finite_3"><span class="math display">\[
-\begin{align}
     L(p, \os) \approx f_r(p, \os, \oi) \int^{\Oi} L(p, \oi)\cos\theta_i \text{d}\oi.
-\end{align}
 \tag{11.4}\]</span></span></p>
 <p>The integration in <a href="#eq-brdf_finite_3" class="quarto-xref">Equation&nbsp;<span>11.4</span></a> has no analytical solution, since we do not know the analytical form of <span class="math inline">\(L(p, \oi)\)</span>, but we know the integration is just another way of expressing the total irradiance incident upon <span class="math inline">\(p\)</span> over <span class="math inline">\(\Oi\)</span>, which is denoted as <span class="math inline">\(E(p, \Oi)\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This gets us <a href="#eq-brdf_finite_4" class="quarto-xref">Equation&nbsp;<span>11.5</span></a>:</p>
 <p><span id="eq-brdf_finite_4"><span class="math display">\[
-\begin{align}
     L(p, \os) \approx f_r(p, \os, \oi) E(p, \Oi).
-\end{align}
 \tag{11.5}\]</span></span></p>
 <p>Thus, we can approximate the BRDF as: <span id="eq-brdf_finite_5"><span class="math display">\[
-\begin{align}
-    f_r(p, \os, \oi) &amp;\approx \frac{L(p, \os)}{E(p, \Oi)}.
-\end{align}
+    f_r(p, \os, \oi) \approx \frac{L(p, \os)}{E(p, \Oi)}.
 \tag{11.6}\]</span></span></p>
 <p>Ultimately, we can see from <a href="#eq-brdf_finite_5" class="quarto-xref">Equation&nbsp;<span>11.6</span></a> that the BRDF <span class="math inline">\(f_r(p, \os, \oi)\)</span> can also be calculated as the ratio between the <em>absolute</em> radiance <span class="math inline">\(L(p, \oi)\)</span> and the absolute irradiance <span class="math inline">\(E(p, \Oi)\)</span> illuminated from a very small, but finite solid angle <span class="math inline">\(\Oi\)</span>. Another way to interpret this is that the so-calculated BRDF is the average BRDF over <span class="math inline">\(\Oi\)</span>. This derivation is useful for actually measuring a BRDF, which we will discuss in <a href="rendering-surface.html#sec-chpt-mat-rt-brdf" class="quarto-xref"><span>Section 12.3.2</span></a>, where we will have no choice but to use a non-zero solid angle for illumination, because physically we just cannot illuminate a point through an infinitesimal solid angle <span class="math inline">\(\doi\)</span>.</p>
 </section>
@@ -493,15 +479,11 @@ window.Quarto = {
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-dhr"><span class="header-section-number">11.2.1</span> Directional-Hemispherical Reflectance</h3>
 <p>For the energy to be conserved, the total outgoing energy at any point must not exceed that of the incident energy received by that point. Assume that a point <span class="math inline">\(p\)</span> receives an irradiance <span class="math inline">\(\d E_i\)</span> from a direction <span class="math inline">\(\oi\)</span> over an infinitesimal solid angle <span class="math inline">\(\doi\)</span>, and the outgoing radiance along the direction <span class="math inline">\(\os\)</span> due to that irradiance is <span class="math inline">\(f_r(p, \os, \oi)\d E_i\)</span>. Then the outgoing irradiance leaving <span class="math inline">\(p\)</span> over an infinitesimal solid angle <span class="math inline">\(\dos\)</span> around <span class="math inline">\(\os\)</span> would be <span class="math inline">\(f_r(p, \os, \oi)\d E_i\cos\theta_s\dos\)</span>. If we integrate all the outgoing directions <span class="math inline">\(\Omega\)</span>, we get the total outgoing irradiance <span class="math inline">\(\d E_o\)</span>, which must not exceed the incident irradiance <span class="math inline">\(\d E_i\)</span>:</p>
 <p><span id="eq-energy_con_0"><span class="math display">\[
-\begin{align}
     \d E_o = \int^{\Omega} \d E_i f_r(p, \os, \oi) \cos\theta_s\text{d}\os.
-\end{align}
 \tag{11.7}\]</span></span></p>
 <p><span class="math inline">\(\d E_i\)</span> is independent of <span class="math inline">\(\os\)</span>, so it can be hoisted out of the integration. Therefore, we have the following equation, which holds for any arbitrary incident direction <span class="math inline">\(\oi\)</span>:</p>
 <p><span id="eq-energy_con_1"><span class="math display">\[
-\begin{align}
     \int^{\Omega}f_r(p, \os, \oi)\cos\theta_s\text{d}\os = \frac{\d E_o}{\d E_i} = \rho_{dh}(p, \oi) \leq 1.
-\end{align}
 \tag{11.8}\]</span></span></p>
 <p><span class="math inline">\(\rho_{dh}\)</span> is defined as the ratio between <span class="math inline">\(\d E_o\)</span> and <span class="math inline">\(\d E_i\)</span>. When <span class="math inline">\(\Omega\)</span> is the hemisphere, <span class="math inline">\(\rho_{dh}\)</span> is called the <strong>directional-hemispherical reflectance</strong> in the computer vision and graphics literature, and is interpreted as the percentage of energy scattered by a point over the entire hemisphere given the incident light from a particular direction. Clearly, <span class="math inline">\(\rho_{dh}\)</span> is a function of both <span class="math inline">\(p\)</span> and <span class="math inline">\(\oi\)</span> and takes a value between 0 and 1.</p>
 </section>
@@ -509,15 +491,11 @@ window.Quarto = {
 <h3 data-number="11.2.2" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-hdr"><span class="header-section-number">11.2.2</span> Hemispherical-Directional Reflectance</h3>
 <p>Since we are dealing with geometric optics, the Helmholtz reciprocity holds:</p>
 <p><span class="math display">\[
-\begin{align}
     f_r(p, \os, \oi) = f_r(p, \oi, \os),
-\end{align}
 \]</span></p>
 <p>which means the energy conservation can also be expressed as:</p>
 <p><span id="eq-energy_con_2"><span class="math display">\[
-\begin{align}
     \int^{\Omega}f_r(p, \os, \oi)\cos\theta_i\text{d}\oi = \rho_{hd}(p, \os) \leq 1,
-\end{align}
 \tag{11.9}\]</span></span></p>
 <p>where <span class="math inline">\(\rho_{hd}\)</span> is called the <strong>hemispherical-directional reflectance</strong> when <span class="math inline">\(\Omega\)</span> is the hemisphere. <span class="math inline">\(\rho_{hd}\)</span>, a function of <span class="math inline">\(p\)</span> and <span class="math inline">\(\os\)</span>, is interpreted as the percentage of energy reflected toward a particular direction <span class="math inline">\(\os\)</span> given the incident energy over the entire hemisphere.</p>
 <p><a href="#eq-energy_con_2" class="quarto-xref">Equation&nbsp;<span>11.9</span></a> can be derived by first rewriting <a href="#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>11.8</span></a> as <span class="math inline">\(\int^{\Omega}f_r(p, \oi, \os)\cos\theta_s\text{d}\os \leq 1\)</span> (using the reciprocity) followed by switching <span class="math inline">\(\os\)</span> and <span class="math inline">\(\oi\)</span> (simply a change of notation). This derivation suggests that <span class="math inline">\(\rho_{hd}(p, \oi) = \rho_{dh}(p, \os)\)</span>, a natural consequence of the reciprocity<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
@@ -526,63 +504,51 @@ window.Quarto = {
 <h3 data-number="11.2.3" class="anchored" data-anchor-id="sec-chpt-mat-ss-reflectance-hhr"><span class="header-section-number">11.2.3</span> Albedo and Hemispherical-Hemispherical Reflectance</h3>
 <p>We can also describe the relationship between all the outgoing irradiance <span class="math inline">\(E_o\)</span> of a point over a solid angle <span class="math inline">\(\Os\)</span> due to all the incident irradiance <span class="math inline">\(E_i\)</span> over a solid angle <span class="math inline">\(\Oi\)</span>:</p>
 <p><span id="eq-albedo_0"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     E_o &amp;= \int^{\Omega_s} \Big(\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi\Big) \cos\theta_s \dos, \\
     E_i &amp;= \int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi
-\end{align}
+\end{aligned}
 \tag{11.10}\]</span></span></p>
 <p>Due to energy conservation, we have:</p>
 <p><span id="eq-albedo_1"><span class="math display">\[
-\begin{align}
     \rho_{hh}(p) = \frac{E_o}{E_i} \leq 1.
-\end{align}
 \tag{11.11}\]</span></span></p>
 <p><a href="#eq-albedo_1" class="quarto-xref">Equation&nbsp;<span>11.11</span></a> defines <span class="math inline">\(\rho_{hh}\)</span>, which is called the <strong>hemispherical-hemispherical reflectance</strong> when both <span class="math inline">\(\Omega_i\)</span> and <span class="math inline">\(\Omega_s\)</span> are hemispheres. <span class="math inline">\(\rho_{hh}\)</span> has another name: <strong>albedo</strong>.</p>
 <p>When <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of (invariant to) <span class="math inline">\(\oi\)</span> and <span class="math inline">\(\os\)</span>, i.e., when <span class="math inline">\(p\)</span> is an ideal <strong>Lambertian</strong> surface (see <a href="rendering-surface.html#sec-chpt-mat-ss-mat" class="quarto-xref"><span>Section 12.1</span></a>), <a href="#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>11.10</span></a> can be re-written as:</p>
 <p><span id="eq-lamb_0"><span class="math display">\[
-\begin{align}
     E_o = \int^{\Omega_s} f_r(p, \os, \oi) (\int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos.
-\end{align}
 \tag{11.12}\]</span></span></p>
 <p>Plugging in the definition of <span class="math inline">\(E_i\)</span> from <a href="#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>11.10</span></a>, we have: <span id="eq-lamb_1"><span class="math display">\[
-\begin{align}
     E_o = \int^{\Omega_s} f_r(p, \os, \oi) E_i \cos\theta_s \dos.
-\end{align}
 \tag{11.13}\]</span></span></p>
 <p>Since <span class="math inline">\(E_i\)</span> is independent of <span class="math inline">\(\os\)</span>, we have:</p>
 <p><span id="eq-lamb_2"><span class="math display">\[
-\begin{align}
     E_o = E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos.
-\end{align}
 \tag{11.14}\]</span></span></p>
 <p>Using the definition of <span class="math inline">\(\rho_{dh}\)</span> in <a href="#eq-energy_con_1" class="quarto-xref">Equation&nbsp;<span>11.8</span></a>, we have:</p>
 <p><span id="eq-lamb_3"><span class="math display">\[
-\begin{align}
     E_o = E_i \rho_{dh}(p, \oi).
-\end{align}
 \tag{11.15}\]</span></span></p>
 <p>Comparing <a href="#eq-lamb_3" class="quarto-xref">Equation&nbsp;<span>11.15</span></a> and <a href="#eq-albedo_1" class="quarto-xref">Equation&nbsp;<span>11.11</span></a>, we can see that for a Lambertian surface the albedo (<span class="math inline">\(\rho_{hh}\)</span>) is equivalent to <span class="math inline">\(\rho_{dh}\)</span> and <span class="math inline">\(\rho_{hd}\)</span>, but this relationship is not true in general.</p>
 <p>We can also show that for a Lambertian surface, the BRDF is the constant <span class="math inline">\(\frac{\rho_{hh}}{\pi}\)</span>. Starting from <a href="#eq-lamb_2" class="quarto-xref">Equation&nbsp;<span>11.14</span></a> and using the assumption that <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of <span class="math inline">\(\os\)</span>:</p>
 <p><span id="eq-lamb_4"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     E_o = E_i \rho_{hh} &amp;= E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos \\
     &amp;= E_i f_r(p, \os, \oi) \int^{\Omega_s} \cos\theta_s \dos \\
     &amp;= E_i f_r(p, \os, \oi) \pi.
-\end{align}
+\end{aligned}
 \tag{11.16}\]</span></span></p>
 <p>Thus: <span id="eq-diffuse_brdf"><span class="math display">\[
-\begin{align}
     f_r(p, \os, \oi) = \frac{\rho_{hh}}{\pi}.
-\end{align}
 \tag{11.17}\]</span></span></p>
 <p>The last step in <a href="#eq-lamb_4" class="quarto-xref">Equation&nbsp;<span>11.16</span></a> uses the integral results that:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     \d\omega &amp;= \sin\theta\d\theta\d\phi, \\
     \int^{\Omega=2\pi} \cos\theta \d\omega &amp;= \int^{2\pi}_0 \int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta\d\phi \nonumber\\
     &amp;= 2\pi\int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta \nonumber \\
     &amp;= \pi,
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>when <span class="math inline">\(\Omega\)</span> is the hemisphere.</p>
 <p>A fun exercise you can entertain yourself with is to show that if <span class="math inline">\(f_r\)</span> is independent of <span class="math inline">\(\oi\)</span>, it must also be independent of <span class="math inline">\(\os\)</span>. An informal way to do so is the following. Since <span class="math inline">\(f_r(p, \os, \oi)\)</span> is independent of <span class="math inline">\(\oi\)</span>, let’s rewrite it as <span class="math inline">\(g(p, \os)\)</span>. Now we invoke the reciprocity and rewrite <span class="math inline">\(f_r(p, \os, \oi)\)</span> as <span class="math inline">\(g(p, \oi)\)</span>. The only way for <span class="math inline">\(g(p, \os) = g(p, \oi)\)</span> is for <span class="math inline">\(g\)</span> to be dependent only on <span class="math inline">\(p\)</span>.</p>
@@ -595,20 +561,18 @@ window.Quarto = {
 <p>Given the BRDF, we can estimate the outgoing radiance of a point given its illumination using the well-known <strong>Rendering Equation</strong>.</p>
 <p>The setup is that we have a surface on which there is a point <span class="math inline">\(p\)</span> that is receiving light from a solid angle <span class="math inline">\(\Omega\)</span>. We are interested in calculating the exiting radiance leaving <span class="math inline">\(p\)</span> toward an arbitrary direction <span class="math inline">\(\os\)</span>. The rendering equation formulates this calculation by:</p>
 <p><span id="eq-re"><span class="math display">\[
-\begin{align}
     L(p, \os) = \int^{\Omega} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i \text{d}\oi,
-\end{align}
 \tag{11.18}\]</span></span></p>
 <p>where <span class="math inline">\(L(p, \os)\)</span> is the outgoing radiance from <span class="math inline">\(p\)</span> toward the direction <span class="math inline">\(\os\)</span>; <span class="math inline">\(\Omega\)</span> is usually a hemisphere in surface scattering, since lights hitting a surface point can come from anywhere in the hemisphere, in which case <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a> is also called the <em>reflection equation</em>, indicating the fact that the equation governs surface reflection/scattering. The rendering equation was first introduced to computer graphics by <span class="citation" data-cites="kajiya1986rendering">Kajiya (<a href="references.html#ref-kajiya1986rendering" role="doc-biblioref">1986</a>)</span> and <span class="citation" data-cites="immel1986radiosity">Immel, Cohen, and Greenberg (<a href="references.html#ref-immel1986radiosity" role="doc-biblioref">1986</a>)</span> (albeit with slightly different formulations and the former being more general than the latter).</p>
-The rendering equation is exactly the same equation in <a href="#eq-brdf_finite_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>, so there is nothing more profound about the rendering equation than the definition of the BRDF: we are simply following the BRDF’s definition and turning the differential equation into an integral one. Intuitively, the way to understand this equation is that every ray that hits <span class="math inline">\(p\)</span> makes some contribution toward the outgoing radiance <span class="math inline">\(L(p, \os)\)</span>, and the integration just accumulates all the contributions. In particular:
-<p><span class="math inline">\(L(p, \oi) \text{d}\oi\)</span> is the incident irradiance of a differential solid angle <span class="math inline">\(\text{d}\oi\)</span>; note that the irradiance calculated here is defined with respect to a surface perpendicular to the direction of <span class="math inline">\(\oi\)</span>.</p>
+<p>The rendering equation is exactly the same equation in <a href="#eq-brdf_finite_2" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>, so there is nothing more profound about the rendering equation than the definition of the BRDF: we are simply following the BRDF’s definition and turning the differential equation into an integral one. Intuitively, the way to understand this equation is that every ray that hits <span class="math inline">\(p\)</span> makes some contribution toward the outgoing radiance <span class="math inline">\(L(p, \os)\)</span>, and the integration just accumulates all the contributions. In particular:</p>
 <ul>
+<li><span class="math inline">\(L(p, \oi) \text{d}\oi\)</span> is the incident irradiance of a differential solid angle <span class="math inline">\(\text{d}\oi\)</span>; note that the irradiance calculated here is defined with respect to a surface perpendicular to the direction of <span class="math inline">\(\oi\)</span>.</li>
 <li><span class="math inline">\(L(p, \oi) \cos\theta \text{d}\oi\)</span> applies the Lambert’s cosine law and calculates the irradiance at the surface where <span class="math inline">\(p\)</span> lies.</li>
 <li><span class="math inline">\(f_r(p, \os, \oi)L(p, \oi) \cos\theta \text{d}\oi\)</span> “transfers” the differential incident irradiance to the differential outgoing radiance toward <span class="math inline">\(\os\)</span> through the BRDF function.</li>
 <li>The integration over all the incident directions calculates the total outgoing radiance given all the incident lights.</li>
 </ul>
 <p>The rendering equation in theory allows us to calculate the entire light field, i.e., the radiance distribution in space, given an arbitrary <span class="math inline">\(p\)</span> and <span class="math inline">\(\os\)</span>. Why is knowing the light field important? Recall <a href="rendering-lightfield.html#eq-cam" class="quarto-xref">Equation&nbsp;<span>10.1</span></a>: knowing the light field allows us to synthesize any image or calculate the color of any object from any perspective.</p>
-<p>It is, of course, much easier said than done when it comes to solving the rendering equation, which itself is worth multiple chapters in a computer graphics textbook. We will not get into it here; let’s just consider the following challenges. First, the integrand in generally has no analytical form, so we will not be able to get an analytical solution to the integral equation. A common method is Monte-Carlo integration, which samples the integrand at different points and estimates the integral from the samples.</p>
+<p>It is, of course, much easier said than done when it comes to solving the rendering equation, which itself is worth multiple chapters in a computer graphics textbook. We will not get into it here; let’s just consider the following challenges. First, the integrand in <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a> generally has no analytical form, so we will not be able to get an analytical solution to the integral equation. A common method is Monte-Carlo integration, which samples the integrand at different points and estimates the integral from the samples.</p>
 <p>Second, in a realistic environment, we need to solve the rendering equation <em>recursively</em>. Note how the radiance function shows up on both sides of the equation. Put it in another way, when using Monte-Carlo integration to solve <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a> we need to sample the value of <span class="math inline">\(L(p, \oi)\)</span> for a specific <span class="math inline">\(\oi\)</span> — how? We evaluate <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a> again, but this time treating <span class="math inline">\(\oi\)</span> as the <span class="math inline">\(\os\)</span>, which means we invoke Monte Carlo integration again. You can see how this can quickly blow up the computation: the number of rays whose radiances we need to calculate exponentially increases as long as we need to sample more than one ray at each point. A big chunk of physically-based graphics is devoted to addressing this issue; the most commonly used strategy is called <strong>path tracing</strong>, for which <span class="citation" data-cites="pharr2023physically">Pharr, Jakob, and Humphreys (<a href="references.html#ref-pharr2023physically" role="doc-biblioref">2023</a>, Chpt. 13)</span> is a great reference.</p>
 <p>Another way to think of this is that there are infinitely many paths through which light can propagate and be incident on a point. A <strong>global illumination</strong> method for rendering would attempt to track all these paths (e.g., through Monte Carlo methods). In contrast, a <strong>local illumination</strong> method is concerned with only a small subset of these paths, in which case we might be able to evaluate the rendering equation as a single-pass integration while avoiding recursion. For instance, we might consider lights only from direct light sources. We will see the counterpart of this exact situation in surface scattering/volume rendering in <a href="rendering-rte.html" class="quarto-xref"><span>Chapter 14</span></a>. For this reason, the rendering equation is sometimes called the <strong>light transport equation</strong> (LTE), because it in principle captures how light is transported in space<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>An interesting, and approximate, global illumination method that avoids path tracing is the idea of <strong>environment map</strong> <span class="citation" data-cites="ramamoorthi2009precomputation">(<a href="references.html#ref-ramamoorthi2009precomputation" role="doc-biblioref">Ramamoorthi 2009</a>, Chpt. 3)</span>. It assumes that the light sources are so distant from the objects in the scene that all points in the scene receive the same incident radiance distribution. That is, <span class="math inline">\(L(p, \oi)\)</span> in <a href="#eq-re" class="quarto-xref">Equation&nbsp;<span>11.18</span></a> is a function of only <span class="math inline">\(\oi\)</span> but not <span class="math inline">\(p\)</span>. We can then pre-compute (through path tracing for instance) or directly measure <span class="math inline">\(L(\oi)\)</span> offline and store them in a data structure. For instance, we can use the equirectangular projection to store a discretized form of <span class="math inline">\(L(\oi)\)</span>, or use spherical harmonics to (approximately) store a parameterized form of <span class="math inline">\(L(\oi)\)</span>. Either way, the data structure that stores pre-computed <span class="math inline">\(L(\oi)\)</span> is called an environment map, which we can load at rendering time, plug it into the rendering equation, and calculate the outgoing radiance by simply evaluating the integral.</p>

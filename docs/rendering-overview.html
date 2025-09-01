@@ -413,7 +413,6 @@ window.Quarto = {
 
 
 <p>This chapter first lays the land for physically modeling light-matter interactions in rendering, discussing the different levels at which the modeling can occur (<a href="#sec-chpt-mat-basics-ov" class="quarto-xref"><span>Section 8.1</span></a>) and building intuitions using a toy example (<a href="#sec-chpt-mat-vs-ov" class="quarto-xref"><span>Section 8.2</span></a>). We will conclude the chapter by introducing an extremely high-level model that abstracts away almost all the underlying physics and models an object as its <em>apparent</em> reflection and transmission spectra (<a href="#sec-chpt-mat-basics-model" class="quarto-xref"><span>Section 8.3</span></a>). This simple modeling is very commonly used in practice and serves as a curious teaser for the remaining rendering chapters: how and when can this simple model be a good approximation of the sophisticated light-matter interactions?</p>
-<div class="hidden">
 <p><span class="math display">\[
 \def\oi{{\omega_i}}
 \def\os{{\omega_s}}
@@ -431,7 +430,6 @@ window.Quarto = {
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cL}{\mathcal{L}}
 \]</span></p>
-</div>
 <section id="sec-chpt-mat-basics-ov" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-ov"><span class="header-section-number">8.1</span> Light-Matter Interactions</h2>
 <p>By and large, we will treat light as a collection of photons, each traveling in a particular direction and carrying a specific amount of energy. When a beam of photons hits a material surface, some of the photons will be scattered directly back to your eyes, and others will penetrate into the material. These surface phenomena are governed by <strong>surface scattering</strong>. We use the word “scattering” here to generally refer to lights coming back from the surface. Depending on the material, some of the scattered photons are along the perfect mirror-reflection directions, and others might be more diffuse. You might sometimes see the word “reflection” used. Reflection is sometimes used in the same way as scattering, which will be our use, but other times is reserved for the perfect, mirror-like reflection. Usually what the word means is self-evident given the context, but we will err on the side of verbosity when we want to mean a specific form of reflection.</p>

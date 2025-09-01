@@ -507,9 +507,7 @@ Figure&nbsp;16.3: Left: compute-simulated Airy disk (contrast is slightly exagge
 <p>Diffraction is a form of blur because the optical power of a power in the scene is spread spatially on the detector plane. Therefore diffraction limits the maximum resolving power of an imaging system. The way to quantify that is to imagine that we have two different points in space imaged through a pinhole. Each point, of course, will cause a diffraction pattern. The two Airy disks add up linearly in the power domain in the captured image, but when the two points are sufficiently apart spatially, the peaks of the two Airy disks will be sufficiently apart on the detector plane as well, which means we can tell the two points apart from the image (because the power of the Airy disks falls off very quickly with the distance to the center). When the two points are closer, the peaks of the Airy disks are closer; when the two peaks are sufficiently close, the superposition of the two Airy disks will result in an image where we cannot easily tell the two peaks apart, and that is when we know we have reached the resolution limit of the imaging system.</p>
 <p>A common criterion used to quantify such a limit is called the <strong>Rayleigh criterion</strong>, first defined by Lord Rayleigh<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, which says the two points are <em>regarded</em> as just resolvable when the center of the airy disk of one point coincides with the first minimum of the other <span class="citation" data-cites="rayleigh1879xxxi">(<a href="references.html#ref-rayleigh1879xxxi" role="doc-biblioref">Rayleigh 1879</a>)</span>. If you go through the math, this translates to:</p>
 <p><span id="eq-diff_limit"><span class="math display">\[
-\begin{align}
     \theta \approx 1.22\frac{\lambda}{D},
-\end{align}
 \tag{16.1}\]</span></span></p>
 <p>where <span class="math inline">\(\lambda\)</span> is the light wavelength, <span class="math inline">\(D\)</span> is the diameter of the pinhole, and <span class="math inline">\(\theta\)</span> is the angular resolution of the imaging system, i.e., the angle subtended by the two points and the pinhole. As an example, assuming a 550 nm typical visible light, when the pupil size is about 2 mm, which is a typical size under normal daylight, the resolvable angular resolution between two points is about 0.02 degree.</p>
 <p>Note that I italicize “regarded” in the text above. There is no reason why one cannot distinguish between two points separated less than the Rayleigh criterion in a given scenario or train a deep neural network to do so. The Rayleigh criterion for the most part serves as an intuitive criterion that works empirically well with observations.</p>
@@ -535,44 +533,38 @@ Figure&nbsp;16.4: The setup to derive the lens maker’s equation, which require
 </div>
 <p>We will apply the Snell’s law at the two interfaces, essentially tracing the ray through the lens. At the first interface, we have:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     n_1 \sin\alpha &amp;= n_2 \sin{\beta}, \\
     \alpha &amp;= \theta_1 + \mu_1, \\
     \beta &amp;= \mu_1 - \phi, \\
     \sin\mu_1 &amp;= \frac{h_1}{R_1}, \\
     \tan\theta_1 &amp;= \frac{h_1}{u}.
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>As the light travels inside the lens and reaches the second interface, we have:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     n_2 \sin\delta &amp;= n_1 \sin{\gamma}, \\
     \delta &amp;= \mu_2 + \phi, \\
     \gamma &amp;= \mu_2 + \theta_2, \\
     \sin\mu_2 &amp;= \frac{h_2}{R_2}, \\
     \tan\theta_2 &amp;= \frac{h_2}{v}.
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>Now, we are going to make two assumptions. First, we will assume that the lens is very thin; the thickness <span class="math inline">\(d\)</span> is very small. As a result, <span class="math inline">\(h_1 \approx h_2\)</span>. This is called the <strong>thin-lens assumption</strong>. Second, we will assume that the ray stays close to the optical axis as it travels. Such rays are <strong>paraxial rays</strong>, and this assumption is called the <strong>paraxial assumption</strong>. That is, <span class="math inline">\(\theta_1, \theta_2, \alpha, \beta, \gamma, \delta, \mu_1, \text{and~} \mu_2\)</span> are very small angles, for which we can apply the usual small-angle approximation in trigonometry, e.g., <span class="math inline">\(\sin(\alpha) \approx \tan(\alpha) \approx \alpha\)</span> and <span class="math inline">\(\cos(\alpha) = 1\)</span>.</p>
 <p>Using these two assumptions and through a little algebra, we will get:</p>
 <p><span id="eq-lmeq_1"><span class="math display">\[
-\begin{align}
     \frac{n_2 - n_1}{n_1}(\frac{1}{R_1} + \frac{1}{R_2}) = (\frac{1}{u} + \frac{1}{v}).
-\end{align}
 \tag{16.2}\]</span></span></p>
 <p>This is called the <strong>Lens Maker’s Equation</strong>. Critically, observe that <span class="math inline">\(v\)</span> depends only on <span class="math inline">\(u\)</span> regardless of the path the ray takes (for a given lens with a particular set of <span class="math inline">\(n_1, n_2, R_1, \text{and~} R_2\)</span>). Therefore, all rays originating from an on-axis point will converge at the same point on the other side of the optical axis. This is crucial, because it means we can place a single detector <strong>Q</strong> (e.g., a pixel) on the imaging side (right side of the lens in this diagram) to capture all the rays from the point <strong>P</strong>. In other words, if we place the detector at <strong>Q</strong>, the point <strong>P</strong> would be <em>in focus</em>. In fact, you can show that this is true for all points in space, not just on-axis points: all the rays originating from a point on one side of the lens will converge to another point on the other side of the lens. In reality, of course, only paraxial rays with a thin lens follow this.</p>
 <p>Now, if the ray originates from infinity (as if it is parallel to the optical axis), where <span class="math inline">\(u = \infty\)</span>, we have</p>
 <p><span id="eq-lmeq_2"><span class="math display">\[
-\begin{align}
     \frac{1}{v} = \frac{n_2 - n_1}{n_1}(\frac{1}{R_1} + \frac{1}{R_2}) := \frac{1}{f}.
-\end{align}
 \tag{16.3}\]</span></span></p>
 <p>This allows us to derive the position <span class="math inline">\(v\)</span> where a parallel ray intersects with the optical axis. We define that position as the <strong>focal length</strong> <span class="math inline">\(f\)</span> of the imaging system.</p>
 <p>Plugging <a href="#eq-lmeq_2" class="quarto-xref">Equation&nbsp;<span>16.3</span></a> into <a href="#eq-lmeq_1" class="quarto-xref">Equation&nbsp;<span>16.2</span></a> gives us the familiar <strong>Gaussian Lens Equation</strong>:</p>
 <p><span id="eq-gse"><span class="math display">\[
-\begin{align}
     \frac{1}{u} + \frac{1}{v} = \frac{1}{f}.
-\end{align}
 \tag{16.4}\]</span></span></p>
 <p>Under the ideal thin lens and paraxial approximation, the ray-tracing diagram is simplified to the one depicted in <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>16.5</span></a>, where:</p>
 <ul>
@@ -602,9 +594,7 @@ Figure&nbsp;16.5: Under an ideal thin lens and paraxial approximation, the ray-t
 <h3 data-number="16.3.2" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-fov"><span class="header-section-number">16.3.2</span> Magnification vs.&nbsp;Field-of-View</h3>
 <p>Using simple trigonometry in <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>16.5</span></a>, we can relate the size of an object in the world space (<span class="math inline">\(H\)</span>) and that in the image space (<span class="math inline">\(H'\)</span>):</p>
 <p><span id="eq-mag"><span class="math display">\[
-\begin{align}
     M = \frac{H'}{H} = \frac{f}{u-f} = \frac{1}{\frac{u}{f}- 1},
-\end{align}
 \tag{16.5}\]</span></span></p>
 <p>where <span class="math inline">\(M\)</span> is the magnification of the imaging system. We can see that <span class="math inline">\(M\)</span> increases as <span class="math inline">\(f\)</span> does. That is why telephoto cameras, those that you see in, for instance, sports broadcasting, are very long: they need to be long to accommodate a large focal length so that they can magnify objects that are very small (far away).</p>
 <p>What do we sacrifice when we increase magnification by increasing the focal length? The FoV reduces. The FoV of an imaging system is the extent of the observable world that can be captured by the sensor. Let’s use <a href="#fig-thin_lens" class="quarto-xref">Figure&nbsp;<span>16.5</span></a> to derive this, and for simplicity’s sake, let’s just assume that the sensor size is <span class="math inline">\(2H'\)</span> and is symmetric about the optical axis, i.e., the object at <span class="math inline">\(u\)</span> is just fully captured by the sensor. The figure omits the upper half of the sensor. The FoV is defined as <span class="math inline">\(2\theta = 2 \times \arctan(H'/v)\)</span>.</p>
@@ -663,9 +653,7 @@ Figure&nbsp;16.9: The setup to derive the depth-of-field (DoF) equation; adapted
 <p>As the CoC increases, eventually it becomes objectionable to the human visual system. Exactly what that CoC threshold depends on a number of factors that we will omit here (e.g., how the image will be scaled when being viewed, the contrast sensitivity of the human visual system, etc.), but let’s just use <span class="math inline">\(C\)</span> to denote that threshold for now. You can see that if an object is placed slightly before or after the depth <span class="math inline">\(T\)</span> (where the object is perfectly in focus), as long as the resulting CoC is smaller than <span class="math inline">\(C\)</span>, our visual system would still regard it as in focus. The distance between the nearest and farthest objects whose CoCs are still within <span class="math inline">\(C\)</span> is called the depth-of -field (DoF) of the system.</p>
 <p>Using geometrical optics and with a few assumptions, we can show that the DoF is given by:</p>
 <p><span id="eq-dof"><span class="math display">\[
-\begin{align}
     DoF \approx \frac{2CT^2N}{f^2} = \frac{2CT^2}{fA},
-\end{align}
 \tag{16.6}\]</span></span></p>
 <p>where <span class="math inline">\(T\)</span> is the distance of the object that is perfectly in focus, <span class="math inline">\(f\)</span> is the focal length, and <span class="math inline">\(N = f/A\)</span> is called the <strong>F-number</strong> of the camera, which is defined as the ratio between the focal length and the aperture size (<span class="math inline">\(A\)</span>).</p>
 <p>Given <a href="#eq-dof" class="quarto-xref">Equation&nbsp;<span>16.6</span></a>, there are three ways to increase the DoF. First, we can increase <span class="math inline">\(T\)</span>, i.e., focus on objects that are farther away (e.g., landscape photography). Second, we can decrease the focal length, but just keep in mind that changing the focal length will also affect the magnification and FoV as discussed in <a href="#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 16.3.1</span></a>. Finally, we can also reduce the aperture size, which would increase the F-number. Changing the aperture size, however, will have implications on other aspects of the imaging quality. Specifically, a small aperture increases the exposure time and, thus, motion blur.</p>
@@ -679,16 +667,12 @@ Figure&nbsp;16.9: The setup to derive the depth-of-field (DoF) equation; adapted
 <p>The way to reason about it is to think of a lens as performing a sequence of two refractions at its two surfaces, so we will have to first reason about, at each surface, what happens to the radiance and then consider the composite effect of the two surfaces.</p>
 <p>With a little radiometry (which we will omit but refer to <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4.1.6)</span> for the derivation), we can show that the radiance after refraction <span class="math inline">\(L_r\)</span> relates to the incident radiance <span class="math inline">\(L_i\)</span> by:</p>
 <p><span class="math display">\[
-\begin{align}
     L_r = n^2 L_i,
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(n\)</span> is the relative refractive index of the lens/medium to the air. Usually <span class="math inline">\(n &gt; 1\)</span>, which means after refraction the radiance increases. This makes sense because after refraction from the air to, say, glass, the set of incident rays maps to a smaller solid angle.</p>
 <p>What happens in the second surface? The same thing except the relative refractive index is now <span class="math inline">\(1/n\)</span>, since we are now going from the medium to the air:</p>
 <p><span class="math display">\[
-\begin{align}
     L_o = \frac{1}{n^2} L_r,
-\end{align}
 \]</span></p>
 <p>where <span class="math inline">\(L_o\)</span> is the radiance leaving the lens. Combining the two equations above, we can see <span class="math inline">\(L_o = L_i\)</span>, meaning the lens does not change the radiance. This is a nice result, because it essentially means we can simply trace rays through a lens and be reasonably sure that the ray radiance does not change.</p>
 <p>Intuitively, this conclusion is obviously <em>wrong</em>: some energy of incident light is absorbed/reflected away by the lens, so the energy leaving the lens is definitely smaller than that entering the lens. So the derivation above is a bit of a simplification, because we have assumed that no reflection takes place at each surface and no absorption by the lens. That said, this invariance largely still holds if we confine ourselves to near-normal angles of incidence and assume typical materials for lenses (which are mostly transparent with little absorption).</p>
@@ -699,9 +683,7 @@ Figure&nbsp;16.9: The setup to derive the depth-of-field (DoF) equation; adapted
 <p>When building an imaging system, we ideally want a point in the physical space to be captured as a single point in the image space. In our derivation of the Gaussian lens equation in <a href="#sec-chpt-imaging-optics-lens-gauss" class="quarto-xref"><span>Section 16.3.1</span></a>, this is indeed the case, so if the sensor is correctly positioned, we will capture a sharp image of the point. This derivation, however, assumes an ideal thin lens and considers only paraxial rays. It turns out that the equation still holds even if the lens is thick (i.e., the distance between the two surfaces is not negligible), even though the definition of the focal length would have to be slightly more complicated than <a href="#eq-lmeq_2" class="quarto-xref">Equation&nbsp;<span>16.3</span></a>.</p>
 <p>The real complication is that in practice we cannot ignore non-paraxial rays (i.e., rays that do not stay close to the optical axis), in which case rays from a single point (or from infinitely far away) will not all converge at a single point in the image space, resulting in a blur. Mathematically, this means we cannot invoke the small angle approximations. For instance, using Taylor expansion, we have:</p>
 <p><span class="math display">\[
-\begin{align}
     \sin\theta = \theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots.
-\end{align}
 \]</span></p>
 <p>When considering paraxial rays, we can afford to consider only the first term, but when <span class="math inline">\(\theta\)</span> is large, we have to include other terms. When considering the second term of Taylor series expansion (compared to considering only the first term), five forms of <strong>aberrations</strong> show up: spherical aberration, coma, astigmatism, field curvature, distortion. Geometrical optics that consider the second term are called the <strong>third-order theory</strong>, as opposed to the <strong>first-order theory</strong> or <strong>Gaussian optics</strong> that considers only the first term.</p>
 <section id="spherical-aberration" class="level3" data-number="16.4.1">
@@ -848,18 +830,16 @@ Figure&nbsp;16.16: Left: geometrically, the ideal image <span class="math inline
 </div>
 <p>In the second step, we then using the PSF function <span class="math inline">\(f(\cdot)\)</span> to convolve <span class="math inline">\(I_{ideal}\)</span>, and the result:</p>
 <p><span id="eq-psf_conv_cont"><span class="math display">\[
-\begin{align}
     I_{actual} = I_{ideal} \star f,
-\end{align}
 \tag{16.7}\]</span></span></p>
 <p>is the actual image formed by the imaging system. This is illustrated in <a href="#fig-psf" class="quarto-xref">Figure&nbsp;<span>16.15</span></a> (right).</p>
 <p>The convolution is a natural conclusion once we assume linearity (irradiances add) and shift invariance (constant PSF) of the imaging system. <a href="#fig-psf_conv" class="quarto-xref">Figure&nbsp;<span>16.16</span></a> (right) illustrates the intuition using an 1D example. <span class="math inline">\(I_{ideal}(x, y)\)</span> is the irradiance at <span class="math inline">\((x, y)\)</span> with a delta PSF. With a non-delta PSF, the irradiance of <span class="math inline">\(I_{ideal}(x, y)\)</span> is distributed over the sensor plane as defined in the PSF. Each point on the sensor, thus, receives contributions from all the point spreads. Since we assume linearity, the result is a convolution between <span class="math inline">\(I_{ideal}\)</span> and the PSF.</p>
 <p>Why? Here is a quick demonstration. Taking a discrete case with four points as an example and assuming we are interested in calculating the actual irradiance <span class="math inline">\(I_{actual}(x_0)\)</span>, the contribution from <span class="math inline">\(x_0\)</span> itself is <span class="math inline">\(I_{ideal}(x_0)f(0)\)</span>, the contribution from <span class="math inline">\(x_1\)</span> is <span class="math inline">\(I_{ideal}(x_1)f(x_0-x_1)\)</span>, and similarly the contributions from <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> are, respectively, <span class="math inline">\(I_{ideal}(x_2)f(x_0-x_2)\)</span> and <span class="math inline">\(I_{ideal}(x_3)f(x_0-x_3)\)</span>. So the actual irradiance received by <span class="math inline">\(x_0\)</span> is:</p>
 <p><span id="eq-psf_conv_dis"><span class="math display">\[
-\begin{align}
+\begin{aligned}
     I_{actual}(x_0) = &amp;I_{ideal}(x_0)f(0) + I_{ideal}(x_1)f(x_0-x_1) \nonumber\\
     + &amp;I_{ideal}(x_2)f(x_0-x_2) + I_{ideal}(x_3)f(x_0-x_3).
-\end{align}
+\end{aligned}
 \tag{16.8}\]</span></span></p>
 <p>You can see when we generalize from four points to a continuous signal <span class="math inline">\(I_{ideal}\)</span>, <a href="#eq-psf_conv_dis" class="quarto-xref">Equation&nbsp;<span>16.8</span></a> becomes <a href="#eq-psf_conv_cont" class="quarto-xref">Equation&nbsp;<span>16.7</span></a>.</p>
 <p>In the literature, it is common to see people taking images from a dataset, e.g., ImageNet, and simply convolve a PSF against them. The underlying assumption is that those images are captures of distant objects with an ideal system (with no blurs) and, thus, can be treated as essentially irradiance maps <span class="math inline">\(I_{ideal}\)</span>.</p>
@@ -869,17 +849,15 @@ Figure&nbsp;16.16: Left: geometrically, the ideal image <span class="math inline
 <h3 data-number="16.5.3" class="anchored" data-anchor-id="sec-chpt-imaging-optics-modeling-mtf"><span class="header-section-number">16.5.3</span> Fourier Perspectives: OTF and MTF</h3>
 <p>Since we are using convolution to model imaging in LSI systems, it is only natural to take a Fourier perspective. Recall the convolution theorem:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     \mathcal{F}(f \star g) &amp;= \mathcal{F}(f)\mathcal{F}(g), \\
     f \star g &amp;= \mathcal{F}^{-1}(\mathcal{F}(f)\mathcal{F}(g)),
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(\mathcal{F}\)</span> and <span class="math inline">\(\mathcal{F}^{-1}\)</span> denote Fourier transform and inverse Fourier transform. This allows us to reason about the effect of an imaging system in the frequency domain.</p>
 <p>The Fourier transform of a PSF is called the Optical Transfer Function (OTF), which is necessarily complex-valued, which has a magnitude and a phase component. The magnitude component of the OTF is called the Modulation Transfer Function (MTF) and the phase component of the OTF is called the Phase Transfer Function (PTF):</p>
 <p><span class="math display">\[
-\begin{align}
     OTF(\omega) = MTF(\omega)e^{i PTF(\omega)}.
-\end{align}
 \]</span></p>
 <p>What is the OTF of an ideal PSF, i.e., a delta function? It is a constant 1 across all frequencies. This makes sense: an ideal PSF introduces no blur so it does nothing to each spatial frequency.</p>
 <div id="fig-otf" class="quarto-float quarto-figure quarto-figure-center anchored">

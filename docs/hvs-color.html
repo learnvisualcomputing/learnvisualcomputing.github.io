@@ -461,16 +461,16 @@ Figure&nbsp;4.1: Physiological measurements give us absolute spectral sensitivit
 <p>Critically, this also means if we have a 570 <span class="math inline">\(\text{nm}\)</span> light at 1 <span class="math inline">\(\text{W}\)</span> and a 630 <span class="math inline">\(\text{nm}\)</span> light at 2.5 W, the two lights would cause the same amount of pigment excitations in L cones. If we had only L cones, these two lights would be seen as the exact same light, because the HVS will receive the exact amount of electrical responses — according to the Principle of Univariance. This explains why we could not see colors at night, when only rods are functioning.</p>
 <p>In reality, of course, most humans have three classes of cones, so what <em>is</em> the signal we receive? Given the Spectral Power Distribution (SPD) of a light <span class="math inline">\(\Phi(\lambda)\)</span>, we can calculate the total number of photon absorptions for each cone type, given by:</p>
 <p><span id="eq-spd2cones_int"><span class="math display">\[
-\begin{align}
+\begin{aligned}
   L &amp;= \int_\lambda L(\lambda) \Phi(\lambda) d\lambda \\
   M &amp;= \int_\lambda M(\lambda) \Phi(\lambda) d\lambda \\
   S &amp;= \int_\lambda S(\lambda) \Phi(\lambda) d\lambda
-\end{align}
+\end{aligned}
 \tag{4.1}\]</span></span></p>
 <p>where <span class="math inline">\(L(\lambda)\)</span>, <span class="math inline">\(M(\lambda)\)</span> and <span class="math inline">\(S(\lambda)\)</span> represent the cone sensitivity functions. The fact that we can directly multiply <span class="math inline">\(\Phi(\lambda)\)</span> with, say, <span class="math inline">\(L(\lambda)\)</span> is a result of defining <span class="math inline">\(L(\lambda)\)</span> on an equal-energy/power basis. The L/M/S values we calculate represent the total number of photon absorptions given an incident light. You would know why we care about photon absorption: it is equivalent to pigment excitation up to a constant scaling factor, and pigment excitations produce electrical signals that our brain actually receives. We sometimes simply call the L/M/S value the <strong>cone responses</strong> or <strong>tristimulus values</strong> of a light, but you should know that they do not represent the actual magnitude of the electrical responses of the cones, since the magnitude is not linearly proportional to absorption as we have discussed before.</p>
 <p>In actual computation we discretize the spectra and perform summation rather than integration. We also limit the summation to within the [380 <span class="math inline">\(\text{nm}\)</span>, 780 <span class="math inline">\(\text{nm}\)</span>] range, since the cone fundamentals are practically 0 beyond that range. Assuming that we are quantizing the spectra at a 1-<span class="math inline">\(\text{nm}\)</span> interval, the cone responses are linearly related to the light spectrum by:</p>
 <p><span id="eq-spd2cones"><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 L(380), L(381), \cdots, L(780)\\
 M(380), M(381), \cdots, M(780)\\
@@ -489,7 +489,7 @@ L\\
 M\\
 S\\
 \end{bmatrix}
-\end{align}
+\end{aligned}
 \tag{4.2}\]</span></span></p>
 <p>We can see that this is a huge dimensionality reduction. That is, our brain receives only the three-dimensional cone responses, not the actual spectrum of the light, which is of a much higher dimension. This is the basis of the <strong>trichromatic theory</strong> of color vision: color is a three-dimensional system. The theory was first proposed by <span class="citation" data-cites="young1802ii">Young (<a href="references.html#ref-young1802ii" role="doc-biblioref">1802</a>)</span>, who conjectured that there are three types of receptors, and later rediscovered, popularized, and extended by Hermann von Helmholtz in the later part of the nineteenth century.</p>
 <p>The huge dimensionality reduction also means there are infinitely many lights (with different SPDs) that will be seen as having the same color, as long as they cause the same cone responses. One way to understand this is if we try to solve the system of linear equations in <a href="#eq-spd2cones" class="quarto-xref">Equation&nbsp;<span>4.2</span></a> given <span class="math inline">\([L, M, S]^T\)</span>, with the constraint that the <span class="math inline">\(\Phi\)</span> vector must be non-negative everywhere (since power cannot be negative), we would generally end up with infinitely many solutions, since it is an <em>under-determined</em> system. The fact that multiple physically different lights can end up having the same color is called <strong>metamerism</strong>, and these lights are called <strong>metamers</strong> of each other.</p>
@@ -517,7 +517,7 @@ Figure&nbsp;4.2: Spectral locus in LMS cone space; from the interactive tutorial
 <h2 data-number="4.2" class="anchored" data-anchor-id="sec-chpt-hvs-color-cme"><span class="header-section-number">4.2</span> Trichromatic Color Matching</h2>
 <p>We can produce, in theory, any color by mixing three other colors, which we call the <strong>primary colors</strong>. Here is the mathematical intuition. Let’s say the SPDs of the three primary lights are <span class="math inline">\(R(\lambda)\)</span>, <span class="math inline">\(G(\lambda)\)</span>, <span class="math inline">\(B(\lambda)\)</span>. What is the power of each of the primary lights we need to produce the color of a target light <span class="math inline">\(\Phi(\lambda)\)</span>? For the color of the mixed light to match that of the target light, their corresponding cone responses must match:</p>
 <p><span id="eq-cme"><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 \sum R(\lambda)L(\lambda),~ \sum G(\lambda)L(\lambda),~ \sum B(\lambda)L(\lambda)\\
 \sum R(\lambda)M(\lambda),~ \sum G(\lambda)M(\lambda),~ \sum B(\lambda)M(\lambda)\\
@@ -535,7 +535,7 @@ b \\
 \sum\Phi(\lambda)M(\lambda)\\
 \sum\Phi(\lambda)S(\lambda)\\
 \end{bmatrix},
-\end{align}
+\end{aligned}
 \tag{4.3}\]</span></span></p>
 <p>where <span class="math inline">\(r, g, b\)</span> represent the power of the three primary lights, respectively. This system in general has one unique solution because we have the same number of unknowns (<span class="math inline">\(r, g, b\)</span>) as the number of equations. Each of the three equations constrains the cone-response matching of one class of cones. This means there is a single unique way to mix three primary lights to produce the color of an arbitrary target light.</p>
 <p>What if we have more than three primary lights? We would end up with an <em>under-determined</em> system (e.g., three equations but four unknowns if given four primary lights), which means there are infinitely many ways to mix the primaries to produce the target color. If we have only two primaries, we end up with an <em>over-determined</em> system, where there is in general no solution.</p>
@@ -593,7 +593,7 @@ Figure&nbsp;4.5: Color from black-body radiation at different temperatures (<spa
 <h4 class="anchored" data-anchor-id="representing-colors-using-cmfs">Representing Colors Using CMFs</h4>
 <p>Given a set of CMFs, we can describe the color of a light with a SPD <span class="math inline">\(\Phi(\lambda)\)</span> using the following equation:</p>
 <p><span id="eq-spd2rgb"><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 \bar{r}(380), \bar{r}(381), \cdots, \bar{r}(780)\\
 \bar{g}(380), \bar{g}(381), \cdots, \bar{g}(780)\\
@@ -612,7 +612,7 @@ R\\
 G\\
 B\\
 \end{bmatrix}
-\end{align}
+\end{aligned}
 \tag{4.4}\]</span></span></p>
 <p>where <span class="math inline">\(\bar{r}(\lambda)\)</span>, <span class="math inline">\(\bar{g}(\lambda)\)</span>, and <span class="math inline">\(\bar{b}(\lambda)\)</span> are the CMFs, and <span class="math inline">\(R\)</span>, <span class="math inline">\(G\)</span>, and <span class="math inline">\(B\)</span> are the amounts of the three primaries needed to match the color of <span class="math inline">\(\Phi(\lambda)\)</span>.</p>
 <p>The CMFs give us another color space, where the color of a light is interpreted as the amount of primary lights needed to match the color of the light. Of course, if we choose a different set of primary lights, we might end up with a new set of CMFs and a new RGB color space.</p>
@@ -626,7 +626,7 @@ B\\
 <p>Given the cone fundamentals, we can derive the CMFs based on the linear system shown in <a href="#eq-cme" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>. The interactive tutorial by <span class="citation" data-cites="zhu2022cone2cmf">Zhu (<a href="references.html#ref-zhu2022cone2cmf" role="doc-biblioref">2022a</a>)</span> walks through the process, which you are invited to go over, and we will describe the main steps here.</p>
 <p>In order to construct the CMFs, we have to match the colors of all the spectral lights, which means we have to specify cone-response matching at each wavelength. Using the basic idea of <a href="#eq-cme" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>, we have:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 \sum R(\lambda)L(\lambda),~ \sum G(\lambda)L(\lambda),~ \sum B(\lambda)L(\lambda)\\
 \sum R(\lambda)M(\lambda),~ \sum G(\lambda)M(\lambda),~ \sum B(\lambda)M(\lambda)\\
@@ -644,11 +644,11 @@ L(380),\cdots,L(780)\\
 M(380),\cdots,M(780)\\
 S(380),\cdots,S(780)\\
 \end{bmatrix},
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(L(\lambda)\)</span>, <span class="math inline">\(M(\lambda)\)</span>, and <span class="math inline">\(S(\lambda)\)</span> are the cone fundamentals; <span class="math inline">\(L(\lambda_0)\)</span> is the L cone response of the spectral light at a particular wavelength <span class="math inline">\(\lambda_0\)</span>; <span class="math inline">\([r(\lambda_0), g(\lambda_0), b(\lambda_0)]^T\)</span> represents the (to-be-solved-for) power of each primary needed to match the color of the spectral light at <span class="math inline">\(\lambda_0\)</span>; <span class="math inline">\(R(\lambda)\)</span>, <span class="math inline">\(G(\lambda)\)</span>, and <span class="math inline">\(B(\lambda)\)</span> are the SPDs of the primary lights used in the CIE 1931 color matching experiment. The first matrix is a constant matrix given a particular set of CMFs, and we will denote it as the <span class="math inline">\(\mathbf{M}\)</span> matrix. We can solve the system of equations by inverting the first matrix:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 r(380),\cdots,r(780)\\
 g(380),\cdots,g(780)\\
@@ -662,11 +662,11 @@ L(380),\cdots,L(780)\\
 M(380),\cdots,M(780)\\
 S(380),\cdots,S(780)\\
 \end{bmatrix}.
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>To get the CMFs, however, we need to turn the power measure into a unit measure. Recall the requirement that white must be produced by equal units of the primaries. We calculate the power of each primary needed to produce the EEW; let’s denote the solution <span class="math inline">\([r_w, g_w, b_w]^T\)</span>:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 r_{w}\\
 g_{w}\\
@@ -680,11 +680,11 @@ L_{w}\\
 M_{w}\\
 S_{w}\\
 \end{bmatrix},
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\([L_w, M_w, S_w]^T\)</span> denotes the total L, M, and S cone responses of EEW. For the so-calculated <span class="math inline">\([r_w, g_w, b_w]\)</span> to represent equal units, the last step is to scale <span class="math inline">\([\bar{r}(\lambda), \bar{g}(\lambda), \bar{b}(\lambda)]^T\)</span> at each <span class="math inline">\(\lambda\)</span> by <span class="math inline">\([r_w, g_w, b_w]\)</span>:</p>
 <p><span id="eq-cone2cmf"><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 \bar{r}(380), \cdots, \bar{r}(780)\\
 \bar{g}(380), \cdots, \bar{g}(780)\\
@@ -723,8 +723,8 @@ S(380),\cdots,S(780)\\
 L(380),\cdots,L(780)\\
 M(380),\cdots,M(780)\\
 S(380),\cdots,S(780)\\
-\end{bmatrix}, \label{eq:cone2cmfsub}
-\end{align}
+\end{bmatrix},
+\end{aligned}
 \tag{4.5}\]</span></span></p>
 <p>where <span class="math inline">\([\bar{r}(\lambda), \bar{g}(\lambda), \bar{b}(\lambda)]^T\)</span> gives us the unit measure, i.e., the values of the CMFs, at each <span class="math inline">\(\lambda\)</span>.</p>
 </section>
@@ -743,7 +743,7 @@ Figure&nbsp;4.6: The spectral locus in the LMS cone space, CIE 1931 RGB space, a
 </div>
 <p>There is something deeper: <span class="math inline">\(\mathbf{T}_{lms2rgb}\)</span> not only transforms the spectral locus, it transforms the entire coordinate system from the cone space to the RGB space. In other words, it transforms every single color in the LMS space to its corresponding coordinates in the CIE 1931 RGB space. The way to think about this is to ask: given that the cone space and the CIE 1931 RGB space provide two ways to represent the color of a light <span class="math inline">\(\Phi\)</span>, how are the cone-space representation <span class="math inline">\([L_c, M_c, S_c]\)</span> and the RGB-space representation <span class="math inline">\([R_c, G_c, B_c]\)</span> related? Using <a href="#eq-spd2cones" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>, <a href="#eq-spd2rgb" class="quarto-xref">Equation&nbsp;<span>4.4</span></a>, and <a href="#eq-cone2cmf" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>, it is easy to see that they are related by a linear transformation through <span class="math inline">\(\mathbf{T}_{lms2rgb}\)</span>:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
 \begin{bmatrix}
 R_c\\
 G_c\\
@@ -757,7 +757,7 @@ L_c\\
 M_c\\
 S_c
 \end{bmatrix}.
-\end{align}
+\end{aligned}
 \]</span></p>
 </section>
 <section id="cone-responses-fully-explain-psychophysical-color-matching" class="level4">
@@ -770,7 +770,7 @@ S_c
 <img src="figs/cmf_coneresponses_match.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmf_coneresponses_match-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.7: Smooth curves are the CMFs from , which uses a different set of primaries and white point than those used in the CIE 1931 RGB CMFs. The markers are the predicted CMFs based on the cone fundamentals measured from macaques. From <span class="citation" data-cites="baylor1987spectral">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987, fig. 4A</a>)</span>.
+Figure&nbsp;4.7: Smooth curves are the CMFs from <span class="citation" data-cites="stiles1955interim">W. Stiles and Burch (<a href="references.html#ref-stiles1955interim" role="doc-biblioref">1955</a>)</span>, which uses a different set of primaries and white point than those used in the CIE 1931 RGB CMFs. The markers are the predicted CMFs based on the cone fundamentals measured from macaques. From <span class="citation" data-cites="baylor1987spectral">Baylor, Nunn, and Schnapf (<a href="references.html#ref-baylor1987spectral" role="doc-biblioref">1987, fig. 4A</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -925,7 +925,8 @@ Figure&nbsp;4.13: We take an image, decouple it into three channels: luminance, 
 <p>It is perhaps not surprising, by now, that if there is a color space that can fully account for the perceptual coding of opponent hues, it is never going to be a linear transformation from the LMS space (or any other space that is a linear transformation away from the LMS space, e.g., the CIE 1931 XYZ space or the DKL cone-opponent space).</p>
 <p>As we have seen above, for instance, the DKL space <span class="citation" data-cites="derrington1984chromatic">(<a href="references.html#ref-derrington1984chromatic" role="doc-biblioref">Derrington, Krauskopf, and Lennie 1984</a>)</span>, which is a linear transformation from the LMS cone space, does not fully account for the perceptual opponent processes, e.g., does not predict any unique hue. People have shown that one can construct a linear transformation from the LMS space that can accurately predict three of the four unique perceptual hues by fitting data from psychophysical measurements that do not presuppose the existence of opponent mechanisms <span class="citation" data-cites="poirson1993appearance bauml1996color">(<a href="references.html#ref-poirson1993appearance" role="doc-biblioref">Poirson and Wandell 1993</a>; <a href="references.html#ref-bauml1996color" role="doc-biblioref">Bäuml and Wandell 1996</a>)</span>, but they cannot predict the fourth unique hue. <span class="citation" data-cites="schrodinger1925verhaltnis">Schrödinger (<a href="references.html#ref-schrodinger1925verhaltnis" role="doc-biblioref">1925</a>)</span> also estimated a linear transformation between the cone response space and the hue-opponent space based on the four unique hues, but the transformation could not accurately predict the achromatic color (also see the commentary by Zaidi in <span class="citation" data-cites="schrodinger1994relationship">Schrödinger (<a href="references.html#ref-schrodinger1994relationship" role="doc-biblioref">1994</a>)</span>).</p>
 <p>The reason is that perceptually unique red and green hues are not <em>collinear</em> with white, the achromatic color that is perceptually neutral in both the Y-B and R-G channel, i.e., does not appear yellow, blue, red, nor green<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. That is, red, white, and green do not lie on a line. Why is this significant? Assuming there was a linear transformation <span class="math inline">\(T\)</span> from the cone responses to the strengths of the hue-opponent mechanisms:</p>
-<p><span class="math display">\[\begin{align}
+<p><span class="math display">\[
+\begin{aligned}
 \begin{bmatrix}
 \text{Y/B}\\
 \text{R/G}\\
@@ -939,9 +940,11 @@ L\\
 M\\
 S
 \end{bmatrix}
-\end{align}\]</span></p>
+\end{aligned}
+\]</span></p>
 <p>Both unique red hue (<span class="math inline">\([L_R, M_R, S_R]\)</span>) and unique green hue (<span class="math inline">\([L_G, M_G, S_G]\)</span>) have no yellow (or blue) hue, so their response in the Y-B channel response would be 0:</p>
-<p><span class="math display">\[\begin{align}
+<p><span class="math display">\[
+\begin{aligned}
 \begin{bmatrix}
 \text{0}\\
 |\\
@@ -968,9 +971,11 @@ L_G\\
 M_G\\
 S_G
 \end{bmatrix}
-\end{align}\]</span></p>
+\end{aligned}
+\]</span></p>
 <p>Therefore, any mixture of the unique red hue and the unique green hue would not appear to have a yellow hue either:</p>
-<p><span class="math display">\[\begin{align}
+<p><span class="math display">\[
+\begin{aligned}
 \begin{bmatrix}
 \text{0}\\
 |\\
@@ -984,7 +989,8 @@ a L_R + b L_G\\
 a M_R + b M_G\\
 a S_R + b S_G
 \end{bmatrix},
-\end{align}\]</span></p>
+\end{aligned}
+\]</span></p>
 <p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are contributions of red and green to the mixed color. However, we know that when we mix red with green colors we get yellow. The fact that two colors without any yellow hue can generate a color that does have a yellow hue means the hue-opponent space cannot be a linear transformation from the LMS cone space.</p>
 <div id="fig-unique_hues" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1129,7 +1135,7 @@ Figure&nbsp;4.19: In a protanomalous color space, the L and M cone fundamentals 
 <img src="figs/cvd_model.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cvd_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.20: Left: isochrome planes and Protanopia confusion lines in LMS cone space; from . According to the model, the intersection between the isochrome planes and a confusion line is the color a dichromat actually sees for all the colors on that confusion line. Right; the isochrome lines and Deuteranopia confusion lines in the xy-diagram; adapted from .
+Figure&nbsp;4.20: Left: isochrome planes and Protanopia confusion lines in LMS cone space; from <span class="citation" data-cites="zhu2022cvd">Zhu (<a href="references.html#ref-zhu2022cvd" role="doc-biblioref">2022c</a>)</span>. According to the <span class="citation" data-cites="brettel1997computerized">Brettel, Viénot, and Mollon (<a href="references.html#ref-brettel1997computerized" role="doc-biblioref">1997</a>)</span> model, the intersection between the isochrome planes and a confusion line is the color a dichromat actually sees for all the colors on that confusion line. Right; the isochrome lines and Deuteranopia confusion lines in the xy-diagram; adapted from <span class="citation" data-cites="confusionlines">Curran919 (<a href="references.html#ref-confusionlines" role="doc-biblioref">2022</a>)</span>.
 </figcaption>
 </figure>
 </div>

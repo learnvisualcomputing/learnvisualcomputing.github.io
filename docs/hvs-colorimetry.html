@@ -460,11 +460,11 @@ Figure&nbsp;5.1: The CIE 1931 XYZ color space (right) is constructed to be a lin
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="chromaticity-is-the-result-of-a-perspective-projection"><span class="header-section-number">5.2.1</span> Chromaticity is the Result of a Perspective Projection</h3>
 <p>More formally, we can calculate the primary ratio <span class="math inline">\(r:g:b\)</span> of a color and then normalize the ratio such that <span class="math inline">\(r + g + b = 1\)</span> (100%). The so-calculated <span class="math inline">\(r\)</span>, <span class="math inline">\(g\)</span>, <span class="math inline">\(b\)</span> values of a color are called the (RGB) <strong>chromaticity</strong> values of that color. Mathematically, the chromaticity of a color defined in an RGB space is calculated from its absolute quantity by:</p>
 <p><span class="math display">\[
-\begin{align}
+\begin{aligned}
     r = \frac{R}{R+G+B}\\
     g = \frac{G}{R+G+B}\\
     b = \frac{B}{R+G+B}
-\end{align}
+\end{aligned}
 \]</span></p>
 <p>Geometrically, going from the RGB values of a color to the rgb chromaticity is equivalent to a <em>perspective projection</em>, where we project an [R, G, B] point through the origin to the <span class="math inline">\(r+g+b=1\)</span> plane. The left panel in <a href="#fig-chromaticity" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> visualizes this projection. Each line that goes through the origin is an “equi-chromaticity” line, in that all the colors on that line have the same chromaticity. The spectral locus is so projected to the <span class="math inline">\(r+g+b=1\)</span> plane. Since there are only two degrees of freedom in chromaticity, we can visualize the chromaticity in a two-dimensional space, and usually the <span class="math inline">\(r\)</span> and <span class="math inline">\(g\)</span> coordinates are used. The right panel in <a href="#fig-chromaticity" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> shows the spectral locus in the rg-chromaticity diagram.</p>
 <div id="fig-chromaticity" class="quarto-float quarto-figure quarto-figure-center anchored">
