@@ -137,7 +137,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surfacemodeling.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surface.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -282,7 +282,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rendering-surfacemodeling.html" class="sidebar-item-text sidebar-link active">
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></a>
   </div>
 </li>
@@ -380,7 +380,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-chpt-mat-ss-mat" id="toc-sec-chpt-mat-ss-mat" class="nav-link active" data-scroll-target="#sec-chpt-mat-ss-mat"><span class="header-section-number">12.1</span> Diffuse, Specular, and Glossy Materials</a>
+  <li><a href="#sec-chpt-mat-ss-mat" id="toc-sec-chpt-mat-ss-mat" class="nav-link active" data-scroll-target="#sec-chpt-mat-ss-mat"><span class="header-section-number">12.1</span> Types of Material Surface</a>
   <ul class="collapse">
   <li><a href="#diffuse-material" id="toc-diffuse-material" class="nav-link" data-scroll-target="#diffuse-material"><span class="header-section-number">12.1.1</span> Diffuse Material</a></li>
   <li><a href="#perfectly-specular-material" id="toc-perfectly-specular-material" class="nav-link" data-scroll-target="#perfectly-specular-material"><span class="header-section-number">12.1.2</span> Perfectly Specular Material</a></li>
@@ -401,7 +401,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surfacemodeling.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-surface.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-chpt-mat-ssmodel" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></h1>
 </div>
@@ -441,15 +441,15 @@ window.Quarto = {
 </div>
 <p>We have established the rendering equation for modeling surface scattering. To apply this equation, we need the BRDF of the surfaces being rendered. In practice, the material BRDF is modeled in two ways: analytical parameterization (<a href="#sec-chpt-mat-ss-mat" class="quarto-xref"><span>Section 12.1</span></a> and <a href="#sec-chpt-mat-ss-para" class="quarto-xref"><span>Section 12.2</span></a>) and directly measurement (<a href="#sec-chpt-mat-measurement" class="quarto-xref"><span>Section 12.3</span></a>).</p>
 <section id="sec-chpt-mat-ss-mat" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-mat"><span class="header-section-number">12.1</span> Diffuse, Specular, and Glossy Materials</h2>
-<p>In everyday life, material surfaces are usually classified as being specular, glossy, or diffuse. <a href="#fig-surface_materials" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> shows examples of the three materials. We can now give a more rigorous treatment of these material types using BRDF, which will, in turn, give us some inspiration for parameterizing the BRDF.</p>
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-chpt-mat-ss-mat"><span class="header-section-number">12.1</span> Types of Material Surface</h2>
+<p>In everyday life, material surfaces are usually classified as being diffuse, specular, or glossy. <a href="#fig-surface_materials" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> shows examples of the three materials. We can now give a more rigorous treatment of these material types using BRDF, which will, in turn, give us some inspiration for parameterizing the BRDF.</p>
 <div id="fig-surface_materials" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-surface_materials-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/surface_materials.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surface_materials-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.1: Left: a specular material and its BRDF. Middle: a diffuse material and its BRDF. Right: a glossy material and its BRDF. From <span class="citation" data-cites="lake">Prabhu B Doss (<a href="references.html#ref-lake" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="have">Daderot (<a href="references.html#ref-have" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="sheffield">Steve Fareham (<a href="references.html#ref-sheffield" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="specularbrdf">VonHaarberg (<a href="references.html#ref-specularbrdf" role="doc-biblioref">2018c</a>)</span>, <span class="citation" data-cites="diffusebrdf">VonHaarberg (<a href="references.html#ref-diffusebrdf" role="doc-biblioref">2018a</a>)</span>, and <span class="citation" data-cites="glossybrdf">VonHaarberg (<a href="references.html#ref-glossybrdf" role="doc-biblioref">2018b</a>)</span>.
+Figure&nbsp;12.1: (a): a diffuse material and its BRDF. (b): a specular material and its BRDF. (c): a glossy material and its BRDF. From <span class="citation" data-cites="lake">Prabhu B Doss (<a href="references.html#ref-lake" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="have">Daderot (<a href="references.html#ref-have" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="sheffield">Steve Fareham (<a href="references.html#ref-sheffield" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="specularbrdf">VonHaarberg (<a href="references.html#ref-specularbrdf" role="doc-biblioref">2018c</a>)</span>, <span class="citation" data-cites="diffusebrdf">VonHaarberg (<a href="references.html#ref-diffusebrdf" role="doc-biblioref">2018a</a>)</span>, and <span class="citation" data-cites="glossybrdf">VonHaarberg (<a href="references.html#ref-glossybrdf" role="doc-biblioref">2018b</a>)</span>.
 </figcaption>
 </figure>
 </div>

@@ -282,7 +282,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rendering-surfacemodeling.html" class="sidebar-item-text sidebar-link">
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></a>
   </div>
 </li>
@@ -464,7 +464,7 @@ window.Quarto = {
 </section>
 <section id="sec-chpt-mat-basics-radiometry-irradiance" class="level3" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-irradiance"><span class="header-section-number">9.1.2</span> Irradiance</h3>
-<p>Our power calculation is done with respect to a surface area, but how about the power at each point on the surface area? You can imagine that some points get more photons and others get fewer, so it is useful to characterize the power at any given point. Technically, the answer to the question “how many photons hit a particular point” is <em>zero</em>, since the area of a single point is 0. The meaningful question is: what is the power <em>density</em> of a particular point <span class="math inline">\(p\)</span>? <strong>Irradiance</strong> is such a quantity.</p>
+<p>Our power calculation is done with respect to a surface area, but how about the power at each point on the surface area? You can imagine that some points get more photons and others get fewer, so it is useful to characterize the power at any given point. Technically, the answer to the question “how many photons hit a particular point” is <em>zero</em>, since the area of a single point is 0<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The meaningful question is: what is the power <em>density</em> of a particular point <span class="math inline">\(p\)</span>? <strong>Irradiance</strong> is such a quantity.</p>
 <p>Imagine again that you are monitoring photons crossing a surface for a period <span class="math inline">\(\Delta t\)</span>; you can calculate the average power received per unit area by dividing the average power by the surface area, and when you shrink the surface area to an infinitesimal point <span class="math inline">\(p\)</span>, we can calculate the power density, i.e., the irradiance, of <span class="math inline">\(p\)</span> by:</p>
 <p><span id="eq-irradiance"><span class="math display">\[
 \begin{align}
@@ -525,7 +525,7 @@ Figure&nbsp;9.2: Left: the baffle limits the directions through which incident p
     \frac{\D \Phi}{\D A \cos\theta \D \omega}.
 \end{align}
 \]</span></p>
-<p>The baffle does a good job of rejecting many directions that are outside <span class="math inline">\(\D \omega\)</span>, but unless it is infinitely long, the detector will still collect some photons traveling through directions outside <span class="math inline">\(\D \omega\)</span>. But as we reduce the detector size and the baffle size, the baffle becomes a very thin cylinder over a very small detector, which collects light from a very small area along a very small solid angle, visualized in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> (right) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In calculus terms, when we let the detector size and baffle’s solid angle approach 0, we obtain the quantity called <strong>radiance</strong>:</p>
+<p>The baffle does a good job of rejecting many directions that are outside <span class="math inline">\(\D \omega\)</span>, but unless it is infinitely long, the detector will still collect some photons traveling through directions outside <span class="math inline">\(\D \omega\)</span>. But as we reduce the detector size and the baffle size, the baffle becomes a very thin cylinder over a very small detector, which collects light from a very small area along a very small solid angle, visualized in <a href="#fig-radiance" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> (right)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In calculus terms, when we let the detector size and baffle’s solid angle approach 0, we obtain the quantity called <strong>radiance</strong>:</p>
 <p><span id="eq-radiance_2"><span class="math display">\[
 \begin{align}
     L(p, \omega) = \lim_{\D \omega \rightarrow 0} \lim_{\D A \rightarrow 0} \frac{\D \Phi}{\D A \cos\theta \D \omega}
@@ -559,7 +559,7 @@ Figure&nbsp;9.2: Left: the baffle limits the directions through which incident p
 <h3 data-number="9.1.5" class="anchored" data-anchor-id="sec-chpt-mat-basics-radiometry-lamb"><span class="header-section-number">9.1.5</span> Radiant Intensity and Lambert’s Cosine Law</h3>
 <p>A <strong>Lambertian emitter</strong> or an ideal <em>diffuse emitter</em> is a flux-emitting point whose emitted radiance is constant regardless of the outgoing direction. A related concept is a <strong>Lambertian scatterer</strong> or an ideal <em>diffuse surface</em>, which is a surface point where the scattered radiance is independent of the scattering direction.</p>
 <p>It might come as a surprise that the flux emitted by a Lambertian emitter through a fixed solid angle is different for different emission directions. Consider a setup where a Lambertian emitter has an infinitesimal area <span class="math inline">\(\d A\)</span>. The power emitted by <span class="math inline">\(\d A\)</span> toward its normal direction in an infinitesimal solid angle of <span class="math inline">\(\do\)</span> is <span class="math inline">\(\d\Phi_0 = L\do\d A\)</span>, where <span class="math inline">\(L\)</span> is the radiance. The power emitted toward an oblique direction <span class="math inline">\(\omega\)</span> through the same solid angle is <span class="math inline">\(\d\Phi_\theta = L \do \cos\theta \d A\)</span>.</p>
-<p>In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the <strong>radiant intensity</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, denoted <span class="math inline">\(I\)</span>:</p>
+<p>In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the <strong>radiant intensity</strong><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, denoted <span class="math inline">\(I\)</span>:</p>
 <p><span id="eq-intensity"><span class="math display">\[
 \begin{align}
     I(\omega) = \frac{\d\Phi}{\do}.
@@ -620,8 +620,9 @@ Reinhard, Erik, Erum Arif Khan, Ahmet Oguz Akyuz, and Garrett Johnson. 2008. <em
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>It is just a visualization convention, but visualizing <span class="math inline">\(\do\)</span> as a cylinder rather than a cone makes it easier to imagine what <span class="math inline">\(\d A \cos\theta\)</span> is like.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Or simply, the “intensity”, which is an extremely overloaded term, so we will be verbose and use “radiant intensity” when we mean it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>A similar question is: imagine you are throwing a dart at a wall, what is the probability of hitting a particular point <span class="math inline">\(p\)</span>? The answer is 0. The meaningful question to ask is: what is the probability <em>density</em> of hitting <span class="math inline">\(p\)</span>?<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>It is just a visualization convention, but visualizing <span class="math inline">\(\do\)</span> as a cylinder rather than a cone makes it easier to imagine what <span class="math inline">\(\d A \cos\theta\)</span> is like.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Or simply, the “intensity”, which is an extremely overloaded term, so we will be verbose and use “radiant intensity” when we mean it.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
