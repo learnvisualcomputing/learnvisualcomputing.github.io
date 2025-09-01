@@ -153,8 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Foundations-of-Visual-Computing.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -837,9 +838,9 @@ Figure&nbsp;17.17: (a): a birefringent material that, through double refraction,
 <p>Each in-sensor optical element adds its own spectral transmittance, so the overall transmittance of the in-sensor optics is the product of them. We will simply use <span class="math inline">\(T(\lambda)\)</span> to represent the overall transmittance. Given what we have discussed so far, we can build an analytical model for a monochromatic, noise-free image sensor. The raw pixel value, also known as the Digital Number, <span class="math inline">\(n\)</span> of a pixel <span class="math inline">\(p\)</span> of size <span class="math inline">\(A_p\)</span> and is exposed for a duration of <span class="math inline">\(t_{exp}\)</span> is given by:</p>
 <p><span id="eq-mono_model"><span class="math display">\[
 \begin{aligned}
-    N &amp;= \int_{\lambda} \int^{t_{exp}} \int^{A_p} Y(p, \lambda, t) T(\lambda) QE(\lambda) \text{d}p \text{d}t \text{d}\lambda, \label{eq:mono_model_1} \\
-    \Delta V &amp;= \frac{Nq}{C_{FD}} \times g, \label{eq:mono_model_2} \\
-    n &amp;= \lfloor \frac{\Delta V}{V_{max}} (2^{L} - 1) \rfloor, \label{eq:mono_model_3}
+    N &amp;= \int_{\lambda} \int^{t_{exp}} \int^{A_p} Y(p, \lambda, t) T(\lambda) QE(\lambda) \text{d}p \text{d}t \text{d}\lambda, \\
+    \Delta V &amp;= \frac{Nq}{C_{FD}} \times g, \\
+    n &amp;= \lfloor \frac{\Delta V}{V_{max}} (2^{L} - 1) \rfloor,
 \end{aligned}
 \tag{17.7}\]</span></span></p>
 <p>where <span class="math inline">\(Y(p, \lambda, t)\)</span> is the number of photons incident on position <span class="math inline">\(p\)</span> at a particular wavelength <span class="math inline">\(\lambda\)</span> at a particular time <span class="math inline">\(t\)</span>, so it is a quantal counterpart of the spectral irradiance; <span class="math inline">\(T(\lambda)\)</span> is the overall spectral transmittance of the in-sensor optics, <span class="math inline">\(QE(\lambda)\)</span> is the quantum efficiency, and <span class="math inline">\(q\)</span> is the elementary charge.</p>
@@ -859,7 +860,7 @@ Figure&nbsp;17.17: (a): a birefringent material that, through double refraction,
 \tag{17.10}\]</span></span></p>
 <p>Rearranging the terms a bit we get:</p>
 <p><span id="eq-cam_measurement_2"><span class="math display">\[
-    N = \int_{\lambda} \Big( \int^{t_{exp}} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega, \lambda, t) \cos\theta \text{d}\omega \text{d}p \text{d}t \Big) T(\lambda) QE(\lambda) \frac{\lambda}{hc} \text{d}\lambda \label{eq:cam_measurement_2}.
+    N = \int_{\lambda} \Big( \int^{t_{exp}} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega, \lambda, t) \cos\theta \text{d}\omega \text{d}p \text{d}t \Big) T(\lambda) QE(\lambda) \frac{\lambda}{hc} \text{d}\lambda.
 \tag{17.11}\]</span></span></p>
 <p>Recall from <a href="rendering-lightfield.html#sec-chpt-mat-basics-radiometry-cam" class="quarto-xref"><span>Section 10.1</span></a>, the inner four integrals in <a href="#eq-cam_measurement_2" class="quarto-xref">Equation&nbsp;<span>17.11</span></a> collectively form the so-called camera measurement equation, which calculates <span class="math inline">\(Q(\lambda)\)</span>, the energy at wavelength <span class="math inline">\(\lambda\)</span> collected by the pixel during the exposure<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Therefore, we get:</p>
 <p><span id="eq-cam_measurement_3"><span class="math display">\[

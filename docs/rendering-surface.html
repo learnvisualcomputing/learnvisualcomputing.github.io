@@ -153,8 +153,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Foundations of Visual Computing</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Foundations-of-Visual-Computing.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -512,10 +513,10 @@ Figure&nbsp;12.1: (a): a diffuse material and its BRDF. (b): a specular material
 <p>Interestingly, the specular reflectance <span class="math inline">\(F_r\)</span> in general is <em>not</em> equivalent to the hemispherical-hemispherical reflectance <span class="math inline">\(\rho_{hh}\)</span>. To see this, plug the specular BRDF into <a href="rendering-re.html#eq-albedo_0" class="quarto-xref">Equation&nbsp;<span>11.10</span></a> (assuming <span class="math inline">\(\Omega_i\)</span> and <span class="math inline">\(\Omega_s\)</span> are hemispheres):</p>
 <p><span class="math display">\[
 \begin{aligned}
-    E_o &amp;= \int^{\Omega_s} (\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos \label{eq:specular_brdf_hh_1} \\
-    &amp;= \int^{\Omega_s} \big(F_r(\os) L(p, \os)\big) \cos\theta_s \dos \label{eq:specular_brdf_hh_2} \\
-    &amp;= \int^{\Omega_i} F_r(\oi) L(p, \oi) \cos\theta_i \doi \label{eq:specular_brdf_hh_3}, \\
-    E_i &amp;= \int^{\Omega_i} L(p, \oi) \cos\theta_i \doi. \label{eq:specular_brdf_hh_4}
+    E_o &amp;= \int^{\Omega_s} (\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos, \\
+    &amp;= \int^{\Omega_s} \big(F_r(\os) L(p, \os)\big) \cos\theta_s \dos, \\
+    &amp;= \int^{\Omega_i} F_r(\oi) L(p, \oi) \cos\theta_i \doi , \\
+    E_i &amp;= \int^{\Omega_i} L(p, \oi) \cos\theta_i \doi.
 \end{aligned}
 \]</span></p>
 <p>We can see that only when <span class="math inline">\(F_r(\oi)\)</span> is a constant do we get <span class="math inline">\(F_r(\oi) = \frac{E_o}{E_i} = \rho_{hh}\)</span>. This is consistent with our early result in <a href="rendering-re.html#sec-chpt-mat-ss-reflectance-hhr" class="quarto-xref"><span>Section 11.2.3</span></a> that <span class="math inline">\(\rho_{dh} = \rho_{hh}\)</span> only when the material is Lambertian, and a specular material is obviously not Lambertian.</p>
