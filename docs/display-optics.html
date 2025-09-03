@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>20&nbsp; Optical Mechanisms – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./display-electronics.html" rel="next">
+<link href="./display.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-optics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Optical Mechanisms</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Foundations-of-Visual-Computing.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-retinalmodel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modeling Retinal Computation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visual Adaptations and Constancy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-radiometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Radiometry and Photometry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-lightfield.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Light Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Volume and Subsurface Scattering Processes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-nflux.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The N-Flux Theory</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Noise</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-optics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Optical Mechanisms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Processing and Backplane Architecture</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-disp-optics-mechanism" id="toc-sec-disp-optics-mechanism" class="nav-link active" data-scroll-target="#sec-disp-optics-mechanism"><span class="header-section-number">20.1</span> Light Emission Mechanisms</a></li>
+  <li><a href="#sec-disp-optics-color" id="toc-sec-disp-optics-color" class="nav-link" data-scroll-target="#sec-disp-optics-color"><span class="header-section-number">20.2</span> Color Production</a>
+  <ul class="collapse">
+  <li><a href="#subpixels" id="toc-subpixels" class="nav-link" data-scroll-target="#subpixels"><span class="header-section-number">20.2.1</span> Subpixels</a></li>
+  <li><a href="#field-sequential-color" id="toc-field-sequential-color" class="nav-link" data-scroll-target="#field-sequential-color"><span class="header-section-number">20.2.2</span> Field-Sequential Color</a></li>
+  </ul></li>
+  <li><a href="#sec-disp-optics-lum" id="toc-sec-disp-optics-lum" class="nav-link" data-scroll-target="#sec-disp-optics-lum"><span class="header-section-number">20.3</span> Luminance Control</a>
+  <ul class="collapse">
+  <li><a href="#pam" id="toc-pam" class="nav-link" data-scroll-target="#pam"><span class="header-section-number">20.3.1</span> PAM</a></li>
+  <li><a href="#pwm" id="toc-pwm" class="nav-link" data-scroll-target="#pwm"><span class="header-section-number">20.3.2</span> PWM</a></li>
+  </ul></li>
+  <li><a href="#sec-disp-optics-gamut" id="toc-sec-disp-optics-gamut" class="nav-link" data-scroll-target="#sec-disp-optics-gamut"><span class="header-section-number">20.4</span> Display Native Gamut</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-optics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Optical Mechanisms</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-disp-optics" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Optical Mechanisms</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We will first discuss the fundamental mechanisms that produce light (<a href="#sec-disp-optics-mechanism" class="quarto-xref"><span>Section 20.1</span></a>), followed by various mechanisms to produce color (<a href="#sec-disp-optics-color" class="quarto-xref"><span>Section 20.2</span></a>) and to control luminance (<a href="#sec-disp-optics-lum" class="quarto-xref"><span>Section 20.3</span></a>). Finally, we will take a look at two smartphone displays and their gamuts (<a href="#sec-disp-optics-gamut" class="quarto-xref"><span>Section 20.4</span></a>).</p>
+<section id="sec-disp-optics-mechanism" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="sec-disp-optics-mechanism"><span class="header-section-number">20.1</span> Light Emission Mechanisms</h2>
+<p>Displays fundamentally transform electrical signals, i.e., image pixels, to optical signals, i.e., light. The most common device used for this electrical-to-optical signal transduction is an Light Emitting Diode (LED), is a semiconductor device that emits light when an electric current passes through it.</p>
+<p>Applying an external voltage across the p–n junction injects electrons from the n-type side and holes from the p-type side into the junction. When electrons recombine with holes, they release energy as photons. The photon’s wavelength is determined by the semiconductor’s band gap, which depends on the material composition. Common semiconductors used for LEDs include AlGaInP (aluminum gallium indium phosphide, for red, orange, or yellow LEDs) and InGaN (indium gallium nitride, for green, blue, or white LEDs).</p>
+<p><a href="#fig-led_spectra" class="quarto-xref">Figure&nbsp;<span>20.1</span></a> (a) shows the emission spectra of two InGanN and two AlGaInP LEDs, and <a href="#fig-led_spectra" class="quarto-xref">Figure&nbsp;<span>20.1</span></a> (b) shows the chromaticities of the four LEDs in the CIE 1931 xy-chromaticity diagram. Generally, the emission spectra of InGanN and AlGaInP are pretty sharp, leading to saturated colors.</p>
+<div id="fig-led_spectra" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-led_spectra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/led_spectra.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-led_spectra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.1: (a): emission spectra of four different LEDs; (b): the corresponding colors in the xy-chromaticity diagram. Adapted from <span class="citation" data-cites="anp50">Thomson, Stuart (<a href="references.html#ref-anp50" role="doc-biblioref">2018, figs. 3, 4</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>InGanN and AlGaInP are inorganic materials. They are usually very large, millimeter in size, so they cannot be used as individual display pixels. OLED (Organic LED) displays use organic (i.e., carbon-based) molecules/polymers, which can be small and act as individual pixels or sub-pixels (see later). MicroLED displays, which many believe are the future of displays, use miniatured inorganic LEDs as individual pixels. These tiny inorganic LEDs have better (optical) properties than organic LEDs, e.g., higher luminance, higher electrical to optical conversion efficiency, and longer lifetime, but are more difficult to manufacture. <!-- You might also have heard of Active-Matrix OLED displays (AMOLEDs); they do not refer to a different kind of LED material --- AMOLEDs often use OLEDs as the light emitting device.
+What makes AMOLEDs special is that they use an array of thin-film transistors (TFT) in the backplane (i.e., "active matrix") to control the OLEDs.
+We will discuss display electronics in @sec-disp-elec. --></p>
+<p>Finally, there is also the Quantum-Dot LED (QLED), which is another kind of LED material that uses quantum dots, tiny nanoparticles of semiconductor, to emit light. QLEDs rely on the quantum effects of the quantum dots to produce color: generally small dots emit higher energy (shorter wavelength, bluer) light, and larger dots emit lower energy (longer wavelength, redder) light<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Commercial QLEDs operate based on fluorescence, where light emission is driven by an external light <span class="citation" data-cites="agarwal2023quantum">(<a href="references.html#ref-agarwal2023quantum" role="doc-biblioref">Agarwal, Rai, and Mondal 2023</a>)</span>. The cutting edge research, however, focuses on using quantum dots as “conventional”, electrical driven devices that emit lights under external current/voltage <span class="citation" data-cites="mashford2013high shirasaki2013emergence qian2011stable">(<a href="references.html#ref-mashford2013high" role="doc-biblioref">Mashford et al. 2013</a>; <a href="references.html#ref-shirasaki2013emergence" role="doc-biblioref">Shirasaki et al. 2013</a>; <a href="references.html#ref-qian2011stable" role="doc-biblioref">Qian et al. 2011</a>)</span>.</p>
+<section id="other-mechanisms" class="level4">
+<h4 class="anchored" data-anchor-id="other-mechanisms">Other Mechanisms</h4>
+<p>Another common light emission mechanism is fluorescence, of which we have seen one use in QLEDs above. Generally, fluorescing materials absorb a photon at a shorter wavelength, which excite an electron across the band gap. When the electron relaxes and recombines with the hole, a photon is emitted, usually at a longer wavelength. The shift between the absorption and emission wavelength is called the <em>Stokes shift</em>. Usually blue/UV lights are absorbed and green lights are emitted — that is why fluorescence is usually green. Since the luminance efficiency function (LEF) peaks at 555 <span class="math inline">\(\text{nm}\)</span>, green-ish light (<a href="hvs-color.html#sec-chpt-hvs-color-oppo-light" class="quarto-xref"><span>Section 4.3.2</span></a>), fluorescence usually makes object appear brighter/more conspicuous, even though the emitted energy is almost always lower than the incident energy.</p>
+<p>In fluorescent light blubs, <strong>phosphors</strong> are commonly used as fluorescent material. Usually we use UV light (generated by applying current to excite mercury vapor) to excite the phosphor coating inside a lamp, which then fluoresces. What enters you eyes is the combination of the fluorescent light and UV light directly emitted by the mercury vapor.</p>
+<div id="fig-fluorescence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fluorescence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fluorescence.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fluorescence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.2: (a) the emission spectrum of a typical fluorescent light bulb; from <span class="citation" data-cites="fluo_light_spectrum">Daniel Smith (<a href="references.html#ref-fluo_light_spectrum" role="doc-biblioref">2016</a>)</span>; (b): the spectrum of a phosphor-converted white LED; adapted from <span class="citation" data-cites="wled">Deglr6328 (<a href="references.html#ref-wled" role="doc-biblioref">2018</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-fluorescence" class="quarto-xref">Figure&nbsp;<span>20.2</span></a> (a) shows the emission spectrum of a typical fluorescent light blub. The two shorter-wavelength peaks are likely from the UV lights themselves, and the rest of the peaks are likely resulted from the phosphor emissions.</p>
+<p>Other than fluorescent blubs, many white LEDs also make use of fluorescence. They are so-called <em>phosphor-converted white LEDs</em>. <a href="#fig-fluorescence" class="quarto-xref">Figure&nbsp;<span>20.2</span></a> (b) shows the spectrum of one such LED, where the peak at the shorter wavelength is caused by the regular InGaN LED emission and the longer wavelength peak is emitted by the Ce:YAG phosphor (cerium-doped yttrium aluminium garnet).</p>
+</section>
+</section>
+<section id="sec-disp-optics-color" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="sec-disp-optics-color"><span class="header-section-number">20.2</span> Color Production</h2>
+<p>The trichromaticy theory of color tells us that reproduce a color we need only three primary colors. This is how all displays produce colors: each image pixel’s color is produced by combining three primary colors. There are two main strategies to implement the three primaries, one relies on the spatial integration of the human visual system, and the other relies on the temporal integration.</p>
+<section id="subpixels" class="level3" data-number="20.2.1">
+<h3 data-number="20.2.1" class="anchored" data-anchor-id="subpixels"><span class="header-section-number">20.2.1</span> Subpixels</h3>
+<p>In many displays, each display pixel is implemented by three sub-pixels, each of which has an implementation-specific emission spectrium and acts as a primary light. The retina then spatially integrates the lights from the three sub-pixels, i.e., mixing the three primary colors. <a href="#fig-subpixel_iphones" class="quarto-xref">Figure&nbsp;<span>20.3</span></a> shows two subpixels structures in iPhone 6 and iPhone 14 Pro. Different phones usually use slightly different subpixel structures, often times to avoid patent infringement.</p>
+<div id="fig-subpixel_iphones" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-subpixel_iphones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/subpixel_iphones.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-subpixel_iphones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.3: Two subpixels structures in iPhone 6 (LCD) and iPhone 14 Pro (OLED display).
+</figcaption>
+</figure>
+</div>
+<p>While three subpixels are the absolute minimal for color production, there are also displays that use more than three primaries. At an area and resolution cost, more primaries means a larger color gamut and provides more flexibility. For instance, if the color of one of the primaries is slightly off (e.g., due to aging), the additional primaries can be used to maintain the overall color reproduction accuracy.</p>
+<p>In particular, there are four-primary displays that have an additional white subpixel. The white subpixels are useful in two ways. First, we can use the white subpixels for actually producing white rather than mixing the other three subpixels. This generally improves the power efficiency. Second, we can add white to artificially boost the luminance of a pixel, but this comes at the cost of sacrificing the color reproduction accuracy: the resulting color becomes more desaturated. This is commonly exploited in projectors.</p>
+<section id="filtering-vs.-emissive-displays" class="level4">
+<h4 class="anchored" data-anchor-id="filtering-vs.-emissive-displays">Filtering vs.&nbsp;Emissive Displays</h4>
+<p>There are two ways to realize the subpixels. Liquid-Crystal Display (LCD) is a light filtering display that uses a white backlight made from a few large inorganic LEDs, which is then filtered by per-pixel color filters to produce subpixel colors. Emissive displays, such as OLED and MicroLEDs, directly use emissive LEDs as individual pixels.</p>
+<div id="fig-oled_vs_lcd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oled_vs_lcd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/oled_vs_lcd.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oled_vs_lcd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.4: The architectural comparison between an OLED and a LCD.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-oled_vs_lcd" class="quarto-xref">Figure&nbsp;<span>20.4</span></a> compares the architectures between the OLED display and the LCD. In a LCD, the backlight is usually broadband (white) produced either by the phosphor-converted white LEDs or a mixture of RGB LEDs, all are conventional large inorganic LEDs. Each sub-pixel is associated with a color filter with a particular transmittance spectrum that, together with the backlight spectrum, determines the color of the sub-pixel.</p>
+<p>To control luminance, each sub-pixel also has a liquid crystal (LC) sandwiched between a rear polarizer, a transparent electrode, and a front polarizer. The rear polarizer rotates the backlight to a particular polarization direction, say vertical. The front polarizer is set to allow light with only the horizontal polarization to go through. Without the LCs in-between, backlight passing through the rear polarizer is all blocked by the front polarizer.</p>
+<p>When no voltage is applied, the LCs are in their default state, which is, say, horizontally twisted. This twist guides the polarized light so that it passes through the second polarizer, making the pixel transparent and producing the highest luminance. When a voltage is applied, the liquid crystals untwist and align with the electric field. This alignment prevents the light’s polarization from being rotated, so the light is blocked by the second polarizer, producing the lowest luminance. This is the basic luminance control mechanism in LCDs.</p>
+<!--
+Applying a voltage twists the orientations of the LCs, which, in turn, rotates the polarization directions of the incident backlight.
+When no voltage is applied to the electrode, the LCs are so-oriented that they rotate the backlight coming out of the rear polarizer to the preferred orientation of the front polarizer.
+Therefore, all photons can go through the front polarizer, producing the highest luminance.
+As we apply voltage, the LCs change their orientation, so does the light that passes through the LCs.
+Eventually at the maximum voltage, the LCs are so-oriented that no backlight passing through the rear polarizer will be allowed through the front polarizer.
+There are also LCD designs where the relationship between voltage and luminance is inverted.
+-->
+</section>
+</section>
+<section id="field-sequential-color" class="level3" data-number="20.2.2">
+<h3 data-number="20.2.2" class="anchored" data-anchor-id="field-sequential-color"><span class="header-section-number">20.2.2</span> Field-Sequential Color</h3>
+<p>Other displays use the Field-Sequential Color (<strong>FSC</strong>) mechanism to produce color. In FSC, each image is presented by three sequential <em>fields</em>, each of which produces light only using on primary color. FSC then relies on the temporal integration of our visual system to create colors.</p>
+<p>In fact, early color TV was delivered using the FSC mechanism. CBS debuted the FSC TV system in 1940s; it is obviously obsolete now, but you can still watch a <a href="https://www.youtube.com/watch?v=O5tf6SQjFlQ">video of its operation here</a>. <a href="#fig-fsc_cbs" class="quarto-xref">Figure&nbsp;<span>20.5</span></a> (a) shows a modern replication of the CBS’ FSC color wheel, which has 2 set of three filters, so there are 6 filters in total per rotation. The wheel spins 24 rotations per second, which amounts of 144 filters per second.</p>
+<div id="fig-fsc_cbs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fsc_cbs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fsc_cbs.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fsc_cbs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.5: (a) a color wheel similar to the one used by CBS’ FSC TV; (b) the integrated frame shows color. From <span class="citation" data-cites="cbs_fsc_reprod">LabGuy’s World (<a href="references.html#ref-cbs_fsc_reprod" role="doc-biblioref">2014</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The TV itself is a Cathode-Ray Tube (CRT) display, which scans the entire display 144 times a second, producing 144 frames. Each frame, received from the broadcaster, is broadband and contains only luminance information. The frame presentation and the color wheel rotation must be perfectly in sync such that as a frame is scanned on the TV, the corresponding filter is placed in front of the TV, displaying a fully red, green, or blue field. <a href="#fig-fsc_cbs" class="quarto-xref">Figure&nbsp;<span>20.5</span></a> (b) shows an effective color image of the TV taken by a camera.</p>
+<div id="fig-dlp_fsc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dlp_fsc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/dlp_fsc.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dlp_fsc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.6: (a) the light path inside a DLP projector: light from a lamp (covered inside so not seen here) goes through the color wheel, reflected off a mirror on the left to the DMD, which controls the light intensity and sends to the light through the projection lens to the screen; adapted from <span class="citation" data-cites="dlp">DMahalko (<a href="references.html#ref-dlp" role="doc-biblioref">2009c</a>)</span>, <span class="citation" data-cites="dlp_color_wheel1">DMahalko (<a href="references.html#ref-dlp_color_wheel1" role="doc-biblioref">2009a</a>)</span>, and <span class="citation" data-cites="dlp_color_wheel2">DMahalko (<a href="references.html#ref-dlp_color_wheel2" role="doc-biblioref">2009b</a>)</span>; (b) the operating principle of a DMD, where every pixel can be mechanically turned on (oriented to reflect the light to a target of interest) or off (oriented to reflect the light away from the target); from <span class="citation" data-cites="allen2017application">Allen (<a href="references.html#ref-allen2017application" role="doc-biblioref">2017, fig. 1</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<section id="dlp-and-lcos" class="level4">
+<h4 class="anchored" data-anchor-id="dlp-and-lcos">DLP and LCoS</h4>
+<p>Today, the most common example of an FSC display is the Digital Light Processing (<strong>DLP</strong>) projectors. <a href="#fig-dlp_fsc" class="quarto-xref">Figure&nbsp;<span>20.6</span></a> (a) shows the interior view of a typical DLP. Light comes from a light source on the right (blocked by the projector housing in the figure and not seen), which could be a broadband lamp or a mixture of different LEDs. The light first passes through the color wheel, which in this case has four filters, red, gree, blue, and transparent. This is equivalent to a four-primary system as discussed above. The light then is reflected by a mirror on the left to a Digital Micromirror Device (DMD) at the bottom, which has an array of pixels/tiny mirrors, each of which can be mechanically turned by a yoke.</p>
+<p><a href="#fig-dlp_fsc" class="quarto-xref">Figure&nbsp;<span>20.6</span></a> (b) illustrates the basic structure of a DMD. Each pixel can be turned either “on”, which directs the incident light to the projection lens, or turned “off”, which directs the incident light away from the projection lens. The light passing through the project lens then leaves the system and enters the scene. The DMD controls the luminance of each pixel by the ratio of the on-time to the off-time. This luminance-control mechanisms is essentially pulse-width modulation, which we will discuss shortly.</p>
+<p>Another application of FSC is in Liquid Crystal on Silicon (<strong>LCoS</strong>) displays, which, in princple, combine DLP projectors and LCDs. Like DLPs, LCoS displays also use the FSC and use a per-pixel mirror to reflect light to the scene. Unlike DLPs, the mirror is always “on”. The mechanism that determines the pixel luminance is, instead, similar to that in LCDs.</p>
+<p>Like LCDs, there are two polarizers. The light source, originally unpolarized, is polarized by the first polarizer before hitting the LC array. The voltage applied to each (per-pixel) LC rotates the polarization state of the light, which then reflects off the pixel’s mirror and goes through the second polarizer, which transmits light with a polarization state that is rotated 90 degrees from that of the first polarizer. Essentially like LCDs, the voltage determines the amount of light emitted from each pixel.</p>
+<!-- Talk about color break-ups in FSCs. -->
+</section>
+</section>
+</section>
+<section id="sec-disp-optics-lum" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="sec-disp-optics-lum"><span class="header-section-number">20.3</span> Luminance Control</h2>
+<p>We have seen some of the ways different display architectures use to control luminance. In general, there are two ways to control the luminance: pulse width modulation (<strong>PWM</strong>) or pulse amplitude modulation (<strong>PAM</strong>).</p>
+<section id="pam" class="level3" data-number="20.3.1">
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="pam"><span class="header-section-number">20.3.1</span> PAM</h3>
+<p>In PAM, we control the strength the voltage or current supplied to a pixel, which then changes the luminance. For LEDs (whether organic or inorganic), the luminance is proportional to the current that flows through the diode. Recall in LEDs the photons are emitted through the creation of electron-hole pairs, so the luminance (at a given wavelength) is naturally proportional to the number of electrons, which is proportional to current. The relationship between the voltage and current in an LED is exponential <span class="citation" data-cites="miller2019color">(<a href="references.html#ref-miller2019color" role="doc-biblioref">Miller 2019</a>, Chpt. 6.1.2)</span>, governed by the <em>Shockley diode equation</em> <span class="citation" data-cites="shockley1949theory">(<a href="references.html#ref-shockley1949theory" role="doc-biblioref">Shockley 1949</a>)</span>:</p>
+<p><span class="math display">\[
+    I = I_0 (e^{V/nV_T} - 1),
+\]</span></p>
+<p>where <span class="math inline">\(I\)</span> is the diode forward current, <span class="math inline">\(V\)</span> is the voltage across the diode, <span class="math inline">\(I_0\)</span> is the saturation current, <span class="math inline">\(n\)</span> is diode ideality factor, and <span class="math inline">\(V_T\)</span> is a temperature dependent thermal voltage. As a result, the relationship between voltage/power consumption and luminance is exponential as well.</p>
+<p>In reality, however, the relationship between current and luminance is seldomly linear. Many other factors affect this relationship. For instance, the quantum efficiency, which in the context of displays is defined as the ratio of photons emitted to the number of electron-hole recombinations, reduces as current increase <span class="citation" data-cites="dai2010carrier deng2017led">(<a href="references.html#ref-dai2010carrier" role="doc-biblioref">Dai et al. 2010</a>; <a href="references.html#ref-deng2017led" role="doc-biblioref">Deng et al. 2017</a>)</span>.</p>
+<p>For LCDs, the relationship between the LC transmittance and the voltage applied on the LC is not linear <span class="citation" data-cites="lee1998electro jeon2009temperature hong2007plane">(<a href="references.html#ref-lee1998electro" role="doc-biblioref">Lee, Lee, and Kim 1998</a>; <a href="references.html#ref-jeon2009temperature" role="doc-biblioref">Jeon et al. 2009</a>; <a href="references.html#ref-hong2007plane" role="doc-biblioref">Hong, Shin, and Chung 2007</a>)</span>. Therefore, the luminance does not scale linearly with the voltage, either.</p>
+</section>
+<section id="pwm" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="pwm"><span class="header-section-number">20.3.2</span> PWM</h3>
+<p>In PWM, the voltage or current supplied to a pixel is fixed but we control the duty cycle, the period in which the voltage or current is active. For instance, with PWM the LC in the LCD is either fully twisted or not twisted, and we control the time during which the LC is in each state. Similarly for emissive displays, each sub-pixel either emit no light or maximum amount of light. What changes is the time during which the sub-pixels emit light.</p>
+<p>Duty cycle is always between 0 and 1. Assuming there is a display that refreshes 60 times a second, a duty cycle of 0.5 would mean that the pixels emit light in about <span class="math inline">\(1\text{s}/60\times 0.5\approx 8.3\text{ms}\)</span> during each refresh cycle. <a href="#fig-pwm" class="quarto-xref">Figure&nbsp;<span>20.7</span></a> shows two PWM examples with a 25% and 75% duty cycle, respectively.</p>
+<div id="fig-pwm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pwm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/pwm.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pwm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.7: Two PWM examples with a 25% and 75% duty cycle, respectively. Ideally each pulse is a perfect square wave, in which case the luminance is proportional to the duty cycle, but in reality pulses take time to rise and fall, so the luminance is sub-linear w.r.t. duty cycle.
+</figcaption>
+</figure>
+</div>
+<p>In theory, the luminance is proportional to the duty cycle — assuming that the pulse is a perfect squared wave (the black curve in <a href="#fig-pwm" class="quarto-xref">Figure&nbsp;<span>20.7</span></a>). In reality, it takes time for the pulse to rise and fall (e.g., for a liquid crystal cell to change its orientation), so there is some efficiency loss (the green curve in <a href="#fig-pwm" class="quarto-xref">Figure&nbsp;<span>20.7</span></a>). As a result, the luminance is sub-linear with respect to the intended duty cycle. The longer the duty cycle, the more we can amortize this efficiency loss and the closer we get to being linear. Generally, the LEDs respond to current changes in the nanoseconds to microseconds range, while the liquid crystal cells respond much slower, usually at the milliseconds range.</p>
+<!-- Talk about motion blur from display persistence -->
+</section>
+</section>
+<section id="sec-disp-optics-gamut" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="sec-disp-optics-gamut"><span class="header-section-number">20.4</span> Display Native Gamut</h2>
+<!-- Talk about angular dependence -->
+<p>Regardless of how color and luminance are produced, ultimately a display has a set of <em>effective</em> primaries, which make up the display’s native color space, which is most likely not exactly sRGB or any standard color space. The primary colors (and the white point) depend on the emission spectrum of each sub-pixel, which in turn depends on the material used. For instance, inorganic LEDs have a narrower emission spectra than the organic LEDs <span class="citation" data-cites="huang2020mini">(<a href="references.html#ref-huang2020mini" role="doc-biblioref">Huang et al. 2020</a>)</span>, so they tend to be able to generate more saturated colors and, thus, the resulting display gamut is wider. One has to balance multiple trade-offs in a display design, such as invariance of chromaticity vs.&nbsp;luminance, lifetime, power consumption, and cost, so it is difficult to tune the pixel spectra <em>just</em> so that the colors precisely match that of a standard.</p>
+<div id="fig-display_subpixels" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-display_subpixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/display_subpixels.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-display_subpixels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.8: Microscope-magnified subpixel images of P3 green and sRGB green primary (both are [0, 255, 0] in their respective color spaces) on a 4th-generation iPad Pro taken from an iPhone 12 Pro (whose image signal processing chain introduces color inaccuracies; the red sub-pixel contributions to the sRGB green are not as strong when seen by naked eye). As a side note, you can also see that when the image is focused on the green sub-pixels, the red (and blue) sub-pixels are out of focus, a result of chromatic aberration.
+</figcaption>
+</figure>
+</div>
+<p>As an example, <a href="#fig-display_subpixels" class="quarto-xref">Figure&nbsp;<span>20.8</span></a> shows the the sub-pixels images of the green primary colors in the P3 and sRGB color space as displayed on a 4th-generation iPad Pro. We can make a few observations. First, the emission patterns of P3 green and sRGB green are different. The P3 green is more “pure”, where the red and blue sub-pixels are contributing very little, whereas the sRGB green requires noticeable contribution from the red sub-pixels. This is not surprising because the P3 green is much more saturated (closer to spectral colors) than the sRGB green, as shown in the right figure in <a href="hvs-colorimetry.html#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The actual contributions of red sub-pixels in sRGB green as seen by my eye are not as strong as seen in this iPhone-taken image; the image signal processing pipeline in the iPhone definitely has introduced its artifacts.</p>
+<p>Second, even for the P3 green, there are still some contributions from the red sub-pixels. This suggests that the native display gamut is different from, in fact larger than, P3. This makes sense: for a display to support a particular color space, say, the P3 space, the display’s native color space must be no smaller than the P3 space.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-agarwal2023quantum" class="csl-entry" role="listitem">
+Agarwal, Kushagra, Himanshu Rai, and Sandip Mondal. 2023. <span>“Quantum Dots: An Overview of Synthesis, Properties, and Applications.”</span> <em>Materials Research Express</em> 10 (6): 062001.
+</div>
+<div id="ref-allen2017application" class="csl-entry" role="listitem">
+Allen, John. 2017. <span>“Application of Patterned Illumination Using a DMD for Optogenetic Control of Signaling.”</span> <em>Nature Methods</em> 1.
+</div>
+<div id="ref-dai2010carrier" class="csl-entry" role="listitem">
+Dai, Qi, Qifeng Shan, Jing Wang, Sameer Chhajed, Jaehee Cho, E Fred Schubert, Mary H Crawford, Daniel D Koleske, Min-Ho Kim, and Yongjo Park. 2010. <span>“Carrier Recombination Mechanisms and Efficiency Droop in GaInN/GaN Light-Emitting Diodes.”</span> <em>Applied Physics Letters</em> 97 (13).
+</div>
+<div id="ref-fluo_light_spectrum" class="csl-entry" role="listitem">
+Daniel Smith. 2016. <span>“<span class="nocase">Calculating the Emission Spectra from Common Light Sources</span>.”</span> <a href="https://www.comsol.com/blogs/calculating-the-emission-spectra-from-common-light-sources/" class="uri">https://www.comsol.com/blogs/calculating-the-emission-spectra-from-common-light-sources/</a>.
+</div>
+<div id="ref-wled" class="csl-entry" role="listitem">
+Deglr6328. 2018. <span>“<span class="nocase">Spectrum of a "white" LED showing blue light directly emitted by the GaN LED and the stokes shifted yellowish light emitted by the Ce:YAG phosphor; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:White_LED.png" class="uri">https://commons.wikimedia.org/wiki/File:White_LED.png</a>.
+</div>
+<div id="ref-deng2017led" class="csl-entry" role="listitem">
+Deng, Xiong, Yan Wu, AM Khalid, Xi Long, and Jean-Paul MG Linnartz. 2017. <span>“LED Power Consumption in Joint Illumination and Communication System.”</span> <em>Optics Express</em> 25 (16): 18990–9003.
+</div>
+<div id="ref-dlp_color_wheel1" class="csl-entry" role="listitem">
+DMahalko. 2009a. <span>“<span class="nocase">InFocus LP425z Single Chip DLP - 4-segment color wheel - Green Blue; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_4-segment_color_wheel_-_Green_Blue.JPG" class="uri">https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_4-segment_color_wheel_-_Green_Blue.JPG</a>.
+</div>
+<div id="ref-dlp_color_wheel2" class="csl-entry" role="listitem">
+———. 2009b. <span>“<span class="nocase">InFocus LP425z Single Chip DLP - 4-segment color wheel - Red Gray; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_4-segment_color_wheel_-_Red_Gray.JPG" class="uri">https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_4-segment_color_wheel_-_Red_Gray.JPG</a>.
+</div>
+<div id="ref-dlp" class="csl-entry" role="listitem">
+———. 2009c. <span>“<span class="nocase">InFocus LP425z Single Chip DLP - DMD Light Path; CC BY-SA 3.0 license</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_DMD_Light_Path.jpg" class="uri">https://commons.wikimedia.org/wiki/File:InFocus_LP425z_Single_Chip_DLP_-_DMD_Light_Path.jpg</a>.
+</div>
+<div id="ref-hong2007plane" class="csl-entry" role="listitem">
+Hong, HyungKi, HyunHo Shin, and InJae Chung. 2007. <span>“In-Plane Switching Technology for Liquid Crystal Display Television.”</span> <em>Journal of Display Technology</em> 3 (4): 361–70.
+</div>
+<div id="ref-huang2020mini" class="csl-entry" role="listitem">
+Huang, Yuge, En-Lin Hsiang, Ming-Yang Deng, and Shin-Tson Wu. 2020. <span>“Mini-LED, Micro-LED and OLED Displays: Present Status and Future Perspectives.”</span> <em>Light: Science &amp; Applications</em> 9 (1): 105.
+</div>
+<div id="ref-jeon2009temperature" class="csl-entry" role="listitem">
+Jeon, Eun Jeong, Anoop Kumar Srivastava, Miyoung Kim, Kwang-Un Jeong, Jeongmin Choi, Gi-Dong Lee, and Seung Hee Lee. 2009. <span>“Temperature Dependence of the Electro-Optic Characteristics in the Liquid Crystal Display Switching Modes.”</span> <em>Journal of Information Display</em> 10 (4): 175–79.
+</div>
+<div id="ref-cbs_fsc_reprod" class="csl-entry" role="listitem">
+LabGuy’s World. 2014. <span>“<span>Goldmark 1 - A Field Sequential Color TV Project</span>.”</span> <a href="https://labguysworld.com/Goldmark1_001.htm" class="uri">https://labguysworld.com/Goldmark1_001.htm</a>.
+</div>
+<div id="ref-lee1998electro" class="csl-entry" role="listitem">
+Lee, SH, SL Lee, and HY Kim. 1998. <span>“Electro-Optic Characteristics and Switching Principle of a Nematic Liquid Crystal Cell Controlled by Fringe-Field Switching.”</span> <em>Applied Physics Letters</em> 73 (20): 2881–83.
+</div>
+<div id="ref-mashford2013high" class="csl-entry" role="listitem">
+Mashford, Benjamin S, Matthew Stevenson, Zoran Popovic, Charles Hamilton, Zhaoqun Zhou, Craig Breen, Jonathan Steckel, et al. 2013. <span>“High-Efficiency Quantum-Dot Light-Emitting Devices with Enhanced Charge Injection.”</span> <em>Nature Photonics</em> 7 (5): 407–12.
+</div>
+<div id="ref-miller2019color" class="csl-entry" role="listitem">
+Miller, Michael E. 2019. <em>Color in Electronic Display Systems</em>. Springer.
+</div>
+<div id="ref-qian2011stable" class="csl-entry" role="listitem">
+Qian, Lei, Ying Zheng, Jiangeng Xue, and Paul H Holloway. 2011. <span>“Stable and Efficient Quantum-Dot Light-Emitting Diodes Based on Solution-Processed Multilayer Structures.”</span> <em>Nature Photonics</em> 5 (9): 543–48.
+</div>
+<div id="ref-shirasaki2013emergence" class="csl-entry" role="listitem">
+Shirasaki, Yasuhiro, Geoffrey J Supran, Moungi G Bawendi, and Vladimir Bulović. 2013. <span>“Emergence of Colloidal Quantum-Dot Light-Emitting Technologies.”</span> <em>Nature Photonics</em> 7 (1): 13–23.
+</div>
+<div id="ref-shockley1949theory" class="csl-entry" role="listitem">
+Shockley, William. 1949. <span>“The Theory of p-n Junctions in Semiconductors and p-n Junction Transistors.”</span> <em>Bell System Technical Journal</em> 28 (3): 435–89.
+</div>
+<div id="ref-anp50" class="csl-entry" role="listitem">
+Thomson, Stuart. 2018. <span>“<span class="nocase">Determination of Chromaticity Coordinates and Bandgaps of III-V LEDs Using Electroluminescence Spectroscopy</span>.”</span> <a href="https://www.edinst.com/wp-content/uploads/2018/08/Electroluminescence-spectroscopy-of-LEDs.pdf" class="uri">https://www.edinst.com/wp-content/uploads/2018/08/Electroluminescence-spectroscopy-of-LEDs.pdf</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>2023 Nobel Prize in Chemistry is awarded to the discovery, characterization, and synthesis of quantum dots.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./display.html" class="pagination-link" aria-label="Display">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Display</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./display-electronics.html" class="pagination-link" aria-label="Processing and Backplane Architecture">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Processing and Backplane Architecture</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
