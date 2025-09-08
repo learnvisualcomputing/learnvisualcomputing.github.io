@@ -446,7 +446,7 @@ Figure&nbsp;21.1: Comparison the driving circuit inside (a) an LCD pixel and (b)
 \end{aligned}
 \tag{21.1}\]</span></span></p>
 <p>where <span class="math inline">\(V_{th}\)</span> is the threshold voltage of the TFT and k is a constant that depends on inherent properties of the transistor. <span class="math inline">\(V_{Data}\)</span> is properly set so that the resulting <span class="math inline">\(I_{OLED}\)</span> gives us the desired luminance (according to <a href="display-optics.html#eq-led_lum" class="quarto-xref">Equation&nbsp;<span>20.1</span></a>).</p>
-<p>We can see that we do not directly control the voltage across the OLED. As the current <span class="math inline">\(I_d\)</span> flows through the OLED, there is naturally a voltage difference across the OLED (given by <a href="display-optics.html#eq-led_iv" class="quarto-xref">Equation&nbsp;<span>20.2</span></a>), which is also the voltage at the drain terminal (since the other side of the OLED is connected to ground). The only thing we have to make sure of is <span class="math inline">\(V_{ds} \leq V_{gs} - V_{th}\)</span> (where <span class="math inline">\(V_{ds}\)</span> is the voltage across the drain and source terminals) so that the TFT operates in the saturation region where <a href="#eq-tft_iv" class="quarto-xref">Equation&nbsp;<span>21.1</span></a> holds.</p>
+<p>We can see that we do not directly control the voltage across the OLED. As the current <span class="math inline">\(I_d\)</span> flows through the OLED, there is naturally a voltage difference across the OLED (given by <a href="display-optics.html#eq-led_iv" class="quarto-xref">Equation&nbsp;<span>20.2</span></a>), which is also the voltage at the drain terminal (since the other side of the OLED is connected to ground). The only thing we have to make sure of is <span class="math inline">\(V_{ds} \geq V_{gs} - V_{th}\)</span> (where <span class="math inline">\(V_{ds}\)</span> is the voltage across the drain and source terminals) so that the TFT operates in the saturation region where <a href="#eq-tft_iv" class="quarto-xref">Equation&nbsp;<span>21.1</span></a> holds.</p>
 <p>Given the driving circuit of individual pixels, it is natural to extend it to drive an array of pixels, shown in <a href="#fig-amoled" class="quarto-xref">Figure&nbsp;<span>21.2</span></a>, which uses OLEDs as an example. The OLED pixels are organized similar to image sensor pixels and memory cells in a memory array. Each time only one row of pixels is activated (through <span class="math inline">\(V_{Select}\)</span>). Each row has a dedicated <span class="math inline">\(V_{Data}\)</span> signal, which delivers the necessary voltage to the corresponding pixel.</p>
 <div id="fig-amoled" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -489,7 +489,7 @@ Figure&nbsp;21.3: Comparing the passive matrix (a) and active matrix (b) driving
 \]</span></p>
 <p>Therefore, the desired <span class="math inline">\(V_{Data}\)</span> is given by<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <p><span class="math display">\[
-    V_{Data} = \sqrt{e\frac{P/(h f)}{\eta k}}  - V_{th} + V_{DD}.
+    V_{Data} = \sqrt{e\frac{P/(h f)}{\eta k}}  + V_{th} - V_{DD}.
 \]</span></p>
 <p>With a Digital-to-Analog Convertor (DAC), we can convert a digital value to an analog voltage. Using an ideal DAC transfer function, the digital value to be sent to the DAC is then:</p>
 <p><span class="math display">\[
@@ -630,7 +630,7 @@ Tsujimura, Takatoshi. 2017. <em>OLED Display Fundamentals and Applications</em>.
 <hr>
 <ol>
 <li id="fn1"><p>Other configurations are possible depending on whether we use an NMOS or a PMOS transistor and whether we use a source-follower circuit or a constant-current circuit <span class="citation" data-cites="tsujimura2017oled">(<a href="references.html#ref-tsujimura2017oled" role="doc-biblioref">Tsujimura 2017</a>, Chpt. 4.4.2)</span>. What we describe here uses PMOS + constant-current circuit.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>given that <span class="math inline">\(V_{gs} \leq V_{th}\)</span> for the TFT to operate in the saturate region.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>given that <span class="math inline">\(V_{gs} &gt; V_{th}\)</span> for the TFT to operate in the saturation region.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
