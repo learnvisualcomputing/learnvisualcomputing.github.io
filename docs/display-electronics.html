@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>20&nbsp; Driving Circuits and Processing Pipeline – Foundations of Visual Computing</title>
+<title>20&nbsp; Driving Circuits – Foundations of Visual Computing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./display-signalprocessing.html" rel="next">
 <link href="./display-optics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -137,7 +137,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-electronics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-electronics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -331,7 +331,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Camera Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +354,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./display-electronics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-signalprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -381,23 +387,15 @@ window.Quarto = {
   <li><a href="#active-matrix-vs.-passive-matrix" id="toc-active-matrix-vs.-passive-matrix" class="nav-link" data-scroll-target="#active-matrix-vs.-passive-matrix"><span class="header-section-number">20.1.2</span> Active Matrix vs.&nbsp;Passive Matrix</a></li>
   </ul></li>
   <li><a href="#sec-disp-dic" id="toc-sec-disp-dic" class="nav-link" data-scroll-target="#sec-disp-dic"><span class="header-section-number">20.2</span> Driver IC</a></li>
-  <li><a href="#sec-disp-tf" id="toc-sec-disp-tf" class="nav-link" data-scroll-target="#sec-disp-tf"><span class="header-section-number">20.3</span> Elelctrical ↔︎ Optical Transfer Functions</a></li>
-  <li><a href="#sec-disp-sp" id="toc-sec-disp-sp" class="nav-link" data-scroll-target="#sec-disp-sp"><span class="header-section-number">20.4</span> Display Signal Processing</a>
-  <ul class="collapse">
-  <li><a href="#sec-disp-sp-tm" id="toc-sec-disp-sp-tm" class="nav-link" data-scroll-target="#sec-disp-sp-tm"><span class="header-section-number">20.4.1</span> Luminance Dynamic Range and Tone Mapping</a></li>
-  <li><a href="#sec-disp-sp-eetf" id="toc-sec-disp-sp-eetf" class="nav-link" data-scroll-target="#sec-disp-sp-eetf"><span class="header-section-number">20.4.2</span> Ideal EETF</a></li>
-  <li><a href="#sec-disp-sp-impl" id="toc-sec-disp-sp-impl" class="nav-link" data-scroll-target="#sec-disp-sp-impl"><span class="header-section-number">20.4.3</span> Practical Considerations</a></li>
-  <li><a href="#sec-disp-sp-cm" id="toc-sec-disp-sp-cm" class="nav-link" data-scroll-target="#sec-disp-sp-cm"><span class="header-section-number">20.4.4</span> Color Management</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-electronics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-electronics.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-disp-elec" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></span></h1>
+<h1 class="title"><span id="sec-disp-elec" class="quarto-section-identifier"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span></h1>
 </div>
 
 
@@ -414,8 +412,8 @@ window.Quarto = {
 </header>
 
 
-<p>Now that we understand how displays produce color and control luminance, let’s take a step back and ask: since all we get from an image is array of pixels, how do we actually control the display color and luminance from image pixel values? This requires a combination of display signal processing algorithms that turn image pixel values to actual digital values sent to the display and the driving circuits that use the digital values to actually drive the emissive devices.</p>
-<p>There are two main components in the driving circuits: 1) the backplane that sits directly at the back of a display panel and that controls the emissive devices (<a href="#sec-disp-bp" class="quarto-xref"><span>Section 20.1</span></a>), and 2) the driver integrated circuit (IC) that delivers the driver signals to the backplane (<a href="#sec-disp-dic" class="quarto-xref"><span>Section 20.2</span></a>). We will then discuss the signal processing pipeline, starting with how it fits in an end-to-end workflow (<a href="#sec-disp-tf" class="quarto-xref"><span>Section 20.3</span></a>), followed by theoretical and practical implementations (<a href="#sec-disp-sp" class="quarto-xref"><span>Section 20.4</span></a>).</p>
+<p>Now that we understand how displays produce color and control luminance, let’s take a step back and ask: since all we get from an image is array of pixels, how do we actually control the display color and luminance from image pixel values? This requires a combination of display signal processing algorithms that turn image pixel values to actual digital values sent to the display, which is the topic of next chapter, and the driving circuits that use the digital values to actually drive the emissive devices, which we focus on in this chapter.</p>
+<p>There are two main components in the driving circuits: 1) the backplane that sits directly at the back of a display panel and that controls the emissive devices (<a href="#sec-disp-bp" class="quarto-xref"><span>Section 20.1</span></a>), and 2) the driver integrated circuit (IC) that delivers the driver signals to the backplane (<a href="#sec-disp-dic" class="quarto-xref"><span>Section 20.2</span></a>).</p>
 <section id="sec-disp-bp" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="sec-disp-bp"><span class="header-section-number">20.1</span> Backplane</h2>
 <p>Mechanically, a display panel has an emissive layer at the front that contains the optical devices we have seen in the previous chapter and a <em>backplane</em> that sits right behind and delivers electrical signals to the emissive layer. The main component of the backplane is the driving circuit, which delivers electrical signals to drive the LEDs/LC cells. The driving circuit differs between LCDs and (O)LED displays, and can use either an active matrix (AM) architecture of a passive matrix (PM) architecture.</p>
@@ -477,7 +475,7 @@ Figure&nbsp;20.3: Comparing the passive matrix (a) and active matrix (b) driving
 </section>
 <section id="sec-disp-dic" class="level2" data-number="20.2">
 <h2 data-number="20.2" class="anchored" data-anchor-id="sec-disp-dic"><span class="header-section-number">20.2</span> Driver IC</h2>
-<p>The backplane itself is more or less just the matrix shown in <a href="#fig-amoled" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>, whose row and column signals (<span class="math inline">\(V_{Select}\)</span> and <span class="math inline">\(V_{Data}\)</span>, or scan and data drivers in <a href="#fig-pm_vs_am" class="quarto-xref">Figure&nbsp;<span>20.3</span></a>) need to be set externally. These driver signals come from an external driver IC. <span class="citation" data-cites="blankenbach2016active">Blankenbach (<a href="references.html#ref-blankenbach2016active" role="doc-biblioref">2016</a>)</span> and <span class="citation" data-cites="cristaldi2009liquid">Cristaldi, Pennisi, and Pulvirenti (<a href="references.html#ref-cristaldi2009liquid" role="doc-biblioref">2009</a>, Chpt. 6)</span> provide general descriptions of LCD driver ICs up until 10 years ago. Today’s driver ICs are more integrated and have more advanced features, but the general functionalities and principles remain.</p>
+<p>The backplane itself is more or less just the matrix shown in <a href="#fig-amoled" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>, whose row and column signals (<span class="math inline">\(V_{Select}\)</span> and <span class="math inline">\(V_{Data}\)</span>, or scan and data drivers in <a href="#fig-pm_vs_am" class="quarto-xref">Figure&nbsp;<span>20.3</span></a>) need to be set externally. These driver signals come from an external driver IC. <span class="citation" data-cites="blankenbach2016active">Blankenbach (<a href="references.html#ref-blankenbach2016active" role="doc-biblioref">2016</a>)</span> and <span class="citation" data-cites="cristaldi2009liquid">Cristaldi, Pennisi, and Pulvirenti (<a href="references.html#ref-cristaldi2009liquid" role="doc-biblioref">2009, vol. 2, chap. 6</a>)</span> provide general descriptions of LCD driver ICs up until 10 years ago. Today’s driver ICs are more integrated and have more advanced features, but the general functionalities and principles remain.</p>
 <div id="fig-display_driver_ic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-display_driver_ic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -494,181 +492,6 @@ Figure&nbsp;20.4: Two driver ICs: (a) Raydium’s RM68090 driving LCDs (<span cl
 <p>For mobile devices like smartphones, the driver IC is typically connected to the Systems-on-a-Chip (SoC), which has a display controller IP block. The display controller uses the DMA engine to pass frame data from the memory to the MIPI Display Serial Interface (DSI) transmitter (Tx) block, which serializes the data (since MIPI DSI is a serial interface) and transmits the data to the MIPI DSI receiver (Rx) on the driver IC — this is how frame data is passed between the host and the driver IC.</p>
 <p>The driver IC then needs to unpack the data to extract pixels. For mobile displays usually integrate the <em>timing controller</em> (TCON), whose main main job is to decide which row/column drivers get which pixels at which time. For large displays like TVs, the TCON usually sits inside the display itself and is a separate IC.</p>
 <p>Many driver ICs also include a small amount of built-in memory, or a frame buffer, which temporarily stores an entire frame of image data. This offloads the constant data transfer burden from the main processor, allowing it to send a new image to the driver IC only when a change is needed, while the driver handles the continuous task of refreshing the screen.</p>
-</section>
-<section id="sec-disp-tf" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="sec-disp-tf"><span class="header-section-number">20.3</span> Elelctrical ↔︎ Optical Transfer Functions</h2>
-<p>Ultimately, it is the <span class="math inline">\(V_{Data}\)</span> signals that the display has to set in order to get a desired response on the pixels. How do we go from digital image pixels to <span class="math inline">\(V_{Data}\)</span>?</p>
-<p>Assuming AMOLED and using <a href="#eq-tft_iv" class="quarto-xref">Equation&nbsp;<span>20.1</span></a> and and <a href="display-optics.html#eq-led_lum" class="quarto-xref">Equation&nbsp;<span>19.1</span></a>, we know that to achieve a particular optical power <span class="math inline">\(P\)</span>, the following must hold:</p>
-<p><span class="math display">\[
-    e\frac{P/(h f)}{\eta} = k(V_{DD} - V_{Data} - V_{th})^2,
-\]</span></p>
-<p>Therefore, the desired <span class="math inline">\(V_{Data}\)</span> is given by<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
-<p><span class="math display">\[
-    V_{Data} = \sqrt{e\frac{P/(h f)}{\eta k}}  + V_{th} - V_{DD}.
-\]</span></p>
-<p>With a DAC, we can convert a digital value to an analog voltage. Using an ideal DAC transfer function, the digital value to be sent to the DAC is then:</p>
-<p><span class="math display">\[
-\begin{aligned}
-    D = \frac{V_{Data} - V_{min}}{\Delta}, \\
-    \Delta = \frac{V_{max} - V_{min}}{2^N - 1},
-\end{aligned}
-\]</span></p>
-<p>where <span class="math inline">\([V_{min}, V_{max}]\)</span> is the DAC output range and <span class="math inline">\(N\)</span> is the resolution.</p>
-<p>The relationship between the digital value <span class="math inline">\(D\)</span> and the emitted optical power <span class="math inline">\(P\)</span> is usually called the Electro-Optical Transfer Function (<strong>EOTF</strong>). <a href="#fig-eotf" class="quarto-xref">Figure&nbsp;<span>20.5</span></a> shows the EOTFs for four inorganic LEDs. Even from the theoretical analysis we can see that the relationship is non-linear. In practice the EOTF is usually calibrated and stored in a look-up table (LUT) rather than modeled analytically.</p>
-<div id="fig-eotf" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-eotf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/eotf.svg" class="img-fluid figure-img" style="width:50.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eotf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.5: An EOTF example from <span class="citation" data-cites="miller2019color">Miller (<a href="references.html#ref-miller2019color" role="doc-biblioref">2019, fig. 7.2</a>)</span> for four inorganic LEDs (R, G, B, and W).
-</figcaption>
-</figure>
-</div>
-<p>Can we directly use an image pixel’s digital value for <span class="math inline">\(D\)</span>? Most likely not. For starters, a pixel’s digital value, without gamma, is encoded in a power/luminance-linear space, but EOTF is non-linear. Therefore, we must transform the image pixel value to the actual digital value that can be sent to the display. This transformation can be abstracted as the Electro-Electrical Transfer Function (<strong>EETF</strong>).</p>
-<div id="fig-ootf" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ootf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/ootf.svg" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ootf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.6: In an end-to-end workflow, OETF is carried by the imaging system, image processing executes the EETF, and the display performs the EOTF. Together, the mapping in the scene luminnace to the display luminance is the effective OOTF of the system.
-</figcaption>
-</figure>
-</div>
-<p><a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>20.6</span></a> shows how EOTF and EETF fit in an end-to-end workflow, where we take a picture of the scene and then displays it on a display. The imaging system essentially executes the Opto-Electrical Transfer Function (<strong>OETF</strong>) that turns the optical signal in the scene to image pixel values. The image processing pipeline turns the image pixel values to digital values that are sent to the display; this pipeline essentially performs the EETF. The display then turns the digital values to optical signal through the EOTF. Together, OETF, EETF, and EOTF collectively forms the effective Opto-Optical Transfer Function (<strong>OOTF</strong>) of the system.</p>
-<p>In a rendering system, the image pixel values are rendered/simulated rather than captured, but the same principle applies. The rendered pixel values should be proportional to or, ideally, directly encode the absolute luminance information of the rendered scene. When the frame is rendered on the display, there is an underlying OOTF between the intended luminance in the virtual scene and the actual luminance from the display.</p>
-<p>Correcting for the non-linear EOTF is part of the EETF, which, however, does more than just that. So what sort of processing is carried by the EETF?</p>
-</section>
-<section id="sec-disp-sp" class="level2" data-number="20.4">
-<h2 data-number="20.4" class="anchored" data-anchor-id="sec-disp-sp"><span class="header-section-number">20.4</span> Display Signal Processing</h2>
-<p>In theory, if we know the <em>intended</em> luminance (of each color channel) we can simply invert the EOTF LUT and obtain the digital value that should be sent to the display. So the real question is, from the image pixel values do we know what the intended luminance value is? Let’s first reason about what <em>should</em> happen using physical units and quantities, and then discuss practical issues in implementation.</p>
-<section id="sec-disp-sp-tm" class="level3" data-number="20.4.1">
-<h3 data-number="20.4.1" class="anchored" data-anchor-id="sec-disp-sp-tm"><span class="header-section-number">20.4.1</span> Luminance Dynamic Range and Tone Mapping</h3>
-<p>Ideally, the goal of any display is to faithfully reproduce the actual luminance range intended in the scene, which, in turn, poses two requirements.</p>
-<p>First, the pixel values in an image should encode absolute luminance/radiance information, not just the relative chromaticity. Usual sRGB encoding does not give us that. Physically-based rendering where physical units are tracked does. HDR imaging, where no pixel is saturated, noise floor is low, and the camera color space is carefully calibrated and corrected to a device-independent space like XYZ (we have discussed color correction in <a href="imaging-isp.html" class="quarto-xref"><span>Chapter 18</span></a>), <em>could</em> (but most often does not) also approximately give the absolute luminance information<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Let’s for now assume that such absolute luminance information is encoded in an image.</p>
-<p>The second requirement has to do with dynamic range and needs a careful explanation.</p>
-<section id="luminance-dynamic-range" class="level4">
-<h4 class="anchored" data-anchor-id="luminance-dynamic-range">Luminance Dynamic Range</h4>
-<p>Given the absolute luminance intended in the image, the display should then ideally reproduce the per-pixel luminance. It would be <em>amazing</em> if a display could do that, but it is hardly possible, for a variety of reasons.</p>
-<ul>
-<li>First, the peak display luminance of a display is usually lower than that of the real world.</li>
-<li>Second, the real world has a much larger luminance dynamic range (DR) than that is afforded by the display. The luminance DR of the scene is the ratio between the maximum and minimum luminance in the scene, and the luminance DR of the display is the ratio between the maximum and minimum luminance producible by the display.
-<ul>
-<li>The definitions are concerned with luminance (a photometric metric) rather than illuminance (a radiometric metric) because we care about the perceived power not the radiant power in the scene.</li>
-<li>We use “luminance DR” rather than simply DR to emphasize its difference from the DR of a sensor (<a href="imaging-sensor.html#sec-chpt-imaging-sensor-pixel-dr" class="quarto-xref"><span>Section 16.2.4</span></a>), which is concerned with the ratio of peak measurable luminance in the scene to the noise floor. For simplicity we will use DR when it is clear what it refers to in a given context. Luminance DR is also often referred to as the <strong>contrast ratio</strong> while the sensor DR can be thought of as a form of signal-to-noise ratio <span class="citation" data-cites="mantiuk2015high">(<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">Mantiuk et al. 2015</a>)</span>.</li>
-</ul></li>
-<li>Third, the luminance levels in a real-world scene are continuous whereas the luminance levels in digital displays are quantized (e.g., 256 levels in an 8-bit encoding), so there are quantization errors.</li>
-</ul>
-<div id="fig-dynamic_range_comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dynamic_range_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/dynamic_range_comparison.svg" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dynamic_range_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.7: Luminance dynamic range comparison between a real-world scene and various output devices. Adapted from <span class="citation" data-cites="lang2007rendering">Lang (<a href="references.html#ref-lang2007rendering" role="doc-biblioref">2007, figs. 3,5</a>)</span>.
-</figcaption>
-</figure>
-</div>
-<p>The difference between the scene luminance range and that of various output devices is illustrated in <a href="#fig-dynamic_range_comparison" class="quarto-xref">Figure&nbsp;<span>20.7</span></a>.</p>
-<ul>
-<li>The DR of a real-world scene usually spans 4-5 log units.</li>
-<li>The DR of a typical display is usually limited to about 3 log units, which is slightly higher than prints.</li>
-<li>Modern high-dynamic-range (HDR) displays have luminance DRs that might match that of a scene, but the peak luminance still falls far short of that of what a real-world scene can produce<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</li>
-</ul>
-<p>To enhance display DR, we not only need to be able to produce a high peak luminance but also a very low, ideally 0, luminance when the pixel value is 0. There are many industry standards/certifications for HDR displays, almost all of which include metrics such as minimum peak luminance, maximum black-level luminance, contrast ratio, and bit depth <span class="citation" data-cites="vesahdr12">(<a href="references.html#ref-vesahdr12" role="doc-biblioref">VESA 2024</a>)</span>.</p>
-</section>
-<section id="tone-mapping" class="level4">
-<h4 class="anchored" data-anchor-id="tone-mapping">Tone Mapping</h4>
-<p>Given that it is unlikely that a display can fully reproduce the scene luminance range, the next best question to ask is: how do we accurately reproduce the <em>perceptual experience</em> of the intended scene? To achieve this, the knob we have is the mapping of the intended luminance of each pixel in the image to a new luminance that is within the range afforded by the display (assuming of course the chromaticity is maintained throughout this mapping). This is the problem of <strong>tone mapping</strong> and is effectively the OOTF in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>20.6</span></a>. Both the OETF of an imaging/rendering system and the EOTF of a display participate in the OOTF, and if the product of OETF and EOTF is not the desired OOTF, the residual adjustment needed must be part of the image processing pipeline, i.e., EETF, to reach the desired OOTF.</p>
-<p>Tone mapping is usually part of the rendering pipeline or the image signal processing pipeline of a digital camera (rather than the display signal processing pipeline), which we have discussed in <a href="imaging-isp.html" class="quarto-xref"><span>Chapter 18</span></a>. We will refer you to <span class="citation" data-cites="reinhard2010high">Reinhard (<a href="references.html#ref-reinhard2010high" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="mantiuk2015high">Mantiuk et al. (<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">2015</a>)</span> for surveys of tone mapping techniques. The key thing is to <strong>preserve contrast</strong>. Recall that the human visual system has a contrast sensitivity function (<a href="hvs-intro.html#sec-chpt-hvs-percept-retinafunc-contrast" class="quarto-xref"><span>Section 2.4.2</span></a>), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable. When we compress a large DR to a small DR, (local) contrasts would be lost due to quantization errors (insufficient bit depths) and, as a result, the displayed image looks “dull”.</p>
-<!-- Let's say we have an image two pixel values [0.1, 0.2, 0.3] and [0.3, 0.5, 0.6], both in linear sRGB space (i.e., without gamma and channel value bounded between 0 and 1).
-What do these pixel values tell us?
-They tell us 1) the relative values of the three channels in the two pixels and 2) the relative luminance ratio between the two pixels in each channel.
-They do not tell us anything about absolute luminance.
-
-There are a few challenges here.
-First, the image pixel values are necessarily encoded in a device-independent color space such as sRGB or DCI-P3, whereas the luminance we are talking about is tied to the display's native color space.
-Therefore, we must transform colors from the image's encoding space to the display native space. -->
-</section>
-</section>
-<section id="sec-disp-sp-eetf" class="level3" data-number="20.4.2">
-<h3 data-number="20.4.2" class="anchored" data-anchor-id="sec-disp-sp-eetf"><span class="header-section-number">20.4.2</span> Ideal EETF</h3>
-<p>So in the ideal case, we would first perform tone mapping to determine the luminance of each pixel. Tone mapping changes the luminance of a pixel but not its chromaticity. Given the new luminance, we can give the absolute XYZ value of a pixel by equating Y to the absolute luminance (recall that Y is proportional to luminance as discussed in <a href="hvs-colorimetry.html#sec-chpt-hvs-cori-xyz" class="quarto-xref"><span>Section 5.1</span></a>). We then transform from the XYZ space to the display native space; from there we then invert the EOTF to obtain the actual digital values sent to the display.</p>
-<p>Mathematically, this is broken down into a few steps. Let’s assume the original image is encoded in a luminance-linear RGB space with absolute luminance information. We could transform from the RGB space to the XYZ space by: <!-- by setting the Y value of the sRGB white to 1 (as discussed in @sec-chpt-hvs-cori-cube and interactively illustrated in @zhu2022cube).
-For an image pixel color in the RGB space, we obtain its color in the XYZ space by: --></p>
-<p><span id="eq-eetf_1"><span class="math display">\[
-    P_{XYZ} = \text{diag}(Y^s_{max}, Y^s_{max}, Y^s_{max}) \times T_{RGB\_to\_XYZ} \times P_{RGB},
-\tag{20.2}\]</span></span></p>
-<p>where <span class="math inline">\(P_{XYZ}\)</span> is the pixel color in the XYZ space carrying absolute luminance information, <span class="math inline">\(P_{RGB}\)</span> is the pixel color in the linear, normalized RGB space bounded by 0 and 1, <span class="math inline">\(T_{RGB\_to\_XYZ}\)</span> is the transformation matrix from the linear, normalized RGB space to the XYZ space such that <span class="math inline">\(Y\)</span> of the RGB white (i.e., <span class="math inline">\([1, 1, 1]\)</span> in the RGB space) is set to 1, and <span class="math inline">\(Y^s_{max}\)</span> is the luminance of RGB white.</p>
-<p>What a tone-mapping operator (TMO) <span class="math inline">\(f_{lum}\)</span> does effectively is to simply re-adjust the Y value of each pixel <span class="math inline">\(P_{XYZ}\)</span> to the corresponding absolute luminance level, and then scale the X and Z values proportionally to maintain the chromaticity:</p>
-<p><span id="eq-eetf_2"><span class="math display">\[
-    \hat{P}_{XYZ} = f_{lum}(P_{XYZ}) = T_{lum} \times P_{XYZ}
-\tag{20.3}\]</span></span></p>
-<p>where <span class="math inline">\(\hat{P}_{XYZ}\)</span> is a tone-mapped XYZ value of the pixel and carries absolute luminance information, and the subscript in <span class="math inline">\(f_{lum}\)</span> indicates that this particular TMO operates on absolute luminance. Effectively, the TMO scales each tristimulus value of <span class="math inline">\(P_{XYZ}\)</span>, which we represent using a scaling matrix <span class="math inline">\(T_{lum}\)</span>. If <span class="math inline">\(T_{lum}\)</span> depends only on the XYZ values of <span class="math inline">\(P_{XYZ}\)</span>, the TMO is a global operator. In contrast, local TMOs can apply different transformations to pixels that have the same XYZ values but appear at different spatial locations.</p>
-<p>Now that we are in the XYZ space, the next step is to transform the image pixel colors to the display native color space, for which we need another transformation between the display native space and the XYZ space. To construct the display native color space, we would first offline measure the chromaticities of the display primary colors and the white point, which gives us another canonical transformation matrix <span class="math inline">\(T_{disp\_to\_XYZ}\)</span> where a luminance-linear, normalized display white point [1, 1, 1] is mapped to an XYZ value where <span class="math inline">\(Y\)</span> is 1.</p>
-<p>To use this transformation matrix, we need to first scale each absolute <span class="math inline">\(\hat{P}_{XYZ}\)</span> value by <span class="math inline">\(Y^d_{max}\)</span>, the maximum luminance of display white (e.g., those shown in <a href="#fig-eotf" class="quarto-xref">Figure&nbsp;<span>20.5</span></a>):</p>
-<p><span id="eq-eetf_3"><span class="math display">\[
-    P_{disp} = T^{-1}_{disp\_to\_XYZ} \times \text{diag}^{-1}(Y^d_{max}, Y^d_{max}, Y^d_{max}) \times \hat{P}_{XYZ},
-\tag{20.4}\]</span></span></p>
-<p>where <span class="math inline">\(P_{disp} \in [0, 1]^3\)</span> is a pixel color in the normalized display native space.</p>
-<p>As an example, let’s say <span class="math inline">\(P_{disp} = [0.1, 0.2, 0.8]\)</span>. What this means is that the R channel of the image pixel requires 10% of the maximum luminance in the R sub-pixel. By inverting the EOTF LUT (<a href="#fig-eotf" class="quarto-xref">Figure&nbsp;<span>20.5</span></a>), we can then get the actual digital value that needs to be sent to the display. This inversion compensates the non-linear EOTF of the display.</p>
-<p>Putting <a href="#eq-eetf_1" class="quarto-xref">Equation&nbsp;<span>20.2</span></a> to <a href="#eq-eetf_3" class="quarto-xref">Equation&nbsp;<span>20.4</span></a> together, we have:</p>
-<p><span id="eq-eetf_4"><span class="math display">\[
-    P_{disp} = \underbrace{T^{-1}_{disp\_to\_XYZ} \times \text{diag}^{-1}(Y^d_{max}, Y^d_{max}, Y^d_{max}) \times T_{lum} \times \text{diag}(Y^s_{max}, Y^s_{max}, Y^s_{max}) \times T_{RGB\_to\_XYZ}}_{f_{norm}(\cdot)} \times P_{RGB},
-\tag{20.5}\]</span></span></p>
-<p>where the entire transformation can be seen as a TMO <span class="math inline">\(f_{norm}(\cdot)\)</span> that operates between normalized RGB and normalized display native spaces.</p>
-</section>
-<section id="sec-disp-sp-impl" class="level3" data-number="20.4.3">
-<h3 data-number="20.4.3" class="anchored" data-anchor-id="sec-disp-sp-impl"><span class="header-section-number">20.4.3</span> Practical Considerations</h3>
-<p>There are many challenges of implementing the ideal EETF in practice.</p>
-<section id="practical-tone-mapping" class="level4">
-<h4 class="anchored" data-anchor-id="practical-tone-mapping">Practical Tone Mapping</h4>
-<p>Many images do not encode absolute luminance/radiance information. An image pixel [10, 20, 30] in the sRGB space tells us nothing about the absolute luminance of each channel. Even if an image is captured through an HDR imaging workflow and encoded in an HDR format, e.g., OpenEXR <span class="citation" data-cites="openxer">(<a href="references.html#ref-openxer" role="doc-biblioref">ILM 2025</a>)</span>, which has a very high bit depth (even allows for floating point numbers!), the absolute luminance information is usually still not encoded. Worse, we do not always know the target display dynamic range (which is ultimatelly what matters since that is where the image will be displayed!), when, for instance, tone mapping is done in an camera image signal processing pipeline that is agnostic to the viewing display.</p>
-<p>Absent absolute luminance information, the TMO <span class="math inline">\(f_{norm}(\cdot)\)</span> in <a href="#eq-eetf_4" class="quarto-xref">Equation&nbsp;<span>20.5</span></a> has to operate in normalized, luminance-linear spaces. Some guesswork and empirical heuristics are involved. Many software tools allow us to play with the EETF in such a setting, such as the famous Curves tool in Photoshop and Lightroom. <a href="#fig-tone_mapping_examples" class="quarto-xref">Figure&nbsp;<span>20.8</span></a> shows three such examples in Lightroom, each of which has a tonal adjustment curve that maps an input pixel value in the normalized, luminance-linear input range (x-axis) to an output pixel value in the same range and color space (y-axis)<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. The actual number of input digital levels depends on the input image encoding, which in this case is 10 bits (from Google’s HDR+ dataset) and the number of output digital levels depends on the display itself.</p>
-<div id="fig-tone_mapping_examples" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tone_mapping_examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/tone_mapping_examples.svg" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone_mapping_examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.8: Three tone mapping examples, each with a corresponding tonal adjustment curve, I set using Lightroom on an iPhone 12 Pro. The original image is a 10-bit (demosaicked and color corrected) image captured by a Google Pixel phone, obtained from the HDR+ Burst Photography Dataset <span class="citation" data-cites="hasinoff2016burst">(<a href="references.html#ref-hasinoff2016burst" role="doc-biblioref">Hasinoff et al. 2016</a>)</span>.
-</figcaption>
-</figure>
-</div>
-<p>With a simple linear mapping in the first example, the image looks quite dark and dull. This is because most of the input pixel values are quite low (judging from the color histogram at the top), so essentially most of the pixels are mapped to low output digital values. We can raise the brightness by raising the tonal curve, as done in the second example. That curve essentially increases the contrast ratio of the low-to-mid luminance pixels and compress the contrast ratio of the mid-to-high luminance pixels.</p>
-<p>In my last example, I have raised the tonal curve so much that many input digital levels are mapped to the same, maximum output digital levels, as if those pixels were “saturated” during imaging. What this does is to give the low-to-mid luminance pixels an even larger contrast ratio, so the details look more vivid. Perhaps surprisingly, this intentional saturation does not actually lead to visible “over-exposure” in the final image. Why? Look at the color histogram at the top of the third example: only a small fraction pixels are actually saturated, even though a relative wide range of pixel pixel values are mappped to saturation.</p>
-<p>Not knowing the absolute (input and output) luminance levels is fine here since: 1) the input digital levels are luminance-linear so we <em>are</em> still mainipulating the relative luminance information, and 2) the absolute output luminance information is directly seen on the display, so we can judge for ourselves whether we like it or not.</p>
-<p>The tonal adjustment curve is also a place for creative expression even if we are not concerned with tone mapping <em>per se</em>. Readers familiar with the Curve tool in Photoshop must be familiar with the notion of an “S-curve” or an “inverse S-curve” (if not, see <a href="https://www.lightroompresets.com/blogs/pretty-presets-blog/how-to-use-photoshop-curves">these</a> <a href="https://www.cambridgeincolour.com/tutorials/photoshop-curves.htm">articles</a>). The former essentially increases the contrast ratio between the highlights and shadows in an image and the latter does the opposite. These adjustments are usually made in photo editing/image processing software that does not map between different dynamic ranges but allows us to apply an creative and artistic look to an image.</p>
-</section>
-<section id="gamut-mapping" class="level4">
-<h4 class="anchored" data-anchor-id="gamut-mapping">Gamut Mapping</h4>
-<p>A display might support a color space whose gamut is smaller than that of the image’s encoding space. For instance, the display might support only sRGB while the image is encoded in DCI-P3, so some of the P3 colors might not be accurately reproduced. That is, <span class="math inline">\(P_{disp}\)</span> in <a href="#eq-eetf_3" class="quarto-xref">Equation&nbsp;<span>20.4</span></a> might be outside the [0, 1] bound. The best thing we can do is to approximate an out-of-gamut color with an in-gamut color to minimize the color error. This is called <strong>gamut mapping</strong>. <span class="citation" data-cites="morovivc2008color">Morovič (<a href="references.html#ref-morovivc2008color" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995, chap. 3.6</a>)</span> describe the basic algorithms, with the former being more recent and comprehensive.</p>
-<p>The simplest strategy would be to simply clamp out-of-range values, so a color of [12, 200, 300] would become [12, 200, 255]. Clearly, other than being extremely simple to implement, this strategy would introduce large color reproduction errors. International Color Consortium (ICC) has defined four <strong>rendering intents</strong>, each of which corresponds to a gamut mapping algorithm (vaguely worded, and the implementation detail might vary).</p>
-<p>For instance, the <em>Absolute</em> rendering intent leaves all the in-gamut colors unchanged but maps the out-of-gamut colors to the boundary of the color gamut. The <em>Perceptual</em> rendering intent can be implemented by uniformly projecting all the colors to the white point so that all the colors are in-gamut. You can imagine that while this maintains the relative color appearance between colors (which the Absolute rendering intent fails at), but it would also change in-gamut colors that could have been accurately rendered!</p>
-</section>
-</section>
-<section id="sec-disp-sp-cm" class="level3" data-number="20.4.4">
-<h3 data-number="20.4.4" class="anchored" data-anchor-id="sec-disp-sp-cm"><span class="header-section-number">20.4.4</span> Color Management</h3>
-<p>Performing EETF in an end-to-end workflow benefits from princpled <strong>color management</strong>, which is concerned with maintaining a consistent color appearance throughout the workflow that might involve wildly different capturing devices (e.g., cameras, scanners) and output devices (e.g., displays, printers).</p>
-<p>Color management requires a collaboration between every single piece that touches color in the workflow: the image file must come with a <em>profile</em> that specifies what color space its pixel colors are encoded in and (an estimation of) the viewing condition under which the image was originally edited/viewed, the software that manipulates image content must correctly read and interpret the profile and perform the necessary transformation, potentially through APIs exposed by the Operating System (OS), and the display firmware and drive must communicate with the OS a similar profile of the display itself. <span class="citation" data-cites="giorgianni2009digital">Giorgianni and Madden (<a href="references.html#ref-giorgianni2009digital" role="doc-biblioref">2009</a>)</span> and <span class="citation" data-cites="sharma2018understanding">Sharma (<a href="references.html#ref-sharma2018understanding" role="doc-biblioref">2018</a>)</span> are two excellent references for color management.</p>
-<p>First, the image file should ideally have metadata that tells us what color space its pixel colors are encoded in or, better, the transformation matrix from the image’s color space to a device-independent color space, say the CIE XYZ space. The way to describe such information has been standardized by ICC in what is called the <em>ICC profile</em> <span class="citation" data-cites="iccv2 sharma2018understanding">(<a href="references.html#ref-iccv2" role="doc-biblioref">International Color Consortium 2019</a>; <a href="references.html#ref-sharma2018understanding" role="doc-biblioref">Sharma 2018</a>, Chpt, 5)</span>. We can embed an ICC profile in common image file formats such as JPEG.</p>
-<p>Second, the display itself also has to report its native color space. To do that, modern displays usually come with an ICC profile that describes how to transform from the CIE XYZ space to the display’s native space. Now when the Operating System gets the image file, it would first transform the, say, sRGB colors to the XYZ space using the ICC profile in the image and then transform the colors in the XYZ to the display’s native space using the display ICC profile. You can see that the XYZ space here serves to connect the input color space and the output color space. ICC calls such a space a Profile Connection Space (PCS).</p>
-<p>During the color space transformation, we usually perform an additional transformation so that sRGB white becomes the white point in the display space. This is called <em>chromatic adaptation</em>, which is discussed in <a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-chroma" class="quarto-xref"><span>Section 6.3</span></a>. This is to accommodate the fact that the viewer might be under a different viewing condition than the condition under which the photo was originally edited. The viewing condition could affect the actual appearance of a color, so we must account for this shift in viewing condition through chromatic adaptation.</p>
-<!-- Talk about the following here; emphasize that the display EOTF is most likely not sRGB, but showing it to app developers give them the impression that it's sRGB so that they can encode their pixel values according.  Internally there is another translation that uses the device's actual EOTF.
-
-If you want the true TRC of your specific panel:
-Measure it with a colorimeter (e.g., X-Rite i1Display, Datacolor Spyder, or better a spectroradiometer).
-Generate a LUT-based ICC profile with DisplayCAL. That will encode the actual EOTF of your MacBook at the brightness setting you tested.
-
-The mapping between the original image pixel value (normalized to [0, 1]) to the relative luminance level (normalized to [0, 1]) is also called the **tone reproduction curve** or tone response curve (TRC), essentially a normalized form of EOTF.
-
-![Two TRC examples: one of my LG dislay (left) and the other of my MacBook LCD (right).](figs/trc_examples){#fig-trc_examples width="100%"}
-
-Very confusingly, sometimes TRC is also used to mean the (normalized) OETF, especially in the imaging context, so be careful what it actually means. -->
-<!-- %``Display profiles are profiles that describe how a computer monitor or projector reproduces colours. Without them applications such as Photoshop would have no idea how the monitor displays colour. If you haven’t calibrated and profiled your monitor then your computer will be using a generic profile that does not reflect how your monitor works. It will be an approximation at best.''
-%https://www.permajet.com/blog/what-is-an-icc-profile-why-do-i-need-one/
-% miller2019color chap. 7.1 uses a somewhat weird example where he wants to pick 9000K as the adaptation white but the display white point is not 9000K. so after chromatic adaptation the input sRGB white will become [1, 1, 1] in the display native space, i.e., display white point, which, however, is not 9000K. he suggests a compensation method, but in reality the display profile would know its actual white point and supply the correct chromatic adaptation matrix accordingly. -->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -681,35 +504,8 @@ Blankenbach, Karlheinz, Andreas Hudak, and Michael Jentsch. 2016. <span>“Direc
 <div id="ref-cristaldi2009liquid" class="csl-entry" role="listitem">
 Cristaldi, David JR, Salvatore Pennisi, and Francesco Pulvirenti. 2009. <em>Liquid Crystal Display Drivers: Techniques and Circuits</em>. Vol. 2. Springer.
 </div>
-<div id="ref-giorgianni2009digital" class="csl-entry" role="listitem">
-Giorgianni, Edward J, and Thomas E Madden. 2009. <em>Digital Color Management: Encoding Solutions</em>. Vol. 13. John Wiley &amp; Sons.
-</div>
-<div id="ref-glassner1995principles" class="csl-entry" role="listitem">
-Glassner, Andrew S. 1995. <em>Principles of Digital Image Synthesis</em>. Elsevier.
-</div>
-<div id="ref-hasinoff2016burst" class="csl-entry" role="listitem">
-Hasinoff, Samuel W, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan T Barron, Florian Kainz, Jiawen Chen, and Marc Levoy. 2016. <span>“Burst Photography for High Dynamic Range and Low-Light Imaging on Mobile Cameras.”</span> <em>ACM Transactions on Graphics (ToG)</em> 35 (6): 1–12.
-</div>
-<div id="ref-openxer" class="csl-entry" role="listitem">
-ILM. 2025. <span>“<span class="nocase">OpenEXR Specification, v 3.4.0</span>.”</span> <a href="https://openexr.com/en/latest/" class="uri">https://openexr.com/en/latest/</a>.
-</div>
-<div id="ref-iccv2" class="csl-entry" role="listitem">
-International Color Consortium. 2019. <span>“<span class="nocase">Specification ICC.2:2019 (Profile version 5.0.0 - iccMAX)</span>.”</span> <a href="https://color.org/specification/ICC.2-2019.pdf" class="uri">https://color.org/specification/ICC.2-2019.pdf</a>.
-</div>
-<div id="ref-lang2007rendering" class="csl-entry" role="listitem">
-Lang, Karl. 2007. <span>“Rendering the Print: The Art of Photography.”</span> <em>Adobe System Technical Paper</em>.
-</div>
 <div id="ref-ma2016active" class="csl-entry" role="listitem">
 Ma, Ruiqing. 2016. <span>“Active Matrix for OLED Displays.”</span> In <em>Handbook of Visual Display Technology</em>, 2nd ed., 1821–41. Springer.
-</div>
-<div id="ref-mantiuk2015high" class="csl-entry" role="listitem">
-Mantiuk, Rafał, Grzegorz Krawczyk, Dorota Zdrojewska, Radosław Mantiuk, Karol Myszkowski, and Hans-Peter Seidel. 2015. <span>“High Dynamic Range Imaging.”</span> In <em>Wiley Encyclopedia of Electrical and Electronics Engineering</em>. Wiley.
-</div>
-<div id="ref-miller2019color" class="csl-entry" role="listitem">
-Miller, Michael E. 2019. <em>Color in Electronic Display Systems</em>. Springer.
-</div>
-<div id="ref-morovivc2008color" class="csl-entry" role="listitem">
-Morovič, Ján. 2008. <em>Color Gamut Mapping</em>. 2nd ed. John Wiley &amp; Sons.
 </div>
 <div id="ref-od6631" class="csl-entry" role="listitem">
 OmniVision. n.d. <span>“<span>OD6631 AMOLED Driver Brief</span>.”</span>
@@ -717,30 +513,16 @@ OmniVision. n.d. <span>“<span>OD6631 AMOLED Driver Brief</span>.”</span>
 <div id="ref-rm68090" class="csl-entry" role="listitem">
 Raydium. 2011. <span>“<span class="nocase">RM68090 Data Sheet: Single Chip Driver with 262K color for 240RGBx320 a-Si TFT LCD</span>.”</span>
 </div>
-<div id="ref-reinhard2010high" class="csl-entry" role="listitem">
-Reinhard, Erik. 2010. <em>High Dynamic Range Imaging Acquisition, Display, and Image-Based Lighting</em>. 2nd ed. Morgan Kaufmann Publishers.
-</div>
-<div id="ref-sharma2018understanding" class="csl-entry" role="listitem">
-Sharma, Abhay. 2018. <em>Understanding Color Management</em>. John Wiley &amp; Sons.
-</div>
 <div id="ref-tsujimura2017oled" class="csl-entry" role="listitem">
 Tsujimura, Takatoshi. 2017. <em>OLED Display Fundamentals and Applications</em>. 2nd ed. John Wiley &amp; Sons.
 </div>
-<div id="ref-vesahdr12" class="csl-entry" role="listitem">
-VESA. 2024. <em>VESA High-Performance Monitor and Display Compliance Test Specification</em>. Video Electronics Standards Association.
 </div>
-</div>
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Other configurations are possible depending on whether we use an NMOS or a PMOS transistor and whether we use a source-follower circuit or a constant-current circuit <span class="citation" data-cites="tsujimura2017oled">(<a href="references.html#ref-tsujimura2017oled" role="doc-biblioref">Tsujimura 2017</a>, Chpt. 4.4.2)</span>. What we describe here uses PMOS + constant-current circuit.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Other configurations are possible depending on whether we use an NMOS or a PMOS transistor and whether we use a source-follower circuit or a constant-current circuit <span class="citation" data-cites="tsujimura2017oled">(<a href="references.html#ref-tsujimura2017oled" role="doc-biblioref">Tsujimura 2017, chap. 4.4.2</a>)</span>. What we describe here uses PMOS + constant-current circuit.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>240 pixel columns and 3 sub-pixels per pixel column, so 720 effective columns<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>given that <span class="math inline">\(V_{gs} &gt; V_{th}\)</span> for the TFT to operate in the saturation region.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>This is because the Y value in an XYZ space is proportional to the luminance, so the device RGB to XYZ transformation matrix can be calibrated to give absolute Y values.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Case in point: you have probably never really felt too uncomfortable staring at a display but starring at white paper under noon sunlight is excruciating.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Two notes. First, exactly in what color space are the inputs and outputs encoded is irrelevant, because all we care about here is luminance re-mapping. Second, the tonal curve here maps RGB values within the same space rather than from the RGB space to the display native space, so it is technically not <span class="math inline">\(f_{norm}(\cdot)\)</span> in <a href="#eq-eetf_4" class="quarto-xref">Equation&nbsp;<span>20.5</span></a> but relates to <span class="math inline">\(f_{norm}(\cdot)\)</span> by a linear transformation from RGB to display native space.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1151,8 +933,8 @@ VESA. 2024. <em>VESA High-Performance Monitor and Display Compliance Test Specif
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./display-signalprocessing.html" class="pagination-link" aria-label="Display Signal Processing">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

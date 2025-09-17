@@ -331,7 +331,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Camera Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +354,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./display-electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-signalprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -484,7 +490,7 @@ Figure&nbsp;19.4: The architectural comparison between an OLED and a LCD.
 <p><a href="#fig-oled_vs_lcd" class="quarto-xref">Figure&nbsp;<span>19.4</span></a> compares the architectures between the OLED display and the LCD. In a LCD, the backlight is usually broadband (white) produced either by the phosphor-converted white LEDs or a mixture of RGB LEDs, all are conventional large inorganic LEDs. Each sub-pixel is associated with a color filter with a particular transmittance spectrum that, together with the backlight spectrum, determines the color of the sub-pixel.</p>
 <p>Each sub-pixel has a liquid crystal (LC) cell sandwiched between a rear polarizer and a front polarizer. The rear polarizer rotates the backlight to a particular polarization direction, say vertical. The front polarizer is set to allow light with only the horizontal polarization to go through. Without the LCs in-between, backlight passing through the rear polarizer is blocked by the front polarizer.</p>
 <p>When no voltage is applied, the LC cells are in their default twist state, which rotates the polarization of the light by 90 degrees so that it pass the second polarizer, making the pixel transparent and producing the highest luminance. When a voltage is applied, the LC cells align with the electric field and untwist. This alignment causes no change to the polarization of the light leaving the rear polarizer, so the light is blocked by the front polarizer, producing the lowest luminance.</p>
-<p>This relationship between voltage and transmittance (i.e., low voltage leads to high transmittance) is characteristic of Twisted Nematic (TN) LC cells. There are other LC technologies such as In-Plane Switching (IPS) and Vertical Alignment (VA) (which are better alternatives to TN <span class="citation" data-cites="trussell2008fundamentals">(<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">Trussell and Vrhel 2008</a>, Chpt. 11.2)</span>) where the relationship is inverted.</p>
+<p>This relationship between voltage and transmittance (i.e., low voltage leads to high transmittance) is characteristic of Twisted Nematic (TN) LC cells. There are other LC technologies such as In-Plane Switching (IPS) and Vertical Alignment (VA) (which are better alternatives to TN <span class="citation" data-cites="trussell2008fundamentals">(<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">Trussell and Vrhel 2008, chap. 11.2</a>)</span>) where the relationship is inverted.</p>
 </section>
 </section>
 <section id="field-sequential-color" class="level3" data-number="19.2.2">
@@ -529,12 +535,12 @@ Figure&nbsp;19.6: (a) the light path inside a DLP projector: light from a lamp (
 <h3 data-number="19.3.1" class="anchored" data-anchor-id="sec-disp-optics-lum-pam"><span class="header-section-number">19.3.1</span> PAM</h3>
 <p>In PAM, we (directly or indirectly) control the voltage or current supplied to a pixel, which then changes the amount of photons emitted (and thereby luminance).</p>
 <p>For LEDs (whether organic or inorganic), the luminance is proportional to the current that flows through the diode. Recall in LEDs the photons are emitted through the creation of electron-hole pairs, so the amount of photon emission is naturally proportional to the number of electrons injected (through an external voltage), which is proportional to current.</p>
-<p>More formally, we can define quantum efficiency <span class="math inline">\(\eta\)</span> of an LED <span class="citation" data-cites="schubert2006light">(<a href="references.html#ref-schubert2006light" role="doc-biblioref">Schubert 2006</a>, Chpt. 5)</span>: <span id="eq-led_lum"><span class="math display">\[
+<p>More formally, we can define quantum efficiency <span class="math inline">\(\eta\)</span> of an LED <span class="citation" data-cites="schubert2006light">(<a href="references.html#ref-schubert2006light" role="doc-biblioref">Schubert 2006, chap. 5</a>)</span>: <span id="eq-led_lum"><span class="math display">\[
     \eta = \frac{N_{\text{photons}}}{N_{\text{electrons}}} = \frac{P/(h f)}{I/e},
 \tag{19.1}\]</span></span></p>
 <p>where <span class="math inline">\(N_{\text{photons}}\)</span> is the number of photons emitted to space per second, <span class="math inline">\(N_{\text{electrons}}\)</span> is the number of electrons injected to the LED per second, <span class="math inline">\(P\)</span> is the emitted power, <span class="math inline">\(h\)</span> is the Planck’s constant, <span class="math inline">\(f\)</span> is the frequency of the photons, <span class="math inline">\(I\)</span> is the injection current (total charges per second), and <span class="math inline">\(q\)</span> is the elementary charge.</p>
 <p>In reality, however, the relationship between current and luminance can be non-linear because <span class="math inline">\(\eta\)</span> is not a constant. For instance, the quantum efficiency reduces as current increase <span class="citation" data-cites="dai2010carrier deng2017led">(<a href="references.html#ref-dai2010carrier" role="doc-biblioref">Dai et al. 2010</a>; <a href="references.html#ref-deng2017led" role="doc-biblioref">Deng et al. 2017</a>)</span>.</p>
-<p>The relationship between the voltage across an LED and the current through the LED, known as the I-V curve, is non-linear. Generally, the relationship is exponential <span class="citation" data-cites="geffroy2006organic tsujimura2017oled miller2019color">(<a href="references.html#ref-geffroy2006organic" role="doc-biblioref">Geffroy, Le Roy, and Prat 2006</a>; <a href="references.html#ref-tsujimura2017oled" role="doc-biblioref">Tsujimura 2017</a>, Chpt. 4.2; <a href="references.html#ref-miller2019color" role="doc-biblioref">Miller 2019</a>, Chpt. 6.1.2)</span>, governed by the <em>Shockley diode equation</em> <span class="citation" data-cites="shockley1949theory">(<a href="references.html#ref-shockley1949theory" role="doc-biblioref">Shockley 1949</a>)</span>:</p>
+<p>The relationship between the voltage across an LED and the current through the LED, known as the I-V curve, is non-linear. Generally, the relationship is exponential <span class="citation" data-cites="geffroy2006organic tsujimura2017oled miller2019color">(<a href="references.html#ref-geffroy2006organic" role="doc-biblioref">Geffroy, Le Roy, and Prat 2006</a>; <a href="references.html#ref-tsujimura2017oled" role="doc-biblioref">Tsujimura 2017, chap. 4.2</a>; <a href="references.html#ref-miller2019color" role="doc-biblioref">Miller 2019, chap. 6.1.2</a>)</span>, governed by the <em>Shockley diode equation</em> <span class="citation" data-cites="shockley1949theory">(<a href="references.html#ref-shockley1949theory" role="doc-biblioref">Shockley 1949</a>)</span>:</p>
 <p><span id="eq-led_iv"><span class="math display">\[
     I = I_0 (e^{V/nV_T} - 1),
 \tag{19.2}\]</span></span></p>
@@ -550,7 +556,7 @@ Figure&nbsp;19.7: Relationship between the transmittance and voltage applied to 
 </figcaption>
 </figure>
 </div>
-<p>For LCDs, the luminance depends on the LC transmittance, which depends on the voltage that is applied on the LC. <a href="#fig-lcd_transmittance_voltage" class="quarto-xref">Figure&nbsp;<span>19.7</span></a> (a) shows the relationship between transmittance and voltage of a TN LC cell. Overall, the relationship is not linear: the transmittance is almost invariant to voltage at very low or very high voltage levels, but in the mid-voltage range the relationship is close to linear <span class="citation" data-cites="trussell2008fundamentals gauza2007fast lee1998electro jeon2009temperature hong2007plane">(<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">Trussell and Vrhel 2008</a>, Chpt 11.2; <a href="references.html#ref-gauza2007fast" role="doc-biblioref">Gauza et al. 2007</a>; <a href="references.html#ref-lee1998electro" role="doc-biblioref">Lee, Lee, and Kim 1998</a>; <a href="references.html#ref-jeon2009temperature" role="doc-biblioref">Jeon et al. 2009</a>; <a href="references.html#ref-hong2007plane" role="doc-biblioref">Hong, Shin, and Chung 2007</a>)</span>. <a href="#fig-lcd_transmittance_voltage" class="quarto-xref">Figure&nbsp;<span>19.7</span></a> (b) shows the transmittance vs.&nbsp;voltage relationship for an IPS cell, where the relationship is largely inverted. Generally, the LCD luminance does not scale linearly with the voltage.</p>
+<p>For LCDs, the luminance depends on the LC transmittance, which depends on the voltage that is applied on the LC. <a href="#fig-lcd_transmittance_voltage" class="quarto-xref">Figure&nbsp;<span>19.7</span></a> (a) shows the relationship between transmittance and voltage of a TN LC cell. Overall, the relationship is not linear: the transmittance is almost invariant to voltage at very low or very high voltage levels, but in the mid-voltage range the relationship is close to linear <span class="citation" data-cites="trussell2008fundamentals gauza2007fast lee1998electro jeon2009temperature hong2007plane">(<a href="references.html#ref-trussell2008fundamentals" role="doc-biblioref">Trussell and Vrhel 2008, chap. 11.2</a>; <a href="references.html#ref-gauza2007fast" role="doc-biblioref">Gauza et al. 2007</a>; <a href="references.html#ref-lee1998electro" role="doc-biblioref">Lee, Lee, and Kim 1998</a>; <a href="references.html#ref-jeon2009temperature" role="doc-biblioref">Jeon et al. 2009</a>; <a href="references.html#ref-hong2007plane" role="doc-biblioref">Hong, Shin, and Chung 2007</a>)</span>. <a href="#fig-lcd_transmittance_voltage" class="quarto-xref">Figure&nbsp;<span>19.7</span></a> (b) shows the transmittance vs.&nbsp;voltage relationship for an IPS cell, where the relationship is largely inverted. Generally, the LCD luminance does not scale linearly with the voltage.</p>
 </section>
 <section id="sec-disp-optics-lum-pwm" class="level3" data-number="19.3.2">
 <h3 data-number="19.3.2" class="anchored" data-anchor-id="sec-disp-optics-lum-pwm"><span class="header-section-number">19.3.2</span> PWM</h3>
@@ -585,7 +591,7 @@ Figure&nbsp;19.9: Microscope-magnified subpixel images of P3 green and sRGB gree
 </div>
 <p>As an example, <a href="#fig-display_subpixels" class="quarto-xref">Figure&nbsp;<span>19.9</span></a> shows the the sub-pixels images of the green primary colors in the P3 and sRGB color space as displayed on a 4th-generation iPad Pro. We can make a few observations. First, the emission patterns of P3 green and sRGB green are different. The P3 green is more “pure”, where the red and blue sub-pixels are contributing very little, whereas the sRGB green requires noticeable contribution from the red sub-pixels. This is not surprising because the P3 green is much more saturated (closer to spectral colors) than the sRGB green, as shown in the right figure in <a href="hvs-colorimetry.html#fig-xy_chromaticity" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The actual contributions of red sub-pixels in sRGB green as seen by my eye are not as strong as seen in this iPhone-taken image; the image signal processing pipeline in the iPhone definitely has introduced its artifacts.</p>
 <p>Second, even for the P3 green, there are still some contributions from the red sub-pixels. This suggests that the native display gamut is different from, in fact larger than, P3. This makes sense: for a display to support a particular color space, say, the P3 space, the display’s native color space must be no smaller than the P3 space.</p>
-<p>It is worth noting that the spectrum/color of the light emitted from a sub-pixel is angularly dependent. This is at least partially because some emitted photons might not escape the LED because of the internal reflection at the material-air interface, and this reflection depends on photon arrival angles <span class="citation" data-cites="schubert2006light">(<a href="references.html#ref-schubert2006light" role="doc-biblioref">Schubert 2006</a>, Chpt. 5)</span>. Display measurement standard usually defines the angles at which a display’s color and luminance must be measured for a full display performance characterization <span class="citation" data-cites="idmsv3">(<a href="references.html#ref-idmsv3" role="doc-biblioref">ICDM 2025</a>, Chpt. 9)</span>.</p>
+<p>It is worth noting that the spectrum/color of the light emitted from a sub-pixel is angularly dependent. This is at least partially because some emitted photons might not escape the LED because of the internal reflection at the material-air interface, and this reflection depends on photon arrival angles <span class="citation" data-cites="schubert2006light">(<a href="references.html#ref-schubert2006light" role="doc-biblioref">Schubert 2006, chap. 5</a>)</span>. Display measurement standard usually defines the angles at which a display’s color and luminance must be measured for a full display performance characterization <span class="citation" data-cites="idmsv3">(<a href="references.html#ref-idmsv3" role="doc-biblioref">ICDM 2025, chap. 9</a>)</span>.</p>
 <!-- Talk about lighting systems -->
 
 
@@ -1084,8 +1090,8 @@ Tsujimura, Takatoshi. 2017. <em>OLED Display Fundamentals and Applications</em>.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./display-electronics.html" class="pagination-link" aria-label="Driving Circuits and Processing Pipeline">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./display-electronics.html" class="pagination-link" aria-label="Driving Circuits">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

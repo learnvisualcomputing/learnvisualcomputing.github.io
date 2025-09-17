@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>21&nbsp; Display Signal Processing – Foundations of Visual Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./display-electronics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-signalprocessing.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Visual Computing</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Foundations-of-Visual-Computing.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Invitation to Visual Computing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./hvs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Human Visual System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Light to Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-receptor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Photoreceptors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Color Vision</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-colorimetry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Colorimetry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hvs-adaptation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visual Adaptations and Constancy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./rendering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-radiometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Radiometry and Photometry</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-lightfield.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Light Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-re.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Rendering Surface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-sss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Volume and Subsurface Scattering Processes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-rte.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rendering Volume and Subsurface Scattering</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rendering-nflux.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The N-Flux Theory</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Imaging</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Imaging Optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-sensor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Image Sensor Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-noise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Noise</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Camera Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./display.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Display</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-optics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Optical Mechanisms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-signalprocessing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-disp-sp-ov" id="toc-sec-disp-sp-ov" class="nav-link active" data-scroll-target="#sec-disp-sp-ov"><span class="header-section-number">21.1</span> The Big Picture</a></li>
+  <li><a href="#sec-disp-sp-proc" id="toc-sec-disp-sp-proc" class="nav-link" data-scroll-target="#sec-disp-sp-proc"><span class="header-section-number">21.2</span> The Chain of Processing</a>
+  <ul class="collapse">
+  <li><a href="#hardware-intrinsic-oetf" id="toc-hardware-intrinsic-oetf" class="nav-link" data-scroll-target="#hardware-intrinsic-oetf"><span class="header-section-number">21.2.1</span> Hardware-Intrinsic OETF</a></li>
+  <li><a href="#reference-oetf" id="toc-reference-oetf" class="nav-link" data-scroll-target="#reference-oetf"><span class="header-section-number">21.2.2</span> Reference OETF</a></li>
+  <li><a href="#eetf" id="toc-eetf" class="nav-link" data-scroll-target="#eetf"><span class="header-section-number">21.2.3</span> EETF</a></li>
+  <li><a href="#reference-eotf" id="toc-reference-eotf" class="nav-link" data-scroll-target="#reference-eotf"><span class="header-section-number">21.2.4</span> Reference EOTF</a></li>
+  <li><a href="#hardware-intrinsic-eotf" id="toc-hardware-intrinsic-eotf" class="nav-link" data-scroll-target="#hardware-intrinsic-eotf"><span class="header-section-number">21.2.5</span> Hardware-Intrinsic EOTF</a></li>
+  </ul></li>
+  <li><a href="#sec-disp-sp-tm" id="toc-sec-disp-sp-tm" class="nav-link" data-scroll-target="#sec-disp-sp-tm"><span class="header-section-number">21.3</span> Practical Tone Mapping</a></li>
+  <li><a href="#sec-disp-sp-cm" id="toc-sec-disp-sp-cm" class="nav-link" data-scroll-target="#sec-disp-sp-cm"><span class="header-section-number">21.4</span> Color Management</a>
+  <ul class="collapse">
+  <li><a href="#gamut-mapping" id="toc-gamut-mapping" class="nav-link" data-scroll-target="#gamut-mapping"><span class="header-section-number">21.4.1</span> Gamut Mapping</a></li>
+  <li><a href="#chromatic-adaptation" id="toc-chromatic-adaptation" class="nav-link" data-scroll-target="#chromatic-adaptation"><span class="header-section-number">21.4.2</span> Chromatic Adaptation</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./display.html">Display</a></li><li class="breadcrumb-item"><a href="./display-signalprocessing.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-disp-sp" class="quarto-section-identifier"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>From <a href="display-electronics.html" class="quarto-xref"><span>Chapter 20</span></a>, we know that ultimately it is the <span class="math inline">\(V_{Data}\)</span> signals that the display has to set in order to get a desired response on the pixels. How do set <span class="math inline">\(V_{Data}\)</span>? This question can only be answered by positioning display in an end-to-end workflow that involves imaging, image processing, and display. We will first give a big-picture view, showing that the central task of this signal processing chain is tone mapping, which is realized by a chain of signal processing steps (<a href="#sec-disp-sp-ov" class="quarto-xref"><span>Section 21.1</span></a>). We will then walk through this chain step by step (<a href="#sec-disp-sp-proc" class="quarto-xref"><span>Section 21.2</span></a>), and discuss practical issues in realizing tone mapping (<a href="#sec-disp-sp-tm" class="quarto-xref"><span>Section 21.3</span></a>). Finally, we will discuss color management, a framework that makes everything we discuss in this chapter much more consistent and reliable across software and hardware platforms (<a href="#sec-disp-sp-cm" class="quarto-xref"><span>Section 21.4</span></a>).</p>
+<section id="sec-disp-sp-ov" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="sec-disp-sp-ov"><span class="header-section-number">21.1</span> The Big Picture</h2>
+<p>Consider a typical workflow where you capture the scene as an image and then view it on a display. <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a> illustrates the chain of signal processing that takes place in this workflow. At the beginning of this chain is the luminance in the physical scene; at the end is the luminance emitted by the display. The transformation from the former to the latter can be abstracted as the Opto-Optical Transfer Function (<strong>OOTF</strong>), ① in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>. In practice, the OOTF is <em>indirectly</em> realized through a long processing chain (① through ⑩ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>) that spans imaging hardware, image processing algorithms, and display hardware. Each step can be represented as a transfer function, and together these functions collectively constitute the OOTF.</p>
+<div id="fig-ootf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ootf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/ootf.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ootf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.1: In an end-to-end workflow, OETF is carried by the imaging system, image processing executes the EETF (which includes color space conversion (CSC), gamut mapping, tone mapping, and EOTF compensation), and the display performs the EOTF. Together, the mapping in the scene luminnace to the display luminance is the effective OOTF of the system.
+</figcaption>
+</figure>
+</div>
+<p>Ideally, the OOTF should be an identity function, which, one could argue, is the Holy Grail of an imaging-display workflow: faithfully capturing <em>and</em> reproducing the actual luminance in the scene. The former is dealt with by HDR imaging (<a href="imaging-sensor.html#sec-chpt-imaging-sensor-pixel-dr" class="quarto-xref"><span>Section 16.2.4</span></a>), and the latter is the job of display signal processing and display hardware design.</p>
+<p>It would be <em>amazing</em> if a display could accurately reproduce the scene luminance (assuming it is accurately captured). It is hardly possible for a variety of reasons. <!-- This, in turn, poses two requirements.
+
+First, the pixel values in an image should encode absolute luminance/radiance information, not just the relative chromaticity.
+Usual sRGB encoding does not give us that.
+Physically-based rendering where physical units are tracked does.
+HDR imaging, where no pixel is saturated, noise floor is low, and the camera color space is carefully calibrated and corrected to a device-independent space like XYZ (we have discussed color correction in @sec-chpt-imaging-isp), *could* (but most often does not) also approximately give the absolute luminance information^[This is because the Y value in an XYZ space is proportional to the luminance, so the device RGB to XYZ transformation matrix can be calibrated to give absolute Y values.].
+Let's for now assume that such absolute luminance information is encoded in an image. --></p>
+<!-- Given the absolute luminance intended in the image, the display should then ideally reproduce the per-pixel luminance. -->
+<ul>
+<li>First, the peak display luminance of a display is usually lower than that of the real world.</li>
+<li>Second, the real world has a much larger <strong>luminance dynamic range</strong> (DR) than that is afforded by the display. The luminance DR of the scene is the ratio between the maximum and minimum luminance in the scene, and the luminance DR of the display is the ratio between the maximum and minimum luminance producible by the display.
+<ul>
+<li>The definitions are concerned with luminance (a photometric metric) rather than illuminance (a radiometric metric) because we care about the perceived power not the radiant power in the scene.</li>
+<li>We use “luminance DR” rather than simply DR to emphasize its difference from the DR of a sensor (<a href="imaging-sensor.html#sec-chpt-imaging-sensor-pixel-dr" class="quarto-xref"><span>Section 16.2.4</span></a>), which is concerned with the ratio of peak measurable luminance in the scene to the noise floor. For simplicity we will use DR when it is clear what it refers to in a given context. Luminance DR is also often referred to as the <strong>contrast ratio</strong> while the sensor DR can be thought of as a form of signal-to-noise ratio <span class="citation" data-cites="mantiuk2015high">(<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">Mantiuk et al. 2015</a>)</span>.</li>
+</ul></li>
+<li>Third, the luminance levels in a real-world scene are continuous whereas the luminance levels in digital displays are quantized (e.g., 256 levels in an 8-bit encoding), so there are quantization errors.</li>
+</ul>
+<div id="fig-dynamic_range_comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dynamic_range_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/dynamic_range_comparison.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dynamic_range_comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.2: Luminance dynamic range comparison between a real-world scene and various output devices. Adapted from <span class="citation" data-cites="lang2007rendering">Lang (<a href="references.html#ref-lang2007rendering" role="doc-biblioref">2007, figs. 3,5</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The difference between the scene luminance range and that of various output devices is illustrated in <a href="#fig-dynamic_range_comparison" class="quarto-xref">Figure&nbsp;<span>21.2</span></a>.</p>
+<ul>
+<li>The DR of a real-world scene usually spans 4-5 log units.</li>
+<li>The DR of a typical display is usually limited to about 3 log units, which is slightly higher than prints.</li>
+<li>Modern high-dynamic-range (HDR) displays have luminance DRs that might match that of a scene, but the peak luminance still falls far short of that of what a real-world scene can produce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+</ul>
+<p>To enhance display DR, we not only need to be able to produce a high peak luminance but also a very low, ideally 0, luminance when the pixel value is 0. There are many industry standards/certifications for HDR displays, almost all of which include metrics such as minimum peak luminance, maximum black-level luminance, contrast ratio, and bit depth <span class="citation" data-cites="vesahdr12">(<a href="references.html#ref-vesahdr12" role="doc-biblioref">VESA 2024</a>)</span>.</p>
+<p>Given that it is unlikely that a display can fully reproduce the scene luminance, the next best question to ask is: how do we accurately reproduce the <em>perceptual experience</em> of the intended scene? To achieve this, the knob we have is the mapping of the intended luminance of each pixel in the image to a new luminance that is within the range afforded by the display (assuming of course the chromaticity is maintained throughout this mapping through appropriate color space transformations).</p>
+<p>The mapping from scene luminance to displayed luminance is the OOTF in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>, and is the central task of <strong>tone mapping</strong>. As noted earlier, the OOTF is not directly controlled; instead, it emerges from a cascade of transfer functions within the signal processing chain. Some of these transfer functions are determined by the design of the imaging and display hardware (② and ⑩), others by image encoding and decoding format (e.g., ③, ④ ⑥, ⑦), and the remainder by the image processing algorithm (⑤) abstracted as Electro-Electrical Transfer Function (<strong>EETF</strong>).</p>
+<p>EETF is the component over which we have the greatest degree of control and, thus, where tone mapping operators (TMOs) are usually implemented. In principle, of course, we can influence tone mapping at any stage in the pipeline. For instance, the recent Rec. 2100 standard defines image encoding formats, both on the imaging and display side, that allows for better tone mapping in HDR workflows.</p>
+<p>We will refer you to <span class="citation" data-cites="reinhard2010high">Reinhard (<a href="references.html#ref-reinhard2010high" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="mantiuk2015high">Mantiuk et al. (<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">2015</a>)</span> for surveys of tone mapping techniques. The key thing is to <strong>preserve contrast</strong>. Recall that the human visual system has a contrast sensitivity function (<a href="hvs-intro.html#sec-chpt-hvs-percept-retinafunc-contrast" class="quarto-xref"><span>Section 2.4.2</span></a>), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable. When we compress a large DR to a small DR, (local) contrasts would be lost due to quantization errors (insufficient bit depths) and, as a result, the displayed image looks “dull”.</p>
+</section>
+<section id="sec-disp-sp-proc" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="sec-disp-sp-proc"><span class="header-section-number">21.2</span> The Chain of Processing</h2>
+<p>Let’s now walk through the chain of processing from luminance in the scene to the luminance emitted from a display.</p>
+<section id="hardware-intrinsic-oetf" class="level3" data-number="21.2.1">
+<h3 data-number="21.2.1" class="anchored" data-anchor-id="hardware-intrinsic-oetf"><span class="header-section-number">21.2.1</span> Hardware-Intrinsic OETF</h3>
+<p>An imaging system fundamentally performs a signal transduction from the optical domain to the electrical domain. This transduction can be abstracted as <a href="imaging-sensor.html#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>16.7</span></a>, where the scene power is converted to RAW pixels. <a href="imaging-sensor.html#eq-mono_model" class="quarto-xref">Equation&nbsp;<span>16.7</span></a> can be thought of as the intrinsic Opto-Electrical Transfer Function (<strong>OETF</strong>) of the imaging system (② in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). Barring noise and ADC quantization errors, the RAW pixel values are roughly proportional to the scene luminance. A RAW pixel value can be expressed as:</p>
+<p><span id="eq-hoetf"><span class="math display">\[
+    P_{cam} =
+    \begin{bmatrix}
+        hOETF_R(\Phi(\lambda)) \\
+        hOETF_G(\Phi(\lambda)) \\
+        hOETF_B(\Phi(\lambda))
+    \end{bmatrix},
+\tag{21.1}\]</span></span></p>
+<p>where <span class="math inline">\(P_{cam}\)</span> is the pixel color in the camera RAW space, <span class="math inline">\(hOETF_R(\cdot)\)</span>, <span class="math inline">\(hOETF_G(\cdot)\)</span>, and <span class="math inline">\(hOETF_B(\cdot)\)</span> represent the hardware-intrinsic OETF for the red, green, and blue channel, respectively, and <span class="math inline">\(\Phi(\lambda)\)</span> represents the SPD of the incident light. We have three OETFs here because there are three different spectral sensitivity functions (<a href="imaging-sensor.html#sec-chpt-imaging-sensor-color-goal" class="quarto-xref"><span>Section 16.7.1</span></a>). If using a 10-bit encoding, each channel in <span class="math inline">\(P_{RAW}\)</span> is bounded between 0 and 1023. The <span class="math inline">\(hEOTF\)</span>s are defined accordingly.</p>
+<p>In a rendering system, the image pixel values are rendered/simulated rather than captured, but the same principle applies, where the rendered pixels should ideally be proportional to or, ideally, directly encode the absolute luminance information of the rendered scene. Two main differences exist between rendering and imaging. First, in rendering we generally we do not intentionally model sensor noise. Second, numerically solving the (volume) rendering equation leads to inaccuracies <span class="citation" data-cites="pharr2018physically">(<a href="references.html#ref-pharr2018physically" role="doc-biblioref">Pharr, Jakob, and Humphreys 2018, chaps. 2, 13, 14</a>)</span>, whereas the rendering equations are effectively “solved by nature” in imaging. Of course, we still pay the ADC quantization error in rendering. Therefore, the rendered pixels are usually not perfectly proportional to luminance.</p>
+</section>
+<section id="reference-oetf" class="level3" data-number="21.2.2">
+<h3 data-number="21.2.2" class="anchored" data-anchor-id="reference-oetf"><span class="header-section-number">21.2.2</span> Reference OETF</h3>
+<p>When savings RAW pixels as an image file (such as JPEG and PNG), we usually have a low bit budget. For instance, RAW pixels are typically encoded using 10 or 12 bits, but usual RGB images use 8 bits per color channel. Recall from <a href="hvs-colorimetry.html#sec-chpt-hvs-cori-cube-step2" class="quarto-xref"><span>Section 5.3.2</span></a> that when quantizing luminance-linear signals into digital values, we use a gamma-based encoding strategy, which attempts to encode the perceived brightness, rather than the physical luminance, uniformly. Gamma encoding makes better use of the limited bit budget by reducing the perceptual quantiztion errors for the low luminance range.</p>
+<p>The encoding function <span class="math inline">\(f_{L \mapsto V}\)</span> that maps a luminance-linear signal <span class="math inline">\(L\)</span> to a digital value <span class="math inline">\(V\)</span> that is actually saved in an image file is also called the OETF (③ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). This OETF, however, purely represents an encoding strategy, and is clearly different from the hardware-intrinsic OETF of the imaging system.</p>
+<ul>
+<li>The hardware-intrinsic OETF represents an actual signal transduction, but the encoding OETF here purely manipulates information, both <span class="math inline">\(L\)</span> and <span class="math inline">\(V\)</span>, in the electrical domain, except <span class="math inline">\(L\)</span> represents luminance information and <span class="math inline">\(V\)</span> represents a digital value.</li>
+<li>The two need not be, and mostly will not be, the same. When people say OETF without any qualifier, what they refer to is the encoding OETF <span class="math inline">\(f_{L \mapsto V}\)</span>, a convention we will follow. We will explicitly use <em>hardware-intrinsic OETF</em> when referring specifically to the transfer function intrinsic to the signal transduction process.</li>
+</ul>
+<p>After <span class="math inline">\(f_{L \mapsto V}\)</span>, pixel values are roughly proportional to perceived brightness. A good OETF should be designed based on models of human brightness perception. Over the years, many reference OETFs have been defined in video/broadcast standards, such as Rec. 601, Rec. 709, and, more recently, Rec. 2020 and Rec. 2100—all published by ITU-R<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In contrast, sRGB and Display P3 are color space standards (not defined by ITU-R). sRGB shares the same primaries and white point chromaticities as Rec. 709 but uses a different OETF. Display P3 offers a wider gamut than sRGB while using the same OETF.</p>
+<p>All of the standards above, except Rec. 2100, use relative luminance as input, where L=1 is given by some form of maximum luminance measure manually determined for a particular setting and, therefore, usually does <em>not</em> correspond to a fixed, absolute luminance level. That maximum luminance could be, for instance, the absolute luminance that just saturates the sensor in the imaging system. In theory, though, the brightness-vs-luminance model should take absolute luminance into account. The sRGB standard does specify a <em>recommended</em> display luminance of 80 nits, but that is just a recommendation and nothing prevents you from displaying an sRGB on a dimmer or brighter display, in which case the brightness model underlying the OETF in sRGB technically would not apply.</p>
+<p>In practice, the OETF is applied after a color space conversion (CSC) from the raw camera space to a standard color space such as sRGB or Display P3 (which we cover in <span class="citation" data-cites="zhu2022cam">Zhu (<a href="references.html#ref-zhu2022cam" role="doc-biblioref">2022</a>)</span>), each of which specifies a reference OETF. The OETF is applied to each of the three color channels. Mathematically:</p>
+<p><span id="eq-oeft"><span class="math display">\[
+\begin{aligned}
+    P_{XYZ} &amp;= T_{cam\_to\_XYZ} \times \text{diag}^{-1}(1024) \times P_{cam}, \\
+    P_{sRGB\_linear} &amp;= T_{XYZ\_to\_sRGB} \times P_{XYZ}, \\
+    P_{sRGB} &amp;= \text{diag}(255) \times
+    \begin{bmatrix}
+        OETF(P_{sRGB\_linear}(R))\\
+        OETF(P_{sRGB\_linear}(G))\\
+        OETF(P_{sRGB\_linear}(B))
+    \end{bmatrix},
+\end{aligned}
+\tag{21.2}\]</span></span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\text{diag}^{-1}(1024) \times P_{cam}\)</span> (<span class="math inline">\(\mathbb{R}^3 \in [0, 1]^3\)</span>) is a color in the camera RAW space normalized to the [0, 1] range (assuming 10-bit RAW encoding).</li>
+<li><span class="math inline">\(T_{cam\_to\_XYZ}\)</span> is the transformation matrix from the normalized camera RAW space to the CIE 1931 XYZ space; it is usually illuminant dependent and normalized such that when the illuminant is normalized to have a Y value of 1, one of the RGB channels saturates <span class="citation" data-cites="rowlands2020color">(<a href="references.html#ref-rowlands2020color" role="doc-biblioref">Rowlands 2020</a>)</span>.</li>
+<li><span class="math inline">\(P_{XYZ}\)</span> is the color in the XYZ space.</li>
+<li><span class="math inline">\(T_{XYZ\_to\_sRGB}\)</span> is the transformation from the XYZ space to a color space, say sRGB, used to encode the image file; the matrix is usually normalized such that [1, 1, 1] in the linear sRGB space translates to Y=1.</li>
+<li><span class="math inline">\(P_{sRGB\_linear}\)</span> (<span class="math inline">\(\mathbb{R}^3 \in [0, 1]^3\)</span>) is the color in the linear sRGB space.</li>
+<li><span class="math inline">\(OETF(\cdot)\)</span> is the OETF of the encoding space (the OETF for sRGB in this example is <a href="hvs-colorimetry.html#eq-srgb_oetf" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>).</li>
+<li><span class="math inline">\(P_{sRGB}\)</span> (<span class="math inline">\(\mathbb{Z}^3 \in [0, 255]^3\)</span>) is the color in the sRGB space.</li>
+</ul>
+</section>
+<section id="eetf" class="level3" data-number="21.2.3">
+<h3 data-number="21.2.3" class="anchored" data-anchor-id="eetf"><span class="header-section-number">21.2.3</span> EETF</h3>
+<p>When an OETF-encoded image is later processed, we can use OETF<sup>-1</sup> to recover the original luminance (④ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). This is important because any further image processing should ideally be operating in the luminance-linear space, where operates correspond to physical units; forgetting this can lead to many subtle bugs in code <span class="citation" data-cites="chen2024coolerspace">(<a href="references.html#ref-chen2024coolerspace" role="doc-biblioref">Chen, Chang, and Zhu 2024</a>)</span>!</p>
+<p>The image processing pipeline can be abstracted as Electro-Electrical Transfer Function (<strong>EETF</strong>), as it processes digital pixels (⑤ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). EETF is usually the part of the entire processing pipeline that we get to control, so it is where we can impact the overall tone mapping and OOTF. Mathematically: <span id="eq-eetf"><span class="math display">\[
+    P'_{sRGB\_linear} = f(OETF^{-1}(\text{diag}^{-1}(255) \times P_{sRGB})),
+\tag{21.3}\]</span></span></p>
+<p>where <span class="math inline">\(f(\cdot)\)</span> is the tone mapping operator operating on luminance-linear signals, and <span class="math inline">\(P'_{sRGB\_linear}\)</span> is the tone-mapped pixel value in the luminance-linear space. If <span class="math inline">\(f\)</span> depends only on the value of <span class="math inline">\(P_{sRGB}\)</span>, the TMO is a global operator. In contrast, local TMOs can apply different transformations to pixels that share the same color but appear at different spatial locations.</p>
+<p>The EETF-based tone mapping is most commonly implemented at the end of an rendering pipeline or a camera signal processing pipeline (<a href="imaging-isp.html" class="quarto-xref"><span>Chapter 18</span></a>), which is where we have access to raw (relative) luminance information before we have to turn luminance to digital values in a, e.g., JPEG or PNG image. But it is also common to control tone mapping by processing an JPEG/PNG image, which is what is <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a> assumes and what is visualized in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>.</p>
+<p>One obvious thing we notice here is that even though ideally we would want to manipulate absolute luminance, as discussed in <a href="#sec-disp-sp-ov" class="quarto-xref"><span>Section 21.1</span></a> the tone mapping operator here has to work to <em>relative</em> luminance. This is because usually the processing stages before EETF do not keep the absolute luminance information because of all the normalizations. <a href="#sec-disp-sp-tm" class="quarto-xref"><span>Section 21.3</span></a> discusses challenges facing implementing a good EETF and typical solutions.</p>
+</section>
+<section id="reference-eotf" class="level3" data-number="21.2.4">
+<h3 data-number="21.2.4" class="anchored" data-anchor-id="reference-eotf"><span class="header-section-number">21.2.4</span> Reference EOTF</h3>
+<p>After EETF, each image pixel is mapped to an intended (relative) luminance. Now comes the time to display the image. We have to again turn luminance back to digital values<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Minimizing perceptual quantization error is still the key, since these digital values will eventually be decoded back to luminance. This requires, again, modeling human brightness perception, but this time the luminance range is limited by what the display can afford to produce so the model would be somewhat different than that used to define OETF on the imaging side.</p>
+<p>We need a function <span class="math inline">\(f_{V \mapsto L}\)</span> that maps a digital value <span class="math inline">\(V\)</span> to a luminance <span class="math inline">\(L\)</span>. <span class="math inline">\(f_{V \mapsto L}\)</span> is called the Electro-Optical Transfer Function (<strong>EOTF</strong>). This is potentially confusing: why do we not construct the function to map luminance to digital value, like how we have done on the imaging side, but the other way around? Mathematically, this is somewhat a moot point because the function is constructed to be monotonic and, thus, invertible. In practice, we use EOTF, rather than OETF, on the display side simply to signify the fact that a display converts electrical signals to optical signals.</p>
+<p>Over the years, there have been a set of reference EOTFs defined in various standards. Rec. 1886 is meant to give a good approximation of the hardware-intrinsic EOTF of CRT displays, and Rec. 2100 is meant to be used for HDR workflows, where absolute luminance is tracked. Rec. 709, Rec. 2100, sRGB, and Display P3 define both an OETF and an EOTF, which are inversions of each other. Note that OETF and EOTF need not be an inversion of each other. Both are designed with a good model of human brightness perception in mind. The difference in the underlying model is that at the imaging side the luminance is dictated by the scene whereas as the display side the luminance is dictated by the display hardware; the two do not match, which, in turn, impacts the EOTF and OETF design. Therefore, while we use OETF to encode scene luminance to a file (and OETF<sup>-1</sup> to recover the scene luminance from the file), the display EOTF might not necessarily be OETF<sup>-1</sup>.</p>
+<p>Given an intended luminance <span class="math inline">\(L\)</span> we want to display, we use EOTF<sup>-1</sup> to obtain the corresponding digital value <span class="math inline">\(V\)</span> to be sent to the display (⑥ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). This is usually carried out in a CSC. For example, if the input image is encoded in sRGB, the pixels remain in the sRGB space after applying the EETF. If the display operates in the Display P3 color space, a CSC must be performed from linear sRGB to linear Display P3, after which the P3 EOTF is applied to obtain the digital pixel values. These EOTF-encoded digital pixels will then be transmitted through the MIPI DSI interface to the driver IC, as discussed in <a href="display-electronics.html#sec-disp-dic" class="quarto-xref"><span>Section 20.2</span></a>. Mathematically, the sequence of processing is:</p>
+<p><span id="eq-eotf"><span class="math display">\[
+\begin{aligned}
+    P_{XYZ} &amp;= T^{-1}_{XYZ\_to\_sRGB} \times P'_{sRGB\_linear}, \\
+    P_{P3\_linear} &amp;= T_{XYZ\_to\_P3} \times P_{XYZ}, \\
+    P_{P3} &amp;= \text{diag}(1024) \times
+    \begin{bmatrix}
+        EOTF^{-1}(P_{P3\_linear}(R)) \\
+        EOTF^{-1}(P_{P3\_linear}(G)) \\
+        EOTF^{-1}(P_{P3\_linear}(B))
+    \end{bmatrix},
+\end{aligned}
+\tag{21.4}\]</span></span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(T_{XYZ\_to\_P3}\)</span> is the transformation from the XYZ space to the linear Display P3 space; the matrix is usually normalized such that [1, 1, 1] in the linear P3 space translates to an XYZ value where Y=1.</li>
+<li><span class="math inline">\(P_{P3\_linear}\)</span> is the color in the linear P3 space.</li>
+<li><span class="math inline">\(P_{P3}\)</span> (<span class="math inline">\(\mathbb{Z}^3 \in [0, 1023]^3\)</span>) is the color in the P3 space, assuming 10-bit encoding.</li>
+</ul>
+<p>Even though the TMO in <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a> operates completely within the sRGB space, by cascading <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a> and <a href="#eq-eotf" class="quarto-xref">Equation&nbsp;<span>21.4</span></a> we can see that an EETF-based TMO effectively maps pixels from the color space where the input image is encoded (<span class="math inline">\(P_{sRGB}\)</span> here) to the color space where the tone-mapped image is to be displayed (<span class="math inline">\(P_{P3}\)</span> here).</p>
+</section>
+<section id="hardware-intrinsic-eotf" class="level3" data-number="21.2.5">
+<h3 data-number="21.2.5" class="anchored" data-anchor-id="hardware-intrinsic-eotf"><span class="header-section-number">21.2.5</span> Hardware-Intrinsic EOTF</h3>
+<p>The driver IC will then turn the P3-encoded pixel values to the DAC inputs. Can we directly use the former for the latter? Most likely not.</p>
+<p>To see why, let’s assume that we are dealing with an AMOLED display; using <a href="display-electronics.html#eq-tft_iv" class="quarto-xref">Equation&nbsp;<span>20.1</span></a> and <a href="display-optics.html#eq-led_lum" class="quarto-xref">Equation&nbsp;<span>19.1</span></a>, we know that to achieve a particular optical power <span class="math inline">\(P\)</span>, the following must hold:</p>
+<p><span class="math display">\[
+    e\frac{P/(h f)}{\eta} = k(V_{DD} - V_{Data} - V_{th})^2,
+\]</span></p>
+<p>Therefore, the desired <span class="math inline">\(V_{Data}\)</span> is given by<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<p><span class="math display">\[
+    V_{Data} = \sqrt{e\frac{P/(h f)}{\eta k}}  + V_{th} - V_{DD}.
+\]</span></p>
+<p>With a DAC, we can convert a digital value to an analog voltage. Using an ideal DAC transfer function, the digital value to be sent to the DAC is then:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    D = \frac{V_{Data} - V_{min}}{\Delta}, \\
+    \Delta = \frac{V_{max} - V_{min}}{2^N - 1},
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\([V_{min}, V_{max}]\)</span> is the DAC output range and <span class="math inline">\(N\)</span> is the resolution.</p>
+<p>The relationship between the digital value <span class="math inline">\(D\)</span> and the emitted optical power <span class="math inline">\(P\)</span> is what we call the <em>display-intrinsic EOTF</em>. From the theoretical analysis we can see that the relationship is non-linear. <a href="#fig-eotf" class="quarto-xref">Figure&nbsp;<span>21.3</span></a> shows examples for four inorganic LEDs. In practice, the hardware-intrinsic EOTF is affeced by many factors (such as variation in manufacturing, the particular driving circuit design, etc.), and is usually measured offline rather than modeled analytically.</p>
+<div id="fig-eotf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eotf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/eotf.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eotf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.3: Hardware-intrinsic EOTFs for four inorganic LEDs (R, G, B, and W). From <span class="citation" data-cites="miller2019color">Miller (<a href="references.html#ref-miller2019color" role="doc-biblioref">2019, fig. 7.2</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>We want to very explicitly differentiate between the display-intrinsic EOTF and the reference EOTF defined in a standard.</p>
+<ul>
+<li>The former maps digital values sent to the DAC to the luminance emitted: it is an inherent property of the display hardware (both the driving circuits and the emissive devices) and represents an actual signal transduction. The latter is purely a theoretical construction that is meant for efficient and effective digital encoding (based on human brightness perception); it operates completely within the electrical domain, except the input <span class="math inline">\(V\)</span> represents a digital value and the output <span class="math inline">\(L\)</span> represents (relative) luminance.</li>
+<li>The two EOTFs do not have to match and most definitely do not match<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. When people say EOTF without any qualifier, they mean <span class="math inline">\(f_{V \mapsto L}\)</span>. We will specifically use <em>display-intrinsic EOTF</em> to refer to the actual EOTF that maps DAC values to emitted luminance.</li>
+</ul>
+<p>Given the display-intrinsic EOTF, converting from P3-encoded pixels to DAC inputs requires two steps.</p>
+<ul>
+<li>First, we use the reference EOTF (in this case part of the Display P3 standard) to decode the actual luminance intended to be displayed (⑦ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>).</li>
+<li>Second, we perform a CSC from the Display P3 space to the display native space, after which we invert the display-intrinsic EOFT to obtain the digital value to send to the DACs (⑧ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). This CSC is necessary because it is unlikely that the display primaries and white point exactly matches that of a color space standard (e.g., Display P3), but we can measure them offline and construct a transformation matrix from the P3 space to the display native.</li>
+</ul>
+<p>Mathematically, this is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    P_{P3\_linear} &amp;= EOTF(\text{diag}^{-1}(1024) \times P_{P3}), \\
+    P_{disp} &amp;= T_{P3\_to\_disp} \times P_{P3\_linear}, \\
+    P_{DAC} &amp;=
+    \begin{bmatrix}
+        hEOTF^{-1}_R(P_{disp}(R)) \\
+        hEOTF^{-1}_G(P_{disp}(G)) \\
+        hEOTF^{-1}_B(P_{disp}(B))
+    \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(T_{P3\_to\_disp}\)</span> is the transformation matrix from the linear Display P3 space to the display native space.</li>
+<li><span class="math inline">\(P_{disp}\)</span> is the pixel color in the display native space.</li>
+<li><span class="math inline">\(P_{DAC}\)</span> is the DAC inputs, one for each channel since each sub-pixel might have a different hardware-intrinsic OETF.</li>
+</ul>
+<p>In reality, we could calibrate, offline, three look-up tables (LUTs), each of which maps each digital level in a <span class="math inline">\(P_{P3}\)</span> channel to a corresponding DAC input (⑨ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>). In this way, after going through the display-intrinsic EOTF (⑩ in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>) the luminance emitted by the display matches the intended luminance. The LUTs can be constructed by, at each P3 digital level, repeatedly changing the DAC input and measure the actual emitted luminance from the display until it matches that of the indended luminance. If the LUT size of concern, we could measure just a few digital values and interpolate between them in hardware.</p>
+</section>
+</section>
+<section id="sec-disp-sp-tm" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="sec-disp-sp-tm"><span class="header-section-number">21.3</span> Practical Tone Mapping</h2>
+<p>Tone mapping controls the OOTF of the end-to-end system, so ideally TMOs should manipulate <em>absolute</em> luminance information. In reality, however, TMOs are implemented as the EETF, which has no access to the absolute luminance information.</p>
+<ul>
+<li>For instance, if we are given an sRGB image to display, an image pixel [10, 20, 30] in the sRGB space tells us nothing about the absolute luminance of each channel.</li>
+<li>Even if an image is captured through an HDR imaging workflow and encoded in an HDR format, e.g., OpenEXR <span class="citation" data-cites="openxer">(<a href="references.html#ref-openxer" role="doc-biblioref">ILM 2025</a>)</span>, which has a very high bit depth (even allows for floating point numbers!), the absolute luminance information is usually still not encoded.</li>
+<li>Worse, we do not always know the target display’s luminancec range, which is ultimatelly what matters since that is where the image will be displayed! This often the case when tone mapping is done in an camera signal processing pipeline that is agnostic to the viewing display.</li>
+<li>Perhaps the only exception is when images are generated using physically-based spectral rendering, where spectral radiance information is tracked throughout the rendering pipeline.</li>
+</ul>
+<p>Absent absolute luminance information, the TMO has to operate in normalized, luminance-linear spaces. Some guesswork and heuristics are involved. For instance, if the input image is encoded using sRGB, one fair assumption to make is that the image is to be displayed on a display with a peak luminance of 80 nits, which is the recommended luminance in the sRGB standard (that is rarely followed!). If the image is to be displayed on a display that supports the Rec. 2100 standard, we can assume that the display will have a peak luminance of at least 1,000 nits and can go up to 10,000 nits.</p>
+<p>Many software tools allow us to interactively adjust the EETF, such as the famous Curves tool in Photoshop and Lightroom. With these tools, even though we are not explicitly told of the display luminance range, the absolute output luminance information is directly seen on the display, so we can judge for ourselves whether we like it or not.</p>
+<p><a href="#fig-tone_mapping_examples" class="quarto-xref">Figure&nbsp;<span>21.4</span></a> shows three such examples in Lightroom, each of which has a tonal adjustment curve that maps an input pixel value in the normalized, luminance-linear input range (x-axis) to an output pixel value in the same range and color space (y-axis). The curves here are effectively the TMO <span class="math inline">\(f\)</span> in <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a>.</p>
+<div id="fig-tone_mapping_examples" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tone_mapping_examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/tone_mapping_examples.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tone_mapping_examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.4: Three tone mapping examples, each with a corresponding tonal adjustment curve, I set using Lightroom on an iPhone 12 Pro. The original image is a 10-bit (demosaicked and color corrected) image captured by a Google Pixel phone, obtained from the HDR+ Burst Photography Dataset <span class="citation" data-cites="hasinoff2016burst">(<a href="references.html#ref-hasinoff2016burst" role="doc-biblioref">Hasinoff et al. 2016</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>With a simple linear mapping in the first example, the image looks quite dark and dull. This is because most of the input pixel values are quite low (judging from the color histogram at the top), so essentially most of the pixels are mapped to low output digital values. We can raise the brightness by raising the tonal curve, as done in the second example. That curve essentially increases the contrast ratio of the low-to-mid luminance pixels and compress the contrast ratio of the mid-to-high luminance pixels.</p>
+<p>In my last example, I have raised the tonal curve so much that many input digital levels are mapped to the same, maximum output digital levels, as if those pixels were “saturated” during imaging. What this does is to give the low-to-mid luminance pixels an even larger contrast ratio, so the details look more vivid. Perhaps surprisingly, this intentional saturation does not actually lead to visible “over-exposure” in the final image. Why? Look at the color histogram at the top of the third example: only a small fraction pixels are actually saturated, even though a relative wide range of pixel pixel values are mappped to saturation.</p>
+<p>The tonal adjustment curve is also a place for creative expression even if we are not concerned with tone mapping <em>per se</em>. Readers familiar with the Curve tool in Photoshop must be familiar with the notion of an “S-curve” or an “inverse S-curve” (if not, see <a href="https://www.lightroompresets.com/blogs/pretty-presets-blog/how-to-use-photoshop-curves">these</a> <a href="https://www.cambridgeincolour.com/tutorials/photoshop-curves.htm">articles</a>). The former essentially increases the contrast ratio between the highlights and shadows in an image and the latter does the opposite. These adjustments are meant to enhance the visual experience (e.g., increasing the contrast improves the visibility of some otherwise less detectable details) at the cost of technically changing the relative luminance information in the physical scene.</p>
+<div id="fig-hdrplus_tm_example" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hdrplus_tm_example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/hdrplus_tm_example.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hdrplus_tm_example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.5: Four tone mapping examples form <span class="citation" data-cites="hdrplustm">(<a href="references.html#ref-hdrplustm" role="doc-biblioref">Chen and Hasinoff 2020</a>)</span>. The last example uses a local TMO from the HDR+ pipeline in Google Pixel phones, whereas the first three use glocal TMOs.
+</figcaption>
+</figure>
+</div>
+<p>As another example, <a href="#fig-hdrplus_tm_example" class="quarto-xref">Figure&nbsp;<span>21.5</span></a> shows four tone mapping examples and their associated tonal adjustment curves. The first three use glocal TMOs similar to the three examples in <a href="#fig-tone_mapping_examples" class="quarto-xref">Figure&nbsp;<span>21.4</span></a>. The last example uses a local TMO from the HDR+ pipeline in Google Pixel phones <span class="citation" data-cites="hasinoff2016burst">(<a href="references.html#ref-hasinoff2016burst" role="doc-biblioref">Hasinoff et al. 2016</a>)</span>. We can see it uses a local TMO because there is no single mapping function from an input pixel value to an output pixel value. Instead, the adjustment “curve” is actually a heatmap showing, for each input pixel, the output pixel distribution after tone mapping. The local TMO is realized by dividing an image into tiles and designing a curve for each tile.</p>
+</section>
+<section id="sec-disp-sp-cm" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="sec-disp-sp-cm"><span class="header-section-number">21.4</span> Color Management</h2>
+<p>Everything we have discussed so far benefits immensely from a princpled <strong>color management</strong>, which is concerned with maintaining a consistent color appearance throughout the workflow that might involve wildly different capturing devices (e.g., cameras, scanners) and output devices (e.g., displays, printers).</p>
+<p>Color management requires a collaboration between every single piece that touches color in the workflow: the image file must come with a <em>profile</em> that specifies what color space its pixel colors are encoded in and (an estimation of) the viewing condition under which the image was originally edited/viewed, the software that manipulates image content must correctly read and interpret the profile and perform the necessary transformation, potentially through APIs exposed by the Operating System (OS), and the display firmware and drive must communicate with the OS a similar profile of the display itself. <span class="citation" data-cites="giorgianni2009digital">Giorgianni and Madden (<a href="references.html#ref-giorgianni2009digital" role="doc-biblioref">2009</a>)</span> and <span class="citation" data-cites="sharma2018understanding">Sharma (<a href="references.html#ref-sharma2018understanding" role="doc-biblioref">2018</a>)</span> are two excellent references for color management.</p>
+<p>First, the image file should ideally have metadata that tells us what color space its pixel colors are encoded in or, better, the transformation matrix from the image’s color space to a device-independent color space, say the CIE XYZ space. The way to describe such information has been standardized by ICC in what is called the <em>ICC profile</em> <span class="citation" data-cites="iccv2 sharma2018understanding">(<a href="references.html#ref-iccv2" role="doc-biblioref">International Color Consortium 2019</a>; <a href="references.html#ref-sharma2018understanding" role="doc-biblioref">Sharma 2018, chap. 5</a>)</span>. We can embed an ICC profile in common image file formats such as JPEG.</p>
+<p>Second, the display itself also has to report its native color space. To do that, modern displays usually come with an ICC profile that describes how to transform from the CIE XYZ space to the display’s native space. Now when the Operating System gets the image file, it would first transform the, say, sRGB colors to the XYZ space using the ICC profile in the image and then transform the colors in the XYZ to the display’s native space using the display ICC profile. You can see that the XYZ space here serves to connect the input color space and the output color space. ICC calls such a space a Profile Connection Space (PCS).</p>
+<section id="gamut-mapping" class="level3" data-number="21.4.1">
+<h3 data-number="21.4.1" class="anchored" data-anchor-id="gamut-mapping"><span class="header-section-number">21.4.1</span> Gamut Mapping</h3>
+<p>A display might support a color space whose gamut is smaller than that of the image’s encoding space. For instance, the display might support only sRGB while the image is encoded in DCI-P3, so some of the P3 colors might not be accurately reproduced. That is, <span class="math inline">\(P_{disp}\)</span> in <span class="quarto-unresolved-ref">?eq-eetf_3</span> might be outside the [0, 1] bound. The best thing we can do is to approximate an out-of-gamut color with an in-gamut color to minimize the color error. This is called <strong>gamut mapping</strong>. <span class="citation" data-cites="morovivc2008color">Morovič (<a href="references.html#ref-morovivc2008color" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="glassner1995principles">Glassner (<a href="references.html#ref-glassner1995principles" role="doc-biblioref">1995, chap. 3.6</a>)</span> describe the basic algorithms, with the former being more recent and comprehensive.</p>
+<p>The simplest strategy would be to simply clamp out-of-range values, so a color of [12, 200, 300] would become [12, 200, 255]. Clearly, other than being extremely simple to implement, this strategy would introduce large color reproduction errors. International Color Consortium (ICC) has defined four <strong>rendering intents</strong>, each of which corresponds to a gamut mapping algorithm (vaguely worded, and the implementation detail might vary).</p>
+<p>For instance, the <em>Absolute</em> rendering intent leaves all the in-gamut colors unchanged but maps the out-of-gamut colors to the boundary of the color gamut. The <em>Perceptual</em> rendering intent can be implemented by uniformly projecting all the colors to the white point so that all the colors are in-gamut. You can imagine that while this maintains the relative color appearance between colors (which the Absolute rendering intent fails at), but it would also change in-gamut colors that could have been accurately rendered!</p>
+</section>
+<section id="chromatic-adaptation" class="level3" data-number="21.4.2">
+<h3 data-number="21.4.2" class="anchored" data-anchor-id="chromatic-adaptation"><span class="header-section-number">21.4.2</span> Chromatic Adaptation</h3>
+<p>During the color space transformation, we usually perform an additional transformation so that sRGB white becomes the white point in the display space. This is called <em>chromatic adaptation</em>, which is discussed in <a href="hvs-adaptation.html#sec-chpt-hvs-adaptations-chroma" class="quarto-xref"><span>Section 6.3</span></a>. This is to accommodate the fact that the viewer might be under a different viewing condition than the condition under which the photo was originally edited. The viewing condition could affect the actual appearance of a color, so we must account for this shift in viewing condition through chromatic adaptation.</p>
+<!-- Talk about the following here; emphasize that the display EOTF is most likely not sRGB, but showing it to app developers give them the impression that it's sRGB so that they can encode their pixel values according.  Internally there is another translation that uses the device's actual EOTF.
+
+If you want the true TRC of your specific panel:
+Measure it with a colorimeter (e.g., X-Rite i1Display, Datacolor Spyder, or better a spectroradiometer).
+Generate a LUT-based ICC profile with DisplayCAL. That will encode the actual EOTF of your MacBook at the brightness setting you tested.
+
+The mapping between the original image pixel value (normalized to [0, 1]) to the relative luminance level (normalized to [0, 1]) is also called the **tone reproduction curve** or tone response curve (TRC), essentially a normalized form of EOTF.
+
+![Two TRC examples: one of my LG dislay (left) and the other of my MacBook LCD (right).](figs/trc_examples){#fig-trc_examples width="100%"}
+
+TRC is the reference EOTF. Confusingly, TRC is sometimes also used to refer to the intrinsic OETF in analog imaging. see: https://125px.com/docs/unsorted/kodak/e27.pdf-->
+<!-- %``Display profiles are profiles that describe how a computer monitor or projector reproduces colours. Without them applications such as Photoshop would have no idea how the monitor displays colour. If you haven’t calibrated and profiled your monitor then your computer will be using a generic profile that does not reflect how your monitor works. It will be an approximation at best.''
+%https://www.permajet.com/blog/what-is-an-icc-profile-why-do-i-need-one/
+% miller2019color chap. 7.1 uses a somewhat weird example where he wants to pick 9000K as the adaptation white but the display white point is not 9000K. so after chromatic adaptation the input sRGB white will become [1, 1, 1] in the display native space, i.e., display white point, which, however, is not 9000K. he suggests a compensation method, but in reality the display profile would know its actual white point and supply the correct chromatic adaptation matrix accordingly. -->
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-hdrplustm" class="csl-entry" role="listitem">
+Chen and Hasinoff. 2020. <span>“<span class="nocase">Live HDR+ and Dual Exposure Controls on Pixel 4 and 4a</span>.”</span> <a href="https://research.google/blog/live-hdr-and-dual-exposure-controls-on-pixel-4-and-4a/" class="uri">https://research.google/blog/live-hdr-and-dual-exposure-controls-on-pixel-4-and-4a/</a>.
+</div>
+<div id="ref-chen2024coolerspace" class="csl-entry" role="listitem">
+Chen, Ethan, Jiwon Chang, and Yuhao Zhu. 2024. <span>“Coolerspace: A Language for Physically Correct and Computationally Efficient Color Programming.”</span> <em>Proceedings of the ACM on Programming Languages</em> 8 (OOPSLA2): 846–75.
+</div>
+<div id="ref-giorgianni2009digital" class="csl-entry" role="listitem">
+Giorgianni, Edward J, and Thomas E Madden. 2009. <em>Digital Color Management: Encoding Solutions</em>. Vol. 13. John Wiley &amp; Sons.
+</div>
+<div id="ref-glassner1995principles" class="csl-entry" role="listitem">
+Glassner, Andrew S. 1995. <em>Principles of Digital Image Synthesis</em>. Elsevier.
+</div>
+<div id="ref-hasinoff2016burst" class="csl-entry" role="listitem">
+Hasinoff, Samuel W, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan T Barron, Florian Kainz, Jiawen Chen, and Marc Levoy. 2016. <span>“Burst Photography for High Dynamic Range and Low-Light Imaging on Mobile Cameras.”</span> <em>ACM Transactions on Graphics (ToG)</em> 35 (6): 1–12.
+</div>
+<div id="ref-openxer" class="csl-entry" role="listitem">
+ILM. 2025. <span>“<span class="nocase">OpenEXR Specification, v 3.4.0</span>.”</span> <a href="https://openexr.com/en/latest/" class="uri">https://openexr.com/en/latest/</a>.
+</div>
+<div id="ref-iccv2" class="csl-entry" role="listitem">
+International Color Consortium. 2019. <span>“<span class="nocase">Specification ICC.2:2019 (Profile version 5.0.0 - iccMAX)</span>.”</span> <a href="https://color.org/specification/ICC.2-2019.pdf" class="uri">https://color.org/specification/ICC.2-2019.pdf</a>.
+</div>
+<div id="ref-lang2007rendering" class="csl-entry" role="listitem">
+Lang, Karl. 2007. <span>“Rendering the Print: The Art of Photography.”</span> <em>Adobe System Technical Paper</em>.
+</div>
+<div id="ref-mantiuk2015high" class="csl-entry" role="listitem">
+Mantiuk, Rafał, Grzegorz Krawczyk, Dorota Zdrojewska, Radosław Mantiuk, Karol Myszkowski, and Hans-Peter Seidel. 2015. <span>“High Dynamic Range Imaging.”</span> In <em>Wiley Encyclopedia of Electrical and Electronics Engineering</em>. Wiley.
+</div>
+<div id="ref-miller2019color" class="csl-entry" role="listitem">
+Miller, Michael E. 2019. <em>Color in Electronic Display Systems</em>. Springer.
+</div>
+<div id="ref-morovivc2008color" class="csl-entry" role="listitem">
+Morovič, Ján. 2008. <em>Color Gamut Mapping</em>. 2nd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-pharr2018physically" class="csl-entry" role="listitem">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2018. <em>Physically Based Rendering: From Theory to Implementation</em>. 3rd ed. MIT Press.
+</div>
+<div id="ref-reinhard2010high" class="csl-entry" role="listitem">
+Reinhard, Erik. 2010. <em>High Dynamic Range Imaging Acquisition, Display, and Image-Based Lighting</em>. 2nd ed. Morgan Kaufmann Publishers.
+</div>
+<div id="ref-rowlands2020color" class="csl-entry" role="listitem">
+Rowlands, D Andrew. 2020. <span>“Color Conversion Matrices in Digital Cameras: A Tutorial.”</span> <em>Optical Engineering</em> 59 (11): 110801–1.
+</div>
+<div id="ref-sharma2018understanding" class="csl-entry" role="listitem">
+Sharma, Abhay. 2018. <em>Understanding Color Management</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-vesahdr12" class="csl-entry" role="listitem">
+VESA. 2024. <em>VESA High-Performance Monitor and Display Compliance Test Specification</em>. Video Electronics Standards Association.
+</div>
+<div id="ref-zhu2022cam" class="csl-entry" role="listitem">
+Zhu, Yuhao. 2022. <span>“<span class="nocase">Exploring Camera Color Space and Color Correction</span>.”</span> <a href="https://horizon-lab.org/colorvis/camcolor.html" class="uri">https://horizon-lab.org/colorvis/camcolor.html</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Case in point: you have probably never really felt too uncomfortable staring at a display but starring at white paper under noon sunlight is excruciating.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>ITU-R refers to the Radiocommunication Sector of the International Telecommunication Union; these standards are formally designated with names such as ITU-R BT.2100, commonly shortened to Rec. 2100.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>We encode luminance into digital values because the raw luminance data are continuous and would require floating-point representation, which cannot be sent directly to the display. Encoding reduces bandwidth demands and ensures compatibility with nearly all existing interface protocols.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>given that <span class="math inline">\(V_{gs} &gt; V_{th}\)</span> for the TFT to operate in the saturation region.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>except maybe in the CRT case where its EOTF<sup>-1</sup> roughly matches human luminance-to-brightness perception.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./display-electronics.html" class="pagination-link" aria-label="Driving Circuits">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

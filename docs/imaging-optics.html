@@ -331,7 +331,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./imaging-isp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Image Signal Processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Camera Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +354,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./display-electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits and Processing Pipeline</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Driving Circuits</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./display-signalprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></a>
   </div>
 </li>
       </ul>
@@ -660,7 +666,7 @@ Figure&nbsp;15.9: The setup to derive the depth-of-field (DoF) equation; adapted
 <h3 data-number="15.3.5" class="anchored" data-anchor-id="sec-chpt-imaging-optics-lens-rad"><span class="header-section-number">15.3.5</span> Radiometric Analysis of Lens</h3>
 <p>What does a convex lens do to the radiance of incident light? We know that the radiance of a ray does not change as the ray propagates through space along a particular direction, but what does a lens do to the radiance? This is an important problem in practice: the lens essentially transforms the light field in the physical scene to the light field inside the camera, which means if we know the latter <em>and</em> the radiance transformation done by the lens, we can infer the light field in the scene.</p>
 <p>The way to reason about it is to think of a lens as performing a sequence of two refractions at its two surfaces, so we will have to first reason about, at each surface, what happens to the radiance and then consider the composite effect of the two surfaces.</p>
-<p>With a little radiometry (which we will omit but refer to <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006</a>, Chpt. 4.1.6)</span> for the derivation), we can show that the radiance after refraction <span class="math inline">\(L_r\)</span> relates to the incident radiance <span class="math inline">\(L_i\)</span> by:</p>
+<p>With a little radiometry (which we will omit but refer to <span class="citation" data-cites="bohren2006fundamentals">Bohren and Clothiaux (<a href="references.html#ref-bohren2006fundamentals" role="doc-biblioref">2006, chap. 4.1.6</a>)</span> for the derivation), we can show that the radiance after refraction <span class="math inline">\(L_r\)</span> relates to the incident radiance <span class="math inline">\(L_i\)</span> by:</p>
 <p><span class="math display">\[
     L_r = n^2 L_i,
 \]</span></p>
