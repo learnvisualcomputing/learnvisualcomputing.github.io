@@ -381,7 +381,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-disp-sp-ov" id="toc-sec-disp-sp-ov" class="nav-link active" data-scroll-target="#sec-disp-sp-ov"><span class="header-section-number">21.1</span> The Big Picture</a></li>
+  <li><a href="#sec-disp-sp-ov" id="toc-sec-disp-sp-ov" class="nav-link active" data-scroll-target="#sec-disp-sp-ov"><span class="header-section-number">21.1</span> The Big Picture</a>
+  <ul class="collapse">
+  <li><a href="#sec-disp-sp-ov-dr" id="toc-sec-disp-sp-ov-dr" class="nav-link" data-scroll-target="#sec-disp-sp-ov-dr"><span class="header-section-number">21.1.1</span> Luminance Dynamic Range</a></li>
+  <li><a href="#sec-disp-sp-ov-tm" id="toc-sec-disp-sp-ov-tm" class="nav-link" data-scroll-target="#sec-disp-sp-ov-tm"><span class="header-section-number">21.1.2</span> Tone Mapping</a></li>
+  </ul></li>
   <li><a href="#sec-disp-sp-proc" id="toc-sec-disp-sp-proc" class="nav-link" data-scroll-target="#sec-disp-sp-proc"><span class="header-section-number">21.2</span> The Chain of Processing</a>
   <ul class="collapse">
   <li><a href="#hardware-intrinsic-oetf" id="toc-hardware-intrinsic-oetf" class="nav-link" data-scroll-target="#hardware-intrinsic-oetf"><span class="header-section-number">21.2.1</span> Hardware-Intrinsic OETF</a></li>
@@ -432,11 +436,13 @@ window.Quarto = {
 <img src="figs/ootf.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ootf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.1: In an end-to-end workflow, OETF is carried by the imaging system, image processing executes the EETF (which includes color space conversion (CSC), gamut mapping, tone mapping, and EOTF compensation), and the display performs the EOTF. Together, the mapping in the scene luminnace to the display luminance is the effective OOTF of the system.
+Figure&nbsp;21.1: In an end-to-end workflow, the mapping in the scene luminance to the display luminance is the effective OOTF of the system. This mapping, commonly known as <em>tone mapping</em>, is realized by cascading a sequence of processing stages involving the imaging system (②), image processing algorithms (⑤), and the display (⑩). Information is encoded and decoded when passing between stages (③, ④, ⑥, and ⑧). The image processing algorithms are what we have the most control over in the end-to-end workflow.
 </figcaption>
 </figure>
 </div>
 <p>Ideally, the OOTF should be an identity function, which, one could argue, is the Holy Grail of an imaging-display workflow: faithfully capturing <em>and</em> reproducing the actual luminance in the scene. The former is dealt with by HDR imaging (<a href="imaging-sensor.html#sec-chpt-imaging-sensor-pixel-dr" class="quarto-xref"><span>Section 16.2.4</span></a>), and the latter is the job of display signal processing and display hardware design.</p>
+<section id="sec-disp-sp-ov-dr" class="level3" data-number="21.1.1">
+<h3 data-number="21.1.1" class="anchored" data-anchor-id="sec-disp-sp-ov-dr"><span class="header-section-number">21.1.1</span> Luminance Dynamic Range</h3>
 <p>It would be <em>amazing</em> if a display could accurately reproduce the scene luminance (assuming it is accurately captured). It is hardly possible for a variety of reasons. <!-- This, in turn, poses two requirements.
 
 First, the pixel values in an image should encode absolute luminance/radiance information, not just the relative chromaticity.
@@ -471,10 +477,26 @@ Figure&nbsp;21.2: Luminance dynamic range comparison between a real-world scene 
 <li>Modern high-dynamic-range (HDR) displays have luminance DRs that might match that of a scene, but the peak luminance still falls far short of that of what a real-world scene can produce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
 </ul>
 <p>To enhance display DR, we not only need to be able to produce a high peak luminance but also a very low, ideally 0, luminance when the pixel value is 0. There are many industry standards/certifications for HDR displays, almost all of which include metrics such as minimum peak luminance, maximum black-level luminance, contrast ratio, and bit depth <span class="citation" data-cites="vesahdr12">(<a href="references.html#ref-vesahdr12" role="doc-biblioref">VESA 2024</a>)</span>.</p>
+</section>
+<section id="sec-disp-sp-ov-tm" class="level3" data-number="21.1.2">
+<h3 data-number="21.1.2" class="anchored" data-anchor-id="sec-disp-sp-ov-tm"><span class="header-section-number">21.1.2</span> Tone Mapping</h3>
 <p>Given that it is unlikely that a display can fully reproduce the scene luminance, the next best question to ask is: how do we accurately reproduce the <em>perceptual experience</em> of the intended scene? To achieve this, the knob we have is the mapping of the intended luminance of each pixel in the image to a new luminance that is within the range afforded by the display (assuming of course the chromaticity is maintained throughout this mapping through appropriate color space transformations).</p>
-<p>The mapping from scene luminance to displayed luminance is the OOTF in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>, and is the central task of <strong>tone mapping</strong>. As noted earlier, the OOTF is not directly controlled; instead, it emerges from a cascade of transfer functions within the signal processing chain. Some of these transfer functions are determined by the design of the imaging and display hardware (② and ⑩), others by image encoding and decoding format (e.g., ③, ④ ⑥, ⑦), and the remainder by the image processing algorithm (⑤) abstracted as Electro-Electrical Transfer Function (<strong>EETF</strong>). EETF is the component over which we have the greatest degree of control and, thus, where a tone mapping operator (TMO) is usually implemented. <!-- In principle, of course, we can influence tone mapping at any stage in the pipeline.
-For instance, the recent Rec. 2100 standard defines image encoding formats, both on the imaging and display side, that allows for better tone mapping in HDR workflows. --></p>
-<p>We will refer you to <span class="citation" data-cites="reinhard2010high">Reinhard (<a href="references.html#ref-reinhard2010high" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="mantiuk2015high">Mantiuk et al. (<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">2015</a>)</span> for surveys of tone mapping techniques. The key thing is to <strong>preserve contrast</strong>. Recall that the human visual system has a contrast sensitivity function (<a href="hvs-intro.html#sec-chpt-hvs-percept-retinafunc-contrast" class="quarto-xref"><span>Section 2.4.2</span></a>), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable. When we compress a large DR to a small DR, (local) contrasts would be lost due to quantization errors (insufficient bit depths) and, as a result, the displayed image looks “dull”.</p>
+<p>The mapping from scene luminance to displayed luminance is the OOTF in <a href="#fig-ootf" class="quarto-xref">Figure&nbsp;<span>21.1</span></a>, and is the central task of <strong>tone mapping</strong>. As noted earlier, the OOTF is not directly controlled; instead, it emerges from a cascade of transfer functions within the signal processing chain. Some of these transfer functions are determined by the design of the imaging and display hardware (② and ⑩), others by image encoding and decoding format (e.g., ③, ④ ⑥, ⑦), and the remainder by the image processing algorithm (⑤) abstracted as Electro-Electrical Transfer Function (<strong>EETF</strong>).</p>
+<p>EETF is the component over which we have the greatest (or sometimes the only) control and, thus, where tone mapping/OOTF can be practically influenced. For that reason, the entire EETF can also be thought of as a tone mapping operator (TMO).</p>
+<p>The key to tone mapping is to <strong>preserve contrast</strong>. Recall that the human visual system has a contrast sensitivity function (<a href="hvs-intro.html#sec-chpt-hvs-percept-retinafunc-contrast" class="quarto-xref"><span>Section 2.4.2</span></a>), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable. Let’s use a simple 1D example to explain how tone mapping might affect contrast and, consequently, perceptual quality.</p>
+<p>Assume that we have a 1D signal <span class="math inline">\(y = A_0 + A\sin(x)\)</span> (where <span class="math inline">\(0 &lt; A &lt; A_0\)</span>) with only two frequencies, a 0 Hz mode with an amplitude of <span class="math inline">\(A_0\)</span> and a 1 Hz mode with a amplitude of <span class="math inline">\(A\)</span>.</p>
+<ul>
+<li>The luminance DR of the signal is <span class="math inline">\([A_0 - A, A_0 + A]\)</span>.</li>
+<li>The Michelson contrast at 1 Hz is <span class="math inline">\(\frac{A}{A_0}\)</span>.</li>
+</ul>
+<p>Now assume that we need to display this signal on a display with a luminance DR of <span class="math inline">\([\frac{A_0 - A}{k}, \frac{A_0 + A}{k}]\)</span>, where <span class="math inline">\(k &gt; 1\)</span>. Perhaps the easiest TMO would be to simply linearly scale the signal by a factor of <span class="math inline">\(k\)</span> to <span class="math inline">\(y' = \frac{A_0}{k} + \frac{A}{k}\sin(x)\)</span>. The Michelson contrast at 1 Hz for this new signal is still <span class="math inline">\(\frac{A}{A_0}\)</span>, which seems to indicate that this simple linear-scaling TMO works well.</p>
+<p>This TMO has two potential issues.</p>
+<ul>
+<li>First, while the scene luminance is continuous or is encoded with a high bit precision by the imaging system, the display could have a lower bit depth, leading to quantization errors. If the vast majority of the scene is limited to a relatively a narrow luminance range, the quantization errors would make the displayed image look “dull”.</li>
+<li>Second, the average luminance is reduced by a factor of <span class="math inline">\(k\)</span>. The contrast sensitivity reduces as the mean background level reduces <span class="citation" data-cites="wandell1995foundations barten2003formula ashraf2024castlecsf">(<a href="references.html#ref-wandell1995foundations" role="doc-biblioref">Wandell 1995, fig. 5.26</a>; <a href="references.html#ref-barten2003formula" role="doc-biblioref">Barten 2003, fig. 7</a>; <a href="references.html#ref-ashraf2024castlecsf" role="doc-biblioref">Ashraf et al. 2024, figs. 8, 9, 10</a>)</span>. This means we could need to increase, not just maintain, the contrast to make up for the sensitivity loss.</li>
+</ul>
+<p>In practice, another challenge in implementing a good TMO is that the EETF has limited visibility of the end-to-end workflow: it receives information only from ⑭ rather than the scene directly and sends information only to ⑯ rather than directly to the display. So any information loss before or after the EETF would hurt the tone mapping quality. We will refer you to <span class="citation" data-cites="reinhard2010high">Reinhard (<a href="references.html#ref-reinhard2010high" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="mantiuk2015high">Mantiuk et al. (<a href="references.html#ref-mantiuk2015high" role="doc-biblioref">2015</a>)</span> for surveys of tone mapping techniques. <a href="#sec-disp-sp-tm" class="quarto-xref"><span>Section 21.3</span></a> discusses challenges and solutions of tone mapping in practice.</p>
+</section>
 </section>
 <section id="sec-disp-sp-proc" class="level2" data-number="21.2">
 <h2 data-number="21.2" class="anchored" data-anchor-id="sec-disp-sp-proc"><span class="header-section-number">21.2</span> The Chain of Processing</h2>
@@ -718,6 +740,12 @@ Figure&nbsp;21.6: Screenshots taken from the ColorSync Utility showing the prima
 <div id="ref-anderson1996proposal" class="csl-entry" role="listitem">
 Anderson, Matthew, Ricardo Motta, Srinivasan Chandrasekar, and Michael Stokes. 1996. <span>“Proposal for a Standard Default Color Space for the Internet—Srgb.”</span> In <em>Color and Imaging Conference</em>, 4:238–45. Society of Imaging Science; Technology.
 </div>
+<div id="ref-ashraf2024castlecsf" class="csl-entry" role="listitem">
+Ashraf, Maliha, Rafał K Mantiuk, Alexandre Chapiro, and Sophie Wuerger. 2024. <span>“castleCSF—a Contrast Sensitivity Function of Color, Area, Spatiotemporal Frequency, Luminance and Eccentricity.”</span> <em>Journal of Vision</em> 24 (4): 5–5.
+</div>
+<div id="ref-barten2003formula" class="csl-entry" role="listitem">
+Barten, Peter GJ. 2003. <span>“Formula for the Contrast Sensitivity of the Human Eye.”</span> In <em>Image Quality and System Performance</em>, 5294:231–38. SPIE.
+</div>
 <div id="ref-hdrplustm" class="csl-entry" role="listitem">
 Chen and Hasinoff. 2020. <span>“<span class="nocase">Live HDR+ and Dual Exposure Controls on Pixel 4 and 4a</span>.”</span> <a href="https://research.google/blog/live-hdr-and-dual-exposure-controls-on-pixel-4-and-4a/" class="uri">https://research.google/blog/live-hdr-and-dual-exposure-controls-on-pixel-4-and-4a/</a>.
 </div>
@@ -795,6 +823,9 @@ Stokes, Anderson, Chandrasekar, and Motta. 1996. <span>“<span class="nocase">A
 </div>
 <div id="ref-vesahdr12" class="csl-entry" role="listitem">
 VESA. 2024. <em>VESA High-Performance Monitor and Display Compliance Test Specification</em>. Video Electronics Standards Association.
+</div>
+<div id="ref-wandell1995foundations" class="csl-entry" role="listitem">
+Wandell, Brian A. 1995. <em>Foundations of Vision</em>. Sinauer Associates.
 </div>
 <div id="ref-zhu2022cam" class="csl-entry" role="listitem">
 Zhu, Yuhao. 2022. <span>“<span class="nocase">Exploring Camera Color Space and Color Correction</span>.”</span> <a href="https://horizon-lab.org/colorvis/camcolor.html" class="uri">https://horizon-lab.org/colorvis/camcolor.html</a>.
