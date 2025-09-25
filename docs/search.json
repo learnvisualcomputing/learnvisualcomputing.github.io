@@ -464,7 +464,7 @@
     "href": "hvs-adaptation.html",
     "title": "6  Visual Adaptations and Constancy",
     "section": "",
-    "text": "6.1 Light Adaptation\nBuilding some intuitions using heat, pain, smell. In all cases we care about two things: 1) the behavior after full adaptation and 2) the time course of adaptation.\nlight adaptation",
+    "text": "6.1 Light Adaptation\nHumans adapt to all sorts of sensory input, including heat, pain, smell. In all cases we care about two things: 1) the behavior after full adaptation and 2) the time course of adaptation. Before this chapter is fully developed, check out our lecture slides on adaptation.\nlight adaptation",
     "crumbs": [
       "Human Visual System",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Visual Adaptations and Constancy</span>"
@@ -1100,7 +1100,7 @@
     "href": "imaging-noise.html",
     "title": "17  Noise",
     "section": "",
-    "text": "This chapter reviews different sources of noise during imaging. We will study the physical mechanisms through which the noises trickle in, build computational models for different noise sources, and discuss basic denoising strategies.",
+    "text": "This chapter reviews different sources of noise during imaging. We will study the physical mechanisms through which the noises trickle in, build computational models for different noise sources, and discuss basic denoising strategies. Before the chapter is fully developed, check our lecture slides on imaging noise.",
     "crumbs": [
       "Imaging",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Noise</span>"
