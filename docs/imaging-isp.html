@@ -359,7 +359,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./display-signalprocessing.html" class="sidebar-item-text sidebar-link">
+  <a href="./display-signal-processing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Display Signal Processing</span></span></a>
   </div>
 </li>
@@ -435,7 +435,7 @@ Figure&nbsp;18.1: A general ISP pipeline. The exact stages and arrangement of th
 <p>It is important that these steps are taken at the very beginning of an ISP: if the pixel values are noisy, any subsequent manipulations on the pixels also manipulate, sometimes amplify, the noise.</p></li>
 <li><p>After that, we can assume that the raw pixels carry physical meanings: they are proportional to luminance, but of course because of the CFA, the color information is spatially sampled. The raw pixels before demosaicing are usually called pixels in the Bayer domain. The next stage is demosaicing, which essentially reconstructs the color information (all three channels) from the single-channel samples. While many reconstruction filters/kernels exist, the easiest and most commonly used filter is the bilinear filter.</p></li>
 <li><p>The demosaiced color information is encoded in the sensor’s native color space, because the sensor’s SSFs almost certainly do not match the cone fundamentals. So the next stage is to transform color from the sensor’s native color space to a device-independent color space such as the CIE XYZ space. We build an interactive tutorial to walk you through this correction process that you are invited to play with <span class="citation" data-cites="zhu2022cam">(<a href="references.html#ref-zhu2022cam" role="doc-biblioref">Zhu 2022b</a>)</span>. White balancing usually is implemented along with color correction, because both involve linear transformations of colors <span class="citation" data-cites="rowlands2020color zhu2021ca">(<a href="references.html#ref-rowlands2020color" role="doc-biblioref">Rowlands 2020a</a>; <a href="references.html#ref-zhu2021ca" role="doc-biblioref">Zhu 2021</a>)</span>.</p></li>
-<li><p>Usually there is a tone mapping stage in the ISP. The dynamic range of the raw pixels is usually (but not always) larger than that of a typical output medium (e.g., a display or a print). Tone mapping operators map signals between the two dynamic ranges so that the output image is visually appealing. Tone mapping participates in the overall Opto-Optical Transfer Function (OOTF) of an end-to-end display pipeline, which we discuss in detail in <a href="display-signalprocessing.html" class="quarto-xref"><span>Chapter 21</span></a>.</p></li>
+<li><p>Usually there is a tone mapping stage in the ISP. The dynamic range of the raw pixels is usually (but not always) larger than that of a typical output medium (e.g., a display or a print). Tone mapping operators map signals between the two dynamic ranges so that the output image is visually appealing. Tone mapping participates in the overall Opto-Optical Transfer Function (OOTF) of an end-to-end display pipeline, which we discuss in detail in <a href="display-signal-processing.html" class="quarto-xref"><span>Chapter 21</span></a>.</p></li>
 <li><p>The final output is usually compressed, either through an image compression algorithm (e.g., JPEG) or, in the case of video capturing, a video compression algorithm (e.g., H264).</p></li>
 </ul>
 </section>
