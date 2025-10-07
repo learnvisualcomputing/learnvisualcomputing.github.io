@@ -461,7 +461,7 @@
        id="clipPath89">
       <path
          d="M 0,0 H 644 V 395 H 0 Z"
-         transform="matrix(1,0,0,-1,-95.660005,29.000001)"
+         transform="matrix(1,0,0,-1,-98.772002,29.000001)"
          id="path89" />
     </clipPath>
     <clipPath
@@ -469,7 +469,7 @@
        id="clipPath90">
       <path
          d="M 0,0 H 644 V 395 H 0 Z"
-         transform="matrix(1,0,0,-1,-269.34001,29.000001)"
+         transform="matrix(1,0,0,-1,-266.22801,29.000001)"
          id="path90" />
     </clipPath>
     <clipPath
@@ -1243,17 +1243,17 @@
     <text
        id="text88"
        xml:space="preserve"
-       transform="matrix(1.3333333,0,0,1.3333333,127.54667,488)"
+       transform="matrix(1.3333333,0,0,1.3333333,131.696,488)"
        clip-path="url(#clipPath89)"><tspan
          id="tspan88"
          style="font-variant:normal;font-weight:700;font-size:16px;font-family:Optima;writing-mode:lr-tb;fill:#005493;fill-opacity:1;fill-rule:nonzero;stroke:none"
          x="0"
-         dx="0 -0.72000003 0 -0.192 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.59200001 -0.59200001"
-         y="0">Perceptions of the World</tspan></text>
+         dx="0 -0.72000003 0 -0.192 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.59200001 -0.59200001"
+         y="0">Perception of the World</tspan></text>
     <text
        id="text89"
        xml:space="preserve"
-       transform="matrix(1.3333333,0,0,1.3333333,359.12,488)"
+       transform="matrix(1.3333333,0,0,1.3333333,354.97067,488)"
        clip-path="url(#clipPath90)"><tspan
          id="tspan89"
          style="font-variant:normal;font-weight:normal;font-size:16px;font-family:Optima;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
