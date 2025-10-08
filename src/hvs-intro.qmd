@@ -480,14 +480,13 @@ We now know that Weber's law holds because of light adaptation, where RGCs encod
 Fechner was Weber's student and gave a theoretical explanation of Weber's law that predates, and is now replaced by, the prevailing contrast theory.
 Nevertheless, it is still widely used and is practical useful in many settings, so we will briefly discuss it here.
 
-Fechner hypothesized that there is some sort of internal neural response that governs our perception of signal strength.
-That relationship between the perceived signal strength (e.g., light brightness) and the physical signal strength (e.g., light intensity) is governed by a logarithmic relationship:
+Fechner hypothesized that our perception of signal strength (e.g., light brightness) is directly governed by some sort of internal neural response, which relates to the physical signal strength (e.g., light intensity) by a logarithmic relationship:
 
 $$
     p(I) = \ln(I) + C,
 $$ {#eq-fechner1}
 
-where $I$ is the current signal strength, and $p$ is the perceived strength under $I$.
+where $I$ is the current signal strength, and $p(I)$ is the internal response under $I$.
 $C$ allows us to account for the fact that there is a minimal signal strength $I_0$ at which Weber's law holds^[$C = p(I_0) - \ln(I_0)$, so @eq-fechner1 can also be written as $p(I) = \ln(I/I_0) + p(I_0)$ or, equivalently, $p(I) - p(I_0) = \ln(I) - \ln(I_0)$, which has an intuitive interpretation: the perceived signal strength change is proportional to absolute signal strength change in the logarithmic domain.].
 The reason Fechner came up with this relationship is because
 
@@ -496,8 +495,9 @@ $$
 $$ {#eq-fechner2}
 
 Why is this relevant?
-We need two more assumptions. First, humans require a minimal $\Delta p(I)$ for $I$ to be behaviorally detectable and  $\Delta p(I)$ is a constant regardless of $I$.
-Second, $\Delta p(I)$ is sufficiently small that we can treat it as infinitesimal (equivalent to $\text{d}p(I)$).
+We need three more assumptions. First, humans require a minimal change in internal response, $\Delta p(I)$, for $I+\Delta I$ to be behaviorally detactable against $I$.
+Second, $\Delta p(I)$ is a constant regardless of $I$.
+Third, $\Delta p(I)$ and the corresponding $\Delta I$ are sufficiently small so that we can treat them as infinitesimal (equivalent to $\text{d}p(I)$ and $\text{d}I$).
 Therefore, we have:
 
 $$

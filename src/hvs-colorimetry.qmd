@@ -289,7 +289,7 @@ This seems to suggest that color discrimination might be independently mediated 
 The first set of color discrimination data was collected by David MacAdam in his seminar work @macadam1942visual and @macadam1943specification^[MacAdam did the work while working for Eastman Kodak at Rochester and he later was an adjunct professor at the Institute of Optics, University of Rochester.].
 MacAdam did not use the 4AFC strategy above, but indirectly estimated the thresholds using variations in color matching experiments.
 A modern rendition of his results is shown in @fig-color_disc (c) in the CIE 1931 xy-chromaticity space; the ellipse sizes are magnified ten times to be visible.
-A practical interpretation of a dicrimination contour is that with an ellipse all the colors are non-discriminable with respect to the center, reference color.
+A practical interpretation of a dicrimination contour is that with an ellipse all the colors are undiscriminable with respect to the center, reference color.
 
 ### Adaptation and Eccentricity Dependence
 
