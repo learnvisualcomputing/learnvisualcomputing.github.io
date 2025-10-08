@@ -1,0 +1,13 @@
+# Human Visual System
+
+At the center of visual computing is human vision, which is important for two key reasons.
+First, many visual computing systems (such as cameras and AR/VR headsets) generate image signals that are ultimately consumed by humans.
+It is therefore essential to understand how the human visual system processes and interprets these signals. 
+Second, although not the focus of this book, machine vision systems are still, in many ways, striving to match the capabilities of human vision.
+A deeper understanding of human vision may help inform and inspire better machine vision designs.
+
+Our discussion will primarily focus on the eye’s optics and retinal processing while touching only lightly on cortical processing --- for three reasons.
+First, eye optics and retinal processing are *relatively* better understood in the scientific community compared to cortical processing.
+Second, many visual behavioral characteristics—such as spatial and temporal resolution, contrast sensitivity, and visual adaptation—can be largely explained by the eye’s optics and retinal function.
+These characteristics are frequently exploited in engineering optimizations aimed at improving efficiency. 
+Finally, the computer science and engineering community is already relatively attuned to cortical processing, thanks to the substantial body of work on spiking neural networks. For further exploration of cortical mechanisms, we refer readers to those specialized texts.

@@ -1,0 +1,122 @@
+# Driving Circuits {#sec-disp-elec}
+
+Now that we understand how displays produce color and control luminance, let's take a step back and ask: since all we get from an image is array of pixels, how do we actually control the display color and luminance from image pixel values?
+This requires a combination of display signal processing algorithms that turn image pixel values to actual digital values sent to the display, which is the topic of next chapter, and the driving circuits that use the digital values to actually drive the emissive devices, which we focus on in this chapter.
+
+There are two main components in the driving circuits: 1) the backplane that sits directly at the back of a display panel and that controls the emissive devices (@sec-disp-bp), and 2) the driver integrated circuit (IC) that delivers the driver signals to the backplane (@sec-disp-dic).
+
+## Backplane {#sec-disp-bp}
+
+Mechanically, a display panel has an emissive layer at the front that contains the optical devices we have seen in the previous chapter and a *backplane* that sits right behind and delivers electrical signals to the emissive layer.
+The main component of the backplane is the driving circuit, which delivers electrical signals to drive the LEDs/LC cells.
+The driving circuit differs between LCDs and (O)LED displays, and can use either an active matrix (AM) architecture of a passive matrix (PM) architecture.
+
+### LCD vs. OLED
+
+As far as driving is concerned, the main difference between an LED and an LC cell is that LED is a current-driven device and an LC cell is a voltage-driven device.
+An LED emits photons because of the injected current that flows through it.
+LC cells do not emit photons themselves --- the backlight does.
+The LC cells change their optical properties (the ability to rotate the polarization of incident light) in response to external voltage, and there is very little current that flows through the LC cells.
+
+Therefore, to drive an LC cell, we need to maintain an external voltage.
+In contrast, to drive an LED, we need to maintain a flow of current, which will cause a voltage potential difference across the LED but that is the by-product of the injected current.
+
+@fig-lcd_oled_pixel compares the driving circuit between an LC cell and an OLED pixel.
+In the LC case, each pixel has an LC cell, a storage capacitor $C_{storage}$, and a switching transistor, usually a thin-film transistor (TFT).
+When $V_{Select}$ is activated, the TFT allows $C_{storage}$ to be charged by $V_{Data}$.
+The voltage stored in $C_{storage}$ then drives the LC cell.
+In PAM, the voltage value is determined by the intended luminance based on the transmittance-vs-voltage curve (@sec-disp-optics-lum-pam).
+In PWM, the voltage is fixed but duration at which $V_{Select}$ is activated is luminance dependent.
+
+![Comparison the driving circuit inside (a) an LCD pixel and (b) an OLED pixel. Both use the active matrix design, where there are in-pixel TFTs and capacitors to store data and control each pixel. Adapted from @ma2016active[Fig. 1].](figs/lcd_oled_pixel){#fig-lcd_oled_pixel width="80%"}
+
+The in-pixel driving circuit for an OLED is slightly more complicated because of its current driven nature.
+As shown in @fig-lcd_oled_pixel (b), each pixel has two TFTs and a storage capacitor, hence the name 2T1C design.
+The switching TFT acts similarly to that in the LC case, allowing $C_{storage}$ to be charged.
+The voltage across $C_{storage}$ is then $V_{DD} - V_{Data}$.
+
+To deliver a current to the OLED, however, having only the voltage in $C_{storage}$ is not enough; we need another TFT, the driving TFT.
+The driving TFT (like any transistor) has three terminals: the source terminal is connected to one side of the capacitor and $V_{DD}$, the gate terminal is connected to the other side of the capacitor, and the drain terminal is connected to the OLED^[Other configurations are possible depending on whether we use an NMOS or a PMOS transistor and whether we use a source-follower circuit or a constant-current circuit [@tsujimura2017oled, chap. 4.4.2]. What we describe here uses PMOS + constant-current circuit.].
+The gate-source voltage of the TFT, $V_{gs}$, is equivalent to the voltage across $C_{storage}$.
+Given $V_{gs}$, the current that flows through the drain terminal $I_d$, which is also the current injected to the OLED $I_{OLED}$ (because of Kirchhoff's first law), is given by [@ma2016active, p. 1829]:
+
+$$
+\begin{aligned}
+    I_{OLED} = I_d = k(V_{gs} - V_{th})^2, \\
+    V_{gs} = V_{DD} - V_{Data},
+\end{aligned}
+$$ {#eq-tft_iv}
+
+where $V_{th}$ is the threshold voltage of the TFT and k is a constant that depends on inherent properties of the transistor.
+$V_{Data}$ is properly set so that the resulting $I_{OLED}$ gives us the desired luminance (according to @eq-led_lum).
+
+We can see that we do not directly control the voltage across the OLED.
+As the current $I_d$ flows through the OLED, there is naturally a voltage difference across the OLED (given by @eq-led_iv), which is also the voltage at the drain terminal (since the other side of the OLED is connected to ground).
+The only thing we have to make sure of is $V_{ds} \geq V_{gs} - V_{th}$ (where $V_{ds}$ is the voltage across the drain and source terminals) so that the TFT operates in the saturation region where @eq-tft_iv holds.
+
+Given the driving circuit of individual pixels, it is natural to extend it to drive an array of pixels, shown in @fig-amoled, which uses OLEDs as an example.
+The OLED pixels are organized similar to image sensor pixels and memory cells in a memory array.
+Each time only one row of pixels is activated (through $V_{Select}$).
+Each row has a dedicated $V_{Data}$ signal, which delivers the necessary voltage to the corresponding pixel.
+
+![An array of active matrix OLED pixels and the driving circuit. Each pixel uses the 2T1C design in @fig-lcd_oled_pixel (b).](figs/amoled){#fig-amoled width="100%"}
+
+If a display's refresh rate is, say, 120 Hz, each row is selected 120 times a second.
+Each time, a new voltage is effectively programmed into the storage capacitor.
+Critically, even when a row is not selected, the charges in $C_{storage}$ are still there and can continuously drive the LED.
+Driving circuit that has in-pixel control and storage uses the so-called "active matrix" addressing scheme.
+You might have heard of AMOLED, which is essentially OLED displays that use the AM driving circuit.
+
+### Active Matrix vs. Passive Matrix
+
+The driving circuit we have seen above uses the active matrix design.
+In the passive matrix (PM) design, there is no in-pixel TFTs or storage capacitor [@blankenbach2016direct].
+@fig-pm_vs_am compares the PM and AM design.
+
+![Comparing the passive matrix (a) and active matrix (b) driving architecture; from [@ma2016active, Fig. 4.20, 4.41]. The AM architecture has in-pixel control (TFTs) and storage (capacitor) that are absent in the PM design.](figs/pm_vs_am){#fig-pm_vs_am width="80%"}
+
+Like the AM addressing scheme, in PM we still address pixels row by row.
+For LCDs, once a row is activated, we set the per-column voltage so that we get the proper voltage difference ($V_{row} - V_{col}$) to drive an LC cell.
+For OLED displays, we address a row of pixels by connecting the row signal to ground, and the column signal needs to act as a current source so as to deliver a current through the OLED.
+
+Critically, the pixel (whether LCD or OLED) is "off" whenever its row is not selected.
+Therefore, for the most part of a refresh cycle the pixels are off.
+As a result, we need to deliver a large voltage or current during the "on" period in order to get a desired luminance level.
+This increases the power consumption and reduces the device life time.
+
+<!-- Talk about PWM driving scheme. -->
+
+## Driver IC {#sec-disp-dic}
+
+The backplane itself is more or less just the matrix shown in @fig-amoled, whose row and column signals ($V_{Select}$ and $V_{Data}$, or scan and data drivers in @fig-pm_vs_am) need to be set externally.
+These driver signals come from an external driver IC.
+@blankenbach2016active and @cristaldi2009liquid[chap. 6] provide general descriptions of LCD driver ICs up until 10 years ago.
+Today's driver ICs are more integrated and have more advanced features, but the general functionalities and principles remain.
+
+![Two driver ICs: (a) Raydium's RM68090 driving LCDs (@rm68090[p. 13]) and (b) OmniVision's OD6631 driving AMOLED displays (@od6631).](figs/display_driver_ic){#fig-display_driver_ic width="80%"}
+
+@fig-display_driver_ic shows two examples of driver ICs; one is Raydium's RM68090 meant to drive LCDs and the other is OmniVision's OD6631 meant to drive AMOLED displays.
+Perhaps the most important function of a display driver IC is to set the row (gate) and the column (source) driver signals.
+In the case of RM68090, it interfaces with a display backplane that has 320 rows, each of which has 720 columns^[240 pixel columns and 3 sub-pixels per pixel column, so 720 effective columns].
+Therefore, RM68090 has 320 gate driver signals (`G[320:1]`) and 720 source driver signals (`S[720:1]`).
+Only one gate driver signal is ON at a time, since only one row is selected at a time, so the gate driver signals effectively are a 320-stage shifter register.
+Assuming the display refreshes at a rate of 60 Hz, the shift register must shift at a rate of 60 $\times$ 320 = 19.2 KHz.
+
+OD6631 interfaces with AMOLED displays that use the gate-in-panel (GIP) technology where the shift registers are inside the backplane.
+The AMOLED can have up to 2800 rows, but the driver IC delivers only 20 gate driver signals (`GIP[19:0]`) to the panel.
+This implies that each gate signal controls 140 rows.
+With a 144 Hz refresh rate, shift register inside the backplane has to operate a rate of 144 $\times$ 2800 = 403.2 KHz, but the gate signals from the driver IC only have to shift at 1/20 of that rate (20.16 KHz).
+
+Another difference between gate and source driver signals is that the former is a binary signal controlling whether a row is selected whereas the latter needs to have many digital levels to control the pixel luminance.
+Therefore, there are Digital-to-Analog Convertors (DACs) before the source driver signals.
+Both the gate and source driver signals are generated from level shifters, because the input voltage of the driver IC is usually much lower (e.g., below 3.3 $\text{V}$) than that of the gate/source drivers; for instance, the gate driver signal in RM68090 is above 10 $\text{V}$ in order to select a row.
+
+For mobile devices like smartphones, the driver IC is typically connected to the Systems-on-a-Chip (SoC), which has a display controller IP block.
+The display controller uses the DMA engine to pass frame data from the memory to the MIPI Display Serial Interface (DSI) transmitter (Tx) block, which serializes the data (since MIPI DSI is a serial interface) and transmits the data to the MIPI DSI receiver (Rx) on the driver IC --- this is how frame data is passed between the host and the driver IC.
+
+The driver IC then needs to unpack the data to extract pixels.
+For mobile displays usually integrate the *timing controller* (TCON), whose main main job is to decide which row/column drivers get which pixels at which time.
+For large displays like TVs, the TCON usually sits inside the display itself and is a separate IC.
+
+Many driver ICs also include a small amount of built-in memory, or a frame buffer, which temporarily stores an entire frame of image data.
+This offloads the constant data transfer burden from the main processor, allowing it to send a new image to the driver IC only when a change is needed, while the driver handles the continuous task of refreshing the screen.

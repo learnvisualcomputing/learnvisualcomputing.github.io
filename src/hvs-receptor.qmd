@@ -1,0 +1,556 @@
+# Photoreceptors {#sec-chpt-hvs-receptor}
+
+In this chapter we will review how photoreceptors work.
+We will start from the highest level of abstraction, where photoreceptors can be seen as photon counting devices.
+The photon counting capability is fundamentally a result of the photoreceptors' ability to absorb photons (selectively) over wavelengths.
+We will then lower the level of abstraction, reviewing in detail how a photon is absorbed in a photoreceptor, a.k.a., the phototransduction process and its recovery.
+Understanding photoreceptors at this low level, in turn, allows us to reason about key high-level behaviors of vision, such as sensitivity and saturation.
+
+## Counting Photons: Principle of Univariance {#sec-chpt-hvs-receptor-counting}
+
+![Anatomical structures of rods and cones. The outer segment contains photon-absorbing photopigments, which of which has the capability of absorbing a photon and being excited/isomerized after absorption. Adapted from @cone_cell and @rod_cell.](figs/photoreceptors_new){#fig-photoreceptors width="80%"}
+
+Anatomically, a photoreceptor has two parts: an inner segment and an outer segment.
+Photons enter from the inner segment, which for the most part can be thought of as a waveguide that funnels the photons to the outer segment.
+The outer segment contains the photon-absorbing pigments.
+This is illustrated in @fig-photoreceptors.
+
+Conceptually, we can think of each photoreceptor as a bucket that collects photons.
+There are millions of buckets sitting on the retina, taking a shower of photons.
+Many photons entering the eye will not hit any bucket: they are absorbed before they reach the bucket (e.g., by the lens).
+Any photon that does hit the bucket has a certain *probability* of being absorbed.
+The absorption probability varies with the photoreceptor type and the photon's wavelength.
+
+Fundamentally, a photoreceptor can absorb photons because it contains light-sensitive, photon-absorbing pigments, each of which is able to absorb one photon.
+Each rod photoreceptor has tens of millions of such pigments [@milo2015cell, pp. 142-147; @nathans1992rhodopsin].
+Why is a photon's absorption probability not 100% once it enters a photoreceptor?
+For one, a photon might not meet a photopigment as it travels through the photoreceptor before the exit.
+Even if a photon hits a pigment, its absorption is still probabilistic, as absorption is dictated fundamentally by quantum mechanics.
+
+Once a photon is absorbed, it has a certain probability of "exciting" or "isomerizing" the pigment.
+A pigment **excitation** or **isomerization** generates a certain level of electrical signal --- in the form of a current or voltage change across the cell membrane of the photoreceptor.
+The excitation probability once a photon is absorbed is called the **quantum efficiency** of the pigment.
+Quantum efficiency is about two-thirds in the visible spectrum and is not wavelength sensitive [@dartnall1972photo; @kropf1982photo; @fu2010phototransduction].
+A pigment excitation is also called pigment **bleach**, since the pigment after excitation is no longer responsive to light as if it is bleached.
+
+The process of initiating an electrical response upon a photon absorption is called phototransduction.
+We will study this process in detail shortly in @sec-hvs-receptor-cascade.
+For now, it is important to know that for a given photoreceptor class, the electrical response caused by a photon absorption is constant regardless of the photon's wavelength.
+This is called the **Principle of Univariance** [@rushton1972visual; @rushton1972review; @naka1966s]: each photon that generates an electrical response has the same effect as any other photon that does so.
+In other words, the only effect that wavelength has is to impact the probability a photon gets absorbed; after absorption, the wavelength information is lost.
+
+A crucial implication of this principle is that any two lights that are equally absorbed/excited will be seen as the same light by the human vision.
+For the purpose of comparing two lights, we can think of each bucket as having a counter; every time a photon is absorbed and excites a pigment, the counter gets incremented by 1.
+If two lights lead to the same counter value, they are perceptually the same.
+Crucially, if a bucket's counter is, say, twice as high as another's, it does *not* mean the electrical responses produced by the first photoreceptor are twice as high as that of the second.
+We will see why this is the case shortly.
+
+## Spectral Absorbance, Absorptance, and Sensitivity {#sec-chpt-hvs-receptor-absorb}
+
+To understand vision in everyday scenarios, what we care about is not the probability of how a single photon is absorbed and excites a pigment, but the collective behavior of a flux of photons that enter our eyes.
+Conveniently, when we have a large population of photons, the probability that an individual photon causes an excitation translates to the *percentage* of incident photons that are absorbed and/or cause excitations.
+In fact, the percentage of absorption is the quantity that we can directly measure.
+
+There are in general two ways to estimate the absorption rate of a flux of photons.
+The direct way of measurement is using a technique called microspectrophotometry (MSP).
+The indirect method is to measure the electrical responses using, e.g., a suction electrode, and then estimate the absorption.
+The indirect method gives us only relative absorption across wavelengths, while the MSP approach gives us absolute absorption.
+
+### Absorbance Spectra from Microspectrophotometry {#sec-chpt-hvs-receptor-absorb-msp}
+
+The idea of MSP is to shine a beam of light through a photoreceptor and then measure, at the other side, the percentage of photons that are transmitted, i.e., unabsorbed [@bowmaker1984microspectrophotometry].
+Ignoring back-scattering^[Without back-scattering, we can assume any unabsorbed photons will be transmitted through, and measured at the other side of, the photoreceptor. In reality, a very small amount of some photons might be scattered backward toward where they come from and will not be measured either, but the effect is small.], photon absorption by photopigments in a photoreceptor can be modeled using the Beer-Lambert law.
+The **transmittance** at wavelength $\lambda$ is defined as the ratio between the amount of transmitted photons $I_d(\lambda)$ and the amount of total incident photons $I_0(\lambda)$:
+
+$$
+    T(\lambda) = \frac{I_d(\lambda)}{I_0(\lambda)} = e^{-\epsilon(\lambda) c l},
+$$
+
+where $\epsilon(\lambda)$ is called the absorption coefficient and is wavelength dependent, $c$ is the concentration (the number of pigments per unit volume), and $l$ is the optical length, the length through which a photon has to travel^[$\epsilon(\lambda)$ so-defined has a unit of $m^2$, and $c$ so-defined has a unit of $1/m^3$. In the literature, sometimes people define $\epsilon(\lambda)$ to be the **molar absorption coefficient**, which has a unit of $m^2/mol$, and define $c$ to be the **molar concentration** (the number of moles of pigments per unit volume), which has a unit of $mol/m^3$.].
+Both $c$ and $l$ are inherent properties of a photoreceptor and are not dependent on photon wavelength.
+
+**Absorptance** $a(\lambda)$, the percentage of absorption at $\lambda$, is naturally $1-T(\lambda)$.
+**Absorbance** $A(\lambda)$ (also called the **optical density**), whose spelling is subtly and annoyingly different from that of absorptance, is defined as:
+
+$$
+    A(\lambda) = -\ln(T(\lambda)) = \epsilon(\lambda) c l.
+$$ {#eq-absorbance}
+
+Therefore, absorptance $a(\lambda)$ and absorbance $A(\lambda)$ are related by:
+
+$$
+    a(\lambda) = 1 - e^{-A(\lambda)}.
+$$ {#eq-absorptance}
+
+![Left: Log-scaled spectral sensitivities of the cones (L, M, S) in a macaque measured using the suction electrode method; adapted from @baylor1987spectral[Fig. 3A]. Right: Absorbance spectra of the three cones (L, M, S) and the rod (R) in a human, measured using MSP; adapted from @dartnall1983human[Fig. 2]. The spectra in both cases are normalized to peak at 1/100.](figs/receptor_sensitivity){#fig-receptor_sensitivity_2 width="100%"}
+
+We would repeat this experiment over a frequency range and obtain the axial absorbance at each sampled frequency.
+The resulting plot is usually called the **absorbance spectrum**.
+One such example is shown in the right panel in @fig-receptor_sensitivity_2, measured by @dartnall1983human on humans.
+Much such data has been obtained in the literature, the earliest of which is perhaps by George Wald and his colleagues [@marks1964visual; @brown1964visual] who identified three distinct absorbance spectra in cone-mediated vision and, thus, provided direct physiological evidence for the existence of three classes of cones.
+The three cone types are generally referred to as the **L**, **M**, and **S** cones, since their absorbances peak at, relatively, long, medium, and short wavelengths.
+
+Decades before the work by Wald et al., Ragnar Granit measured the spectral sensitivities of the retinal ganglion cells [@granit1941retinal; @granit1943physiological; @granit1945electrophysiological; @granit1945colour]^[Granit shared the Nobel Prize in 1967 with George Wald and Haldan Keffer Hartlin largely due to this work.].
+Granit showed the existence of two classes of RGCs: 1) one that has a broader spectral sensitivity whose peak shifts to shorter wavelengths from photopic vision to scotopic vision, and 2) one whose spectral sensitivities are narrower and fall generally into three main groups.
+The former is the physiological version of the Purkinje shift that we will discuss in @sec-chpt-hvs-color-oppo-light, and provides direct evidence for the convergence of the rod and the cone vision pathways (@sec-chpt-hvs-percept-retina-rodcone-pathways and @fig-retinal_nn).
+The latter is the first direct evidence of the existence of three dinstinct wavelength encoding mechanisms (albeit not at the photoreceptor level), essential for the trichromatic color vision.
+<!-- %see dowling1967nobel and granit1968development (nobel lecture) too.
+%granit1945electrophysiological is a summary of his own work. Sec. 5 is quite interesting (based on work in granit1945colour), as it shows a mechanism to isolate the spectra of his modulators. originally he by chance could find RGCs that have narrow spectra (modulators), but he wanted to have a more scalable way to get modulator spectra and test the hypothesis that denominators are formed by modulators. in modern terms, his modulators are definitely not just single cones, but the technique in Sec. 5 is interesting: adapting colored lights would universally reduce the sensitivity of rod's LEF and any discrependacy must be because of cones (or the resulting modulators) whose sensitivities are not suppressed by the adapting light, so they can they derive the modulator spectra.
+% in this scheme, blue modulators could give non-zero M curves under R and G adapting light, and R modulators could give such spectra under B/G adapting lights, and so on. Fig. 9 averages all the modulator spectra by adapting light, and Fig. 10 averages modulator spectra by modulator type (based on the pre-established preferential peak of each type).
+% his view is perhaps incorrect in modern terms. Fig. 10 in granit1945colour shows his guess of the "fundamental sensation curves", which are cone fundamentals.  he later then says "fundamental sensation curves cannot be shown to exist" and "They are theoretical postulates which can merely be satisfied by adding modulators within the three preferential regions".  he shows in fig. 10 the R fundamental curve is the sum of M_y and M_r modulators.
+% basically, since he observed more than 3 modulators, "On the basis of the known modulators it would be necessary to develop a 6- or 7-colour theory, based on one red and one yellow modulator, two or three green modulators and two blue ones", he concludes that each cone fundamental must be sumed from individual modulators. in modern terms, we have only three cone classes, but they converge/combine in different ways at the RGCs, which is what he measured. -->
+
+#### Normalization
+
+Quite often, the absorbance spectrum is normalized to peak at unity, as is the case in @fig-receptor_sensitivity_2 (right).
+According to @eq-absorbance, normalizing absorbance across different wavelengths is equivalent to normalizing $\epsilon$ across wavelengths, since $c$ and $l$ are not wavelength specific, whereas $\epsilon$ is.
+$c$ and $l$ might vary across species and across individuals and might differ between different illumination methods (see below), but $\epsilon$, which is fundamental to the photopigment, does not.
+Therefore, the normalized absorbance spectrum tells us something fundamental about the wavelength sensitivity of the photopigments.
+
+Perhaps a subtlety but quite confusing when perusing the literature, the maximum absolute absorbance across all wavelengths (i.e., the peak of an absorbance spectrum) is usually simply called the optical density; "peak optical density" would have been more accurate, as optical density is wavelength specific.
+Using the peak optical density and the normalized absorbance spectrum, we can reconstruct the absolute absorbance spectrum; from there we can get the absolute absorptance spectrum.
+
+While not shown here, the peak absorbance between rods and cones is not that different.
+The peak absorbance of rods is about 0.475, and the value is about 0.375 for foveal S cones and 0.525 for foveal L/M cones [@bowmaker1978visual; @bowmaker1980visual].
+The large sensitivity difference between rod vision and cone vision is not primarily attributed to the difference in their ability to absorb photons.
+<!-- %http://www.cvrl.org/database/text/optdens/optdens.htm -->
+
+#### Correcting for Transverse Illuminations
+
+There is one more complication.
+With MSP, we illuminate a photoreceptor *transversely*, i.e., the light passes from one side of the photoreceptor to the other side.
+In reality, when a photon enters a photoreceptor, it travels *axially* from the inner segment through the outer segment.
+The main difference between these two scenarios is the optical length that a photon has to travel.
+A photoreceptor is tall and skinny, so its width is much smaller than its length, about 2.5 $\mu\text{m}$ wide and 35 $\mu\text{m}$ long for a fovea L/M cone [@polyak1941retina].
+<!-- %http://www.cvrl.org/database/text/outseg/length.htm
+%bowmaker1980visual cites polyak 1941 "25 um for parafoveal S cone"
+%bowmaker1980microspectrophotometric cites polyak 1941 "35 um for foveal cones and 25 um for extra-foveal rods," -->
+
+Therefore, we need to first calculate the absorbance per unit length, called the **specific absorbance**, and then scale the specific absorbance by the axial length of the photoreceptor to obtain the axial absorbance, from which we can estimate the axial absorptance using @eq-absorbance.
+This is shown below (omitting $\lambda$ for simplicity):
+
+$$
+\begin{aligned}
+    A_{\text{transverse}} &= -\ln(p_{\text{transverse}}) = \epsilon c l_{\text{transverse}} \\
+    A_{\text{specific}} &= \frac{A_{\text{transverse}}}{l_{\text{transverse}}} = \epsilon c \\
+    A_{\text{axial}} &= A_{\text{specific}} l_{\text{axial}} \\
+    T_{\text{axial}} &= e^{-A_{\text{axial}}}
+\end{aligned}
+$$ {#eq-axial}
+
+### Relative Absorptance Spectra from Electrical Responses {#sec-chpt-hvs-receptor-suction}
+
+Another method is by measuring the photoreceptor's electrical responses across different wavelengths using techniques such as suction electrode, which records the electrical responses of an isolated photoreceptor sucked into a micropipette.
+Spectra so estimated are usually called the spectral sensitivity of the photoreceptors in the literature, but as we will see, they are equivalent to the *normalized* absorptance spectra.
+
+![Each curve shows the electrical response (in photovoltage; $y$-axis) as a function of light intensity ($x$-axis) at a given wavelength. To estimate the relative sensitivity/absorptance between two wavelengths, we laterally shift one curve so that it coincides with the other. Given the Principle of Univariance, the amount of shift is proportional to the relative absorptance. From @baylor1973detection[Fig. 8].](figs/spectral_sensitivity_from_photocurrents){#fig-spectral_sensitivity_from_photocurrents width="80%"}
+
+@fig-spectral_sensitivity_from_photocurrents illustrates the idea, where @baylor1973detection measured the peak electrical response of a turtle cone (in photovoltage; $y$-axis) as a function of light intensity ($x$-axis) at two wavelengths: 644 $\text{nm}$ and 539 $\text{nm}$.
+We see that the curves are almost parallel to each other: we can laterally move the 644 $\text{nm}$ curve to coincide with that of 539 $\text{nm}$.
+In this case, we have to shift the former by 1.27 log units.
+
+Think for a second what this means.
+When we increase the intensity at 644 $\text{nm}$ by a factor of $10^{1.27}$, the sheer number of photons absorbed at 644 $\text{nm}$ is increased by a factor of $10^{1.27}$, too.
+That means without scaling the number of incident photons at 644 $\text{nm}$ is $10^{-1.27}$ (about 5.4%) of that at 539 $\text{nm}$.
+Even with just 5.4% of incident photons, 644 $\text{nm}$ light is able to produce the same level of electrical response, i.e., cause the same amount of photon absorption (given the Principle of Univariance), as the light at 539 $\text{nm}$.
+Therefore, we can say the absorption rate (absorptance) at 644 $\text{nm}$ is $10^{1.27}$ higher than of that at 539 $\text{nm}$.
+
+We repeat this experiment across other wavelengths and obtain the relative spectral sensitivity/absorptance spectra.
+The left panel in @fig-receptor_sensitivity_2 shows one such example obtained by @baylor1987spectral on macaque cones.
+Critically, the absorptance so obtained is relative: we do not know the absolute absorptance at either wavelength.
+The $y$-axis is necessarily normalized to peak at unity.
+Similar data have been collected on humans as well [@schnapf1987spectral; @kraft1993visual].
+
+#### Normalized Spectra From the Two Methods Match Well
+
+It is worth noting that the suction electrode method also uses transversely illuminated lights.
+Since the absorptance obtained here is relative, we cannot easily use the method in @eq-axial to obtain the absorptance spectra for the axial illumination.
+
+Here is the catch.
+Numerically, $1 - e^{-A} \approx A$ when $A$ is small.
+When we illuminate a photoreceptor transversely, the optical length $l$ is the photoreceptor width, which is short, which means $A$ is small [@wyszecki1982color, pp. 588, 594].
+Therefore, the transverse absorbance and transverse absorptance are approximately equal.
+So the normalized absorptance spectrum given by the suction electrode method *is* approximately the normalized absorbance spectrum, as is shown experimentally [@schnapf1987spectral; @stockman2000spectral, Fig. 11].
+
+The normalized absorbance spectra are still not sufficient, since to use the method in @eq-axial we need to know the absolute absorbance spectra.
+People usually have to resort to another data source that provides absolute peak absorbance or fit the data against, e.g., psychophysical measurements that provide some form of absolute measures [@kraft1993visual; @baylor1984photocurrent; @baylor1987spectral].
+
+## Cone Fundamentals: Cornea-Referred Spectral Sensitivities {#sec-chpt-hvs-receptor-fundamentals}
+
+Our discussions so far have focused on absorption by the photoreceptors, but for a flux of photons arriving at the cornea about to enter our eye, they are also absorbed even before reaching the photoreceptors.
+Accounting for these **pre-receptoral** filters is important to model human vision.
+Spectral sensitivities that account for these pre-receptoral filters are what we call the *cornea-referred* spectral sensitivities.
+
+### Cone Fundamentals From Physiology
+
+There are two such pre-receptoral filters: the ocular media (@sec-chpt-hvs-percept-absorb) and the macular pigments, which are located at a small area in the fovea.
+Macular pigments absorb light presumably to counter some of the aberrations from the ocular media and to protect the retina from light damage [@snodderly1984macular].
+Both ocular media and macular pigments absorb light selectively over the spectrum, just like photoreceptors do.
+
+We can model $E(\lambda)$, the fraction of photons arriving at the cornea that are absorbed by the photoreceptors:
+
+$$
+    E(\lambda) = l(\lambda) m(\lambda) a(\lambda),
+$$
+
+where $a(\lambda)$ represents the photoreceptor absorptance spectrum, $l(\lambda)$ and $m(\lambda)$ represent ocular and macular transmittance spectrum, respectively, i.e., the fraction of photons at $\lambda$ *unabsorbed* by the ocular media (e.g., lens) [@boettner1962transmission; @norren1974spectral] and the macular pigments.
+@fig-cone_fundamentals illustrates this process.
+
+![Cornea-referred spectral sensitivity function measures the percentage of photons arriving at the cornea (about to enter the eye) that are absorbed by each photoreceptor type at each wavelength. The cone versions of this are called the cone fundamentals and are visualized in the bottom right. The sensitivity metric relates to the rate of pigment excitation only by a constant scaling factor (i.e., the photoreceptor quantum efficiency, which is about two-thirds). It is a product of ocular transmittance (top left), macular transmittance (top right), and photoreceptor absorptance (bottom left). The macular transmittance and lens transmittance are from @stockman1999spectral; the cone absorptance spectra are estimated from @stockman2000spectral (different from the @dartnall1983human data used in @fig-receptor_sensitivity; see the methodology in @absorption_spectra_cvrl).](figs/cone_fundamentals_new){#fig-cone_fundamentals width="100%"}
+
+<!-- %the probability a here is a constant; one might think that absorption becomes harder as a photon travels through the cell, but we are calculating the total absorption *given* a cell length. so the probability here already considers the cell length. See https://web.stanford.edu/~wandell/data/papers/2022_ISETBio_VisualEncoding.pdf#page=19.65
+% what this means is that the amount of excitation (and absorption) is proportional to light power. so if we want to increase absorption we linearly increase power. this however does not mean response is linearly wrt power/excitation/absorption; in fact we know that r/rmax is not linear. so what the spectral sensitivity function really means the not the response per unit power but the amount of excitation per unit power. -->
+
+We call $E(\lambda)$ the cornea-referred spectral sensitivity function, since it is calculated with respect to the incident lights at the cornea surface.
+When $a(\lambda)$ is replaced by the absorptance spectra of the three classes of cones, the resulting sensitivity functions are more commonly referred to as the **cone fundamentals**.
+
+We can make a few general observations about the cone fundamentals.
+First, the cone sensitivity drops to 0 beyond the 380 $\text{nm}$ and 780 $\text{nm}$ range, a range we usually call the visible spectrum, since there will be no pigment excitation beyond that range: lights beyond that range are invisible.
+Second, S cones are generally the least sensitive of the three cone types, but it is not because of the photoreceptors but because of the pre-receptoral filters, which absorb mostly low-wavelength lights.
+Finally, the sensitivity peaks of the L cones and M cones are very similar (off by about 20 $\text{nm}$), but both are rather far from the peak of the S cones.
+We have discussed the reason behind this when discussing @fig-receptor_sensitivity.
+
+### Cone Fundamentals From Psychophysics
+
+The spectral sensitivities discussed above are measured physiologically.
+We can also measure such functions through psychophysics using the increment-threshold method.
+A typical set up is one where there is a uniform background illumination and a spot light superimposed at the center of the background.
+We ask a participant to adjust a knob to control the intensity of the spot light so that it is just noticeable from the background.
+The sensitivity is then defined as the reciprocal of the threshold intensity.
+We repeat this experiment for each sampled wavelength across the spectrum to obtain a sensitivity curve.
+This method is first used in the pioneering work done by W.S. Stiles [@stiles1939directional; @stiles1959color; @stiles1964appendix], and is adopted in virtually all later work [@wald1964receptors; @smith1975spectral; @stockman1999spectral; @stockman2000spectral].
+
+A curious question is how we can separate the sensitivity of different photoreceptor types, given that the spectral sensitivities of the four photoreceptor types overlap.
+There are two methods to isolate rods from cones.
+We can either use very dim lights, to which cone responses are too small to contribute to vision [@crawford1949scotopic], or we could measure from people with rod monochromacy --- individuals who have only rods.
+When measuring cone sensitivities, we will use intense lights that almost completely saturate rods.
+
+Isolating the three cone types from each other is generally challenging with individuals with normal vision.
+W.S. Stiles' initial work [@stiles1939directional; @stiles1959color] designed special conditions of background illumination to suppress the sensitivity of two unwanted cone types while sparing the one under study.
+Modern studies usually turn to color-deficient individuals who lack one or two cone types.
+Isolating S cones is done by measuring from S-cone monochromats [@stockman1999spectral].
+Isolating L and M cones is challenging because individuals with only L or M cones are very rare and the spectral sensitivities of the L and M cones overlap substantially.
+Instead, a common approach is to resort to Protanopes and Deuteranopes; the former has only M and S cones, and the latter has only L and S cones.
+To isolate M (L) cones from the S cones, we measure from Protanopes (Deuteranopes) using lights that have high spatial and/or temporal frequencies, to which S cones are known to be insensitive [@stockman2000spectral; @smith1975spectral].
+
+### Physiological and Psychophysical Sensitivities Match Well
+
+We can then compare the spectral sensitivity data from physiology and from psychophysics.
+This is shown in @fig-spectral_sensitivity_comparison.
+See the figure caption for details.
+Overall it is fair to say that the two sets of data match well.
+
+![Left: comparison of the physiologically-obtained rod spectral sensitivity from macaques (open circles) and the rod spectral sensitivity from human psychophysics (filled circles); adapted from @baylor1987photoreceptor[Fig. 14], which is after @baylor1984photocurrent[Fig. 5]. Right: comparison of the spectral sensitivity of the three cone types between physiology data (open circles; from macaques) and psychophysics data (curves; from humans); adapted from @baylor1987spectral[Fig. 5]. The human psychophysics data is from @stiles1959color for cones and from @crawford1949scotopic for rods.](figs/spectral_sensitivity_comparison){#fig-spectral_sensitivity_comparison width="100%"}
+
+Think about what this comparison means.
+What we measure in psychophysics is the threshold intensity (at each wavelength) needed to evoke a criterion level of human *behavioral response* (i.e., just noticeability).
+The threshold intensity in the physiological measurement represents how much light is needed (at each wavelength) to cause the same amount of pigment absorption and, by the Principle of Univariance, the amount of *electrical responses*.
+The fact that the two sets of data match suggests that the amount of electrical response we need to evoke a just-noticeable level of perception is a constant regardless of wavelength, a perhaps unsurprising inference.
+
+Interestingly, the physiological data in @fig-spectral_sensitivity_comparison is obtained from macaques, and the psychophysical data is from humans.
+The fact that they match well suggests the similarities of the visual system among primates --- we have come a long way since the monkey days, but our photoreceptors have not changed much.
+Other studies obtaining the physiological sensitivity data from humans show similarly good matches with human psychophysical data [@crescitelli1953human; @kraft1993visual; @bowmaker1980visual; @mollon1982colour].
+
+## Beyond Counting Photons: Phototransduction and Recovery {#sec-hvs-receptor-cascade}
+
+The discussion so far about (spectral) sensitivity has focused on the ability of different types of photoreceptors to absorb ("count") photons at different wavelengths, and by that measure, rods and cones are not that different: their peak absorbances differ by less than 10% (@sec-chpt-hvs-receptor-absorb-msp).
+So then why do we say rod vision is more sensitive than cone vision?
+What we have ignored is the absolute *strength* of the electrical response once photons are absorbed.
+To understand the absolute response strength, we need to understand the cellular and molecular processes underlying how electrical responses are actually produced from pigment excitations.
+These processes constitute the so-called **phototransduction cascade** and are the focus of this section.
+
+### Phototransduction Cascade
+
+The phototransduction cascades in rods and (different types of) cones are exactly the same.
+The differences appear to be quantitative rather than qualitative and are dictated by the genes expressing the isoforms of the molecules participating in phototransduction [@ingram2016rods; @yau1994phototransduction].
+We will mainly use rods as an example to drive the discussion here.
+
+#### Photoreceptor Has a Stable Transmembrane Current in Dark
+
+A visual pigment in a rod is a special molecule called a rhodopsin (also called "visual purple")^[which is a G protein-coupled receptor (GPCR), also known as a seven-(pass)-transmembrane (7TM) domain receptor.], which has two parts: a long strand of protein called opsin (which is insensitive to light)^[ The first full amino acid sequence of (bovine) opsin is discovered in @hargrave1983structure and @ovchinnikov1982rhodopsin.] and the light-sensitive **_11-cis_ retinal**, a derivative of vitamin A as discovered by @wald1933vitamin, that is attached to the opsin.
+@hofmann2023rhodopsin presents a comprehensive survey of what is known about rhodopsin to date.
+
+![cGMP-gated ion channels keep a transmembrane current of about -34 pA for each photoreceptor in the dark. The current is called the dark current, and its negative sign indicates that the direction of the current is inward. Adapted from @rodieck1998first[p. 172].](figs/dark_current_photoreceptor){#fig-dark_current_photoreceptor width="100%"}
+
+In the dark, there is a stable current of -34 pA that flows *into* the outer segment called the **dark current**.
+By convention, inward current is defined as negative.
+This is illustrated in @fig-dark_current_photoreceptor.
+The dark current is a result of a particular kind of cation-selective ion channel that is permeable to both Na^+^ and Ca^2+^ flowing into the outer segment.
+Critically, these channels are ligand-gated channel --- gated by cyclic guanosine monophosphate (cGMP) molecules [@fesenko1985induction; @yau1989cyclic].
+Think of cGMPs as the guards of the channels; on average, each channel needs three cGMPs to remain open [@rodieck1998first, p. 169].
+In a rod outer segment in the dark, there is an ample amount (3-4 micromoles) of cGMPs, which bind to a large amount of channels and keep them open.
+
+As a result of the dark current, the membrane potential of a photoreceptor in the dark is about -35 mV.
+If you are familiar with basic neuroscience, you would notice that the photoreceptor in the dark is depolarized, since the membrane potential is higher than that of the resting potential of a typical neuron.
+The depolarization is exactly caused by the inward flow of cations through the cGMP-gated channels.
+
+#### Closing Ion Channels Produces Electrical Responses
+
+Once a photon is absorbed and, with a two-thirds chance, excites a pigment (dictated by quantum efficiency, as discussed in @sec-chpt-hvs-receptor-counting), the *11-cis* retinal of the pigment changes to its isomer called **_all-trans_ retinal** (which will later be separated from the pigment).
+This is why a pigment excitation is often called a **photoisomerization**.
+This step takes place remarkably fast: the absorption takes about 3 fs and the photoisomerization takes about 200 fs [@gruhl2023ultrafast; @rodieck1998first, p. 162].
+
+![Steps involved in phototransduction. A single excited rhodopsin pigment can close about 2% of the cGMP-gated ion channels, introducing a photocurrent (change in the transmembrane current) of about 0.7 pA; photocurrent is always positive, whereas the actual transmembrane current is always negative. Adapted from @rodieck1998first[p. 166--172].](figs/phototransduction_steps){#fig-phototransduction_steps width="100%"}
+
+The isomerization changes the conformation of a rhodopsin pigment, which becomes "activated": it diffuses randomly and activates a transducin (a form of G protein) whenever they meet.
+This is illustrated by step ① in @fig-phototransduction_steps.
+On average, an activated pigment activates about 700-800 transducins [@purves2017neurosciences, p. 243; @rodieck1998first, p. 170].
+Each activated G protein then meets and binds to a molecule called "cGMP-specific phosphodiesterase" (PDE), activating the PDE.
+This is step ② in @fig-phototransduction_steps.
+Each activated PDE has the ability to catalyze the hydrolysis of several dozen cGMPs [@rieke1998single], reducing the cGMP concentrations.
+This is step ③ in @fig-phototransduction_steps.
+
+We know that the ion channels that induce dark current are gated by cGMPs.
+A reduction in cGMP concentration will close some of these channels, *reducing* the dark current and *increasing* the membrane potential (i.e., the photoreceptor hyperpolarizes).
+This membrane current/potential change *is* the electrical response of photon absorptions and *is* the signal that will be delivered to the rest of the visual system to eventually give rise to vision.
+
+<!-- Figure 5b in \cite{rieke1998single} is a good figure to reproduce here. -->
+
+At the peak of this transduction process, a single activated rhodopsin in a rod can reduce the number of cGMPs by about 1,400, which translates to about 2% closure of the cGMP-gated channels [@rodieck1998first, p. 170].
+Since each cGMP-gated channel carries the same amount of current,
+this means the total membrane current is reduced by about 2%.
+This is step ④ in @fig-phototransduction_steps.
+In the literature, the *change* of membrane current and voltage potential is usually termed **photocurrent** and **photovoltage**, respectively.
+Since the change in the membrane current is positive and the change in the membrane voltage is negative, the photocurrent is positive and the photovoltage is negative.
+The actual transmembrane current and voltage are always negative.
+Some electrophysiological techniques measure the total membrane current/voltage, while others measure the photocurrent/photovoltage.
+Be careful of what quantity is being reported when perusing the literature.
+
+### Deactivation of Phototransduction and Pigment Regeneration {#sec-chpt-hvs-receptor-counter}
+
+If phototransduction continues without any hindrance, eventually 1) all pigments will be bleached (isomerized), and 2) all the ion channels will be open.
+If so, the photoreceptor and, ultimately, our visual system will not be able to respond to further lights: additional photons cannot be absorbed, and even if they are absorbed and excite pigments, there are no ion channels to close, and so no electrical response will be produced;
+at that point, our visual system *saturates*.
+
+In order for our visual system to continue to respond to lights, two things must take place.
+First, there must be mechanisms to terminate the phototransduction and re-open the ion channels [@burns2005beyond; @burns2001activation].
+Second, new pigments must be continuously regenerated; this is the job of the **retinoid cycle** or the **visual cycle**.
+George Wald is largely credited for elucidating the molecular basis of the visual cycle [@wald1933vitamin; @wald1968molecular]^[and won the Nobel Prize because of it.], while Franz Boll and Willy Kühne made early, seminal contributions [@wolf2001discovery].
+
+#### Phototransductions are Continuously Being Deactivated
+
+![There are activities constantly at work to deactivate the phototransduction. This can be seen by observing the response kinetics to a flash light (left) and to a step light (right). Without the deactivation activities, the responses to the flash light would not have been eliminated, and the responses to the step light would not have reached an equilibrium. Left: macaque rods; adapted from @baylor1984photocurrent[Fig. 1]; Right: macaque M cones; adapted from @schnapf1990visual[Fig. 7A].](figs/phototransduction_kinetics){#fig-phototransduction_kinetics width="100%"}
+
+There are activities *constantly* at work attempting to terminate the phototransduction.
+This can be seen by observing the response kinetics of a photoreceptor to light.
+The left panel in @fig-phototransduction_kinetics shows the photocurrent kinetics of macaque rods in response to a flash light [@baylor1984photocurrent];
+the right panel shows the photocurrent kinetics of macaque M cones when presented with a step light, i.e., a constant background illumination [@schnapf1990visual].
+Without the deactivation activities, the responses to the flash light would not have been eliminated after the flash light was removed, and the responses to the step light would not have reached an equilibrium.
+
+For the phototransduction cascade to terminate, there are mechanisms to deactivate every step in the transduction: activated rhodopsins must be deactivated so that they cannot activate more G proteins, activated G proteins must come off the PDE so that the PDE cannot hydrolyze more cGMPs, the cGMPs must be replenished, and the cGMP-gated ion channels must reopen.
+Every step must be deactivated; for instance, it is not sufficient to just deactivate the pigments:
+that just means the inactivated pigments will not activate more G proteins, but existing G proteins that are still activated will continue activating PDEs and the rest of the phototransduction.
+
+![Steps involved in pigment deactivation and regeneration. An activated pigment is first deactivated, at which point the *all-trans* retinal falls off the opsin and is transported to the RPE to be re-synthesized back to *11-cis* retinal. Top: adapted from @goldstein2009sensation[Fig. 3.20]; Bottom right: from @rodieck1998first[p. 511]; R* denotes activated pigments, RK denotes rhodopsin kinase, and A denotes arrestin.](figs/pigment_regeneration){#fig-pigment_regeneration width="100%"}
+
+The deactivation also involves a set of biochemical reactions that we will not detail here; the bottom-right panel in @fig-pigment_regeneration illustrates the main steps in the deactivation process.
+An enzyme, rhodopsin kinase (RK), binds to and phosphorylates an activated pigment.
+Another protein called arrestin (A) then binds to phosphorylated pigment, which inhibits the pigment's ability to activate G proteins, essentially deactivating the pigment.
+
+#### Deactivation is Accelerated by Negative Feedbacks
+
+Interestingly, some of the deactivation steps are *accelerated* by *negative feedback* mechanisms mediated by Ca^2+^ concentration.
+One such mechanism is shown in @fig-deactivation_negative_feedback.
+Let's briefly take a look at this, not only because it is a classical example of the dynamics common in visual neuroscience (and many dynamical systems) but also because we will come back to this negative feedback when we discuss light adaptation later in the class.
+
+![Left: the deactivation is accelerated by the negative feedback from Ca^2+^.  Right: the kinetics of macaque L cones; the negative feedback is so strong in cones that the response kinetics have undershoots; from @baylor1987photoreceptor[Fig. 11].](figs/deactivation_negative_feedback){#fig-deactivation_negative_feedback width="100%"}
+
+The closing of cGMP-gated channels from phototransduction reduces the inward flows of Ca^2+^ and Na^+^ to the outer segment.
+Importantly, Ca^2+^ inhibits guanylate cyclase (GC), which inherently re-synthesizes cGMPs.
+As the Ca^2+^ level reduces, the cGMP re-synthesis rate increases, which replenishes cGMPs and re-opens ion channels.
+That is, phototransduction initially reduces the cGMP concentration, and the very reduction of concentration serves to replenish the cGMPs --- the feedback is negative.
+Without this negative feedback, the response still would have stabilized.
+For instance, soon after we move the flash light the cGMP concentration will stop falling while the GC-induced resynthesis is steadily going on.
+Eventually, the cGMP concentration will be restored to the original level^[You might be wondering: if the GC-induced re-synthesis is always going on, wouldn't the outer segment of a photoreceptor be packed with cGMP molecules?
+It turns out that in the dark even unactivated PDEs can hydrolyze cGMPs --- at a much lower rate than activated PDEs do.
+These two forces counter each other and maintain a steady cGMP level in dark [@rodieck1998first, p. 373].].
+The negative feedback simply accelerates this process.
+
+The strength of the negative feedback is much stronger in cones than in rods [@yau2009phototransduction; @burns2001activation].
+The stronger negative feedback is the reason why cone responses recover much faster than do rods: compare the kinetics of macaque rods under flash lights of varying intensities in @fig-phototransduction_kinetics (left) and the macaque L cone kinetics under the same set of lights in @fig-deactivation_negative_feedback (right), and pay attention to the timescale on the $x$-axis.
+In cones, the negative feedback is so strong that there is actually a temporary over-provision of cGMPs during the deactivation phase, leading to an undershoot in the current (right panel in @fig-deactivation_negative_feedback).
+
+The negative feedback through Ca^2+^ concentration also accelerates other steps in deactivation, including accelerating pigment deactivation (although with a much less potent effect than that on the GC [@nikonov2000role; @pugh1999molecular]) and increasing the sensitivity of cGMP-gated channels to cGMPs (so that the channels can be open even at lower cGMP levels) [@hsu1993modulation].
+
+#### Pigments are Continuously Being Regenerated
+
+Deactivating phototransduction is not enough; it reopens ion channels and replenishes all the materials involved in phototransduction --- except the pigments themselves.
+Pigments must somehow be restored so that they are available for phototransduction again, and this is the job of the visual cycle or retinoid cycle.
+An activated pigment roams about randomly and gets deactivated when it meets rhodopsin kinase and arrestin.
+When an activated pigment is deactivated, the *all-trans* retinal falls off the opsin and is reduced *all-trans* retinol.
+This is shown in the top panel in @fig-pigment_regeneration.
+
+The *all-trans* retinols then leave the photoreceptor and are transported to the **Retinal Pigment Epithelium** (RPE), which is a layer of special cells just outside the retina and is where *all-trans* retinols are converted back to *11-cis* retinals, which are then transported back to the outer segment, recombining with the opsin portion of the pigment, at which point the pigment is reconstituted to its original form and is sensitive to photons again.
+This is shown in the bottom panel in @fig-pigment_regeneration.
+Wilhelm Kühne is the first to discover that RPE is crucial in regenerating visual pigments [@wolf2001discovery].
+
+![Bleach all pigments using intense light, then remove the light and measure the fraction of available/bleached pigments vs. time in the dark. Left: human rod kinetics; adapted from @rushton1963cone[Fig. 3]; Right: human cone kinetics; adapted from @rushton1965ferrier[Fig. 3].](figs/pigment_regeneration_kinetics){#fig-pigment_regeneration_kinetics width="100%"}
+
+Rushton used retinal densitometry to measure the pigment regeneration of both cones and rods in the living eye.
+The kinetics of the rod and cone pigment regenerations are shown in @fig-pigment_regeneration_kinetics.
+The half-life of of cone pigments regeneration is about 3 times shorter than that of rod pigments [@rushton1961rhodopsin; @rushton1963cone; @rushton1965ferrier].
+<!-- %, which is consistent with modern electroretinogram (ERG) measurements \citep{mahroo2004recovery}, which shows the delivery or 11-cis is the rate limiting step.
+%\citep{rushton1968bleaching} shows ``regeneration after full bleaching is twice as fast when bleaching takes 1 sec as when it takes 2 min'', and ``the regeneration rate depends upon the amount of 11- cis retinal immediately available.'' -->
+The fast regeneration of cone pigments means it is unlikely that the steady-state cone pigment bleaching level exceeds about 90% under the normal range of illumination levels throughout a day [@burns2004visual, p. 15].
+In contrast, under normal daylight, rod pigments are almost all bleached.
+
+Compared to the speed of pigment generation, the deactivation of phototransduction takes place much more rapidly.
+On average, a cone pigment is regenerated in about 2 minutes [@rodieck1998first, p. 184-185], and phototransduction deactivation (and activation for that matter) happens in millisecond scale.
+Imagine in your visual field there is a brief flash.
+You see the flash as a flash because the phototransduction initiated by the flash quickly goes away almost immediately as the flash is removed.
+
+#### Steady Vision Means Equilibrium
+
+Both pigment regeneration and phototransduction deactivation are constantly at work, countering the effect of the phototransduction in light.
+The more pigments are excited and the more ion channels are open, the stronger the deactivation and pigment regeneration processes are.
+
+Under a modest background illumination, the opposing forces reach an equilibrium where the rate of closing cGMP-gated ion channels matches that of re-opening them.
+So dynamically a fixed number, not all, of the ion channels are open.
+If after light exposure we move to a dark room, there are no photons coming in, so there is no phototransduction.
+The countering forces completely dominate, and eventually all the materials involved in phototransduction are replenished and all the ion channels are open --- another equilibrium.
+If we flash a light on top of the background, some cGMP channels open for a short period of time and then close as the flash goes away; our vision goes back to the steady state.
+
+If we increase the intensity of the steady background a little, again some cGMP channels will open, and simultaneously the countering forces are at work trying to close them.
+Eventually a new equilibrium is reached where more channels are steadily open than before.
+What if we keep increasing the background light's intensity?
+Every time we intensify the background light a little, we reach a new equilibrium with fewer channels steadily open.
+This is readily seen in the right panel in @fig-phototransduction_kinetics, where the steady-state response increases (i.e., fewer channels are open) as the background light intensity increases.
+Eventually all the channels will close, and our vision is said to be saturated.
+This is what we will study next.
+
+## Absolute Sensitivity and Saturation in Rods vs. Cones
+
+Now that we understand phototransduction and its recovery, we can appreciate some fundamental differences between rods and cones in their absolute sensitivity and saturation levels, which shape our daily visual experience.
+
+### Rods Have a Much Higher Signal-to-Noise Ratio Than Cones {#sec-chpt-hvs-receptor-snr}
+
+Psychophysical experiments show that humans can reliably detect a flash when only about 5 to 7 pigments are excited in a field of about 500 rods;
+in contrast, it takes about 5 pigment excitations *per cone* in a pool of about 10 cones for humans to signal a flash [@hecht1942energy; @barlow1956retinal; @donner1992noise; @angueyra2014limits].
+Assuming the visual system requires the same level of electrical response to see a flash, the difference suggests that rods are able to produce the same amount of electrical response using fewer pigment excitations than cones.
+
+Part of this can be explained by the different levels of neural convergence in the rod and cone pathway, which we have discussed before.
+But the difference in sensitivity between the photoreceptors themselves also plays a significant role: rod photoreceptors have a higher electrical response and a lower noise floor than cones.
+This contributes to the lower detection threshold in rod vision.
+Let's examine the signal and the noise separately.
+
+#### Single Photon Response is Much Larger in Rods than in Cones
+
+The photocurrent, i.e., the signal part of the SNR, from a single rod pigment excitation is about 20 times higher than that from a cone pigment excitation (34 pA vs. 0.7 pA) [@baylor1979responses; @baylor1984photocurrent; @baylor1987photoreceptor; @schnapf1990visual; @ingram2016rods; @angueyra2014limits].
+A single rod pigment excitation already closes about 2% of the ion channels in a rod, and about 30 pigment excitations would close half of the ion channels in a rod in the dark.
+In contrast, it requires about 650 pigment excitations in a cone photoreceptor to provide a half-maximal response in dark [@baylor1984photocurrent; @schnapf1990visual].
+<!-- %schnapf1990visual is cited by baylor1987photoreceptor, which, however, says 3000; not sure where the data is from -->
+
+Part of the reason why rods have larger responses than cones is because the phototransduction cascade in rods is much more rapid [@ingram2016rods]: the rate of PDE activation is higher, the rate of cGMP concentration reduction is higher, etc.
+As a result, a lot of cGMP-gated ion channels already close before much of the "countering forces" (that are simultaneously trying to deactivate phototransductions) kick in, resulting in higher peak responses in rods than in cones.
+
+#### Cones are Much Noisier than Rods
+
+Not only do rods produce a higher response per pigment excitation, but the inherent noise in a rod is much lower than that in a cone.
+Photocurrents exist even in the dark due to noise, which comes from two main sources [@baylor1980two; @rieke2000origin]: 1) the spontaneous, thermal-induced activations of pigments, which show up as discrete spikes in photocurrents, and 2) the spontaneous activation of PDEs, which causes the cGMP concentration to fluctuate and shows up as the continuous rumbling of the photocurrent [@rieke1996molecular].
+Photocurrent in the dark has the equivalent effect of a background illumination in the dark, so it is also termed **dark noise**, **dark light**, or "eigengrau" (German: one's own light).
+As we can imagine, dark noise interferes with light detection when the signal is weak, i.e., illumination is dim [@barlow1957increment], where behaviorally we cannot tell for certain if we are seeing actual light or dark light.
+
+Dark noise is much higher in cones than in rods [@angueyra2014limits; @donner1992noise].
+For instance, the dark light in rods is equivalent to about one pigment excitation every 90 seconds [@baylor1984photocurrent] and about 500 -- 1,000 times per second in cones [@schnapf1990visual; @schneeweis1999photovoltage; @rieke2000origin; @burns2004visual; @rieke1998single].
+<!-- % for cone dark light, rieke2000origin is a good cite (600/s for L/M, much lower for S). rieke1998single didn't provide a cite and burns says it's estimated from tvi curves. neither is for primates though.  schnapf1990visual is for macaques (6400/s; 2400 is a typo as pointed out by schneeweis1999photovoltage). -->
+The dark light in cones is high enough to allow a rod to reach its half-maximum response [@tamura1991calcium; @nakatani1988calcium; @matthews1988photoreceptor]!
+<!-- % what we need here is response vs. step intensity. FSS page 143 has a figure for that and says it's from Baylor 1984, but i can't find that data in the paper.
+% tamura1991calcium is macaque rods and data on page 111-113 are good.  we can use the two 1988 light adaptation papers too but they are not for primates. -->
+As a result, the SNR in cones is much lower than that in rods.
+<!-- %It's not that the cones don't give electrical response to a single pigment excitation; it's just the signal is buried in the noise.
+
+%\fixme{free opsin dark light is not considered here since they are after a full bleach and we are talking about after full dark adaptation.}
+%\fixme{\cite{barlow1971responses} quantifies the threshold for RGC responses. so mention that noise can be measured at downstream and at the behavioral level and they are much less noisy than receptor level.  \cite{field2005retinal} is a good reference for both and cites \cite{schneeweis1999photovoltage}} -->
+
+### Rods Saturate Much More Easily Than Cones
+
+We know the rod-mediated vision saturates under much lower light levels than does the cone-mediated vision.
+Because of this, rods are not useful in mediating vision in typical daylight illuminations.
+Cones are much harder to saturate, if ever, under normal daylight [@burns2004visual; @barlow1972dark; @shevell1977saturation], so they are primarily responsible for daylight vision.
+But why do the rod-mediated vision saturate more easily, other than the higher degree of neural convergence?
+Again, the difference in the photoreceptors themselves plays a role.
+
+First, the photocurrent generated by a pigment excitation is much higher in rods than in cones, as discussed before.
+Second, the phototransduction kinetics is faster in cones than in rods.
+As we have seen in @fig-phototransduction_kinetics, the electrical response of a pigment excitation is an event that does not finish instantaneously: it takes time for the photocurrent to rise, reach its peak, and then decay.
+The rising phase, as discussed in @sec-chpt-hvs-receptor-snr, is briefer in rods than in cones, but the decay phase is much longer in rods than in cones [@ingram2016rods].
+The faster decay is due to the stronger phototransduction deactivation in cones than in rods [@yau2009phototransduction; @burns2001activation] (which is attributed to the stronger negative feedbacks as discussed in @sec-chpt-hvs-receptor-counter), which means ion channels are more rapidly restored.
+Overall, the duration of a cone phototransduction is about four times shorter than that for a rod (100 ms vs. 400 ms) [@baylor1987photoreceptor; @angueyra2014limits; @nakatani1988calcium; @rodieck1998first, p. 185].
+
+Why does the time duration matter?
+It is because a longer duration integrates responses of more incoming photons.
+Consider an example where two excitations are taking place, say, 200 ms apart in a photoreceptor.
+In a rod, the time durations of these two excitations overlap, so the total electrical response the photoreceptor generates is greater than that if only one excitation takes place.
+In a cone, however, these two events do not overlap, and so their effects do not add up.
+
+As a side, the slow kinetics of rods is the reason we cannot sense object movement very well in low light conditions.
+If you have ever played basketball at night, you would know that even though you can tell where the ball is when it is still, but you cannot track the movement of the ball well.
+
+It is worth noting that even though cone pigments regenerate much faster than rods (@sec-chpt-hvs-receptor-counter), the slower pigment regeneration rate unlikely affects the saturation in rods.
+There are tens of millions of pigments in a mammalian rod cell [@nathans1992rhodopsin; @milo2015cell, p. 142-147] but a rod is almost saturated by only several hundreds of pigment excitations, so when a rod is saturated, the vast majority of pigments are still available [@lamb1980spontaneous].
+It is the fact that almost all cGMP-gated ion channels are closed, rather than all pigments are bleached, that prevents rods from responding further to lights.
+The slow regeneration rate in rods does affect dark adaptation time, which we will discuss later in the class.
+
+## Response vs. Light Intensity {#sec-hvs-receptor-intensity}
+
+The Principle of Univariance tells us that the electrical response from a photon absorption is constant without regard to the photon wavelength, but it does not tell us how the *magnitude* of the electrical response varies with the *number* of photons absorbed.
+With the basic understanding of phototransduction, we can now turn to this question.
+You might be tempted to think that the relationship is linear, and you would be wrong!
+
+![Left: the electrical response (photocurrent) kinetics of macaque rods under varying flash light intensities (quantified by the total number of pigment excitations/isomerizations); from @baylor1984photocurrent[Fig. 1]. Right: the peak response (normalized to maximum response) as a function of flash intensity; from @rodieck1998first[p. 178], which uses the underlying data in the left plot. The tangential line shows that only 47 pigment excitations would saturate the photoreceptor *if* the photoreceptor does not desensitize.](figs/peak_flash_response){#fig-peak_flash_response width="100%"}
+
+### Peak Response is Not Linearly Proportional to Light Intensity {#sec-hvs-receptor-intensity-peak}
+
+@fig-peak_flash_response (left) shows the response (photocurrents) kinetics of macaque rods under flash lights of different intensities.
+The right plot shows the peak response (normalized to the maximum response) as a function of flash intensity.
+
+If the relationship between the response magnitude and the light intensity were linear, the curve would be a straight line.
+But in reality, we can see that the response grows quickly initially, but the growth slows down soon.
+What does the actual relationship tell us about photoreceptors?
+Let's define the photoreceptor's sensitivity, or its response rate, to flash lights as the additional response per unit increment in light intensity.
+
+The sensitivity/response rate is given by the derivative of the curve, i.e., the slope at every point on the curve.
+Evidently, the response rate slows down as light becomes more intense; in other words, the photoreceptor becomes less sensitive as light becomes more intense.
+While the discussions here focus on photoreceptor responses to flash lights, the conclusion holds for responses to steady background lights as well.
+
+This non-linear relationship can be used to explain our brightness perception.
+Our perceived brightness is not linear with respect to the light intensity.
+Imagine you walk into a dark room and turn one light on; the perceived brightness changes a lot (literally from 0 to 1);
+then you turn another light on and another light on; every time you turn on an additional light, your perceived brightness increases, but not as much as before.
+As you continue, the additional brightness you feel from turning one additional light on becomes smaller:
+you probably would not notice it if someone turned on one more light when there are 1,000 lights on already.
+
+This non-linear relationship between perceived brightness and absolute light power is important when deciding how to effectively allocate digital bits when encoding pixel values.
+A classic example is the gamma encoding/compression in the popular sRGB color space, a topic we will turn to in @sec-chpt-hvs-cori-cube-step2.
+
+### Why and How Do Photoreceptors Desensitize?
+
+The reduction of sensitivity under stronger lights is called **desensitization**, and is stereotypical of photoreceptor **light adaptation**.
+A curious question is, does desensitization provide us any benefits?
+Do we not want our photoreceptors to be more sensitive to light?
+Without desensitization, i.e., if the initial response rate was maintained, the rod would saturate at about 47 pigment excitations, as shown in @fig-peak_flash_response.
+The desensitization allows the photoreceptors to extend their operating range, which, in turn, allows our vision to operate at higher light levels.
+
+What mechanisms cause photoreceptor desensitization?
+We will leave a thorough discussion for later in the class when we actually discuss adaptation, but briefly, there are two reasons.
+
+The first reason is the natural exponential decay you would observe in pretty much any dynamical system.
+Recall that the reason a photoreceptor can produce electrical responses is because of the sequence of biochemical reactions, which require a bunch of materials, like the cGMPs, PDEs, etc., to bump into each other.
+Under stronger lights, the concentration of these materials is lower, which means they are less likely to meet each other.
+That in turn means the rate of cGMP concentration reduction becomes even slower, and the ion channels close even less frequently.
+
+The second reason, first experimentally shown by @matthews1988photoreceptor and @nakatani1988calcium, has to do with negative feedbacks regulated by Ca^2+^ ions.
+Interestingly, these negative feedback mechanisms are exactly the same as those that accelerate phototransduction deactivation, as discussed in @sec-chpt-hvs-receptor-counter.
+As we will discuss more quantitatively in the adaptation chapter (@sec-chpt-hvs-adaptations-light), this is not a coincidence: desensitization and faster recovery kinetics are two hallmarks of photoreceptor light adaptation.
+
+### Linear Range {#sec-hvs-receptor-intensity-model}
+
+If you observe @fig-peak_flash_response (right) closely, you will see that the response vs. flash intensity is linear when the lights are dim.
+This linear relationship is used to estimate the single photon response: we cannot easily measure the response of a single photon as it is difficult to precisely deliver just one single photon, but this linear relationship in the dim range allows us to estimate such a response by scaling the response of a dim light by its intensity.
+
+Mathematically, the response vs. intensity relationship is modeled in literature either by a negative exponential function (when negative feedbacks are weak) [@baylor1984photocurrent; @lamb1981spatial; @kraft1993visual] or by the Michaelis equation (when negative feedbacks are not negligible) [@baylor1970electrical; @baylor1974electrical; @baylor1979membrane; @normann1979effects; @fain1976sensitivity; @schneeweis1995photovoltage; @ingram2016rods].
+The negative exponential model would look something like $r/r_{max} = 1 - e^{-ki}$, where $r$, $r_{max}$, and $i$ denote the response, maximum response, and flash light intensity, respectively; $k$ is a constant fit to data.
+The Michaelis equation, which is also called the Naka–Rushton equation (presumably because @naka1966s was the first to use it), looks like $r/r_{max} = \frac{i}{i+\sigma}$, where $\sigma$ is a constant fit to data.
+Sometimes it would fit the data better to use the generalized Michaelis equation, which takes the form $r/r_{max} = \frac{i^n}{i^n+\sigma^n}$, where $n$ is the additional parameter that can fit to data.
+Both models can be approximated by a linear function when $i$ is small.
+This linear region perhaps also explains why the sRGB encoding is a piece-wise function where the encoding is linear when light levels are low (@sec-chpt-hvs-cori-cube-step2).

@@ -1,0 +1,140 @@
+## Light Field {#sec-chpt-mat-basics-lf}
+
+Given that we have the basic understanding of radiometry, now seems like a good time to show how radiometry is of fundamental importance to computer graphics and imaging.
+We do so by building two important concepts using radiometry: the camera measurement equation (@sec-chpt-mat-basics-radiometry-cam) and the light field (@sec-chpt-mat-basics-radiometry-lf).
+
+## The Measurement Equation {#sec-chpt-mat-basics-radiometry-cam}
+
+For simplicity, let's just consider one single pixel with a setup illustrated in @fig-cam_measurement_setup.
+
+![Geometric setting for the camera measurement equation. Calculating the pixel value requires integrating the energy of all the rays hitting the pixel area, which requires knowing the light field inside the camera, which, in turn, requires knowing the light field in the scene and how the camera optics transfer the external light field to the internal light field.](figs/cam_measurement_setup){#fig-cam_measurement_setup width="30%"}
+
+Each pixel is very small, but it has a finite area, say $A_p$.
+Each pixel is constantly being bombarded by lights that enter the aperture, which has an area $V$.
+The raw pixel value is roughly proportional to the energy it receives during the exposure time^[Assuming there is no noise and there is no quantization error in converting analog signals to digital signals.].
+So using the basic radiometry, we can write the total energy received by a pixel during the exposure time $T$ as:
+
+$$
+    Q = \int^{T} \int^{A_p} \int^{\Omega(p, V)} L(p, \omega) \cos\theta~\text{d}\omega~\text{d}p~\text{d}t,
+$$ {#eq-cam}
+
+where $\Omega(p, V)$ explicitly expresses that a solid angle is determined by the aperture $V$ and a point $p$ on the pixel surface.
+Of course this quantity changes with $p$.
+We sometimes omit $p$ and $V$ when it is clear what $\Omega$ refers to, but here, since the solid angle changes with the dummy variable $p$ in the integral equation, we express it explicitly.
+<!-- %similar to Equ 6.65b in CIFA. -->
+In graphics literature, this equation is sometimes called the **measurement equation** of an image sensor [@kolb1995realistic; @reinhard2008color, chap. 6.8.1; @pharr2023physically, chap. 5.4].
+
+The inner integral in @eq-cam is expressed over the solid angle, which varies with $p$.
+A more common, but equivalent, formulation of the measurement equation is to re-express the inner integral over the aperture area $V$:
+
+$$
+    Q = \frac{1}{d^2} \int^{T} \int^{A_p} \int^{V} L(p, \omega) |\cos^4\theta|~\text{d}p'~\text{d}p~\text{d}t,
+$$ {#eq-cam_area}
+
+where $d$ is the distance between the aperture plane and the sensor plane, and $p'$ is a point on the aperture plane.
+The derivation is available in standard texts [@pharr2023physically, chap. 5.4.1] and is omitted here.
+
+The measurement equation is concerned with the radiance distribution inside a camera, but the only reason there is a radiance distribution inside the camera is because there is an external radiance distribution in the scene impinging upon the camera optics, which act as a transfer function that turns external radiance into internal radiance.
+The transfer function is determined by the material properties of the camera optics (e.g., lenses, filters, etc.), whose effects are nothing more than surface scattering and volume scattering, topics of the next two chapters.
+
+Using @fig-cam_measurement_setup as a concrete example, to know the radiance $L(p, \omega)$ inside the camera, we need to know $L(p', \omega')$, the corresponding radiance in the scene and how the latter is transferred to the former.
+If the camera is an ideal pinhole, we have $\omega = \omega'$ and $L(p, \omega) = L(p', \omega')$ (ignoring diffraction).
+If the camera uses an ideal convex lens, the relationship between the two rays is governed by the Gauss lens equation (@sec-chpt-imaging-optics-lens-gauss) and, with some simplifications, $L(p, \omega) = L(p', \omega')$ still holds (@sec-chpt-imaging-optics-lens-rad).
+The transfer function is more complicated when as the camera optics become more complicated.
+Imaging we replace the lenses with a duck tape --- how would the radiance be transferred?
+
+The measurement equation is important because it fundamentally allows us to, in theory, synthesize/render any image taken by any camera at any viewpoint --- given that we know the radiance distribution of the scene.
+Using @fig-lf_setup as an example, let us simulate a new camera where the sensor is moved closer to the lens.
+To calculate the pixel value $p_c$ of this new camera imaging the scene, it requires nothing more than invoking the measurement equation @eq-cam at $p_c$, integrating over all the incident rays, which is a portion of the overall radiance distribution.
+This is why having access to the underlying radiance field allows us to synthesize new images.
+
+![The light field is described by the plenoptic function, which describes the radiance of any ray, i.e., the energy at any position, along any ray direction, at any wavelength, and at any time. In free space, the plenoptic function is invariant to traversal along the ray propagation direction ($P_1$ and $P_2$ share the same radiance but not with $P_3$). Having access to the entire light field allows us to synthesize any image taken by any camera (e.g., moving the sensor closer to the lens). A lens-based camera, however, is a poor device to capture the light field, since each pixel necessarily integrates many rays.](figs/lf_setup){#fig-lf_setup width="70%"}
+
+Critically, observe that two of the rays that $p_c$ needs are already captured by $p_a$ and $p_b$ in the current camera.
+So it is only natural to ask: can we synthesize new images from images taken from the same scene?
+How do we systematically reason about this? Read on.
+
+## Light Field {#sec-chpt-mat-basics-radiometry-lf}
+
+There is a name for the distribution of the radiance in the space --- it is called the **light field**, which refers to the complete set of all the possible radiances flowing through every possible direction.
+The light field is thus a function $L(p, \omega, \lambda, t)$, describing the energy of a ray passing the position $p$, along the direction $\omega$, at time $t$ and wavelength $\lambda$.
+This function is also called the **plenoptic function** [@bergen1991plenoptic; @gortler1996lumigraph; @levoy1996light].
+@fig-lf_setup shows a tiny portion of the light field --- six rays in fact; three inside the camera and three outside the camera.
+
+### Light-Field Imaging {#sec-chpt-mat-basics-radiometry-lf-im}
+
+The field of **light-field imaging** is concerned with measuring the light field of a scene, which is a task impossible --- we cannot possibly measure the radiance of every single ray.
+There are some simplifications we can make.
+For instance, we can assume that a ray's energy does not change in free space during propagation, so the plenoptic function is invariant along the ray traversal direction; we can also assume that the light field is time-invariant during the period of interest.
+But still, the task of measuring the entire field is a daunting one.
+
+The next best thing is to sample the light field.
+A lens-based camera does a poor job of sampling the light field.
+The pixel $p_a$ integrates a bundle of rays, two of which are shown.
+Even assuming that the ray’s radiance remains unchanged as it passes through the lens, the inherent integration by the pixel (i.e., the measurement equation in @eq-cam) still means from the pixel value itself we could not decouple the radiance of the incident rays.
+Therefore, the ray that $p_c$ wants cannot be easily extracted from $p_a$.
+Using an ideal pinhole helps, but pinhole imaging comes with its own limitations that make it infeasible in practice (@sec-chpt-imaging-optics-pinhole).
+
+![A pixel in a conventional camera (e.g., $q$) integrates over a large portion of the light field. By placing a microlens array (here at where the sensor plane would have been in lieu of the microlens array), each pixel (e.g., $p$) now integrates over a small portion of the light field.](figs/lf_microlens_array){#fig-lf_microlens_array width="80%"}
+
+A vast literature exists in effective light-field sampling [@lam2015computational, Sec. 3].
+A good trade-off in practice is to insert a lenticular array or a microlens array between the main imaging lens and the sensor plane [@ng2006digital; @adelson1992single].
+The idea was first conceptualized by Gabriel Lippmann [@lippmann1908epreuves]^[Lippmann did not get to implement the idea.  He won the Nobel Prize in Physics in 1908 for inventing, for the first time, a method for color photography.]
+@fig-lf_microlens_array shows one such example.
+Without the microlens array, a pixel (e.g., $q$) would integrate over all the rays that are subtended by the main lens, which is relatively large.
+Now we insert a microlens array and move the sensor plane a little farther back; each pixel (e.g., $q$) now integrates over a much smaller portion of the light field (rays subtended by a microlens), providing a higher angular resolution in light-field measurement.
+
+### Light-Field Rendering {#sec-chpt-mat-basics-radiometry-lf-ren}
+
+The main reason we want to measure the light field is so that we can render new images.
+**Light-field rendering** is concerned with rendering a new image at a novel perspective (or by a novel camera configuration) given a set of images from other perspectives/configurations.
+It is a form of **image-based rendering**.
+In this sense, many familiar tasks such as interpolating between video frames, panoramic photography, and (stereoscopic) 360$^\circ$ video rendering are all light-field rendering in disguise.
+
+Given that each image is a sample of a portion of the light field followed by a low-pass filter (i.e., the integration in @eq-cam), rendering an image at a new perspective is nothing more than estimating another sample of the light field.
+As with any signal re-sampling task, the ideal solution to light-field rendering is to first reconstruct the underlying light field from a set of samples and then re-sample the light field given the new perspective.
+Signal filtering is necessary for both signal reconstruction and anti-aliasing, and the name of the game is to design good filters that are practically useful and computationally tractable [@pharr2023physically, chap. 8.8].
+
+Of course, modern image-based rendering, known under the name (neural) radiance-field rendering [@mildenhall2021nerf; @kerbl20233d], approaches the whole problem through machine learning and learns to reconstruct from massive amounts of data.
+To be precise, these methods do not reconstruct the light field; they reconstruct the radiance field.
+
+### Radiance-Field Rendering
+
+**Radiance field**, popularized by @mildenhall2021nerf, applies a simplification and an addition to a light field.
+A radiance field is described by a function $R(p, \omega, r, g, b, \sigma)$, describing the $(r, g, b)$ color and the density $\sigma$ of a ray passing through a position $p$ along the direction $\omega$.
+Compare that with the plenoptic function, we can see that the radiance field function simplifies the the energy spectrum into just the tristimulus color values and assumes that the energy is time-invariant.
+
+Importantly, the radiance field incorporates a new quantity, density, that is absent in the light field.
+Density has nothing to do with the energy of a ray; rather, it is/models an intrinsic property of the material (at position $p$ along ray direction $\omega$).
+Materials are important for imaging and rendering, because they change the light field of the scene --- through surface scattering and volume scattering.
+After all, rendering is a process of simulating the light-matter interactions.
+
+In essence, a radiance field combines both a (simplified) light field, a property of the light, and a density field, a property of the materials.
+This simple extension from light to materials allows radiance-field methods to model (in fact, learn) material properties, which in turn enables more effective light-field rendering.
+Conventional light-field rendering, in contrast, does not attempt to decouple the light field from the material properties.
+
+Radiance-field methods learn, from offline captured images (hence image-based rendering), to predict the tristimulus color values and density of a given point along a given direction:
+
+$$
+f: (p, \omega) \mapsto r, g, b, \sigma.
+$$
+
+The function $f$ can be parameterized in many ways.
+Two of most popular parameterizations are to use either a neural network [@mildenhall2021nerf] or a mixture of Gaussians [@kerbl20233d].
+With $f$, we can then synthesize/rendering any image --- by co-opting the classic volume rendering.
+We will study density and radiance field in much greater detail in @sec-chpt-mat-vs-rte.
+
+### Light-Field Display
+
+**Light-field display** is a 3D display technology that attempts to reproduce the light field of a scene [@jones2007rendering; @wetzstein2012tensor; @lanman2013near].
+Reproducing the light field provides the depth information of a scene that is missing in conventional 2D displays and can, thus, accurately drive the accommodation of eye lens in immersive (AR/VR) environment [@wann1995natural; @hoffman2008vergence].
+Other technologies include varifocal displays, multi-focal displays, and holographic displays.
+
+![We first capture the light field (here using a pinhole array) and then reproduce the light field (by placing the displays on the other side of the pinhole array), offering depth cues.](figs/lf_disp){#fig-lf_disp width="100%"}
+
+@fig-lf_disp shows a usual two-stage process of displaying a light-field.
+The first step is to capture the light field using some form of light-field imaging technique discussed in @sec-chpt-mat-basics-radiometry-lf-im; here we use a pinhole array placed in front of the sensor plane.
+Each pinhole covers a small group of the pixels on the sensor; the image captured by the group of pixels under each pinhole is called an *elemental image*.
+Once we have recorded the light field, we can then reproduce it.
+This is done by displaying the elemental images, each with a display placed on the other side of the pinhole array.
+Note that the relative positions of the display pixels are reversed from that of the the image pixels during light-field recording.

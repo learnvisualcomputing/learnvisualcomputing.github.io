@@ -1,0 +1,96 @@
+# Preface {.unnumbered}
+
+This book attempts to present a unified view of visual computing, looking at it as a series of signal transductions across different domains --- optical, analog, digital, and semantic --- along with the processing that happens within each.
+Any sufficiently complex visual computing system worth studying will likely involve both transductions and processing in all of these domains.
+
+Take Augmented Reality glasses as an example.
+The input signals --- light --- are in the optical domain. These first need to be converted into electrical signals by an image sensor so that a computer system can process them to extract semantic information--say, the orientation of a table in a room. The system then simulates light transport to generate photorealistic, context-appropriate virtual objects--perhaps a mug correctly oriented on that very table. Finally, these virtual objects must be transformed back from electrical signals, in the form of pixels, into optical signals by the display.
+
+But wait, we are still not done!
+The light emitted by the display enters our eyes, where photoreceptors in the retina convert the optical signals back into electrical ones. The retina and, further downstream, the brain, process these signals, eventually giving rise to our perception and cognition: we see a virtual mug sitting naturally on a real table.
+
+## Why This Book
+
+Visual computing is wonderfully broad, touching everything from the sciences of human vision to the engineering of sensors, optics, displays, and rendering systems.
+The main motivation for writing the book grew out of a simple observation: while each of these areas is well covered in excellent texts, they are rarely explored together in a single, coherent story.
+
+Why bring them together?
+If you are an engineer, the ability to move comfortably "across the stack" let you see the whole system at once, finding connections and optimizations that are otherwise not obvious when working in isolation.
+For the scientifically curious, there is joy in understanding the fundamentals even without immediate application.
+As Edwin H. Land once put it, the true application of science is that “we finally know what we are doing.”
+
+Every so often I ask myself: why write this book at all, when none of the material is new and so many fine resources already exist?
+Then I remind myself that most textbooks contain no new results; by the time knowledge reaches a textbook, it is already established.
+What books do is to *offer perspectives*, and that always reveals the idiosyncrasies of the author.
+
+The perspective I most want to convey is this: every conclusion is drawn based on a set of precisely defined terms and assumptions, which, unfortunately, are not always announced.
+By taking a first-principles approach, I hope to make those definitions and assumptions explicit, so it is always clear when each conclusion applies and when it does not.
+
+## What Do We Not Cover
+
+We will not attempt to be comprehensive --- no one understands everything, and no one needs to understand everything *to get started*.
+Our aim is to take a first-principles approach, giving you a solid foundation and the confidence to learn new concepts as they arise.
+
+We will not cover computer vision --- a field central to, and is arguably the most well-understood part of, visual computing.
+There are simply too many excellent texts.
+
+In human vision, our focus will be on the early visual system, particularly the retina.
+This is where the first steps of seeing occur, setting the limits of our vision and representing the most thoroughly studied part of the visual system.
+
+In imaging and display, we review basic principles (optical-electrical signal transductions) while being intentionally light on implementation details --- these evolve quickly and are often proprietary.
+
+In rendering, we focus on the classical computational models of light-matter interactions while completely ignoring the implementation issues such as the modern graphics pipelines (e.g., programming Vulkan) and GPU hardware.
+We will not cover the emerging (neural) rendering paradigm in detail, but will explore its connections to the classical theories.
+
+## Book Structure
+
+The book starts with an overview of or, rather, an invitation to visual computing, putting different topics we will discuss into a unified framework.
+The rest of the book is then divided into four major parts.
+
+**Part I** is concerned with the human visual system.
+The output of an imaging system, a display, or a rendering system is ultimately consumed by humans.
+Even computer vision algorithms that analyze visual inputs take inspirations from human vision.
+
+**Part II** discusses rendering, focusing on modeling light-matter interactions.
+We will mostly be taking a geometrical optics perspective, using radiometry and radiative transfer (or light transport) as our main theoretical tool.
+
+**Part III** discusses imaging, where we will cover how a modern digital camera forms an image from a real-world scene.
+We will discuss the imaging optics, the image sensor architecture, and the post-sensing image signal processing.
+Along the way, we focus on computational modeling of the image formation process, taking a linear system perspective and accounting for the presence of noise.
+
+**Part IV** discusses displays.
+We will discuss modern display architectures, including its optical components that turn electrical signals to lights, the electrical components that drive the optics, and the computational components that turn image pixels to drive signals.
+
+## Other Books
+
+This is necessarily an incomplete list, because I can mention only books that I find myself reviewing from time to time.
+
+For human vision, the monumental book by @wandell1995foundations is a must read; it is [freely available](https://wandell.github.io/FOV-1995/), and a second version is in the works.
+@cornsweet1970visual, while slightly dated, is an all-time classic that has inspired a whole generation of vision scientists.
+@rodieck1998first is a breathtaking walk-through of the early stages in vision (eye optics and retinal processing), where every step is described *operationally* rather than conceptually.
+In the end, you get the feeling that *there is no magic*.
+I also like @nelson2017photon, covering light, imaging, and vision --- written by a physicist and from a physical perspective.
+What's most powerful about these books is that none of them relies on complicated equations --- they focus on building intuitions and basic principles first.
+@bass2009handbook provides a comprehensive and authoritative coverage of various topics in vision and visual optics.
+@goldstein2009sensation10ed and @yantis2017sensation are popular introductory texts to human perception (vision and beyond).
+
+For rendering, @pharr2023physically is a golden reference, and @dorsey2010digital provides a comprehensive coverage of light-matter interactions in the graphics context.
+@glassner1995principles is bit dated but a classic.
+For a gentle discussion of light-matter interactions, I would highly recommend @johnsen2012optics, which is written in the biological context, but the intuitions built are general.
+For a technical treatment in the realm of classical electromagnetic theory, read @bohren2006fundamentals.
+It is written for atmospheric scientists but, again, the principles apply broadly.
+Of course, for a quantum treatment of light-matter interactions, I'd be remiss not to mention @feynman1985qed.
+@thompson2011visual provides a good survey of visual perception and how explicitly accounting for it can help design better rendering systems.
+
+There are comparatively fewer texts on imaging.
+The one I particularly like is @rowlands2020physics, which covers almost every single component in imaging, with rigor, from optics to image sensors and image signal processing.
+@trussell2008fundamentals and @nakamura2006image are two excellent references; the former focuses more on the principles (of both imaging and display) and the latter is heavier on the hardware implementations (of image sensors).
+
+## A Live Document
+
+One nice thing about publishing a book online is that it can be a live document, which means two things.
+First, it allows me to keep working on the book.
+Here is [a list of topics](https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/2) that are being contemplated, and there is a plan to embed the code with the book.
+Second, *you* can contribute too!
+If you see a typo, a technical error, or just an exposition that could use clarification, feel free to [open an issue](https://github.com/learnvisualcomputing/learnvisualcomputing.github.io/issues/new).
+As mentioned above, the book is necessarily incompletely, so if you think of a topic that warrants coverage, [send me an email](mailto:yuhaozhu@ieee.org) so that we can expand the book *together*.

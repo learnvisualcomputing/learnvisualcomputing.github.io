@@ -1,0 +1,71 @@
+project:
+  type: book
+  output-dir: ../docs
+
+book:
+  title: "Foundations of Visual Computing"
+  author: "Yuhao Zhu"
+  date: "7/12/2025"
+  sharing: [twitter, facebook, linkedin]
+  repo-url: https://github.com/learnvisualcomputing/learnvisualcomputing.github.io
+  repo-actions: [issue]
+  downloads: [pdf]
+
+  #cover-image: cover.png
+
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: hvs.qmd
+      chapters:
+        - hvs-intro.qmd
+        - hvs-receptor.qmd
+        - hvs-color.qmd
+        - hvs-colorimetry.qmd
+        # - hvs-retinalmodel.qmd
+        - hvs-adaptation.qmd
+    - part: rendering.qmd
+      chapters:
+        - rendering-overview.qmd
+        - rendering-radiometry.qmd
+        - rendering-lightfield.qmd
+        - rendering-re.qmd
+        - rendering-surface.qmd
+        - rendering-sss.qmd
+        - rendering-rte.qmd
+        - rendering-nflux.qmd
+    - part: imaging.qmd
+      chapters:
+        - imaging-optics.qmd
+        - imaging-sensor.qmd
+        - imaging-noise.qmd
+        - imaging-isp.qmd
+    - part: display.qmd
+      chapters:
+        - display-optics.qmd
+        - display-electronics.qmd
+        - display-signal-processing.qmd
+    - references.qmd
+
+comments:
+  hypothesis: true
+
+number-depth: 3
+
+bibliography: refs.bib
+csl: chicago-author-date.csl
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    default-image-extension: svg
+  pdf:
+    documentclass: scrreprt
+    default-image-extension: pdf
+    include-in-header:
+      - macros.tex
+      - preamble.tex
+
+editor: source

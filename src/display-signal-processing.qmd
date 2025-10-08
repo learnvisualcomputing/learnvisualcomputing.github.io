@@ -1,0 +1,482 @@
+# Display Signal Processing {#sec-disp-sp}
+
+From @sec-disp-elec, we know that ultimately it is the $V_{Data}$ signals that the display has to set in order to get a desired response on the pixels.
+How do set $V_{Data}$?
+This question can only be answered by positioning display in an end-to-end workflow that involves imaging, image processing, and display.
+We will first give a big-picture view, showing that the central task of this signal processing chain is called *tone mapping*, which is realized by a chain of signal processing steps (@sec-disp-sp-ov).
+We will then walk through this chain step by step (@sec-disp-sp-proc), and discuss practical issues in realizing tone mapping (@sec-disp-sp-tm).
+Finally, we will discuss color management, a framework that makes everything we discuss in this chapter much more consistent and reliable across software and hardware platforms (@sec-disp-sp-cm).
+
+## The Big Picture {#sec-disp-sp-ov}
+
+Consider a typical workflow where you capture the scene as an image and then view it on a display.
+@fig-ootf illustrates the chain of signal processing that takes place in this workflow.
+At the beginning of this chain is the luminance in the physical scene; at the end is the luminance emitted by the display.
+The transformation from the former to the latter can be abstracted as the Opto-Optical Transfer Function (**OOTF**), &#9312; in @fig-ootf.
+In practice, the OOTF is *indirectly* realized through a long processing chain (&#9312; through &#9321; in @fig-ootf) that spans imaging hardware, image processing algorithms, and display hardware.
+Each step can be represented as a transfer function, and together these functions collectively constitute the OOTF.
+
+![In an end-to-end workflow, the mapping in the scene luminance to the display luminance is the effective OOTF of the system. This mapping, commonly known as *tone mapping*, is realized by cascading a sequence of processing stages involving the imaging system (&#9313;), image processing algorithms (&#9316;), and the display (&#9321;). Information is encoded and decoded when passing between stages (&#9314;, &#9315;, &#9317;, and &#9319;). The image processing algorithms are what we have the most control over in the end-to-end workflow.](figs/ootf){#fig-ootf width="100%"}
+
+Ideally, the OOTF should be an identity function, which, one could argue, is the Holy Grail of an imaging-display workflow: faithfully capturing *and* reproducing the actual luminance in the scene.
+The former is dealt with by HDR imaging (@sec-chpt-imaging-sensor-pixel-dr), and the latter is the job of display signal processing and display hardware design.
+
+### Luminance Dynamic Range {#sec-disp-sp-ov-dr}
+
+It would be *amazing* if a display could accurately reproduce the scene luminance (assuming it is accurately captured).
+It is hardly possible for a variety of reasons.
+<!-- This, in turn, poses two requirements.
+
+First, the pixel values in an image should encode absolute luminance/radiance information, not just the relative chromaticity.
+Usual sRGB encoding does not give us that.
+Physically-based rendering where physical units are tracked does.
+HDR imaging, where no pixel is saturated, noise floor is low, and the camera color space is carefully calibrated and corrected to a device-independent space like XYZ (we have discussed color correction in @sec-chpt-imaging-isp), *could* (but most often does not) also approximately give the absolute luminance information^[This is because the Y value in an XYZ space is proportional to the luminance, so the device RGB to XYZ transformation matrix can be calibrated to give absolute Y values.].
+Let's for now assume that such absolute luminance information is encoded in an image. -->
+
+<!-- Given the absolute luminance intended in the image, the display should then ideally reproduce the per-pixel luminance. -->
+* First, the peak display luminance of a display is usually lower than that of the real world.
+* Second, the real world has a much larger **luminance dynamic range** (DR) than that is afforded by the display.
+The luminance DR of the scene is the ratio between the maximum and minimum luminance in the scene, and the luminance DR of the display is the ratio between the maximum and minimum luminance producible by the display.
+  - The definitions are concerned with luminance (a photometric metric) rather than illuminance (a radiometric metric) because we care about the perceived power not the radiant power in the scene.
+  - We use "luminance DR" rather than simply DR to emphasize its difference from the DR of a sensor (@sec-chpt-imaging-sensor-pixel-dr), which is concerned with the ratio of peak measurable luminance in the scene to the noise floor.
+  For simplicity we will use DR when it is clear what it refers to in a given context.
+  Luminance DR is also often referred to as the **contrast ratio** while the sensor DR can be thought of as a form of signal-to-noise ratio [@mantiuk2015high].
+* Third, the luminance levels in a real-world scene are continuous whereas the luminance levels in digital displays are quantized (e.g., 256 levels in an 8-bit encoding), so there are quantization errors.
+
+![Luminance dynamic range comparison between a real-world scene and various output devices. Adapted from @lang2007rendering[fig. 3,5].](figs/dynamic_range_comparison){#fig-dynamic_range_comparison width="100%"}
+
+The difference between the scene luminance range and that of various output devices is illustrated in @fig-dynamic_range_comparison.
+
+* The DR of a real-world scene usually spans 4-5 log units.
+* The DR of a typical display is usually limited to about 3 log units, which is slightly higher than prints.
+* Modern high-dynamic-range (HDR) displays have luminance DRs that might match that of a scene, but the peak luminance still falls far short of that of what a real-world scene can produce^[Case in point: you have probably never really felt too uncomfortable staring at a display but starring at white paper under noon sunlight is excruciating.].
+
+To enhance display DR, we not only need to be able to produce a high peak luminance but also a very low, ideally 0, luminance when the pixel value is 0.
+There are many industry standards/certifications for HDR displays, almost all of which include metrics such as minimum peak luminance, maximum black-level luminance, contrast ratio, and bit depth [@vesahdr12].
+
+### Tone Mapping {#sec-disp-sp-ov-tm}
+
+Given that it is unlikely that a display can fully reproduce the scene luminance, the next best question to ask is: how do we accurately reproduce the *perceptual experience* of the intended scene?
+To achieve this, the knob we have is the mapping of the intended luminance of each pixel in the image to a new luminance that is within the range afforded by the display (assuming of course the chromaticity is maintained throughout this mapping through appropriate color space transformations).
+
+The mapping from scene luminance to displayed luminance is the OOTF in @fig-ootf, and is the central task of **tone mapping**.
+As noted earlier, the OOTF is not directly controlled; instead, it emerges from a cascade of transfer functions within the signal processing chain.
+Some of these transfer functions are determined by the design of the imaging and display hardware (&#9313; and &#9321;), others by image encoding and decoding format (e.g., &#9314;, &#9315; &#9317;, &#9318;), and the remainder by the image processing algorithm (&#9316;) abstracted as Electro-Electrical Transfer Function (**EETF**).
+
+EETF is the component over which we have the greatest (or sometimes the only) control and, thus, where tone mapping/OOTF can be practically influenced.
+For that reason, the entire EETF can also be thought of as a tone mapping operator (TMO).
+
+The key to tone mapping is to **preserve contrast**.
+Recall that the human visual system has a contrast sensitivity function (@sec-chpt-hvs-percept-retinafunc-contrast), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable.
+Let's use a simple 1D example to explain how tone mapping might affect contrast and, consequently, perceptual quality.
+
+Assume that we have a 1D signal $y = A_0 + A\sin(x)$ (where $0 < A < A_0$) with only two frequencies, a 0 Hz mode with an amplitude of $A_0$ and a 1 Hz mode with a amplitude of $A$.
+
+* The luminance DR of the signal is $[A_0 - A, A_0 + A]$.
+* The Michelson contrast at 1 Hz is $\frac{A}{A_0}$.
+
+Now assume that we need to display this signal on a display with a luminance DR of $[\frac{A_0 - A}{k}, \frac{A_0 + A}{k}]$, where $k > 1$.
+Perhaps the easiest TMO would be to simply linearly scale the signal by a factor of $k$ to $y' = \frac{A_0}{k} + \frac{A}{k}\sin(x)$.
+The Michelson contrast at 1 Hz for this new signal is still $\frac{A}{A_0}$, which seems to indicate that this simple linear-scaling TMO works well.
+
+This TMO has two potential issues.
+
+* First, while the scene luminance is continuous or is encoded with a high bit precision by the imaging system, the display could have a lower bit depth, leading to quantization errors.
+If the vast majority of the scene is limited to a relatively a narrow luminance range, the quantization errors would make the displayed image look "dull".
+* Second, the average luminance is reduced by a factor of $k$.
+The contrast sensitivity reduces as the mean background level reduces [@wandell1995foundations, Fig. 5.26; @barten2003formula, Fig. 7; @ashraf2024castlecsf, Fig. 8, 9, 10].
+This means we could need to increase, not just maintain, the contrast to make up for the sensitivity loss.
+
+In practice, another challenge in implementing a good TMO is that the EETF has limited visibility of the end-to-end workflow: it receives information only from &#9325; rather than the scene directly and sends information only to &#9327; rather than directly to the display.
+So any information loss before or after the EETF would hurt the tone mapping quality.
+We will refer you to @reinhard2010high and @mantiuk2015high for surveys of tone mapping techniques.
+@sec-disp-sp-tm discusses challenges and solutions of tone mapping in practice.
+
+## The Chain of Processing {#sec-disp-sp-proc}
+
+Let's now walk through the chain of processing from luminance in the scene to the luminance emitted from a display.
+
+### Hardware-Intrinsic OETF
+
+An imaging system fundamentally performs a signal transduction from the optical domain to the electrical domain.
+This transduction can be abstracted as @eq-mono_model, where the scene power is converted to RAW pixels.
+@eq-mono_model can be thought of as the intrinsic Opto-Electrical Transfer Function (**OETF**) of the imaging system (&#9313; in @fig-ootf).
+Barring noise and ADC quantization errors, the RAW pixel values are roughly proportional to the scene luminance.
+A RAW pixel value can be expressed as:
+
+$$
+    P_{cam} = 
+    \begin{bmatrix}
+        hOETF_R(\Phi_s(\lambda)) \\
+        hOETF_G(\Phi_s(\lambda)) \\
+        hOETF_B(\Phi_s(\lambda))
+    \end{bmatrix},
+$$ {#eq-hoetf}
+
+where $P_{cam}$ is the pixel color in the camera RAW space, $hOETF_R(\cdot)$, $hOETF_G(\cdot)$, and $hOETF_B(\cdot)$ represent the hardware-intrinsic OETF for the red, green, and blue channel, respectively, and $\Phi_s(\lambda)$ represents the SPD of the incident light in the scene.
+We have three OETFs here because there are three different spectral sensitivity functions (@sec-chpt-imaging-sensor-color-goal).
+If using a 10-bit encoding, each channel in $P_{RAW}$ is bounded between 0 and 1023.
+The $hEOTF$s are defined accordingly.
+
+In a rendering system, the image pixel values are rendered/simulated rather than captured, but the same principle applies, where the rendered pixels should ideally be proportional to or, ideally, directly encode the absolute luminance information of the rendered scene.
+Two main differences exist between rendering and imaging.
+First, in rendering we generally we do not intentionally model sensor noise.
+Second, numerically solving the (volume) rendering equation leads to inaccuracies [@pharr2018physically, chap. 2, 13, 14], whereas the rendering equations are effectively "solved by nature" in imaging.
+Of course, we still pay the ADC quantization error in rendering.
+Therefore, the rendered pixels are usually not perfectly proportional to luminance.
+
+### Reference OETF
+
+When savings RAW pixels as an image file (such as JPEG and PNG), we usually have a low bit budget.
+For instance, RAW pixels are typically encoded using 10 or 12 bits, but usual RGB images use 8 bits per color channel.
+Recall from @sec-chpt-hvs-cori-cube-step2 that when quantizing luminance-linear signals into digital values, we use a gamma-based encoding strategy, which attempts to encode the perceived brightness, rather than the physical luminance, uniformly.
+Gamma encoding makes better use of the limited bit budget by reducing the perceptual quantiztion errors for the low luminance range.
+
+The encoding function $f_{L \mapsto V}$ that maps a luminance-linear signal $L$ to a digital value $V$ that is actually saved in an image file is also called the OETF (&#9314; in @fig-ootf).
+This OETF, however, purely represents an encoding strategy, and is clearly different from the hardware-intrinsic OETF of the imaging system.
+
+* The hardware-intrinsic OETF represents an actual signal transduction, but the encoding OETF here purely manipulates information, both $L$ and $V$, in the electrical domain, except $L$ represents luminance information and $V$ represents a digital value.
+* The two need not be, and mostly will not be, the same.
+When people say OETF without any qualifier, what they refer to is the encoding OETF $f_{L \mapsto V}$, a convention we will follow.
+We will explicitly use *hardware-intrinsic OETF* when referring specifically to the transfer function intrinsic to the signal transduction process.
+
+After $f_{L \mapsto V}$, pixel values are roughly proportional to perceived brightness.
+A good OETF should be designed based on models of human brightness perception.
+Over the years, many reference OETFs have been defined in TV/broadcast standards, such as Rec. 601 [@iturbt601-7], Rec. 709 [@iturbt709-6], and, more recently, Rec. 2020 [@iturbt2020-2] and Rec. 2100 [@iturbt2100-3]---all published by ITU-R^[ITU-R refers to the Radiocommunication Sector of the International Telecommunication Union; these standards are formally designated with names such as ITU-R BT.2100, commonly shortened to Rec. 2100.].
+In contrast, sRGB [@anderson1996proposal; @srgbweb; @srgbiec] and Display P3 are color space standards (not defined by ITU-R).
+sRGB shares the same primaries and white point chromaticities as Rec. 709 but uses a different OETF.
+Display P3 offers a wider gamut than sRGB while using the same OETF.
+
+All of the standards above, except Rec. 2100, use relative luminance as input, where L=1 is given by some form of maximum luminance measure manually determined for a particular setting and, therefore, usually does *not* correspond to a fixed, absolute luminance level.
+That maximum luminance could be, for instance, the absolute luminance that just saturates the sensor in the imaging system.
+In theory, though, the brightness-vs-luminance model should take absolute luminance into account.
+The sRGB standard does specify a *recommended* display luminance of 80 nits, but that is just a recommendation and nothing prevents you from displaying an sRGB on a dimmer or brighter display, in which case the brightness model underlying the OETF in sRGB technically would not apply.
+
+In practice, the OETF is applied after a color space conversion (CSC) from the raw camera space to a standard color space such as sRGB or Display P3 (which we cover in @zhu2022cam), each of which specifies a reference OETF.
+The OETF is applied to each of the three color channels.
+Mathematically:
+
+$$
+\begin{aligned}
+    P_{XYZ} &= T_{cam\_to\_XYZ} \times \text{diag}^{-1}(1024) \times P_{cam}, \\
+    P_{sRGB\_linear} &= T_{XYZ\_to\_sRGB} \times P_{XYZ}, \\
+    P_{sRGB} &= \text{diag}(255) \times
+    \begin{bmatrix}
+        OETF(P_{sRGB\_linear}(R))\\
+        OETF(P_{sRGB\_linear}(G))\\
+        OETF(P_{sRGB\_linear}(B))
+    \end{bmatrix},
+\end{aligned}
+$$ {#eq-oetf}
+
+where:
+
+* $\text{diag}^{-1}(1024) \times P_{cam}$ ($\mathbb{R}^3 \in [0, 1]^3$) is a color in the camera RAW space normalized to the [0, 1] range (assuming 10-bit RAW encoding).
+* $T_{cam\_to\_XYZ}$ is the transformation matrix from the normalized camera RAW space to the CIE 1931 XYZ space; it is usually illuminant dependent and normalized such that when the illuminant is normalized to have a Y value of 1, one of the RGB channels saturates [@rowlands2020color].
+* $P_{XYZ}$ is the color in the XYZ space.
+* $T_{XYZ\_to\_sRGB}$ is the transformation from the XYZ space to a color space, say sRGB, used to encode the image file; the matrix is usually normalized such that [1, 1, 1] in the linear sRGB space translates to Y=1.
+* $P_{sRGB\_linear}$ ($\mathbb{R}^3 \in [0, 1]^3$) is the color in the linear sRGB space.
+* $OETF(\cdot)$ is the OETF of the encoding space (the OETF for sRGB in this example is @eq-srgb_oetf).
+* $P_{sRGB}$ ($\mathbb{Z}^3 \in [0, 255]^3$) is the color in the sRGB space.
+
+### EETF
+
+When an OETF-encoded image is later processed, we can use OETF^-1^ to recover the original luminance (&#9315; in @fig-ootf).
+This is important because any further image processing should ideally be operating in the luminance-linear space, where operates correspond to physical units; forgetting this can lead to many subtle bugs in code [@chen2024coolerspace]!
+
+The image processing pipeline can be abstracted as Electro-Electrical Transfer Function (**EETF**), as it processes digital pixels (&#9316; in @fig-ootf).
+EETF is usually the part of the entire processing pipeline that we get to control, so it is where we can impact the overall tone mapping and OOTF.
+Mathematically:
+$$
+\begin{aligned}
+    P_{sRGB\_linear} = OETF^{-1}(\text{diag}^{-1}(255) \times P_{sRGB}), \\
+    \mathcal{M}_{sRGB \rightarrow sRGB}: P_{sRGB\_linear} \mapsto P'_{sRGB\_linear},
+\end{aligned}
+$$ {#eq-eetf}
+
+where we first recover $P_{sRGB\_linear}$, the luminance-linear signals in the sRGB space, in which the tone mapping operator $\mathcal{M}_{sRGB \rightarrow sRGB}$ operates in;
+the result $P'_{sRGB\_linear}$ is the tone-mapped pixel value in the luminance-linear space.
+Since tone mapping is primarily concerned with manipulating luminance information (assuming chromaticity remains unchanged), recovering luminance-linear signals first is important.
+If $\mathcal{M}$ depends only on the value of $P_{sRGB}$, the TMO is a global operator.
+In contrast, local TMOs can apply different transformations to pixels that share the same color but appear at different spatial locations.
+
+Even though ideally we would want to manipulate absolute luminance, as discussed in @sec-disp-sp-ov, the tone mapping operator here has to work to *relative* luminance.
+This is because usually the processing stages before EETF do not keep the absolute luminance information because of all the normalizations.
+@sec-disp-sp-tm discusses challenges facing implementing a good EETF and typical solutions.
+
+@eq-eetf assumes that we are given a digital image to begin with.
+In reality, we can also implement tone mapping at the end of an rendering pipeline or a camera signal processing pipeline before a digital image is saved (@sec-chpt-imaging-isp).
+At this stage, we have direct access to analog or high-precision (e.g., 10 bits) luminane before it is quantized to a lower (e.g., 8) bit depth in an image.
+
+### Reference EOTF
+
+After EETF, each image pixel is mapped to an intended (relative) luminance.
+Now comes the time to display the image.
+We have to again turn luminance back to digital values^[We encode luminance into digital values because the raw luminance data are continuous and would require floating-point representation, which cannot be sent directly to the display. Encoding reduces bandwidth demands and ensures compatibility with nearly all existing interface protocols.].
+Minimizing perceptual quantization error is still the key, since these digital values will eventually be decoded back to luminance.
+This requires, again, modeling human brightness perception, but this time the luminance range is limited by what the display can afford to produce so the model would be somewhat different than that used to define OETF on the imaging side.
+
+We need a function $f_{V \mapsto L}$ that maps a digital value $V$ to a luminance $L$.
+$f_{V \mapsto L}$ is called the Electro-Optical Transfer Function (**EOTF**).
+This is potentially confusing: why do we not construct the function to map luminance to digital value, like how we have done on the imaging side, but the other way around?
+Mathematically, this is somewhat a moot point because the function is constructed to be monotonic and, thus, invertible.
+In practice, we use EOTF, rather than OETF, on the display side simply to signify the fact that a display converts electrical signals to optical signals.
+
+Over the years, there have been a set of reference EOTFs defined in various standards.
+Rec. 1886 [@iturbt1886] is meant to give a good approximation of the hardware-intrinsic EOTF of CRT displays, and Rec. 2100 is meant to be used for HDR workflows, where absolute luminance is tracked.
+Rec. 709, Rec. 2100, sRGB, and Display P3 define both an OETF and an EOTF, which are inversions of each other.
+Note that OETF and EOTF need not be an inversion of each other.
+Both are designed with a good model of human brightness perception in mind.
+The difference in the underlying model is that at the imaging side the luminance is dictated by the scene whereas as the display side the luminance is dictated by the display hardware; the two do not match, which, in turn, impacts the EOTF and OETF design.
+Therefore, while we use OETF to encode scene luminance to a file (and OETF^-1^ to recover the scene luminance from the file), the display EOTF might not necessarily be OETF^-1^.
+
+Given an intended luminance $L$ we want to display, we use EOTF^-1^ to obtain the corresponding digital value $V$ to be sent to the display (&#9317; in @fig-ootf).
+This is usually carried out in a CSC.
+For example, if the input image is encoded in sRGB, the pixels remain in the sRGB space after applying the EETF. If the display operates in the Display P3 color space, a CSC must be performed from linear sRGB to linear Display P3, after which the P3 EOTF is applied to obtain the digital pixel values.
+These EOTF-encoded digital pixels will then be transmitted through the MIPI DSI interface to the driver IC, as discussed in @sec-disp-dic.
+Mathematically, the sequence of processing is:
+
+$$
+\begin{aligned}
+    P_{XYZ} &= T^{-1}_{XYZ\_to\_sRGB} \times P'_{sRGB\_linear}, \\
+    P_{P3\_linear} &= T_{XYZ\_to\_P3} \times P_{XYZ}, \\
+    P_{P3} &= \text{diag}(1024) \times
+    \begin{bmatrix}
+        EOTF^{-1}(P_{P3\_linear}(R)) \\
+        EOTF^{-1}(P_{P3\_linear}(G)) \\
+        EOTF^{-1}(P_{P3\_linear}(B))
+    \end{bmatrix},
+\end{aligned}
+$$ {#eq-eotf}
+
+where:
+
+* $T_{XYZ\_to\_P3}$ is the transformation from the XYZ space to the linear Display P3 space; the matrix is usually normalized such that [1, 1, 1] in the linear P3 space translates to an XYZ value where Y=1.
+* $P_{P3\_linear}$ is the color in the linear P3 space.
+* $P_{P3}$ ($\mathbb{Z}^3 \in [0, 1023]^3$) is the color in the P3 space, assuming 10-bit encoding.
+
+Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that an EETF-based TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
+
+$$
+    \mathcal{M}_{sRGB \rightarrow P3}: P_{sRGB\_linear} \mapsto P_{P3\_linear},
+$$
+
+### Hardware-Intrinsic EOTF
+
+The driver IC will then turn the P3-encoded pixel values to the DAC inputs.
+Can we directly use the former for the latter?
+Most likely not.
+
+To see why, let's assume that we are dealing with an AMOLED display; using @eq-tft_iv and @eq-led_lum, we know that to emit a particular power spectrum $\Phi_d(\lambda)$ from the display, the following must hold:
+
+$$
+    e\frac{\Phi_d(\lambda)/(h f)}{\eta(\lambda)} = k(V_{DD} - V_{Data} - V_{th})^2, 
+$$ {#eq-heotf1}
+
+Therefore, the desired $V_{Data}$ is given by^[given that $V_{gs} > V_{th}$ for the TFT to operate in the saturation region.]:
+
+$$
+    V_{Data} = \sqrt{e\frac{P/(h f)}{\eta k}}  + V_{th} - V_{DD}.
+$$ {#eq-heotf2}
+
+With a DAC, we can convert a digital value to an analog voltage.
+Using an ideal DAC transfer function, the digital value $D$ to be sent to the DAC is then:
+
+$$
+\begin{aligned}
+    D = \frac{V_{Data} - V_{min}}{\Delta}, \\
+    \Delta = \frac{V_{max} - V_{min}}{2^N - 1},
+\end{aligned}
+$$ {#eq-heotf3}
+
+where $[V_{min}, V_{max}]$ is the DAC output range and $N$ is the resolution.
+
+The relationship between the digital value $D$ and the emitted power spectrum $\Phi_d(\lambda)$ or the corresponding luminance is what we call the *display-intrinsic EOTF*.
+From the theoretical analysis we can see that the relationship is non-linear.
+@fig-eotf shows examples for four inorganic LEDs.
+In practice, the hardware-intrinsic EOTF is affeced by many factors (such as variation in manufacturing, the particular driving circuit design, etc.), and is usually measured offline rather than modeled analytically.
+
+![Hardware-intrinsic EOTFs for four inorganic LEDs (R, G, B, and W). From @miller2019color[Fig. 7.2].](figs/eotf){#fig-eotf width="50%"}
+
+We want to unequivocally differentiate between the display-intrinsic EOTF and the reference EOTF defined in a standard.
+
+* The former maps digital values sent to the DAC to the luminance emitted: it is an inherent property of the display hardware (both the driving circuits and the emissive devices) and represents an actual signal transduction.
+The latter is purely a theoretical construction that is meant for efficient and effective digital encoding (based on human brightness perception); it operates completely within the electrical domain, except the input $V$ represents a digital value and the output $L$ represents (relative) luminance.
+* The two EOTFs do not have to match and most definitely do not match^[except maybe in the CRT case where its EOTF^-1^ roughly matches human luminance-to-brightness perception.].
+When people say EOTF without any qualifier, they mean $f_{V \mapsto L}$.
+We will specifically use *display-intrinsic EOTF* to refer to the actual EOTF that maps DAC values to emitted luminance.
+
+Given the display-intrinsic EOTF, converting from P3-encoded pixels to DAC inputs requires two steps.
+
+* First, we use the reference EOTF (in this case part of the Display P3 standard) to decode the actual luminance intended to be displayed (&#9318; in @fig-ootf).
+* Second, we perform a CSC from the Display P3 space to the display native space, after which we invert the display-intrinsic EOFT to obtain the digital value to send to the DACs (&#9319; in @fig-ootf).
+This CSC is necessary because it is unlikely that the display primaries and white point exactly matches that of a color space standard (e.g., Display P3), but we can measure them offline and construct a transformation matrix from the P3 space to the display native.
+
+Mathematically, this is:
+
+$$
+\begin{aligned}
+    P_{P3\_linear} &= EOTF(\text{diag}^{-1}(1024) \times P_{P3}), \\
+    P_{disp} &= T_{P3\_to\_disp} \times P_{P3\_linear}, \\
+    D &= 
+    \begin{bmatrix}
+        hEOTF^{-1}_R(P_{disp}(R)) \\
+        hEOTF^{-1}_G(P_{disp}(G)) \\
+        hEOTF^{-1}_B(P_{disp}(B))
+    \end{bmatrix}, \\
+    \Phi_d(\lambda) &= \frac{k h \eta(\lambda) (V_{DD} - (D\Delta + V_{min}) - V_{th})^2}{e\lambda},
+\end{aligned}
+$$ {#eq-heotf}
+
+where:
+
+* $T_{P3\_to\_disp}$ is the transformation matrix from the linear Display P3 space to the display native space.
+* $P_{disp}$ is the pixel color in the display native space.
+* $D$ is the DAC inputs, one for each channel since each sub-pixel might have a different hardware-intrinsic OETF.
+* $\Phi_d(\lambda)$ is the emission power spectrum (derived from @eq-heotf1 and @eq-heotf3).
+
+In reality, we could calibrate, offline, three look-up tables (LUTs), each of which maps each digital level in a $P_{P3}$ channel to a corresponding DAC input (&#9320; in @fig-ootf).
+In this way, after going through the display-intrinsic EOTF (&#9321; in @fig-ootf) the luminance emitted by the display matches the intended luminance.
+The LUTs can be constructed by, at each P3 digital level, repeatedly changing the DAC input and measure the actual emitted luminance from the display until it matches that of the indended luminance.
+If the LUT size of concern, we could measure just a few digital values and interpolate between them in hardware.
+
+Cascading all the equations from @eq-hoetf to @eq-heotf, we can see that the TMO we implement as the EETF (@eq-eetf) eventually dictates the mapping from the scene SPD to the displayed SPD, so the ultimately TMO can be thought of as:
+
+$$
+    \mathcal{M}: \int\Phi_s(\lambda)V(\lambda)\text{d}\lambda \mapsto \int\Phi_d(\lambda)V(\lambda)\text{d}\lambda,
+$$
+
+where $V(\lambda)$ is the luminous efficiency function.
+
+## Practical Tone Mapping {#sec-disp-sp-tm}
+
+Tone mapping ultimately controls the OOTF of the end-to-end system, so ideally a TMO should manipulate *absolute* luminance information.
+As seen above, however, TMOs are implemented as the EETF.
+While the EETF ultimately determines the OOTF, it has no access to the absolute luminance information.
+
+* For instance, if we are given an sRGB image to display, an image pixel [10, 20, 30] in the sRGB space tells us nothing about the absolute luminance of each channel.
+* Even if an image is captured through an HDR imaging workflow and encoded in an HDR format, e.g., OpenEXR [@openxer], which has a very high bit depth (even allows for floating point numbers!), the absolute luminance information is usually still not encoded.
+Perhaps the only exception is when images are generated using physically-based spectral rendering, where spectral radiance information is tracked throughout the rendering pipeline.
+* Worse, we do not always know the target display's luminance range, which is ultimatelly what matters since that is where the image will be displayed!
+This often the case when tone mapping is done in an camera signal processing pipeline that is agnostic to the viewing display.
+
+Absent absolute luminance information, the TMO has to operate in normalized, luminance-linear spaces, as we have seen throughout @sec-disp-sp-proc.
+Some guesswork and heuristics are involved when implementing a good TMO.
+For instance, if the input image is encoded using sRGB, one fair assumption to make is that the image is to be displayed on a display with a peak luminance of 80 nits, which is the recommended luminance in the sRGB standard (that is rarely followed!).
+The recent ITU-R Rec. 2100 standard [@iturbt2100-3] defines a reference EOTF and OETF using *absolute* luminance (and specifies that the peak display luminance must be at least 1,000 nits).
+This allows us to directly control the output luminance within EETF, assuming we encode image using Rec. 2100 and the viewing display supports it.
+
+<!-- If the image is to be displayed on a display that supports the Rec. 2100 standard, we can assume that the display will have a peak luminance of at least 1,000 nits and can go up to 10,000 nits. -->
+
+Another way we can control the absolute luminance is through software that allow us to interactively adjust the EETF, such as the famous Curves tool in Photoshop and Lightroom.
+With these tools, even though we are not explicitly told of the display luminance range, the absolute output luminance information is directly seen on the display, enabling us to judge for ourselves whether the result is satisfactory.
+
+@fig-tone_mapping_examples shows three such examples in Lightroom, each of which has a tonal adjustment curve that maps an input pixel value in the normalized, luminance-linear input range (x-axis) to an output pixel value in the same range and color space (y-axis).
+The curves here are effectively the TMO $f$ in @eq-eetf.
+
+![Three tone mapping examples, each with a corresponding tonal adjustment curve, I set using Lightroom on an iPhone 12 Pro. The original image is a 10-bit (demosaicked and color corrected) image captured by a Google Pixel phone, obtained from the HDR+ Burst Photography Dataset [@hasinoff2016burst].](figs/tone_mapping_examples){#fig-tone_mapping_examples width="100%"}
+
+With a simple linear mapping in the first example, the image looks quite dark and dull.
+This is because most of the input pixel values are quite low (judging from the color histogram at the top), so essentially most of the pixels are mapped to low output digital values.
+We can raise the brightness by raising the tonal curve, as done in the second example.
+That curve essentially increases the contrast ratio of the low-to-mid luminance pixels and compress the contrast ratio of the mid-to-high luminance pixels.
+
+In my last example, I have raised the tonal curve so much that many input digital levels are mapped to the same, maximum output digital levels, as if those pixels were "saturated" during imaging.
+What this does is to give the low-to-mid luminance pixels an even larger contrast ratio, so the details look more vivid.
+Perhaps surprisingly, this intentional saturation does not actually lead to visible "over-exposure" in the final image. Why?
+Look at the color histogram at the top of the third example: only a small fraction pixels are actually saturated, even though a relative wide range of pixel pixel values are mappped to saturation.
+
+The tonal adjustment curve is also a place for creative expression even if we are not concerned with tone mapping *per se*.
+Readers familiar with the Curve tool in Photoshop must be familiar with the notion of an "S-curve" or an "inverse S-curve" (if not, see [these](https://www.lightroompresets.com/blogs/pretty-presets-blog/how-to-use-photoshop-curves) [articles](https://www.cambridgeincolour.com/tutorials/photoshop-curves.htm)).
+The former essentially increases the contrast ratio between the highlights and shadows in an image and the latter does the opposite.
+These adjustments are meant to enhance the visual experience (e.g., increasing the contrast improves the visibility of some otherwise less detectable details) at the cost of technically changing the relative luminance information in the physical scene.
+
+![Four tone mapping examples form [@hdrplustm]. The last example uses a local TMO from the HDR+ pipeline in Google Pixel phones, whereas the first three use glocal TMOs.](figs/hdrplus_tm_example){#fig-hdrplus_tm_example width="100%"}
+
+As another example, @fig-hdrplus_tm_example shows four tone mapping examples and their associated tonal adjustment curves.
+The first three use glocal TMOs similar to the three examples in @fig-tone_mapping_examples.
+The last example uses a local TMO from the HDR+ pipeline in Google Pixel phones [@hasinoff2016burst].
+We can see it uses a local TMO because there is no single mapping function from an input pixel value to an output pixel value.
+Instead, the adjustment "curve" is actually a heatmap showing, for each input pixel, the output pixel distribution after tone mapping.
+The local TMO is realized by dividing an image into tiles and designing a curve for each tile.
+
+## Color Management {#sec-disp-sp-cm}
+
+The signal processing pipeline discussed above needs to work well across different workflows that might involve wildly different capturing devices (e.g., cameras, scanners) and output devices (e.g., displays, printers), each of which could have very different hardware-intrinsic transfer functions.
+If a camera gives us an RGB image, how do we know which color space are the pixels encoded in?
+How do we know what OETF was used to encode the pixel values in this image?
+What if the color space that encodes the image is different from that of the display?
+
+The central task underlying all these question is how to ensure consistent color reproduction throughout different workflows?
+This is the job of **color management**, which requires a collaboration between every single piece that touches color in the workflow.
+@giorgianni2009digital and @sharma2018understanding are two excellent references for color management.
+
+### Profiles
+
+The central concept of color management is the notion of a *profile*.
+The most commonly used standard for color management profiles is defined by the International Color Consortium (ICC).
+First, an image file should ideally have metadata, stored in an ICC profile [@iccv2; @sharma2018understanding, chap. 5], that tells us what color space its pixel colors are encoded in or, better, the transformation matrix from the image's color space to a device-independent color space, say the CIE XYZ space (e.g., $T_{XYZ\_to\_sRGB}$ in @eq-oetf).
+The profile also specifies the transfer function that converts between digital values and luminance-linear values ($OETF$ in @eq-oetf).
+The ICC profile can be embedded in common image file formats such as JPEG by a camera or by an image processing software.
+
+![Screenshots taken from the ColorSync Utility showing the primaries in the ICC profile of my LG display (a) and the primaries (b), EOTF (c), and transformation matrix (d) in the ICC profile of my MacBook Pro LCD. The MacBook ICC profile matches that of a Display P3 profile, and my LG display ICC profile does not appear to match that of any reference color space.](figs/icc_profiles){#fig-icc_profiles width="100%"}
+
+Second, the display also has an ICC profile that can be read by the Operating System (OS).
+The profile presents a reference mode or a "virtual display" to the software.
+Among other things, the profile specifies a color space (primaries and white point) of the virtual display or, equivalently, the transformation between that color space and the XYZ space (e.g., $T_{XYZ\_to\_P3}$ in @eq-eotf) and the transfer function used to turn digital pixel values to luminance-linear signals ($EOTF$ in @eq-heotf).
+
+@fig-icc_profiles shows two ICC profiles that I read using the built-in ColorSync Utility on my MacBook Pro, which has an internal LCD and is also connected to an external LG display.
+@fig-icc_profiles (a) and (b) show the primaries of the color spaces of the two ICC profiles, respectively.
+@fig-icc_profiles (c) shows the EOTF of the MacBook's profile, which is the same as that used in sRGB and Display P3 color spaces.
+@fig-icc_profiles (d) shows the transformation matrix, of the MacBook profile, from the display color space to the XYZ space (while considering white point correction; see below).
+Comparing my MacBook's ICC profile with the default Display P3 profile, evidently my MacBook's display presents itself as a Display P3 display.
+
+The information in a display ICC profile is most likely different from, and typically *weaker* than, that of the actual display.
+For instance, the gamut of the display native color space is greater than a particular reference color space like sRGB or Display P3: the emission spetra of the primary LEDs are material dependent and usually result in colors more saturated than the primary colors of a reference space.
+Presenting a reference display model allows the image processing software to know how the image pixels it produces will be interpreted by the display.
+Otherwise, imaging how challenging it would be to develop a, say, tone mapping algorithm, without knowing the color space that a target display supports or what EOTF will be applied to the pixel values.
+The display hardware itself will apply the proper transformation (&#9320; in @fig-ootf) between the virtual display presented in the ICC profile to its internal, native space.
+
+ICC profiles use the notion of Tone Response Curve (**TRC**) to refer to the EOTF, which is invertible and the inversion becomes the OETF.
+We can use the TRC from an image’s ICC profile to convert pixel values into luminance-linear signals. Equivalently, this can be viewed as the camera having used the TRC to encode luminance-linear signals into digital pixel values.
+Similarly, we can assume that the display will use the TRC in its own profile to turn digital pixels to luminance-linear signals, which mean we should use the inversion of the TRC to encode pixel values.
+
+In photographic film, the TRC models the mapping from exposure (luminance-linear) to film density [@fujifilm; @ektachrome100], so in this context, the TRC is technically an OETF.
+Perhaps for this reason, in many digital imaging and display contexts, TRC is often used to refer to the OETF rather than the EOTF [@imatestrtc].
+Either usage is acceptable, provided it is clearly stated, since the function itself is invertible.
+
+Finally, the software that manipulates image content must correctly read and interpret the image profile and the display profile, and perform the necessary decoding, encoding, and transformations.
+When processing an image with, say, an sRGC ICC profile, the processing software would first transform the sRGB colors to the XYZ space, and then transform the colors in the XYZ to the display's color space using the display ICC profile.
+The correct transfer functions are also read from the profiles and applied properly.
+You can see that the XYZ space here serves to connect the input color space and the output color space.
+ICC calls such a space a Profile Connection Space (**PCS**).
+
+### White Point Correction
+
+During the color space transformation, we usually perform an additional transformation so that sRGB white becomes the white point in the display space. This is called *white point correction* (WPC), which is based on chromatic adaptation discussed in @sec-chpt-hvs-adaptations-chroma.
+This is to accommodate the fact that the viewer might be under a different viewing condition than the condition under which the photo was originally edited.
+The viewing condition could affect the actual appearance of a color, so we must account for this shift in viewing condition through chromatic adaptation.
+
+WPC is in principle similar to white balancing in camera signal processing and uses the same transformation mechanism, which we discuss in @zhu2022cam.
+We also refer you to @rowlands2020color, which discusses the interaction between WPC/white balance and color correction of RAW camera space.
+
+### Gamut Mapping
+
+A display might support a color space whose gamut is smaller than that of the image's encoding space.
+For instance, the display might support only sRGB while the image is encoded in DCI-P3, so some of the P3 colors might not be accurately reproduced.
+That is, $P_{P3\_linear}$ in @eq-eotf might be outside the [0, 1] bound.
+The best thing we can do is to approximate an out-of-gamut color with an in-gamut color to minimize the color error.
+This is called **gamut mapping**.
+@morovivc2008color and @glassner1995principles[Chap. 3.6] describe the basic algorithms, with the former being more recent and comprehensive.
+
+The simplest strategy would be to simply clamp out-of-range values, so a color of [12, 200, 300] would become [12, 200, 255].
+Clearly, other than being extremely simple to implement, this strategy would introduce large color reproduction errors.
+ICC has defined four **rendering intents**, each of which corresponds to a gamut mapping algorithm (vaguely worded, and the implementation detail might vary).
+
+For instance, the *Absolute rendering intent* leaves all the in-gamut colors unchanged but maps the out-of-gamut colors to the boundary of the color gamut.
+The *Perceptual rendering intent* can be implemented by uniformly projecting all the colors to the white point so that all the colors are in-gamut.
+You can imagine that while this maintains the relative color appearance between colors (which the Absolute rendering intent fails at), but it would also change in-gamut colors that could have been accurately rendered!
+
+<!-- %``Display profiles are profiles that describe how a computer monitor or projector reproduces colours. Without them applications such as Photoshop would have no idea how the monitor displays colour. If you haven’t calibrated and profiled your monitor then your computer will be using a generic profile that does not reflect how your monitor works. It will be an approximation at best.''
+%https://www.permajet.com/blog/what-is-an-icc-profile-why-do-i-need-one/
+% miller2019color chap. 7.1 uses a somewhat weird example where he wants to pick 9000K as the adaptation white but the display white point is not 9000K. so after chromatic adaptation the input sRGB white will become [1, 1, 1] in the display native space, i.e., display white point, which, however, is not 9000K. he suggests a compensation method, but in reality the display profile would know its actual white point and supply the correct chromatic adaptation matrix accordingly. -->

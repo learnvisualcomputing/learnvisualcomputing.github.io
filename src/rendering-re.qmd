@@ -1,0 +1,282 @@
+# Rendering Surface Scattering {#sec-chpt-mat-ss}
+
+{{< include macros.qmd >}}
+
+When a group of photons arrives at a material surface, some of the photons might be immediately turned away (i.e., reflected) while others might penetrate into the material (i.e., refracted).
+The refracted portion is scattered further inside the material, giving rise to subsurface scattering.
+Let's focus first on surface scattering, ignoring the contribution of surface scattering to an object's appearance.
+
+There are two properties we care about in surface scattering: the directions of the reflection and the (spectral) energy along each direction.
+The direction is important because, as far as rendering, human vision, or camera imaging are concerned, only the photons that will eventually captured by a detector matter.
+The (spectral) energy is important because it dictates the perceived color.
+These two properties are captured by what is known as the BRDF (@sec-chpt-mat-ss-brdf).
+We will then derive a few very useful equations and properties based on BRDF (@sec-chpt-mat-ss-reflectance).
+Given the BRDF, we will introduce the rendering equation, the theoretical tool for rendering surface scattering (@sec-chpt-mat-ss-re).
+
+## BRDF {#sec-chpt-mat-ss-brdf}
+
+Generally, the energy distribution of the surface scattering is captured by the Bidirectional Reflectance Distribution Function (**BRDF**) [@nicodemus1977geometrical].
+Informally, it tells us how the incident energy from a particular direction is distributed to different exiting directions.
+The BRDF is parameterized by three parameters: a surface point $p$, the direction of light incident on $p$, denoted $\oi$, and the direction of light leaving $p$, denoted $\os$.
+So the BRDF is usually written as $f_r(p, \os, \oi)$.
+
+The way to understand BRDF $f_r(p, \os, \oi)$ is to consider  the following.
+$L(p, \os)$, i.e., the radiance leaving $p$ toward $\os$, is dependent on the light incident on $p$.
+When the incident light on $p$ comes from only the direction $\oi$, the irradiance at $p$ is zero, since the solid angle of a single direction $\oi$ is zero, so naturally $L(p, \os)$ is 0 (assuming there is no other light hitting $p$).
+When $p$ receives light from a non-zero solid angle of directions $\Delta\oi$ (centered around $\oi$), the irradiance of $p$ is increased by $\Delta E(p, \oi)$.
+At the same time, due to this increase in incident light, $L(p, \os)$ is no longer zero; the increase in the radiance leaving $p$ over $\os$ is denoted $\Delta L(p, \os)$.
+
+As we increase $\Delta \oi$, both $\Delta E(p, \oi)$ and $\Delta L(p, \os)$ increase.
+BRDF is defined as the ratio of the two *increments* when $\Delta \oi$ approaches 0 (when the radiance along all directions in $\Delta \oi$ can be thought of as a constant):
+
+$$
+    f_r(p, \os, \oi) = \lim_{\Delta \oi \rightarrow 0}\frac{\Delta L(p, \os)}{\Delta E(p, \oi)} = \frac{\text{d}L(p, \os)}{\text{d}E(p, \oi)} = \frac{\text{d}L(p, \os)}{L(p, \oi)\cos\theta_i \text{d}\oi}.
+$$ {#eq-brdf}
+
+### A Useful Approximation {#sec-chpt-mat-ss-brdf-approx}
+
+Now assume that we illuminate $p$ through a finite, but small, solid angle $\Oi$.
+Turning the differential equation into an integral equation, we get:
+
+$$
+    L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) \text{d}E(p, \oi).
+$$ {#eq-brdf_finite_1}
+
+Using the definition of radiance in @eq-radiance_3, we get:
+$$
+    L(p, \os) = \int^{\Oi} f_r(p, \os, \oi) L(p, \oi)\cos\theta_i \text{d}\oi.
+$$ {#eq-brdf_finite_2}
+
+If we assume that the BRDF is a constant over all the directions in $\Oi$, @eq-brdf_finite_2 is simplified to:
+
+$$
+    L(p, \os) \approx f_r(p, \os, \oi) \int^{\Oi} L(p, \oi)\cos\theta_i \text{d}\oi.
+$$ {#eq-brdf_finite_3}
+
+The integration in @eq-brdf_finite_3 has no analytical solution, since we do not know the analytical form of $L(p, \oi)$, but we know the integration is just another way of expressing the total irradiance incident upon $p$ over $\Oi$, which is denoted as $E(p, \Oi)$^[To be more rigorous, the integration in @eq-brdf_finite_3 evaluates to $E(p, \Oi) + C$, where $C$ is a constant.
+Given the boundary condition that $L(p, \os) = 0$ when $E(p, \Oi) = 0$, we know $C=0$, so $C$ is omitted.].
+This gets us @eq-brdf_finite_4:
+
+$$
+    L(p, \os) \approx f_r(p, \os, \oi) E(p, \Oi).
+$$ {#eq-brdf_finite_4}
+
+Thus, we can approximate the BRDF as:
+$$
+    f_r(p, \os, \oi) \approx \frac{L(p, \os)}{E(p, \Oi)}.
+$$ {#eq-brdf_finite_5}
+
+Ultimately, we can see from @eq-brdf_finite_5 that the BRDF $f_r(p, \os, \oi)$ can also be calculated as the ratio between the *absolute* radiance $L(p, \oi)$ and the absolute irradiance $E(p, \Oi)$ illuminated from a very small, but finite solid angle $\Oi$.
+Another way to interpret this is that the so-calculated BRDF is the average BRDF over $\Oi$.
+This derivation is useful for actually measuring a BRDF, which we will discuss in @sec-chpt-mat-rt-brdf, where we will have no choice but to use a non-zero solid angle for illumination, because physically we just cannot illuminate a point through an infinitesimal solid angle $\doi$.
+
+### Isotropic Material
+
+A 3D direction $\omega$ expressed in the Cartesian coordinate system can also be expressed by two 2D planar angles in the spherical coordinate system: the polar angle $\theta$ and the azimuthal angle $\phi$.
+So BRDF can also be parameterized as $f_r(p, \theta_s, \phi_s, \theta_i, \phi_i)$.
+A material is **isotropic** if its BRDF satisfies $f_r(p, \theta_s, \phi_s, \theta_i, \phi_i) = f_r(p, \theta_s, \phi_s+x, \theta_i, \phi_i+x)$ for any $x$.
+An intuitive way to think of an isotropic material is this: if you pick a point $p$ and rotate the material about the normal vector at $p$, the color of $p$ does not change.
+This is because rotation about the normal vector keeps $\theta_i$ and $\theta_s$ unchanged and varies $\phi_i$ and $\phi_s$ by the same amount.
+
+The nice thing about an isotropic BRDF is it can be parameterized with one fewer degree of freedom: $f_r(p, \theta_s, \phi_s - \phi_i, \theta_i)$.
+This is because it is $(\phi_i - \phi_s)$ rather than the specific values of $\phi_s$ or $\phi_i$ that matter.
+
+## Reflectance and Albedo {#sec-chpt-mat-ss-reflectance}
+
+The BRDF does not have to be a value between 0 and 1.
+Let's say that there is 100 J of energy incident on a point coming from a solid angle $\Delta \oi$.
+That amount of energy is distributed across all the outgoing directions in the hemisphere, which forms a solid angle of $4\pi/2 = 2\pi$.
+So on average the energy exiting per direction is $\frac{100}{2\pi}J$, which clearly is greater than 1.
+This is not surprising, since BRDF is ultimately a *density* measure, a *distribution*, which is most meaningful when it is integrated to calculate some quantity.
+Integrating the BRDF gives a percentage/fraction measure between 0 and 1, i.e., reflectance, which we will discuss next.
+
+### Directional-Hemispherical Reflectance {#sec-chpt-mat-ss-reflectance-dhr}
+
+For the energy to be conserved, the total outgoing energy at any point must not exceed that of the incident energy received by that point.
+Assume that a point $p$ receives an irradiance $\d E_i$ from a direction $\oi$ over an infinitesimal solid angle $\doi$, and the outgoing radiance along the direction $\os$ due to that irradiance is $f_r(p, \os, \oi)\d E_i$.
+Then the outgoing irradiance leaving $p$ over an infinitesimal solid angle $\dos$ around $\os$ would be $f_r(p, \os, \oi)\d E_i\cos\theta_s\dos$.
+If we integrate all the outgoing directions $\Omega$, we get the total outgoing irradiance $\d E_o$, which must not exceed the incident irradiance $\d E_i$:
+
+$$
+    \d E_o = \int^{\Omega} \d E_i f_r(p, \os, \oi) \cos\theta_s\text{d}\os.
+$$ {#eq-energy_con_0}
+
+$\d E_i$ is independent of $\os$, so it can be hoisted out of the integration.
+Therefore, we have the following equation, which holds for any arbitrary incident direction $\oi$:
+
+$$
+    \int^{\Omega}f_r(p, \os, \oi)\cos\theta_s\text{d}\os = \frac{\d E_o}{\d E_i} = \rho_{dh}(p, \oi) \leq 1.
+$$ {#eq-energy_con_1}
+
+$\rho_{dh}$ is defined as the ratio between $\d E_o$ and $\d E_i$.
+When $\Omega$ is the hemisphere, $\rho_{dh}$ is called the **directional-hemispherical reflectance** in the computer vision and graphics literature, and is interpreted as the percentage of energy scattered by a point over the entire hemisphere given the incident light from a particular direction.
+Clearly, $\rho_{dh}$ is a function of both $p$ and $\oi$ and takes a value between 0 and 1.
+
+### Hemispherical-Directional Reflectance {#sec-chpt-mat-ss-reflectance-hdr}
+
+Since we are dealing with geometric optics, the Helmholtz reciprocity holds:
+
+$$
+    f_r(p, \os, \oi) = f_r(p, \oi, \os),
+$$
+
+which means the energy conservation can also be expressed as:
+
+$$
+    \int^{\Omega}f_r(p, \os, \oi)\cos\theta_i\text{d}\oi = \rho_{hd}(p, \os) \leq 1,
+$$ {#eq-energy_con_2}
+
+where $\rho_{hd}$ is called the **hemispherical-directional reflectance** when $\Omega$ is the hemisphere.
+$\rho_{hd}$, a function of $p$ and $\os$, is interpreted as the percentage of energy reflected toward a particular direction $\os$ given the incident energy over the entire hemisphere.
+
+@eq-energy_con_2 can be derived by first rewriting @eq-energy_con_1 as $\int^{\Omega}f_r(p, \oi, \os)\cos\theta_s\text{d}\os \leq 1$ (using the reciprocity) followed by switching $\os$ and $\oi$ (simply a change of notation).
+This derivation suggests that $\rho_{hd}(p, \oi) = \rho_{dh}(p, \os)$, a natural consequence of the reciprocity^[For instance, if $\rho_{hd}(p, \oi) = \frac{1}{1+\oi^2}$, then $\rho_{dh}(p, \os)$ must take the form $\rho_{dh}(p, \os) = \frac{1}{1+\os^2}$].
+
+### Albedo and Hemispherical-Hemispherical Reflectance {#sec-chpt-mat-ss-reflectance-hhr}
+
+We can also describe the relationship between all the outgoing irradiance $E_o$ of a point over a solid angle $\Os$ due to all the incident irradiance $E_i$ over a solid angle $\Oi$:
+
+$$
+\begin{aligned}
+    E_o &= \int^{\Omega_s} \Big(\int^{\Omega_i} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i\text{d}\oi\Big) \cos\theta_s \dos, \\
+    E_i &= \int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi
+\end{aligned}
+$$ {#eq-albedo_0}
+
+Due to energy conservation, we have:
+
+$$
+    \rho_{hh}(p) = \frac{E_o}{E_i} \leq 1.
+$$ {#eq-albedo_1}
+
+@eq-albedo_1 defines $\rho_{hh}$, which is called the **hemispherical-hemispherical reflectance** when both $\Omega_i$ and $\Omega_s$ are hemispheres.
+$\rho_{hh}$ has another name: **albedo**.
+
+When $f_r(p, \os, \oi)$ is independent of (invariant to) $\oi$ and $\os$, i.e., when $p$ is an ideal **Lambertian** surface (see @sec-chpt-mat-ss-mat), @eq-albedo_0 can be re-written as:
+
+$$
+    E_o = \int^{\Omega_s} f_r(p, \os, \oi) (\int^{\Omega_i} L(p, \oi) \cos\theta_i\text{d}\oi) \cos\theta_s \dos.
+$$  {#eq-lamb_0}
+
+Plugging in the definition of $E_i$ from @eq-albedo_0, we have:
+$$
+    E_o = \int^{\Omega_s} f_r(p, \os, \oi) E_i \cos\theta_s \dos.
+$$ {#eq-lamb_1} 
+
+Since $E_i$ is independent of $\os$, we have:
+
+$$
+    E_o = E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos.
+$$ {#eq-lamb_2}
+
+Using the definition of $\rho_{dh}$ in @eq-energy_con_1, we have:
+
+$$
+    E_o = E_i \rho_{dh}(p, \oi).
+$$ {#eq-lamb_3}
+
+Comparing @eq-lamb_3 and @eq-albedo_1, we can see that for a Lambertian surface the albedo ($\rho_{hh}$) is equivalent to $\rho_{dh}$ and $\rho_{hd}$, but this relationship is not true in general.
+
+We can also show that for a Lambertian surface, the BRDF is the constant $\frac{\rho_{hh}}{\pi}$.
+Starting from @eq-lamb_2 and using the assumption that $f_r(p, \os, \oi)$ is independent of $\os$:
+
+$$
+\begin{aligned}
+    E_o = E_i \rho_{hh} &= E_i  \int^{\Omega_s} f_r(p, \os, \oi) \cos\theta_s \dos \\
+    &= E_i f_r(p, \os, \oi) \int^{\Omega_s} \cos\theta_s \dos \\
+    &= E_i f_r(p, \os, \oi) \pi.
+\end{aligned}
+$$ {#eq-lamb_4}
+
+Thus:
+$$
+    f_r(p, \os, \oi) = \frac{\rho_{hh}}{\pi}.
+$$ {#eq-diffuse_brdf}
+
+The last step in @eq-lamb_4 uses the integral results that:
+
+$$
+\begin{aligned}
+    \d\omega &= \sin\theta\d\theta\d\phi, \\
+    \int^{\Omega=2\pi} \cos\theta \d\omega &= \int^{2\pi}_0 \int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta\d\phi \nonumber\\
+    &= 2\pi\int^{\pi/2}_{0} \cos\theta \sin\theta\d\theta \nonumber \\
+    &= \pi,
+\end{aligned}
+$$
+
+when $\Omega$ is the hemisphere.
+
+A fun exercise you can entertain yourself with is to show that if $f_r$ is independent of $\oi$, it must also be independent of $\os$.
+An informal way to do so is the following.
+Since $f_r(p, \os, \oi)$ is independent of $\oi$, let's  rewrite it as $g(p, \os)$.
+Now we invoke the reciprocity and rewrite $f_r(p, \os, \oi)$ as $g(p, \oi)$.
+The only way for $g(p, \os) = g(p, \oi)$ is for $g$ to be dependent only on $p$.
+
+Finally, one can also define the **directional-directional reflectance**, which is naturally a function of both the incident direction and outgoing direction and can be defined as the ratio between the incident irradiance and the outgoing irradiance when both the incident and outgoing solid angles approach 0.
+
+BRDF and directional-directional reflectance are both sensitive to both the incident and outgoing directions.
+But the former is a density measure, whereas the latter is a fraction/percentage measure (all other reflectance quantities are fraction measures too).
+Integrating BRDF over a finite set of directions gives us some measure reflectance.
+This is why the BRDF is defined as the radiance/ irradiance ratio rather than radiance/radiance or irradiance/irradiance ratio; it is to reflect the fact that the energy of a small cone of incident directions is distributed over all the directions over the hemisphere, and what we care to characterize is the *distribution* of the incident energy over all outgoing directions.
+
+## The Rendering Equation {#sec-chpt-mat-ss-re}
+
+Given the BRDF, we can estimate the outgoing radiance of a point given its illumination using the well-known **Rendering Equation**.
+
+The setup is that we have a surface on which there is a point $p$ that is receiving light from a solid angle $\Omega$.
+We are interested in calculating the exiting radiance leaving $p$ toward an arbitrary direction $\os$.
+The rendering equation formulates this calculation by:
+
+$$
+    L(p, \os) = \int^{\Omega} f_r(p, \os, \oi) L(p, \oi) \cos\theta_i \text{d}\oi,
+$$ {#eq-re}
+
+where $L(p, \os)$ is the outgoing radiance from $p$ toward the direction $\os$; $\Omega$ is usually a hemisphere in surface scattering, since lights hitting a surface point can come from anywhere in the hemisphere, in which case @eq-re is also called the *reflection equation*, indicating the fact that the equation governs surface reflection/scattering.
+The rendering equation was first introduced to computer graphics by @kajiya1986rendering and @immel1986radiosity (albeit with slightly different formulations and the former being more general than the latter).
+
+The rendering equation is exactly the same equation in @eq-brdf_finite_2, so there is nothing more profound about the rendering equation than the definition of the BRDF: we are simply following the BRDF's definition and turning the differential equation into an integral one.
+Intuitively, the way to understand this equation is that every ray that hits $p$ makes some contribution toward the outgoing radiance $L(p, \os)$, and the integration just accumulates all the contributions.
+In particular:
+
+* $L(p, \oi) \text{d}\oi$ is the incident irradiance of a differential solid angle $\text{d}\oi$; note that the irradiance calculated here is defined with respect to a surface perpendicular to the direction of $\oi$.
+* $L(p, \oi) \cos\theta \text{d}\oi$ applies the Lambert's cosine law and calculates the irradiance at the surface where $p$ lies.
+* $f_r(p, \os, \oi)L(p, \oi) \cos\theta \text{d}\oi$ "transfers" the differential incident irradiance to the differential outgoing radiance toward $\os$ through the BRDF function.
+* The integration over all the incident directions calculates the total outgoing radiance given all the incident lights.
+
+The rendering equation in theory allows us to calculate the entire light field, i.e., the radiance distribution in space, given an arbitrary $p$ and $\os$.
+Why is knowing the light field important?
+Recall @eq-cam: knowing the light field allows us to synthesize any image or calculate the color of any object from any perspective.
+
+It is, of course, much easier said than done when it comes to solving the rendering equation, which itself is worth multiple chapters in a computer graphics textbook.
+We will not get into it here; let's just consider the following challenges.
+First, the integrand in @eq-re generally has no analytical form, so we will not be able to get an analytical solution to the integral equation.
+A common method is Monte-Carlo integration, which samples the integrand at different points and estimates the integral from the samples.
+
+Second, in a realistic environment, we need to solve the rendering equation *recursively*.
+Note how the radiance function shows up on both sides of the equation.
+Put it in another way, when using Monte-Carlo integration to solve @eq-re we need to sample the value of $L(p, \oi)$ for a specific $\oi$ --- how?
+We evaluate @eq-re again, but this time treating $\oi$ as the $\os$, which means we invoke Monte Carlo integration again.
+You can see how this can quickly blow up the computation: the number of rays whose radiances we need to calculate exponentially increases as long as we need to sample more than one ray at each point.
+A big chunk of physically-based graphics is devoted to addressing this issue; the most commonly used strategy is called **path tracing**, for which @pharr2023physically[chap. 13] is a great reference.
+
+Another way to think of this is that there are infinitely many paths through which light can propagate and be incident on a point.
+A **global illumination** method for rendering would attempt to track all these paths (e.g., through Monte Carlo methods).
+In contrast, a **local illumination** method is concerned with only a small subset of these paths, in which case we might be able to evaluate the rendering equation as a single-pass integration while avoiding recursion.
+For instance, we might consider lights only from direct light sources.
+We will see the counterpart of this exact situation in surface scattering/volume rendering in @sec-chpt-mat-vs-rte.
+For this reason, the rendering equation is sometimes called the **light transport equation** (LTE), because it in principle captures how light is transported in space^[To be exact, the LTE sometimes has an emission term at the right-hand side to denote the spontaneous emission from a surface point.].
+
+An interesting, and approximate, global illumination method that avoids path tracing is the idea of **environment map** [@ramamoorthi2009precomputation, chap. 3].
+It assumes that the light sources are so distant from the objects in the scene that all points in the scene receive the same incident radiance distribution.
+That is, $L(p, \oi)$ in @eq-re is a function of only $\oi$ but not $p$.
+We can then pre-compute (through path tracing for instance) or directly measure $L(\oi)$ offline and store them in a data structure.
+For instance, we can use the equirectangular projection to store a discretized form of $L(\oi)$, or use spherical harmonics to (approximately) store a parameterized form of $L(\oi)$.
+Either way, the data structure that stores pre-computed $L(\oi)$ is called an environment map, which we can load at rendering time, plug it into the rendering equation, and calculate the outgoing radiance by simply evaluating the integral.
+
+Finally, we also need to somehow know the BRDF of the material.
+There are generally two methods of going about it.
+We can, of course, measure it, but we have no realistic way of measuring the complete BRDF for a material, because we would have to measure infinitely many points and, for each point, infinitely many incident and outgoing directions.
+We can only sample the BRDF using something called a *goniospectroreflectometer* or a *goniospectrophotometer* [@judd1975color, p. 402--410], but there is still a massive amount of samples we need to take and to store.
+Lots of prior work goes into efficiently sampling, measuring, and deriving BRDFs [@marschner2000image; @matusik2003data; @pharr2023physically, chap. 9.8].
+
+Another approach is to parameterize the BRDF so that we can evaluate the BRDF on demand rather than storing all the BRDF data, and this is what we will study next.

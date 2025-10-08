@@ -1,0 +1,241 @@
+# Radiometry and Photometry {#sec-chpt-mat-basics-radiometry}
+
+{{< include macros.qmd >}}
+
+To rigorously model surface and volume scattering, we must first define a set of physical quantities that characterize light in space, time, angle, and spectrum.
+The study of these quantities is called **radiometry**, which operates entirely within the domain of geometric optics, treating light as a collection of photons, each traveling in a particular direction and carrying a specific amount of energy (@sec-chpt-mat-basics-radiometry-concepts).
+Radiometry allows us to model light-matter interactions using the framework of **radiative transfer** or **light transport**, which describes how energy is transferred between points in space and is the key tool we will use in rendering both surface and subsurface/volume scattering.
+
+The counterpart of radiometry is photometry (@sec-chpt-mat-basics-radiometry-pm), which deals with the measurement of radiometric quantities and thus is affected by the sensitivity of the measurement device itself (e.g., retina, a photodetector).
+@reinhard2008color[chap. 6] and @bohren2006fundamentals[chap. 4] are good references for radiometry and photometry.
+
+## Key Radiometric Concepts  {#sec-chpt-mat-basics-radiometry-concepts}
+
+We will start by defining a few key quantities in radiometry.
+
+### Energy and Power
+
+Each photon carries a certain amount of energy that is determined by its wavelength governed by:
+
+$$
+    Q = \frac{hc}{\lambda},
+$$
+
+where $c$ is the speed of light, $\lambda$ is the photon wavelength, and $h$ is the Planck's constant.
+
+Power, or more formally in radiometry, **radiant flux** (or simply flux) is the total amount of energy passing through some surface in space per unit time.
+Or, taking a calculus perspective, power $\Phi$ is defined as:
+
+$$
+    \Phi = \lim_{\Delta t \rightarrow 0}\frac{\Delta Q}{\Delta t} = \frac{\text{d}Q}{\text{d}t}.
+$$
+
+The way to think about this is that each photon carries a certain amount of energy so if you monitor photons passing across a surface over a period of time $\Delta t$, you can calculate the average power of that period by dividing the total energy passed by by $\Delta t$.
+As $\Delta t$ approaches 0, we get the instantaneous power.
+
+Of course, energy/power is a function of wavelength, so more rigorously we should be talking about *spectral* power $\Phi(\lambda)$, which has a unit of $\text{W}/\text{nm}$:
+
+$$
+    \Phi(\lambda) = \lim_{\Delta \lambda \rightarrow 0}\frac{\Delta \Phi}{\Delta \lambda} = \frac{\d \Phi}{\d \lambda},
+$$
+
+where $\Delta \Phi$ is the total power within a wavelength interval $\Delta \lambda$.
+
+### Irradiance {#sec-chpt-mat-basics-radiometry-irradiance}
+
+Our power calculation is done with respect to a surface area, but how about the power at each point on the surface area?
+You can imagine that some points get more photons and others get fewer, so it is useful to characterize the power at any given point.
+Technically, the answer to the question "how many photons hit a particular point" is *zero*, since the area of a single point is 0^[A similar question is: imagine you are throwing a dart at a wall, what is the probability of hitting a particular point $p$?  The answer is 0.  The meaningful question to ask is: what is the probability *density* of hitting $p$?].
+The meaningful question is: what is the power *density* of a particular point $p$?
+**Irradiance** is such a quantity.
+
+Imagine again that you are monitoring photons crossing a surface for a period $\Delta t$;
+you can calculate the average power received per unit area by dividing the average power by the surface area, and when you shrink the surface area to an infinitesimal point $p$, we can calculate the power density, i.e., the irradiance, of $p$ by:
+
+$$
+    E(p) = \lim_{\Delta A \rightarrow 0}\frac{\Delta \Phi(p)}{\Delta A} = \frac{\text{d}\Phi(p)}{\text{d}A}.
+$$ {#eq-irradiance}
+
+Irradiance is a more primitive measure than power: in calculus terms, irradiance is a power density function, which means we can derive the power of a surface by integrating the irradiance over the surface area:
+
+$$
+    \Phi = \int^{A}E(p)dA.
+$$
+
+Irradiance has a unit of $\text{W}/\text{m}^\text{2}$, and *spectral* irradiance has a unit of $\text{W}/(\text{m}^\text{2} \cdot \text{nm})$.
+
+### Solid Angle
+
+Irradiance is concerned with the power of all the photons incident on a point, but photons hit a point from all directions, so how do we quantify the amount of light coming from a direction?
+
+A direction is a vector, which is invariant to translational transformations, so the two parallel "arrows" $r_1$ and $r_2$ in @fig-solid_angle (left) represent the same vector/direction.
+Therefore, conceptually it is easier if we translate all the arrows so that they start from the same origin when we want to reason about a collection of directions.
+
+![(a): a solid angle is a measure of the size of a collection of directions in 3D. A direction is a vector, which is translationally invariant, so $r_1$ and $r_2$ refer to the same direction. (b): in spherical coordinate systems, a 3D direction can be parameterized by two angles, a polar angle $\theta$ and an azimuthal angle $\phi$. (c): radiance is an intrinsic property of the radiation field, but we can measure it differently.](figs/solid_angle){#fig-solid_angle width="100%"}
+
+How do we count the number of directions?
+In 2D, we use a *planar angle* to measure the amount of directions.
+Given an origin $O$ and a vector, we rotate it to generate an arc.
+The angle subtended by the arc and $O$ is a measure of the amount of directions we have just covered.
+The angle can also be mathematically given by the ratio $s/r$, where $s$ is the arc length and $r$ is the radius of the circle.
+This matches our intuition that if we increase the radius of the circle, we would get a longer arc but the same angle.
+A full circle has a planar angle of $2\pi$.
+
+We can similarly define the size of a set of directions in 3D.
+We draw a sphere around $O$, and imagine that we have some area on the spherical surface.
+Connecting $O$ to every point on that area represents a direction in 3D.
+So the spherical surface area is a measure of the amount of 3D directions.
+Like in the 2D case, we want the measure to be invariant to the spherical radius, so we define **solid angle**, a measure of the size of a set of 3D directions, as:
+
+$$
+    \Omega = \frac{A}{r^2},
+$$ {#eq-solid_angle}
+
+where $A$ is an area on a spherical surface and $r$ is the radius.
+The unit of a solid angle is the **steradian** ($sr$), and the entire sphere subtends a solid angle of $4\pi$.
+
+Sometimes we want to know the size of the set of directions from a point $O$ to an arbitrary surface.
+We would project that surface to a sphere and get a projected spherical area $A$, using which we can invoke @eq-solid_angle to estimate the solid angle subtended by the surface.
+One useful trick that might help sometimes is to project the surface to the unit sphere (i.e., $r=1$), and the solid angle is mathematically equivalent to the projected area on the unit sphere.
+But the most useful intuition I use whenever I am confused about what a particular solid angle means is to always think of the set of directions/vectors that are represented by that solid angle.
+
+### Radiance {#sec-chpt-mat-basics-radiometry-radiance}
+
+We can now ask, what is the amount of flux received by a point from a particular direction?
+Photons travel in all sorts of directions.
+Let's assume that we place an imaginary flux detector with an area $A$ in the field.
+The detector is able to receive light from only one direction $\omega$, as illustrated in @fig-solid_angle (c).
+We can then read out the total flux $\Phi$ received by the detector, from which we know that the power per unit area along the direction $\omega$ is simply $\frac{\Phi}{A}$.
+
+Now imagine that we orient the detector so that its normal subtends an angle $\theta$ with respect to the light direction $\omega$.
+@fig-solid_angle (b) explicitly illustrates this angle, where the tilted detector lies in the $xy$-plane, and the $z$ direction is the normal $n$.
+In a spherical coordinate system, a direction $\omega$ can be parameterized by two angles: a polar angle $\theta$ and an azimuthal angle $\phi$.
+
+The total flux received by the detector has changed to $\Phi\cos\theta$, because the area that is available to receive photons is now $A\cos\theta$.
+We call this the "effective area".
+As a result, the power per area at the direction $\omega$ remains the same, i.e., $\frac{\Phi}{A}$.
+This is not surprising, because we are not changing the radiation field, only how we measure it.
+When the effective area reaches 0 (i.e., the detector is completely parallel to the light direction), the detector collects no photons, but it certainly does not mean that there is no light in the field.
+
+If we now want to measure light power coming from another direction, we would change the detector so that it receives light from only that direction.
+In reality, this is, of course, not possible.
+No detector can screen lights only from one direction.
+If we place a detector in a radiation field, it is going to receive photons from all sorts of directions.
+We can limit the directions of photons that the detector collects by placing a baffle that allows only certain directions to hit the detector.
+
+![Left: the baffle limits the directions through which incident photons can be collected by the detector. As we reduce the solid angle of the baffle $\Do$ and the detector $\D A$, the average power per unit "effective area" per unit solid angle approaches $L(p, \omega)$, the radiance at position $p$ along direction $\omega$. Right: intuitively we can think of a point (an infinitesimal area) receiving lights from a single direction (an infinitesimal solid angle) as just a tiny area intercepting a tiny cylinder.](figs/radiance){#fig-radiance width="100%"}
+
+This setup is illustrated in @fig-radiance (left).
+The total flux collected by the detector is $\Delta \Phi$, the detector size is $\D A$, and the solid angle subtended by the baffle is $\D \omega$.
+The average power collected per unit "effective area" per unit direction by the detector is then:
+
+$$
+    \frac{\D \Phi}{\D A \cos\theta \D \omega}.
+$$
+
+The baffle does a good job of rejecting many directions that are outside $\D \omega$, but unless it is infinitely long, the detector will still collect some photons traveling through directions outside $\D \omega$.
+But as we reduce the detector size and the baffle size, the baffle becomes a very thin cylinder over a very small detector, which collects light from a very small area along a very small solid angle, visualized in @fig-radiance (right)^[It is just a visualization convention, but visualizing $\do$ as a cylinder rather than a cone makes it easier to imagine what $\d A \cos\theta$ is like.].
+In calculus terms, when we let the detector size and baffle's solid angle approach 0, we obtain the quantity called **radiance**:
+
+$$
+    L(p, \omega) = \lim_{\D \omega \rightarrow 0} \lim_{\D A \rightarrow 0} \frac{\D \Phi}{\D A \cos\theta \D \omega}
+    = \frac{\text{d}}{\text{d}\omega}\frac{\text{d}\Phi(p)}{\text{d}A \cos\theta} = \frac{\text{d}^2\Phi(p)}{\text{d}\omega\text{d}A \cos\theta}.
+$$ {#eq-radiance_2}
+
+@eq-radiance_2 is the definition of radiance, and it can be  rewritten to @eq-radiance_3 given the definition of irradiance (see @eq-irradiance).
+
+$$
+    L(p, \omega) = \frac{\text{d}E(p)}{\text{d}\omega\cos\theta}.
+$$ {#eq-radiance_3}
+
+Radiance is an intrinsic property of the radiation field, and the reason we have the $\cos\theta$ term in the definition is merely due to the way we have chosen to measure the property (using a detector that is $\theta$-oriented).
+Radiance has a unit of $\text{W}/(\text{m}^\text{2}\cdot \text{sr})$, and *spectral* radiance has a unit of $\text{W}/(\text{m}^\text{2}\cdot \text{sr} \cdot \text{nm})$.
+
+Looking at the effective area in @fig-radiance, if the irradiance at the infinitesimal area $p$ is $\d E(p)$, the irradiance at the (infinitesimal) effective area (projected from $\d A$ along $\omega$) is $\frac{\d E(p)}{\cos\theta}$, which we denote $\d E_\bot(p)$.
+Combining this with @eq-radiance_3, radiance $L(p, \omega)$ can also be defined as:
+
+$$
+    L(p, \omega) = \frac{\text{d}E_\bot(p)}{\text{d}\omega}.
+$$ {#eq-radiance_4}
+
+@eq-radiance_4 and @eq-radiance_3 each corresponds to a concrete way of measuring the radiance.
+@eq-radiance_4 places the detector perpendicular to the direction of light that we care to measure, and the detector used by @eq-radiance_3 is $\theta$-oriented with respect to the direction of interest.
+They give us an identical radiance result because radiance, again, is an inherent property of the radiation field invariant to how we measure it.
+
+Radiance is a density function: the density of power at a point along a direction.
+As with any density function, it is useful when it gets integrated to compute some other quantities.
+For instance, given the radiance $L(p, \omega)$, the irradiance at $p$ is given by:
+
+$$
+    E(p, \Omega) = \int^{\Omega}L(p, \omega)\cos\theta\text{d}\omega.
+$$ {#eq-int_radiance}
+
+Here we write the irradiance as $E(p, \Omega)$ to explicitly signify that the irradiance depends not only on the specific position $p$ but also the solid angle $\Omega$ over which the lights are coming.
+
+Using the interpretation of radiance in @eq-radiance_4, we can also give a more operational interpretation of @eq-int_radiance: we first calculate the infinitesimal irradiance $\d E_\bot(p) = L(p, \omega)\do$ made by lights at the direction $\omega$, then "transfer" that to the infinitesimal irradiance at the detector surface through the $\cos\theta$ factor, and then repeat this for all the directions to accumulate the contributions from all directions.
+
+### Radiant Intensity and Lambert's Cosine Law {#sec-chpt-mat-basics-radiometry-lamb}
+
+A **Lambertian emitter** or an ideal *diffuse emitter* is a flux-emitting point whose emitted radiance is constant regardless of the outgoing direction.
+A related concept is a **Lambertian scatterer** or an ideal *diffuse surface*, which is a surface point where the scattered radiance is independent of the scattering direction.
+
+It might come as a surprise that the flux emitted by a Lambertian emitter through a fixed solid angle is different for different  emission directions.
+Consider a setup where a Lambertian emitter has an infinitesimal area $\d A$.
+The power emitted by $\d A$ toward its normal direction in an infinitesimal solid angle of $\do$ is $\d\Phi_0 = L\do\d A$, where $L$ is the radiance.
+The power emitted toward an oblique direction $\omega$ through the same solid angle is $\d\Phi_\theta = L \do \cos\theta \d A$.
+
+In radiometry, the ratio of infinitesimal power and infinitesimal solid angle is called the **radiant intensity**^[Or simply, the "intensity", which is an extremely overloaded term, so we will be verbose and use "radiant intensity" when we mean it.], denoted $I$:
+
+$$
+    I(\omega) = \frac{\d\Phi}{\do}.
+$$ {#eq-intensity}
+
+$I$ is a meaningful measure only for a point source (e.g., our infinitesimal Lambertian emitter here).
+We can see that for a Lambertian emitter, the radiant intensity decays by a factor of $\cos\theta$: $\frac{\d\Phi_\theta}{\d\omega} = \frac{\d\Phi_0}{\d\omega}\cos\theta$.
+This is usually called the **Lambert's cosine law**, named after Johann Heinrich Lambert, from his Photometria [@lambert1760photometria].
+Similarly, if we have a Lambertian scatterer, its scattered radiant intensity will also decay by $\cos\theta$ as the polar angle $\theta$ of the viewing direction $\omega$ increases.
+
+![Comparison between the radiance distribution (constant w.r.t. viewing direction $\omega$) and radiant intensity distribution (weakens by a factor of $\cos\theta$) of a Lambertian emitter/scatterer.](figs/intensity_vs_radiance_lobe_new){#fig-intensity_vs_radiance_lobe width="60%"}
+
+@fig-intensity_vs_radiance_lobe compares the radiance distribution and radiant intensity distribution of a Lambertian emitter/scatterer.
+Both distributions are over the entire hemisphere, but we show only a cross section.
+The distributions are visualized as two lobes, and the distance of a point on the lobe to the origin is proportional to the value at that point.
+The radiance distribution is constant regardless of $\omega$ but the radiant intensity is proportional to $\cos\theta$.
+This difference stems from the fact that intensity is defined with respect to the power at the detector/emission area ($\d A$) while radiance is defined with respect to power at the effective area ($\d A \cos\theta$).
+
+## Photometric Quantities {#sec-chpt-mat-basics-radiometry-pm}
+
+Spectral radiant flux (power), irradiance, radiant intensity, and radiance are all radiometric quantities.
+They all have a **photometric** counterpart, which weighs the radiometric quantity by the luminous efficiency function (LEF).
+The LEF, as we have discussed in @sec-chpt-hvs-color-oppo-light, at a particular wavelength is inversely proportional to the radiometric quantity at each wavelength needed to produce the same level of perceptual brightness.
+
+For instance, given a spectral radiant flux $\Phi(\lambda)$, the corresponding photometric counterpart is then:
+
+$$
+    \Phi_v(\lambda) = K \Phi(\lambda) V(\lambda),
+$$
+
+where $\Phi_v(\lambda)$ is the spectral **luminous flux**, $V(\lambda)$ is the LEF, and $K$ is a constant that, for historical reasons, takes the value of 683.002.
+The total luminous flux is then:
+
+$$
+    \Phi_v = \int_\lambda K \Phi(\lambda) V(\lambda) \d \lambda.
+$$
+
+Luminous flux has a unit of **lumen** ($\text{lm}$), so $K$ has a unit of $\text{lm}/\text{W}$.
+We can also weigh the radiant power by the scotopic LEF, in which case $\text{K} = 1700$ ($\text{lm}/\text{W}$).
+
+Other radiometric quantities can be similarly converted to the photometric counterparts.
+Specifically:
+
+* the photometric counterpart of irradiance is **illumination**, which has a unit of $\text{lx} = \text{lm}/\text{m}^2$, which is also called the **lux**;
+* the photometric counterpart of radiance intensity is **luminous intensity**, which has a unit of $\text{cd} = \text{lm}/\text{sr}$, which is called the **candela**;
+* the photometric counterpart of radiance is **luminance**, which has a unit of $\text{lm}/(\text{m}^2\text{sr}) = \text{cd}/(\text{m}^2)$, which is also called the **nit**.
+
+Sometimes radiometric vs. photometric quantities are also called the radiant vs. luminous quantities.
+The way to interpret the photometric quantities is that they take into account the spectral sensitivity of a particular photodetector, which in our discussion above is the photoreceptors on the retina, so the spectral sensitivity function of the detector is the LEF.
+If we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different.
+We will study the spectral sensitivity of image sensors in @sec-chpt-imaging-sensor-optics-monomodel.
+
+A **radiometer** measures the absolute radiometric quantities, whereas a **photometer** reports photometric quantities.
+An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination.

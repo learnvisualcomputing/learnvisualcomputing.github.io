@@ -1,0 +1,452 @@
+# Rendering Volume and Subsurface Scattering {#sec-chpt-mat-vs-rte}
+
+{{< include macros.qmd >}}
+
+So far we have assumed that a ray can only be attenuated, which can happen only when the illumination is collimated and we assume single scattering.
+Under this assumption, @eq-scat_cont allows us to calculate any radiance in the medium (by weakening the initial radiance).
+General media are much more complicated: illumination can be from anywhere, and multiple scattering must be accounted for.
+As a result, external photons can be scattered into a ray of interest, as we have intuitively discussed in @sec-chpt-mat-vs-sca-intuition.
+
+In the realm of geometric optics and radiometry, the general way to model lights going through a material/medium amounts to solving the so-called **Radiative Transfer Equation** (RTE), whose modern version was established by @chandrasekhar1960radiative^[Subrahmanyan Chandrasekhar won the Nobel Prize in physics in 1983 (not for the RTE).], and @kajiya1984ray was the first to introduce it to computer graphics.
+The RTE provides the mathematical tool to model an arbitrary radiance in a medium (@sec-chpt-mat-vs-rte-rte).
+
+We will then discuss an important way to solve the RTE by turning it to the Volume Rendering Equation (VRE) (@sec-chpt-mat-vs-rte-vre), discuss the discrete form of the VRE that is commonly used in scientific visualization (@sec-chpt-mat-vs-rte-vis) and, more recently, radiance-field rendering (@sec-chpt-mat-vs-rte-nr), a modern iteration of image-based rendering (@sec-chpt-mat-basics-radiometry-lf-ren) that uses discrete VRE to parameterize the image formation process.
+Finally, we will show a simple phenomenological model that integrates surface scattering with volume scattering (@sec-chpt-mat-vs-sca-bssrdf).
+
+## Radiative Transfer Equation {#sec-chpt-mat-vs-rte-rte}
+
+The basic idea is to set up a differential equation to describe the (rate) of the radiance *change*.
+Given an incident radiance $L(p, \os)$, we are interested in $L(p+\D s \os, \os)$, the radiance after the ray has gone a small distance $\D s$.
+The radiance can be:
+
+* attenuated by the medium because of absorption;
+* attenuated by the medium because photons are scattered out into other directions; this is called **out-scattering** in graphics;
+* augmented by photons that are scattered into the ray direction from all other directions --- because of multiple scattering^[Technically, even single scattering can lead to augmentation if there is illumination coming from anywhere outside the ray direction.]; this is called *in-scattering* in graphics;
+* augmented because particles can emit photons.
+
+The attenuation (reduction) of the radiance over $\D s$ is:
+
+$$
+    -L(p, \os) \sigma_t(p, \os) \D s.
+$$ {#eq-radiance_sub}
+
+The radiance augmentation due to in-scattering is given by:
+
+$$
+    \int^{\Omega = 4\pi} f_p(p, \os, \oi) \sigma_s(p, \os) \D s L(\oi) \doi = \sigma_s(p, \os) \D s \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi.
+$$ {#eq-radiance_add_insca}
+
+<!-- %\fixme{different oi will have different optical length, but that can be folded into sigma. the fact that we are integrating over 4pi means we should absolutely consider photons that hit all six faces of the cube. also recall that we considering single scattering, so a scattered photon will not go through other scatterings in that volume/entire medium.} -->
+
+The way to interpret @eq-radiance_add is the following.
+$L(p, \oi)$ is the incident radiance from a direction $\oi$, $L(p, \oi) \doi$ is the irradiance received from $\doi$, of which $\sigma_s(p, \oi)\D s L(p, \os) \doi$ is the irradiance scattered in all directions after traveling a distance $\D s$.
+That portion of the scattered irradiance is multiplied by $f_p(\os, \oi)$ to give us the radiance toward $\os$ (see @eq-phase_func_def2).
+We then integrate over the entire sphere, accounting for the fact that lights can come from anywhere over the space, to obtain the total augmented radiance toward $\os$.
+
+If we consider emission, the total radiance augmentation is:
+
+$$
+    \sigma_a(p, \os) \D s L_e(p, \os) + \sigma_s(p, \os) \D s \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi,
+$$ {#eq-radiance_add_total}
+
+where $L_e(p, \os)$ is the emitted radiance at $p$ toward $\os$, so the first term represents the total emission over $\D s$.
+If we let:
+
+$$
+    L_s(p, \os) = \sigma_a(p, \os) L_e(p, \os) + \sigma_s(p, \os) \int^{\Omega = 4\pi} L(p, \oi) f_p(p, \os, \oi) \doi,
+$$ {#eq-source_term_em}
+
+the total augmentation can be simplified to:
+
+$$
+    L_s(p, \os) \D s,
+$$ {#eq-radiance_add}
+
+where the $L_s$ term is sometimes called the **source term** or **source function** in computer graphics, because it is the source of power at $p$^[Some definitions do not include emission in the source term, while in other definitions the source term is what is defined here divided by $\sigma_t$.].
+
+Combining @eq-radiance_sub and @eq-radiance_add, the net radiance change is^[A subtlety you might have noticed is that not all the out-scattering of $L(p, \os)$ attenuates the radiance; some of the scattering could be toward $\os$ so should augment the radiance.
+This is not a concern since our augmentation term @eq-radiance_add integrates over the entire sphere, so it considers $L(p, \os)$ again as part of in-scattering and accounts for the forward-scattered portion of $L(p, \os)$.]:
+
+$$
+\begin{aligned}
+    \D L(p, \os) &= L(p + \D s \os, \os) - L(p, \os) \\
+    &= -L(p, \os) \sigma_t(p, \os) \D s + L_s(p, \os) \D s.
+\end{aligned}
+$$ {#eq-rte_1}
+
+As $\D s$ approaches 0, we get (assuming $\os$ is a unit vector as in @eq-abs_cont and @eq-scat_cont):
+
+$$
+\begin{aligned}
+    \os \cdot \nabla_p L(p, \os) &= \frac{\d L(p, \os)}{\d s} = \lim_{\D s \rightarrow 0} \frac{L(p + \D s \os, \os) - L(p, \os)}{\D s} \nonumber \\
+    &= -\sigma_t(p, \os) L(p, \os) + L_s(p, \os),
+\end{aligned}
+$$ {#eq-rte_2}
+
+where $\nabla_p$ denotes the gradient of $L$ with respect to $p$, and $\os \cdot \nabla_p$ denotes the directional derivative, which is used because technically $p$ and $\os$ are both defined in a three-dimensional space, so what we are really calculating is the rate of radiance change at $p$ along $\os$.
+
+@eq-rte_2 is the RTE, which is an integro-differential equation, because it is a differential equation with an integral embedded.
+The RTE has an intuitive interpretation: if we think of radiance as the power of a ray, as a ray propagates, its power is attenuated by the medium but also augmented by "stray photons" from other rays.
+The latter is given by $L_s(p, \os)$, which can be thought of as the augmentation of the radiance per unit length.
+
+The RTE describes the rate of change of an arbitrary radiance $L(p, \os)$.
+But our ultimate goal is to calculate the radiance itself?
+Generally the RTE has no analytical solution.
+There are two strategies to solve it.
+First, we can derive analytical solutions under certain certain assumptions and simplifications.
+
+* For instance, the integral in @eq-rte_2 can be approximated by a summation along $N$ directions;
+then we can turn @eq-rte_2 into a system of $N$ differential equations to be solved.
+This is sometimes called the **N-flux theory**.
+<!-- We will omit a formal treatment but refer you to @bohren2006fundamentals[chap. 6.1], @volz2001industrial[chap. 3.1.2], and @klein2010industrial[chap. 5.5] for details. -->
+You might have heard of the famous Kubelka-Munk model [@kubelka1931beitrag; @kubelka1931article; @kubelka1948new] widely used in modeling the color of pigment mixture; it is essentially a special case of the N-flux theory where $N=2$, which we will discuss in @sec-chpt-mat-vs-km.
+
+* Another assumption people make is to assume that volume scattering is isotropic and can be approximated as a *diffusion* process.
+This is called the **diffusion approximation** [@ishimaru1977theory; @ishimaru1978wave], which is widely used in both scientific modeling [@farrell1992diffusion; @eason1978theory; @schweiger1995finite; @boas2001imaging] and in rendering [@stam1995multiple, chap. 7; @wann2001practical; @dong2013material]; see @bohren2006fundamentals[chap. 6.2] for a theoretical treatment.
+
+The second approach deserves its own section.
+
+## Volume Rendering Equation {#sec-chpt-mat-vs-rte-vre}
+
+The second approach, which is particularly popular in computer graphics, is to first turn the RTE into a purely integral equation and then *numerically* (rather than analytically) estimate the integral using Monte Carlo integration, very similar to how the rendering equation is dealt with for surface scattering (@sec-chpt-mat-ss-re).
+
+![(a): Illustration of the continuous VRE (@eq-vre). (b): Illustration of a discrete VRE (@eq-vre_1a), where the integral in the continuous VRE is replaced by a summation between $p_0$ and $p$ at an interval of $\D s$; $t_i$ is the total transmittance between $p_i$ and $p_{i+1}$; $L_i$ is a shorthand for $L_s(p_i, \os)$, the source term of at $p_i$ toward $\os$.](figs/vre){#fig-vre width="100%"}
+
+The way to think of this is that in order to calculate any given radiance $L(p, \os)$, we need to integrate all the changes along the direction $\os$ up until $p$.
+Where do we start the integration?
+We can start anywhere.
+@fig-vre (a) visualizes the integration process.
+Let's say we want to start from a point $p_0$, whose initial radiance toward $\os$ is $L_0(p_0, \os)$.
+Let $p = p_0 + s\os$, where $\os$ is a unit vector and $s$ is the distance between $p_0$ and $p$.
+An arbitrary point $p'$ between $p_0$ and $p$ would then be $p' = p_0 + s' \os$^[There are two alternative parameterizations, both of which are common in graphics literature.
+The first [@pharr2023physically] is to express $p_0 = p + s\os$ ($s$ being positive), but then the initial radiance would have to be expressed as $L(p_0, -\os)$, since $\os$ now points from $p$ to $p_0$.
+The other is to express $p_0 = p - s\os$ ($s$ again being positive) [@fong2017production]; this avoids the need to switch directions but uses a negative sign.
+It is a matter of taste which one to use, but be alert to the different conventions.].
+
+Now we need to integrate from $p_0$ to $p$ by running $s'$ from 0 to $s$.
+Observe that the RTE is a form of a *non-homogeneous* linear differential equation, whose solution is firmly established in calculus.
+Without going through the derivations, its solution is:
+
+$$
+    L(p, \os) = T(p_0 \rightarrow p)L_0(p_0, \os) + \int_{0}^{s} T(p' \rightarrow p) L_s(p', \os)\d s',
+$$ {#eq-vre}
+
+where $T(p_0 \rightarrow p)$ is the transmittance between $p_0$ and $p$ along $\os$, and $T(p' \rightarrow p)$ is the transmittance between $p'$ and $p$ along $\os$.
+Recall the definition of transmittance in @eq-transmittance: it is the remaining fraction of the radiance after attenuation by the medium after traveling the distance between two points.
+In our case here:
+
+$$
+\begin{aligned}
+    T(p' \rightarrow p) = \frac{L(p+s\os, \os)}{L(p+s'\os, \os)} = e^{-\int_{s'}^s \sigma_t(p+t\omega, \omega) \d t}, \\
+    T(p_0 \rightarrow p) = \frac{L(p+s\os, \os)}{L(p, \os)} = e^{-\int_{0}^s \sigma_t(p+t\omega, \omega) \d t},
+\end{aligned}
+$$
+
+The integral equation @eq-vre in the graphics literature is called the **volume rendering equation** (VRE) or the **volumetric light transport equation** --- the counterpart of the surface LTE (@sec-chpt-mat-ss-re).
+Looking at the visualization in @fig-vre (a), the VRE has an intuitive interpretation: the radiance at $p$ along $\os$ is the the contribution of $p_0$ plus and contribution of every single point between $p_0$ and $p$.
+
+* The contribution of $p_0$ is given by its initial radiance $L_0$ weakened by the transmittance between $p_0$ and $p$;
+* Why would a point $p'$ between $p_0$ and $p$ make any contribution?  It is because of the source term (@eq-source_term_em): $p'$ might emit lights, and some of the in-scattered photons at $p'$ will be scattered toward $\os$.  The contribution of $p'$ is thus given by the source term $L_s$ weakened by the transmittance between $p'$ and $p$.
+
+The form of the VRE might appear to suggest that it is enough to accumulate along only the *direct* path between $p_0$ and $p$, which is surprising given that there are infinitely many scattering paths between $p_0$ and $p$ (due to multiple scattering).
+For instance, it appears that we consider only the outgoing radiance toward $\os$ from $p_0$, but $p_0$ might have outgoing radiances over other directions, which might eventually contribute to $L(p, \os)$ through multiple scattering.
+Are we ignoring them?
+
+The answer is that the VRE *implicitly* accounts for all the potential paths between $p_0$ and $p$ because of the $L_s$ term, which expands to @eq-source_term_em.
+That is, every time we accumulate the contribution of a point between $p_0$ and $p$, we have to consider the in-scattering from all the directions at that point.
+Another way to interpret this is to observe that the radiance term $L$ appears on both sides of the equation.
+Therefore, the VRE must be solved recursively by evaluating it everywhere in space.
+
+Does this remind you of the rendering equation (@eq-re)?
+Indeed, the VRE can be thought of as the volumetric counterpart of the rendering equation.
+Similarly, we can use Monte Carlo integration to estimate it, just like how the rendering equation is dealt with --- with an extra complication: the VRE has two integrals: the outer integral runs from $p_0$ to $p$ and, for any intermediate point $p'$, there is an inner integral that runs from $p'$ to $p$ to evaluate the transmittance $T(p' \rightarrow p)$.
+Therefore, we have to sample both integrands.
+
+Similar to the situation of the rendering equation, sampling recursively would exponentially increase the number of rays to be tracked.
+Put it another way, since there are infinitely many paths from which a ray gains its energy due to multiple scattering, we have to integrate infinitely many paths.
+Again, a common solution is path tracing, for which @pharr2023physically[chap. 14] is a great reference.
+
+A simplification that is commonly used is to assume that there is only single scattering directly from the light source.
+In this way, the $L_s$ term does not have to integrate infinitely many incident rays over the sphere but only a fixed amount of rays emitted from the light source *non-recursively*.
+This strategy is sometimes called **local illumination** in volume rendering, as opposed to **global illumination**, where one needs to consider all the possible paths of light transport.
+The distinction is similar to that in modeling surface scattering (@sec-chpt-mat-ss-re).
+
+## Discrete VRE and Scientific Volume Visualization {#sec-chpt-mat-vs-rte-vis}
+
+Sometimes the VRE takes the following discrete form:
+
+$$
+    L = \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}t_j\big).
+$$ {#eq-vre_1a}
+
+@eq-vre_1a is the discrete version of @eq-vre: the former turns the two integrals in the latter (both the outer integral and the inner one carried by $T(\cdot)$) to discrete summations using the Riemann sum over $N$ discrete points along the ray between $p_0$ and $p$ at an interval of $\D s = \frac{s}{N}$.
+
+The notations are slightly different; @fig-vre (b) visualizes how this discrete VRE is expressed with the new notations.
+
+* $L$ is $L(p, \os)$, the quantity to be calculated;
+* $L_i$ is a shorthand for $L_s(p_i, \os)$, i.e., the source term (@eq-source_term_em) for the $i^{th}$ point between $p_0$ and $p$ toward $\os$; by definition, $p_0$ is the $0^{th}$ point (so $L_0$ is the initial radiance $L_0(p_0, \os)$ in @eq-vre) and $p$ is the $N^{th}$ point;
+* $t_i$ (or more explicitly $t(p_{i} \rightarrow p_{i+1})$) represents the total transmittance between the $i^{th}$ and the $(i+1)^{th}$ point and is given by $e^{-\sigma_t(p_i, \os) \D s}$ (notice the integral in continuous transmittance @eq-transmittance is gone, because we assume the transmittance between two adjacent points is a constant in the Reimann sum);
+* $\alpha_i$ is the **opacity** between the $i^{th}$ and the $(i+1)^{th}$ point, which is defined as the residual of the transmittance between the two points: $1-t_i$.
+
+See @max1995optical[Sect. 4] or @kaufman2003volume[Sect. 6.1] for a relatively straightforward derivation of @eq-vre_1a, but hopefully this form of the VRE is equally intuitive to interpret from @fig-vre (b).
+It is nothing more than accumulating the contribution of each point^[technically it is the contribution of each small segment between two discrete points because of the Reimann sum.] along the ray, but now we also need to accumulate the attenuation along the way just because of how opacity is defined by convention (per step), hence the product of a sequence of the opacity residuals.
+
+We can also re-express @eq-vre_1a using opacity rather than transmittance:
+$$
+\begin{aligned}
+    L &= \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big) \\
+    &= L_{N-1} \D s + L_{N-2} \D s(1-\alpha_{N-1}) + L_{N-3} \D s(1-\alpha_{N-1})(1-\alpha_{N-2}) +~\cdots~  \\
+    &~~~+ L_1\D s\prod_{j=2}^{N-1}(1-\alpha_j)+ L_0\D s\prod_{j=1}^{N-1}(1-\alpha_j).
+\end{aligned}
+$$  {#eq-vre_1b}
+
+The discrete VRE is usually used in the scientific visualization literature, where people are interested in visualizing data obtained from, e.g., computer tomography (CT) scans or magnetic resonance imaging (MRI).
+There, it is the relative color that people usually care about, not the physical quantity such as the radiance, so people sometimes lump $L_i\D s$ together as $C_i$ and call it the "color" of the $i^{th}$ point.
+The VRE is then written as:
+
+$$
+    C = \sum_{i=0}^{N-1}\big(C_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
+$$ {#eq-vre_2}
+
+The $C$ terms are defined in a three-dimensional RGB space, and @eq-vre_2 is evaluated for the three channels separately, similar to how @eq-vre_1a and @eq-vre are meant to be evaluated for each wavelength independently.
+Since color is a linear projection from the spectral radiance, the so-calculated $C$ (all three channels) is indeed proportional to the true color, although in visualization one usually does not care about the true colors anyway (see @sec-chpt-mat-vs-rte-vis-vis).
+
+@eq-vre_2 is also called the *back-to-front* compositing formula in volume rendering, since it starts from $p_0$, the farthest point on the ray to $p$.
+We can easily turn the order around to start from $p$ and end at $p_0$ in a *front-to-back* fashion ($C_{N-1}$ now corresponds to $p_0$):
+
+$$
+    C = \sum_{i=0}^{N-1}\big(C_i\prod_{j=0}^{i-1}t_j\big).
+$$ {#eq-vre2_front}
+
+While theoretically equivalent, the latter is better in practice because it allows us to opportunistically terminate the integration early when, for instance, the accumulated opacity is high enough (transmittance is low enough), at which point integrating further makes little numerical contribution to the result.
+
+### Another Discrete Form of VRE
+
+A perhaps more common way to express the discrete VRE is to approximate the transmittance $t$ using the first two terms of its Taylor series expansion and further assume that the medium has a low albedo, i.e., $\sigma_t \approx \sigma_a$ and $\sigma_s \approx 0$ (that is, the medium emits and absorbs *only*); we have:
+
+$$
+\begin{aligned}
+    & 1 - \alpha_i = t_i = t(p_{i} \rightarrow p_{i+1}) = e^{-\sigma_t(p_i, \os) \D s} = 1 - \sigma_t(p_i, \os) \D s + \frac{(\sigma_t(p_i, \os) \D s)^2}{2} - \cdots \\
+    \approx & 1 - \sigma_t(p_i, \os) \D s \\
+    \approx & 1 - \sigma_a(p_i, \os) \D s.
+\end{aligned}
+$$
+
+Therefore:
+
+$$
+\alpha_i \approx \sigma_a(p_i, \os) \D s.
+$$ {#eq-vre_alpha_approx}
+
+Now, observe that the $L_i$ term in @eq-vre_1a is the source term in @eq-source_term_em, which under the low albedo assumption has only the emission term, so:
+
+$$
+\begin{aligned}
+    L &= \sum_{i=0}^{N-1}\big(L_i\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big) \\
+    &=  \sum_{i=0}^{N-1}\big(\sigma_a(p_i, \os) L_e(p_i, \os)\D s\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
+\end{aligned}
+$$ {#eq-vre_3b}
+
+Now plug in @eq-vre_alpha_approx, we have:
+
+$$
+    L =  \sum_{i=0}^{N-1}\big(L_e(p_i, \os)\alpha_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
+$$ {#eq-vre_3c}
+
+If we let $C_i = L_e(p_i, \os)$, the discrete VRE is then expressed as [@levoy1988display]:
+
+$$
+    C = \sum_{i=0}^{N-1}\big(C_i\alpha_i\prod_{j=i+1}^{N-1}(1-\alpha_j)\big).
+$$ {#eq-vre_4}
+
+This can be interpreted as a form of **alpha blending** [@smith1995alpha], a typical trick in graphics to render transparent materials.
+It makes sense for our discrete VRE to reduce to alpha blending: our derivation assumes that the volume does not scatter lights, so translucent materials become transparent.
+
+Again, @eq-vre_4 is the back-to-front equation, and the front-to-back counterpart looks like:
+
+$$
+    C = \sum_{i=0}^{N-1}\big(C_i\alpha_i\prod_{j=0}^{i-1}t_j\big).
+$$ {#eq-vre4_front}
+
+If you compare the two discrete forms in @eq-vre_2 and @eq-vre_4, it would appear that the two are not mutually consistent!
+Of course we know why: 1) @eq-vre_4 applies two further approximations (low albedo and Taylor series expansion) *and* 2) the two $C$ terms in the two equations refer to different physical quantities (compare @eq-vre_1b with @eq-vre_3c).
+
+### The Second Form is More Flexible {#sec-chpt-mat-vs-rte-vis-compare}
+
+What is the benefit of this new discrete form, comparing @eq-vre2_front and @eq-vre4_front?
+Both equations can be interpreted as a form of weighted sum, where $C_i$ is weighted by a weight $w_i$, which is $\prod_{j=0}^{i-1}t_j$ in the first case and $\alpha_i\prod_{j=0}^{i-1}t_j$ in the second case.
+The most obvious difference is that the weights in the first case are correlated but less so in the second case.
+The weights are strictly decreasing as $i$ increases in the first case, since $t_i < 1$.
+
+In the second case, the weights are technically independent.
+One way to understand this is to observe, in the second case, that $w_0 = \alpha_0$ and $w_{i+1} = w_i \frac{\alpha_{i+1}(1-\alpha_i)}{\alpha_i}$, so there is generally a unique assignment of the $\alpha$ values for a given weight combination.
+This "flexibility" will come in handy when we can manually assign (@sec-chpt-mat-vs-rte-vis-vis) or learn the weights (@sec-chpt-mat-vs-rte-nr).
+Note, however, that if we impose the constraint that $\alpha\in[0, 1]$, we are effectively constraining the weights too.
+
+### Visualization is Not (Necessarily) Physically-Based Rendering! {#sec-chpt-mat-vs-rte-vis-vis}
+
+These discrete VRE forms might give you the false impression that we have avoided the need to integrate infinitely many paths, because, computationally, the evaluation of the VRE comes down to a *single-path* summation along the ray trajectory.
+Not really.
+Calculating the $C_i$ terms in the new formulations still requires recursion if the results are meant to be physically accurate.
+Of course we can sidestep this by, e.g., applying the local-illumination approximation, as mentioned before, to avoid recursion.
+
+Scientific visualization offers another opportunity: we can simply *assign* values to the $C$s and even the $\alpha$s without regard to physics.
+The goal of visualization is to discover/highlight interesting objects and structures while de-emphasizing things that are irrelevant.
+So the actual colors are not as important, which gives us great latitude to determine VRE parameters.
+
+![Comparing volume rendering for visualization and rendering. (a): two examples of scientific visualization (of CT data) using volume rendering; from @ctscan and @ctscanmouse. (b): photorealistic volume rendering (a scene from Disney’s Moana, 2016); from @eelt_rendering.](figs/render_vs_vis_new){#fig-render_vs_vis width="100%"}
+
+@fig-render_vs_vis compares volume-rendered images for scientific visualization (a) and for photorealistic rendering (b).
+In the case of visualization, the data were from CT scans.
+In both scans, the outer surface is not transparent but is rendered so just because we are interested in seeing the inner structures that are otherwise occluded.
+The user makes an executive call to assign a very low transparency to the bones in the knee model 0 but a very high transparency value to the skin and other tissues: this is not physically accurate but a good choice for this particular visualization.
+Photorealistic rendering, in contrast, has to be physically based and does not usually have this flexibility.
+See figures in @wrenninge2011production and @fong2017production for more examples.
+
+There is volume rendering software that would allow the users to make such an assignment depending on what the user wants to highlight and visualize.
+With certain constraints and heuristics, one can also procedurally assign the $\alpha$ and $C$ values from the raw measurement data, usually a density field (see below) acquired from whatever measurement device is used (e.g., CT scanners or MRI machines), using what is called the *transfer functions* in the literature^[Some (color) transfer functions could have physical underpinnings, such as applying a single-scattering shading algorithms (i.e., local illumination); see, e.g., @levoy1988display[Sect. 3] or @max1995optical[Sect. 5], but the goal there is not to precisely model physics but for better, subjective visualization.].
+Making an assignment usually is tied to a *classification* problem: voxels/points of different classes should have different assignments.
+
+### Density Fields
+
+Physically speaking, the medium in RTE/VRE is parameterized by its absorption and scattering coefficients, which are a product of cross section and concentration, which is sometimes also called the density.
+In physically-based volume rendering, this is indeed how the density is used from the very beginning [@kajiya1984ray; @blinn1982light].
+
+In visualization where being physically accurate or photorealistic is unimportant, the notion of an attenuation coefficient^[which is the only coefficient needed and which participates in calculating $\alpha$ (@eq-vre_2).] loses its physical meaning; it is just a number that controls how the brightness of a point weakens.
+People simply call the attenuation coefficient the density [@kaufman2003volume], presumably because, intuitively, if the particle density is high the color should be dimmer.
+If you want to be pedantic, you might say that the attenuation coefficient depends not only on the density/concentration but also on the cross section (@eq-abs_2), so how can we do that?
+Remember in visualization one gets to make an executive call and *assign* the density value (and thus control $\alpha$), so it does not really matter if the value itself means the physical quantity of density/concentration.
+This is apparent in early work that uses volume rendering for scientific visualization [@sabella1988rendering; @williams1992volume], where attenuation coefficients are nowhere to be found.
+
+For this reason, the raw volume data obtained from raw measurement device for scientific (medical) visualization are most often called the density field, even though what is being measured is almost certainly not the density field but a field of optical properties that are related to, but certainly do not equate, density.
+For instance, the raw data you get from a CT scanner is actually a grid of attenuation coefficients [@bharath2009introductory, chap. 3].
+
+## Discrete VRE in (Neural) Radiance-Field Rendering {#sec-chpt-mat-vs-rte-nr}
+
+There is another field where the discrete VRE (especially our second form @eq-vre_4) is becoming incredibly popular: (neural) radiance-field rendering.
+The two most representative examples are NeRF [@mildenhall2021nerf] and 3D Gaussian Splatting (3DGS) [@kerbl20233d].
+They are fundamentally image-based rendering or light-field rendering (@sec-chpt-mat-basics-radiometry-lf), where they sample the light field of the scene by taking a set of images at different camera poses and learn to reconstruct the underlying light field, from which they can then re-sample a new camera pose and, thus, render the corresponding image as if it was taken at that new camera pose.
+This is re-branded in the modern era as "novel view synthesis".
+
+We will assume that you have read the two papers above so that we can focus on interpreting these radiance-field methods within the fundamental framework of physically-based rendering.
+Such a re-interpretation would allow us to better understand where these methods come from, how they have introduced new tweaks to physically-based rendering, and what their limitations might be.
+
+The first thing to notice is that NeRF and 3DGS, being essentially a sampling and reconstruction method, use the discrete form of the VRE (mostly @eq-vre_4) as the reconstruction function.
+This means they assume that the radiance is calculated by a single-path summation along the ray trajectory without the need for path tracing and solving the actual RTE/VRE.
+The reason they can reduce infinite paths to a single-path evaluation is very similar to that in scientific visualization, except now instead of assigning the "color" values $C$ and opacity values $\alpha$ (or equivalently the density field as discussed above), they train a neural network to directly learn these values.
+
+### VRE for Surface Rendering? {#sec-chpt-mat-vs-rte-nr-why}
+
+It is interesting to observe that both NeRF and 3DGS (and the vast majority of their later developments) use the discrete VRE form in @eq-vre_4 as their forward model and can evidently do a very good job at rendering opaque surfaces.
+Is this surprising?
+Isn't @eq-vre_4 designed to render transparent materials/volumes (alpha blending)?
+
+For opaque surfaces, the "ground truth" is the surface rendering equation (@sec-chpt-mat-ss-re), which can be seen as a form of weighted sum, where the BRDF $f_r(p, \os, \oi)$ weighs the incident light irradiance $L(p, \oi) \cos\theta_i \text{d}\oi$.
+In theory, the weights are independent of each other: the value of $f_r(p, \os, \oi)$ at different $\oi$ can technically be completely uncorrelated.
+But in reality they are most likely somewhat correlated for real materials: the appearance of a material does not change dramatically when the incident light direction changes slightly.
+For volumes/translucent materials, the "ground truth" is the VRE, which you could also say is a weighted sum, although the weights are constrained if the $\alpha$ values are constrained (e.g., between 0 and 1), which is the case in NeRF and 3DGS training (@sec-chpt-mat-vs-rte-vis-compare).
+
+So effectively, when rendering opaque surfaces, we are using a form of (theoretically) constrained weighted sum to approximate another (practically) constrained weighted sum, and we hope that we can learn the approximation from a large amount of offline samples.
+The learned parameters (color and opacity of each point) should not be interpreted literally in the physical sense.
+One advantage of this parameterization is that it *could* be used to render volumes or translucent materials if needed, where the ground truth *is* the VRE, in which case the learned parameters might be more amenable to physical interpretations.
+
+### Volume Graphics vs. Point-Based Graphics
+
+Related to volume graphics, there is also a subtly different branch of graphics called **point-based graphics** (PBG) [@levoy1985use; @gross2011point].
+The boundary is somewhat blurred, but given the way the two terms are usually used, we can observe a few similarities and distinctions.
+Both volume graphics and PBG use discrete points as the rendering primitives (as opposed to continuous surfaces such as a mesh), although the input points in volume graphics are usually placed on uniform grids [@engel2004real, chap. 1.5.2] whereas points in PBG can be spatially arbitrary.
+
+Traditionally, PBG is almost exclusively used for photorealistic rendering of surfaces.
+In fact, the points used in PBG are usually acquired as samples on continuous surfaces [@gross2011point, chap. 3].
+PBG usually uses object-order rendering through splatting, although ray casting is used too, but RTE/VRE is not involved in the rendering process [@gross2011point, chap. 6].
+
+In contrast, the use of volume graphics is much broader.
+Volume rendering can be used for photorealistic rendering of participating media and translucent surfaces (by solving the RTE/VRE), or it can be used for non-photorealistic data visualization (by evaluating the single-path, discrete VRE), at which point whether the object to be rendered is called a participating medium, a translucent surface, or anything else is irrelevant, because visualization does not care much about being physically accurate.
+
+3DGS is a somewhat interesting case.
+It is largely a form of PBG because the rendering primitives are unaligned surface samples, and its splatting technique (which we will discuss shortly) resembles that developed in the PBG literature [@gross2011point, chap. 6.1].
+However, 3DGS does use the discrete VRE as the forward model.
+Again, as discussed just above, VRE is just a way for 3DGS to parameterize its forward mode, so the comparison with traditional volume graphics and PBG should not be taken literally.
+
+### Splatting is Signal Filtering {#sec-chpt-mat-vs-rte-nr-splatting}
+
+Splatting, initially proposed by @westover1990footprint for visualizing volume data, is a common rendering technique used in PBG and 3DGS-family models.
+We discuss what splatting is, why it works, and how it is used in NeRF and 3DGS.
+We start by asking: how can we render continuous surfaces from discrete points?
+If we directly project the points to the sensor plane, we obviously will get holes, as shown in @fig-splatting (a).
+This is, of course, not an issue if the rendering primitives are meshes (or procedurally-generated surfaces).
+
+![(a): directly projecting discrete points to the image plane would create holes in the rendered image. (b): in splatting, each point is associated with a splat or a footprint function, which can distribute the color of the point to a spatial region on the image plane. (c): splatting essentially allows signal interpolation, which amounts to first reconstructing the underlying signal from the samples (with potential anti-aliasing filtering) followed by re-sampling at new, desired positions.](figs/splatting_new.png){#fig-splatting width="70%"}
+
+The key is to realize that "meshless" does not mean surfaceless: the fact that we do not have a mesh as the rendering primitives does not mean the surface does not exist.
+Recall that the points used by PBG are actually samples on the surface.
+To render an image pixel is essentially to estimate the color of a surface point that projects to the pixel (ignoring supersampling for now).
+From a signal processing perspective, this is a classic problem of signal filtering: reconstruction and resampling.
+
+That is, ideally what we need to do is to reconstruct the underlying signal, i.e., the color distribution of the continuous surface^[assuming a diffuse surface so we care to reconstruct the color of each point, not the radiance of each ray.] (combined with an anti-aliasing pre-filter^[The compound filter combining reconstruction and anti-aliasing filters is sometimes also called a resampling filter, because the compound filter is used during resampling to calculate the new sample values.]) and then resample the reconstructed/filtered signal at positions corresponding to pixels in an image.
+This is shown in @fig-splatting (c).
+%This amounts to applying a single composite filter $F$ at new sampling positions, and
+The name of the game is to design proper filters.
+The issue of signal sampling, reconstruction, and resampling is absolutely fundamental to all forms of photorealistic rendering and not limited to PBG; @pharr2023physically[chap. 8] and @glassner1995principles[Unit II] are great references.
+
+Another way to think of this is that the color of a surface point is very likely related to its nearby points that have been sampled as part of the rendering input, so one straightforward thing to do is to interpolate from those samples to calculate colors of new surface points.
+Signal interpolation is essentially signal filtering/convolution.
+
+There is one catch.
+In classic signal sampling theories (think of the Nyquist-Shannon sampling theorem), samples are uniformly taken and, as a result, we can use a single reconstruction filter.
+But in PBG the surface samples are non-uniformly taken, so a single reconstruction filter would not work.
+Instead, we need a different filter for each point.
+The filter in the PBG parlance is called a *splat*, or a *footprint function*;
+it is associated with each point (surface sample) and essentially distributes the point color to a local region, enabling signal interpolation.
+This is shown in @fig-splatting (b).
+The exact forms of the footprint functions would determine the exact forms of the signal filters.
+Gaussian filters are particularly common, and Gaussian splatting is a splatting method that uses Gaussian filters [@greene1986creating; @heckbert1989fundamentals; @zwicker2001surface].
+
+From a 3D modeling perspective, instead of having a continuous mesh, the scene is now represented by a set of discrete points, each of which is represented by a 2D Gaussian distribution, which is called a surface element or a surfel [@pfister2000surfels].
+Each surfel is then projected to the screen space to generate a splat as the corresponding reconstruction kernel of that surface point; the reconstruction kernel, after projection, is another Gaussian filter (which can be cascaded with an anti-aliasing pre-filter).
+The color of each screen space point is then calculated by summing over all the splats (each of which is, of course, scaled by the color of the sample), essentially taking a weighted sum of the colors of the neighboring surface samples (see @zwicker2001surface[Fig. 3] for a visualization) or, in signal processing parlance, resampling the reconstructed signal with the reconstruction kernels.
+
+This rendering process is traditionally called surface splatting [@zwicker2001surface].
+@yifan2019differentiable is an early attempt to learn the surfels through a differential surface splatting process.
+Surface splatting is a reasonable rendering model in PBG: the "ground truth" in rendering surfaces is the rendering equation, which can also be interpreted as a weighted sum.
+
+One can also apply the same splatting idea to volume rendering.
+In this case, each point in the scene is represented by a 3D Gaussian distribution, which is projected to a 2D splat in the screen space.
+The color of a pixel is then calculated through, critically, alpha blending the corresponding splats, not weighted sum.
+This is called volume splatting [@zwicker2001ewa].
+3DGS can be seen as a differential variant of traditional volume splatting, even though it is also very effective in rendering opaque surfaces (and we have discussed the reason on @sec-chpt-mat-vs-rte-nr-why).
+
+## Integrating Surface Scattering with Volume Scattering {#sec-chpt-mat-vs-sca-bssrdf}
+
+The rendering equation governs the surface scattering or light transport in space, and the RTE/VRE governs the volume/subsurface scattering or light transport in a medium.
+Both processes can be involved in a real-life scene.
+For instance, the appearance of a translucent material like a paint or a wax is a combination of both forms of scattering/light transport (@fig-photon_particle_interactions).
+Another example would be rendering smoke against a wall.
+
+<!-- %https://pbr-book.org/4ed/Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators -->
+Conceptually nothing new needs to be introduced to deal with the two forms of light transport together.
+Say we have an opaque surface (a wall) located with a volume (smoke) in the scene.
+If we want to calculate the radiance of a ray leaving a point on the wall, we would evaluate the rendering equation there, and for each incident ray, we might have to evaluate the VRE since that ray might come from the volume.
+In practice it amounts to extending the path tracing algorithm to account for the fact that a path might go through a volume and bounce off between surface points.
+See @pharr2023physically[chap. 14.2] and @fong2017production[Sect. 3] for detailed discussions.
+
+Another approach, which is perhaps more common when dealing with translucent materials (whose appearance, of course, depends on both the surface and subsurface scattering), is through a phenomenological model based on the notion of Bidirectional Scattering Surface Reflectance Distribution Function (**BSSRDF**) [@nicodemus1977geometrical].
+The BSSRDF is parameterized as $f_s(p_s, \os, p_i, \oi)$, describing the infinitesimal outgoing radiance at $p_s$ toward $\os$ given the infinitesimal power incident on $p_i$ from the direction $\oi$:
+
+$$
+    f_s(p_s, \os, p_i, \oi) = \frac{\text{d}L(p_s, \os)}{\text{d}\Phi(p_i, \oi)}.
+$$ {#eq-bssrdf}
+
+BSSRDF can be seen as an extension of BRDF in that it considers the possibility that the radiance of a ray leaving $p_s$ could be influenced by a ray incident on another point $p_i$ due to SSS/volume scattering.
+Given the BSSRDF, the rendering equation can be generalized to:
+
+$$
+    L(p_o, \os) = \int^A\int^{\Omega=2\pi} f_s(p_s, \os, p_i, \oi) L(p_i, \oi) \cos\theta_i \doi \d A,
+$$ {#eq-re_sss}
+
+where $L(p_o, \os)$ is the outgoing radiance at $p_o$ toward $\os$, $L(p_i, \oi)$ is the incident radiance at $p_i$ from $\oi$, $A$ in the outer integral is the surface area that is under illumination, and $\Omega=2\pi$ means that each surface point receives illumination from the entire hemisphere.
+
+We can again use path tracing and Monte Carlo integration to evaluate @eq-re_sss if we know the BSSRDF, which can, again, either be analytically derived given certain constraints and assumptions or measured [@frisvad2020survey].
+To analytically derive it, one has to consider the fact that the transfer of energy from an incident ray to an outgoing ray is the consequence of a cascade of three factors: two surface scattering (refraction) factors, one entering the material surface $p_i$ from $\oi$ and the other leaving the material surface at $p_i$ toward $p_o$, and a volume scattering factor that accounts for the subsurface scattering between the incident ray at $p_i$ and the exiting ray at $p_o$ [@pharr2018physically, chap. 11.4].
+If all three factors have an analytical form, the final BSSRDF has an analytical form too.
+This is the approach that, for instance, @wann2001practical takes.

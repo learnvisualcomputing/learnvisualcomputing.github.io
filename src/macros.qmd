@@ -1,0 +1,21 @@
+::: {.content-hidden unless-format="html"}
+::: {.hidden}
+$$
+\def\oi{{\omega_i}}
+\def\os{{\omega_s}}
+\def\Oi{{\Omega_i}}
+\def\Os{{\Omega_s}}
+\def\d{{\text{d}}}
+\def\D{{\Delta}}
+\def\do{{\d\omega}}
+\def\Do{{\Delta\omega}}
+\def\doi{{\d\omega_i}}
+\def\dos{{\d\omega_s}}
+\def\Doi{{\D\omega_i}}
+\def\Dos{{\D\omega_s}}
+\def\H{{\mathbf{H}}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cL}{\mathcal{L}}
+$$
+:::
+:::

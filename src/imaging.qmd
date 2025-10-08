@@ -1,0 +1,12 @@
+# Imaging
+
+This part of the book will discuss imaging, the transduction of optical signals to electrical systems.
+Our discussion will center on the two fundamental components of any imaging system: optics and the image sensor.
+
+We begin with an overview of optics in imaging systems (Chapter @sec-chpt-imaging-optics), covering core concepts such as the pinhole model, lenses, aberrations, and diffraction limits.
+We also explain key photographic concepts, including depth of field, magnification, and field of view, and introduce computational models of imaging through the lens of linear system theory.
+
+We then turn to image sensors, examining the basic principles by which optical signals are converted to electrical charges and then to digital values (Chapter @sec-chpt-imaging-sensor).
+We will introduce hardware implementations of these processes for both monochromatic and color sensing.
+
+We will then discuss the sources of noise in image sensors and how to model them (Chapter @sec-chpt-imaging-noise), followed by how the raw sensor signals are processed to yield images that can be consumed by human or machine vision systems (Chapter @sec-chpt-imaging-isp).

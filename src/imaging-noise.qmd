@@ -1,0 +1,7 @@
+# Noise {#sec-chpt-imaging-noise}
+
+This chapter reviews different sources of noise during imaging.
+We will study the physical mechanisms through which the noises trickle in, build computational models for different noise sources, and discuss basic denoising strategies.
+Before the chapter is fully developed, check our [lecture slides](https://cs.rochester.edu/courses/259/fall2024/decks/lect14-noise-dr.pdf) on imaging noise.
+
+<!-- We refer you to @boukhayma2018low, @nakamura2006image[chap. 3.3], and @rowlands2020physics[chap. 3.8-3.9] for detailed discussions on noise. -->

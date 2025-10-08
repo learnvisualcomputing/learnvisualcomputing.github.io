@@ -1,0 +1,345 @@
+# Colorimetry {#sec-chpt-hvs-cori}
+
+Colorimetry is concerned with quantitatively studying color, a subjective experience.
+Not until we can put our experience into numbers can we rigorously study colors.
+In @sec-chpt-hvs-color-cme, we have seen two ways to geometrically interpret a color as a point in a three-dimensional space: the cone space and the CIE 1931 RGB space.
+
+The main goal of this chapter is to introduce other commonly used color space to quantitatively analyze colors.
+Some of these color spaces are device-independent, just like the LMS cone space, so they permit us to analyze all human visible colors.
+Other color spaces are device-dependent; they are concerned with colors that can physically be captured (by an imaging device) or produceed (by a display device).
+Studying device-dependent spaces allows us to appreciate many subtle but important issues in real-world color workflows.
+
+Classic colorimetry is concerned *only* with color matching under the same viewing condition.
+It tells us if two objects or light sources have the same color when viewed under exactly the same conditions (e.g., ambient illumination).
+It does not tell us 1) how different two colors are and 2) the actual appearance of a color, which depends on the viewing condition.
+Color difference will be discussed in @sec-chpt-hvs-cori-diff; @fairchild2013color is a classic reference on *color appearance* modeling, which we will touch upon in @sec-chpt-hvs-adaptations-chroma.
+
+## CIE 1931 XYZ Space {#sec-chpt-hvs-cori-xyz}
+
+There are two slight inconveniences with the CIE 1931 RGB color space.
+First, it depends on the exact primary colors (and reference white) you choose.
+Second, there are also inevitably going to be colors that can be "produced" only by using negative amounts of the primaries, no matter what primaries you choose.
+While mathematically and physically rigorous, it is not quite intuitive.
+So CIE in 1931 wanted to standardize a color space that 1) can be used as a "common language" (without having to laboriously specify what the primaries are used every time you say "the RGB color space") and that 2) all the human-visible colors are produced by mixing non-negative amounts of the primaries.
+That color space is called the **CIE 1931 XYZ** color space, sometimes referred to simply as the XYZ color space.
+
+You might be wondering: isn't the LMS cone space already a color space that satisfies the two conditions above, and if so, why do we have to invent a new XYZ space?
+The cone space is tied intrinsically to the HVS, so it does not vary (significantly) in population.
+It is also a color space where all the colors are expressed using positive amounts of the primaries (cone responses).
+These are all true, but remember the cone fundamentals were not reliably available back in 1931 (@sec-chpt-hvs-receptor-absorb).
+
+![The CIE 1931 XYZ color space (right) is constructed to be a linear transformation from the CIE 1931 RGB color space (left). Notice how a color, say, 600 $\text{nm}$ spectral light is represented differently in the two color spaces. This figure visualizes how the spectral locus and the CMFs are transformed. The exact coefficients of the transformation matrix $T_{rgb2xyz}$ are omitted here but are widely available online. The CIE 1931 RGB CMFs figure is adapted from @cie1931rgbcmf, and the XYZ CMFs figure is adapted from @cie1931xyz.](figs/rgb_to_xyz){#fig-rgb_to_xyz width="100%"}
+
+@fairman1997cie, @brill1998cie, and @service2016the[Sec. 4] describe the process and the (sometimes rather arbitrary) design decisions that went into turning the CIE 1931 RGB space into the 1931 XYZ space.
+@zhu2022xyz is an interactive tutorial that walks through the math.
+
+The bottom line is that the transformation from the CIE RGB to the XYZ space is *constructed* to be a linear transformation.
+@fig-rgb_to_xyz shows how the spectral locus is transformed from the RGB to the XYZ space, governed by the matrix $\mathbf{T}_{rgb2xyz}$.
+We can see that in the RGB space the spectral locus enters negative octants, but it stays entirely within the all-positive, first octant in the XYZ space.
+The transformation also gives a new set of CMFs in the XYZ space.
+The Y CMF is intentionally designed to match the CIE 1924 Luminous Efficiency Function (LEF), so that by looking at the Y value of a color, we can tell what its *relative* luminance is (refer to @sec-chpt-hvs-color-oppo-light for the definition of the LEF and its various caveats).
+
+## Chromaticity Diagram {#sec-chpt-hvs-cori-chro}
+
+How do a color that is mixed from 1:2:4 units of RGB primaries and a color that is mixed from 2:4:8 units of the primaries relate?
+The amount of a primary is directly proportional to the power of that primary, so the second color can be obtained by doubling the power of each primary in the first color.
+Similarly, halving the power of each primary in the second color gets us the first color.
+Intuitively, lights that have the same primary quantity ratio have the same "objective color quality" while differing in the intensity.
+
+### Chromaticity is the Result of a Perspective Projection
+
+More formally, we can calculate the primary ratio $r:g:b$ of a color and then normalize the ratio such that $r + g + b = 1$ (100%).
+The so-calculated $r$, $g$, $b$ values of a color are called the (RGB) **chromaticity** values of that color.
+Mathematically, the chromaticity of a color defined in an RGB space is calculated from its absolute quantity by:
+
+$$
+\begin{aligned}
+    r = \frac{R}{R+G+B}\\
+    g = \frac{G}{R+G+B}\\
+    b = \frac{B}{R+G+B}
+\end{aligned}
+$$
+
+Geometrically, going from the RGB values of a color to the rgb chromaticity is equivalent to a *perspective projection*, where we project an [R, G, B] point through the origin to the $r+g+b=1$ plane.
+The left panel in @fig-chromaticity visualizes this projection.
+Each line that goes through the origin is an "equi-chromaticity" line, in that all the colors on that line have the same chromaticity.
+The spectral locus is so projected to the $r+g+b=1$ plane.
+Since there are only two degrees of freedom in chromaticity, we can visualize the chromaticity in a two-dimensional space, and usually the $r$ and $g$ coordinates are used.
+The right panel in @fig-chromaticity shows the spectral locus in the rg-chromaticity diagram.
+
+![Visualization of the CIE 1931 RGB space and its rg-chromaticity diagram. Left: the transformation from an [R, G, B] color to its [r, g, b] chromaticity is a perspective projection to the $r+g+b=1$ plane. Each line that goes through the origin is an "equi-chromaticity" line, in that all the colors on that line have the same chromaticity. We use the CIE 1931 RGB color space for illustration here, but the same idea applies to other color spaces as well, e.g., the CIE 1931 XYZ space. From the interactive tutorial in @zhu2022chromaticity. Right: visualization of the spectral locus in CIE 1931 RGB space; from @fairman1997cie[Fig. 2].](figs/chromaticity){#fig-chromaticity width="100%"}
+
+### xy-Chromaticity Diagram and Its Interpretation
+
+Of course we can do the same if a color is defined in the XYZ space or the LMS cone space, and we omit the trivial math here.
+The left panel in @fig-xy_chromaticity shows the xy-chromaticity diagram.
+It is obtained by first converting from the XYZ space to the xyz space and then plotting only the x and y axes (z is implicit in that $x+y+z=1$).
+The horseshoe curve is the spectral locus.
+For the reference, we also show the three primary lights and the white point of the CIE 1931 RGB color space as well as the Planckian locus, which shows the chromaticities of the black-body radiation at different temperatures (@fig-blackbody_colors).
+
+![Left: The gamut and spectral locus of the CIE 1931 RGB space visualized in the xy-chromaticity diagram; adapted from @plankianlocus. The Planckian locus is shown for the reference too. A point outside the (convex) spectral locus is an imaginary color.  Right: comparison of different color spaces in the xy-chromaticity diagram; from @csinxy. A color space's chromaticity gamut is a triangle; a color outside the triangle cannot be physically produced in that color space.](figs/xy_chromaticity){#fig-xy_chromaticity width="100%"}
+
+We can make a few general observations.
+First, the triangle in the diagram represents the chromaticity values of all the colors that can be produced by mixing different amounts of the three colors whose chromaticities are the vertices of the triangle.
+That is, given three colors $[R_1, G_1, B_1]$, $[R_2, G_2, B_2]$, $[R_3, G_3, B_3]$ and their chromaticity coordinates $\mathbf{c_1} = [\frac{R_1}{R_1+G_1+B_1}]$, $\mathbf{c_2} = [\frac{R_2}{R_2+G_2+B_2}]$, and $\mathbf{c_3} = [\frac{R_3}{R_3+G_3+B_3}]$, we can show if we mix these colors to form a color C, $[\alpha R_1 + \beta R_2 + \gamma R_3, \alpha G_1 + \beta G_2 + \gamma G_3, \alpha B_1 + \beta B_2 + \gamma B_3]$ ($\alpha, \beta, \gamma$ are the contributions of the primary colors), C's chromaticity is necessarily inside the triangle $\bigtriangleup \mathbf{c_1}\mathbf{c_2}\mathbf{c_3}$.
+So the triangle $\bigtriangleup \mathbf{R}\mathbf{G}\mathbf{B}$ represents the chromaticities that can be physically produced by the CIE 1931 RGB primary lights.
+We call that the **chromaticity gamut** of the color space, or sometimes simply the gamut of the color space, but we should keep in mind that the actual gamut of a color space is always a three-dimensional concept.
+
+Second, we can extend from mixing three colors to mixing an arbitrary number of colors and show that the interior of the spectral locus represents the chromaticities of all the colors that humans can see, i.e., the gamut of the HVS.
+This is true because the shape of the spectral locus is convex, so connecting any two points (i.e., mixing two colors) on or inside the locus will never go beyond the locus.
+By extension, a positive linear combination of any points on or inside the locus will always stay inside the locus.
+A natural implication is that any point outside the spectral locus represents an imaginary color, since that point can never be constructed by a positive linear combination of points on or inside the spectral locus.
+
+Third, the right panel in @fig-xy_chromaticity shows the gamut of a few common color spaces.
+The sRGB color space is the most commonly used color space; virtually every single display supports it, and images, by default, are encoded in the sRGB format.
+We will have more to say about displays and image encoding later.
+Observe how small the sRGB gamut is: it covers about 35% of the HVS gamut.
+P3 is a more wider gamut that is supported in many new displays.
+Rec.2020 is an even wider gamut that is yet to be widely supported; it is 72% larger than the sRGB gamut and 37% larger than the P3 gamut.
+ProPhotoRGB contains colors that are beyond the HVS gamut, so to produce all the real colors in the ProPhotoRGB space we will need more than three primary lights.
+It is mostly used in Adobe Lightroom and Adobe Camera RAW software.
+They both deal with RAW images before they are encoded in a format that is displayable.
+We will talk about RAW imaging and processing later in @sec-chpt-imaging-isp.
+
+Finally, no display can produce all the colors that humans can see.
+No matter where you choose to place the primary colors in the chromaticity diagram and how many primaries you choose, the resulting gamut will never completely cover the entire HVS gamut as long as the primary colors are real colors (i.e., on or inside the spectral locus) and you have a finite number of them.
+This is again because the spectral locus is convex.
+For this reason, do not trust the colors in any xy-chromaticity diagram:
+the undisplayable colors are approximated by in-gamut, displayable colors.
+This is called gamut mapping, which we will discuss in @sec-disp-sp.
+
+### HVS Gamut
+
+We can systematically sample the chromaticities in the chromaticity diagram to visualize how the HVS gamut looks like.
+@fig-hvs_gamut visualizes the HVS gamut in both the XYZ space and the xy-chromaticity diagram.
+Comparing the two, you can see how a selected set of colors in the highlighted XYZ space map to a curve in the xy-chromaticity diagram.
+
+![HVS gamut visualized in the XYZ space and in the xy-chromaticity diagram. We systematically sample the chromaticities in the chromaticity diagram using square pulses as the light SPDs (insets on the right). From the interactive tutorial in @zhu2022gamut.](figs/hvs_gamut){#fig-hvs_gamut width="100%"}
+
+There are, of course, many ways you can sample the chromaticities to get good coverage of the HVS gamut, and @zhu2022gamut is an interactive tutorial that talks about this in detail (you can also see what the HVS gamut looks like in different color spaces).
+A common way seems to be to generate SPDs that are square pulses with equal peaks (see the insets on the right), which will guarantee that you do not repeatedly sample the same chromaticity point.
+This is what the popular Python package Colour [@colourpython] does, but nothing prevents you from using a different method, as explored in @zhu2022gamut.
+Of course, the actual HVS gamut has no boundary: we can indefinitely grow the gamut by simply scaling up the light power.
+
+## Color Cube {#sec-chpt-hvs-cori-cube}
+
+The various color spaces we have been discussing are great, but they do not seem to be the sort of color spaces we use in everyday software when specifying colors.
+By far the most common way in practical applications to specify colors is by using a **color cube**, where you can specify the primary values (usually R, G, and B) of a color, each an integer between 0 and 255.
+What exactly are the colors that can be represented by such a color cube?
+How is it related to the color gamut we have discussed, and how do we construct a color cube?
+These are questions explored in the interactive tutorial [@zhu2022cube], which you are invited to go through.
+@fig-color_cube illustrates the idea, and we will give a brief summary of the main steps.
+
+![Pick the primary colors (which usually are termed R, G, and B, because they usually are red-ish, green-ish, and blue-ish) and the white point in the xy-chromaticity space (left panel) and then construct a color cube from them (right panel). Note how the spectral locus is now positioned in the constructed RGB space. From the interactive tutorial in @zhu2022cube, which we invite you to study, you can see that as you change the primary colors and/or the white point, the resulting color gamut and the color cube will change accordingly.](figs/color_cube){#fig-color_cube width="100%"}
+
+### Step 1: A Linear Transformation From the XYZ Space {#sec-chpt-hvs-cori-cube-step1}
+
+* We know that a color space is defined by its three primary colors *and* the white point, which you get to choose when building your own color cube.
+The left panel shows one such choice, which happens to be what is used by the sRGB color space.
+* Knowing these four points uniquely defines the shape of a parallelepiped in the XYZ space (middle panel).
+The space inside the parallelepiped corresponds to actual colors that can be produced by using the primary colors.
+
+Note that at this point we know only the relative shape, but not the absolute scale, of the parallelepiped: we can uniformly scale the power of the primary colors and white point, which will not change their chromaticity values but will expand or shrink the parallelepiped.
+The convention is to set the Y value of white to be 1 and scale everything else accordingly, but of course the actual luminance of white (and any other color) depends on the actual device used.
+
+* Now we turn the parallelepiped to a cube that is positioned between [0, 1] in all three directions (right panel).
+The white point in the XYZ space will be [1, 1, 1] in the color cube, signifying that white is produced from equal units of the three primary colors.
+This amounts to a linear transformation from the XYZ space.
+
+Note also how the spectral locus is now positioned in the RGB space: part of the locus (and by extension the HVS gamut) is now outside the RGB cube, showing that there exist real colors (i.e., inside the HVS gamut) that cannot be produced by the choice of the primary colors.
+This is consistent with our gamut interpretation in the chromaticity diagram (@fig-xy_chromaticity).
+
+What we have done so far is to construct a linear transformation matrix, $T_{xyz2rgb}$, which transforms the parallelepiped (middle panel in @fig-color_cube) to a cube (right panel in @fig-color_cube).
+This transformation matrix will change if we change any primary color or the white point of our color space (the interactive tutorial in @zhu2022cube will allow you to do exactly that).
+Either way, the color cube we have built so far is luminance-linear: if we double the power of a light whose color is [R, G, B], we will get a color [2R, 2G, 2B].
+This is because the XYZ space is luminance-linear, and the RGB cube we have so far is a linear transformation from the XYZ space.
+
+### Step 2: Color Quantization and Gamma {#sec-chpt-hvs-cori-cube-step2}
+
+We get a cube now, but we are not done yet.
+The cube is a continuous solid between [0, 0, 0] and [1, 1, 1], but the digital representation of a color is discrete and finite, so we have to quantize the solid.
+Assuming we have, say, 8 bits (i.e., 256 discrete levels) to represent the contribution of each primary color, the question is how to allocate the 256 levels to the [0, 1] range.
+
+So far in our discussion, the contribution of a primary color is linearly correlated with the power of the primary: doubling the contribution of a primary requires doubling the power of the corresponding light.
+Therefore, a uniform allocation of the bits would mean uniformly quantizing the power range.
+This encoding strategy, however, is not ideal.
+
+As we have seen in @sec-hvs-receptor-intensity-peak, the electrical response of a photoreceptor is not linearly proportional to the light power (even though the amount of photon absorption and pigment excitation are!); the response incrementally saturates as the light power increases.
+As a result, the perceptual brightness level also gradually saturates with the light power.
+Therefore, uniformly quantizing the power range would lead to a *non-uniform* quantization of the brightness range, leading to large *perceptual* quantization error when encoding low luminances.
+
+To best use the limited bit budget, therefore, we would ideally want to uniformly quantize the brightness range, not the power range.
+A common method is to first model the brightness level ($B$) as a power-law function (@eq-stevens) of the raw channel value ($v \in [0, 1]$) by $B=v^{1/2.2}$ and then quantize $B$ uniformly.
+The constant factor $2.2$ is called the **gamma** of the system.
+For instance, a red-channel value of 0.5 would translate to $\lfloor 0.5^{1/2.2} \times 255 \rfloor = 186$ in an 8-bit encoding.
+The relationship between $B$ and $v$ is called the Opto-Electronic Transfer Function (**OETF**).
+<!-- OETF is usually performed by an imaging system such as a camera, which turns optical signals (luminance) into electrical signals (bits in a color space). -->
+
+The sRGB standard [@anderson1996proposal; @srgbweb; @srgbiec] essentially uses this approach with one slight tweak to avoid numerical issues when $v$ is small.
+In particular, the sRGB standard uses linear scaling when $v$ is very small (below 0.0031308).
+This makes sense given our understanding in @sec-hvs-receptor-intensity-model that the receptor's electrical response is approximately linear against the light luminance when the luminance is very low.
+The sRGB standard also adjusts the gamma to be 2.4 so that the overall quantization function approximates a uniform power-law function with a gamma of 2.2.
+As a result, the OETF used in sRGB is:
+
+$$
+B = 
+\begin{cases}
+12.92 v, & v \leq 0.0031308\\
+1.055 v^{1/2.4} - 0.055, & v > 0.0031308
+\end{cases}
+$$ {#eq-srgb_oetf}
+
+where $v \in [0, 1]$ is one of the three RGB channels.
+An 8-bit quantization is then applied to $B \in [0, 1]$ to bring each channel value to an integer between 0 and 255 assuming an 8-bit encoding.
+
+Note that the gamma-based OETF does not model the actual relationship between perceived brightness and light luminance, but it is a close engineering hack.
+The behavioral brightness perception is largely accounted for by the photoreceptor/RGC response to light intensity.
+As we discussed in @sec-hvs-receptor-intensity-model, the relationship between the electrical response of a photoreceptor and the light intensity is usually modeled by a (generalized) Michaelis equation, which incrementally saturates and exhibits a diminishing return, the same characteristic that the power-law function also possess.
+<!-- %\footnote{Behavioral brightness perception is usually quantified by the amount of incremental intensity needed to evoke a just noticeable brightness change. The incremental intensity is linearly related to the current intensity. This relationship is called the Weber's law, and is the natural result if the photoreceptor response to light intensity is modeled by the Michaelis equation. We will discuss this in detail in the adaptation lecture.}.
+% there is no way to directly measure brightness vs. luminance, so we can only measure TVI. see my note on Weber’s Law and Sensitivity in Psychophysics vs. Physiology.
+%https://analyticsartist.wordpress.com/2015/03/08/advertising-diminishing-returns-saturation/ -->
+
+There are two caveats here.
+First, $v$ is *proportional* to luminance $L$, but is *not* exactly $L$, so the same $v$ will result in different $L$s on different displays that differ in their peak luminance.
+So encoding $B$ as a power-law function of $v$ does not mean the OETF actually models the correct relationship between $B$ and $L$.
+That is why the sRGB standard specifies the peak luminance of the display (white point) as 80 cd/m$^2$.
+Presumably this means that at this particular luminance range (0 to 80 cd/m$^2$), the relationship between $B$ and $L$ roughly follows the power law.
+Second, light adaptation (@sec-chpt-hvs-adaptations-light) will also play a role, since the HVS responds to contrasts over the mean illuminance, rather than absolute illuminance, and the mean illuminance varies largely across viewing environments.
+The sRGB standard also specifies that the mean illuminance level of the viewing environment to be 64 lux.
+When actually viewing an sRGB image, both conditions are rarely met, so take all these with a huge grain of salt.
+
+### RGB Color Spaces are Linearly Related in Luminance
+
+By "RGB color space", we mean a color space that is defined by its three primary colors (and critically also the white point), which we call R, G, and B for simplicity, but they certainly do not have to look like red-ish, green-ish, and blue-ish.
+Different RGB color spaces might use different gammas and quantization schemes.
+In the end, the discrete RGB values are usually not linearly related to luminance.
+We can go back to a luminance-linear space from the discrete RGB values by inverting the gamma encoding process described above.
+For instance, in sRGB space, 186 would translate to 0.5 in the luminance-linear sRGB space.
+
+Once in a luminance-linear space, different color spaces are simply a linear transformation away from each other.
+The transformation matrix can be calculated based on the primary colors and the white point of the two color spaces.
+We will omit the math here, but to get an idea just go back to @fig-color_cube.
+Two color spaces having different primary colors and white points will end up being two different parallelepipeds that are related by a transformation matrix.
+Another way to think about this is that each luminance-linear RGB color space is a linear transformation away from the XYZ space, so these RGB spaces must be linearly related too.
+
+## HSB/HSL/HSV Space {#sec-chpt-hvs-cori-hsv}
+
+A color cube is one way to represent an RGB color space.
+Another common way to represent an RGB color space is to use a cylindrical-coordinate representation.
+There are two such representations, HSL (Hue, Saturation, and Lightness) and HSV (Hue, Saturation, and Value), which is also called HSB (B for Brightness).
+These are not new color spaces; their gamut is identical to that of the corresponding RGB color space.
+They are just different ways to organize colors in a color space; instead of using three-dimensional coordinates to represent a color as in a color cube, they use cylindrical coordinates.
+
+![We can represent an RGB color cube (left) using cylindrical coordinates. One such representation is the HSL color space (right), where hue, saturation, and lightness have intuitive interpretations. Hue and saturation also have intuitive interpretations in the CIE 1931 xy-chromaticity diagram, which normalizes luminance so lightness information is absent. Left: from @rgb. Middle: adapted from @hsl. Right: from @cie1931xy.](figs/hsv){#fig-hsv width="100%"}
+
+@fig-hsv compares a typical color cube (left) and its HSL representation (right).
+We omit the transformation math here, but one can imagine how we turn the white point in a color cube to the top plane, the black point to the bottom plane, and expand everything else so that a cube surface morphs into a cylindrical surface.
+The three dimensions in an HLS space are hue, saturation, and lightness.
+Very informally, hue represents subjectively different colors (red, orange, yellow, etc.), saturation represents how much white a color has (a color with a higher saturation means it is more "pure"), and lightness represents the brightness.
+In this sense, hue and saturation also find their interpretations in the CIE 1931 xy-chromaticity diagram (right), where a color closer to the spectral locus has a higher saturation (and colors closer to white-ish colors are *desaturated*), and the spectral locus cycles through different hues.
+Lightness is not concerned with in the chromaticity diagram, which normalizes the color intensity.
+
+You can imagine what the benefit of using an HSL/HSB color space is.
+It is more intuitive to pick colors in these color representations since the three dimensions have intuitive interpretations that better align with how we describe colors in our everyday language.
+So we can more easily reason about how a color will change if we vary a dimension.
+In contrast, it is sometimes hard to predict how a color will change when we, say, increase the red channel by 10.
+I almost exclusively use the HSL/HSB space when picking colors in graphing software.
+
+## Color Discrimination and Color Difference {#sec-chpt-hvs-cori-diff}
+
+In many practical applications, we need to calculate color differences.
+For instance, an image synthesis algorithm might want to be minimize the color difference in the synthesized image and some form of "ground truth";
+a display's color reproduction might not be 100% accurate, so we want to quantitatively compare the quality of different displays by measuring the color difference (compared to the colors to be reproduced) each introduces.
+
+Fortunately, once we put colors into a three-dimensional coordinate system, calculating color differences becomes natural: the Enclidan distance between two colors gives a measure of the difference between the two colors.
+However, for the Euclidean distance to be a good measure, we must be sure that the distance is proportional to the perceptual color difference.
+How do we quantify the perceptual color difference?
+
+### Color Discrimination
+
+Practically there are not many cases where we need to quantify large color differences.
+What is more important is to quantify small color differences.
+For a given reference color, we can use a threshold-detection psychophysical paradigm such as the one described in @krauskopf1992color to estimate the set of colors that can just barely be discriminated from the reference color.
+These experiments are called **color discrimination** tests.
+
+Color discrimination experiments typically use a n-alternative forced choice (nAFC) paradigm [@krauskopf1992color; @hansen2009color; @duinkharjav2022color; @danilova2025effect; @hong2025comprehensive].
+@fig-color_disc (a) shows a 4AFC variant from @duinkharjav2022color.
+The visual field consists of an adapting background and four color patches.
+The background controls the light and chromatic adaptation state of the participant, which is shown to have significant impact on the color discrimination results [@krauskopf1992color].
+Among the four color patches, three have the same *reference* color whose discrimination contour we want to estimate.
+The other randomly placed color patch, the *test* patch, has a different color.
+A participant is instructed to identify which one of the 4 color disks appears different.
+The participant fixes their gaze on a crosshair at the center of the screen for the duration that the stimuli are shown; this makes sure that the four color patches are all placed at a given eccentricity.
+
+![(a): A 4AFC color discrimination trial; adapted from @duinkharjav2022color[Fig. 2a]. (b): iso-luminance discrimination contours plotted in the DKL space [@derrington1984chromatic], where all the colors have the same luminance (L+M response); from @krauskopf1992color[Fig. 14]. (c): MacAdam ellipses (measured at 2$^{\circ}$ eccentricity) plotted in the xy-chromaticity diagram (the ellipse sizes are magnified 10 times to be more visible); from @macadam. (d): iso-luminance discrimination contours in the DKL space similar to (b), but now the adapting field is the reference color itself; from @krauskopf1992color[Fig. 8]. (e): contours corresponding to a $\Delta E_{00}$ = 1.0 in the $a^*$-$b^*$ plane in the CIELAB space; from @sharma2003color[Fig. 1.18]. (f): discrimination contours under two different eccentricities (10$^{\circ}$ and 25$^{\circ}$); from @duinkharjav2022color[Fig. 4a].](figs/color_disc){#fig-color_disc width="100%"}
+
+Each trial uses a 1-up-2-down staircase procedure [@cornsweet1962staircase; @leek2001adaptive; @treutwein1995adaptive] to adjust the color of the test patch: the test color is moved closer to the reference color (a harder trial) if the participant identifies the test patch correctly twice in a row, and moved farther away from the reference color (an easier trial) upon an incorrect response.
+
+@fig-color_disc (b) shows a set of discrimination contours obtained by @krauskopf1992color plotted in the DKL space [@derrington1984chromatic], which we have discussed in @sec-chpt-hvs-color-oppobasis-model.
+The individual discrimination thresholds of a reference color are fit with an ellipse to approximate the discrimination contour, where the reference color is placed at the center of the ellipse.
+In their experiments, the reference colors were all iso-luminant (i.e., identical L+M responses) and the test colors were all forced to be on the same iso-luminance plane.
+Of course, the actual discrimination contour would be 3D ellipsoid, and obtaining that data would be take a huge amount work: we would have to sample a 3D space for the reference colors and, for each reference color, sample another 3D space to obtain its discrimination thresholds.
+The results in @fig-color_disc (b) essentially simplifies the 6D sampling to 4D.
+
+We can see, from @fig-color_disc (b), that the discrimination contours are quite regularly placed in the DKL space.
+A striking feature is that the thresholds on one dimension do not change as the reference color changes along the other direction.
+For instance, the threshold along the S-(L+M) axis, i.e., the Yellow-Blue dimension, is roughly constant for the three reference color that differ only along the L-M axis, i.e., the Red-Green dimension.
+This seems to suggest that color discrimination might be independently mediated by the two opponent processes.
+
+The first set of color discrimination data was collected by David MacAdam in his seminar work @macadam1942visual and @macadam1943specification^[MacAdam did the work while working for Eastman Kodak at Rochester and he later was an adjunct professor at the Institute of Optics, University of Rochester.].
+MacAdam did not use the 4AFC strategy above, but indirectly estimated the thresholds using variations in color matching experiments.
+A modern rendition of his results is shown in @fig-color_disc (c) in the CIE 1931 xy-chromaticity space; the ellipse sizes are magnified ten times to be visible.
+A practical interpretation of a dicrimination contour is that with an ellipse all the colors are non-discriminable with respect to the center, reference color.
+
+### Adaptation and Eccentricity Dependence
+
+Discrimination contours depend on both the adaptation state and eccentricity.
+@fig-color_disc (d), also from @krauskopf1992color shows, the discrimination contours when the background, adapting light is the reference color itself and the participant is fully adapted to that color.
+We will study chromatic adaptation later in @sec-chpt-hvs-adaptations-chroma, but what this practically means is that, in this experiment, the background color is perceived as achromatic, even though it might not normally be considered so.
+We can see that the ellipses are wildy different from those in @fig-color_disc (b).
+In particular, it seems like the threshold along the L-M dimension does not change at all with the L-M response of the reference color.
+
+MacAdam's original data were collected at 2$^{\circ}$ eccentricity.
+Given that the visual acuity reduces as the eccentricity increases, it is only natural that the discrimination contours expand in size as the eccentricity.
+@duinkharjav2022color measures the ellipses under different eccentricities.
+@fig-color_disc (e) compares the results between 10$^{\circ}$ and 25$^{\circ}$.
+Not surprisingly, the ellipses are larger in the latter.
+The qualitatively different contour shapes between @duinkharjav2022color and @krauskopf1992color is perhaps due to the differences in the measurement methodology, which warrants further investigations.
+
+### Color Difference and Perceptually Uniform Color Space
+
+The difference between the reference color and a color on its discrimination contour is called the **Just Noticeable Difference** (JND).
+A color space is said to be "perceptually uniform" if the JND measure is a constant anywhere in the color space along any direction.
+In such a color space, the Euclidean distance would be a measure of color difference. 
+
+Unfortunately, no perceptually uniform color space has even been identified.
+Consider the results of @krauskopf1992color or MacAdam, the discrimination contours are ellipses (both in the DKL space and in the xy space), not circles, so the JND for a reference color varies angularly.
+Worse, the discrimination contour changes its shape as the reference color change, suggesting that the JND is also spatially varying.
+
+Quite a few attempts have been made to transform the XYZ space into a more perceptually uniform space.
+Among them, the two common ones are the CIE 1976 $Lu^*v^*$ (CIELUV) space and the (more widely used) CIE 1976 $La^*b^*$ (CIELAB) space, both of which are non-linear transformations from the XYZ space.
+The so-called CIE Delta E 1976 color difference metric ($\Delta E_{ab}^*$ ) is defined as the Euclidean distance in the CIELAB space.
+If CIELAB is truly perceptually uniform (as far as color discrimination is concerned), $\Delta E_{ab}^*$ being 1.0 would mean a JND.
+However, this is not true [@sharma2003color, Fig. 1.18].
+
+CIE has since recommended a new, much more involved, and non-Euclidean measure in the CIELAB space, called the Delta E 2000 metric ($\Delta E_{00}$), to achieve better perceptual uniformity [@sharma2005ciede2000].
+@fig-color_disc (f) shows iso-discrimination contours corresponding to $\Delta E_{00}$ = 1.0 in an $a^*$-$b^*$ (iso-luminance) plane in the CIELAB space.
+If the $\Delta E_{00}$ is to be considered a perceptually uniform color difference metric, the CIELAB space itself must not be perceptually uniform given the varying contour shapes throughout the space.
+What if we construct a new space by transforming the CIELAB space using the $\Delta E_{00}$ metric --- would that space be perceptually uniform?
+The answer is unlikely: the discrimination contours at the low $b^*$ end become weirdly non-convex, which is not a reflection of the human discrimination data but, rather, of the limitation of the $\Delta E_{00}$ metric itself.
+This mean there is no simple, true color difference measure in that space either --- if we insist on defining a perceptual uniform space to be one where a simple Euclidean distance is proportional to perceptual difference.
+
+### Science vs. Engineering
+
+I always feel that color discrimination is a topic that exemplifies the similarities and differences between engineering and science.
+
+From an engineering perspective, we would like to have a practical tool that allows us to quantify perceptual color differences, which have huge implications on capturing, storing, computing, and displaying colors.
+We want to make sure our workflow preserves the color fidelity as much as possible, and a quantitative metric is, just like any other engineering problem, a pre-requisite.
+Since the linear LMS/XYZ spaces and Euclidean distances are insufficient, we turn to non-linear spaces like CIELAB and non-Euclidean measures like $\Delta E_{00}$.
+The goal is engineering convenience.
+It is fair to say that while they are not perfect, they have significantly improved color workflows in practice.
+
+Vision scientists approach this problem with a different goal.
+The retina has access to only the cone reponses but the cone space itself is not perceptually uniform, so a natural question to ask is: *how does color discrimination arise from cone reponses*?
+It is of course of practical value to figure out the mechanisms that mediate our ability to discriminate between two colors; at the very least, we can design better color difference metrics for engineering applications.
+But fundamentally, understanding color discrimination might provide new insights of human color vision as a whole, and that is the scientific value of studying this problem.

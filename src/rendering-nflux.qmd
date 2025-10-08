@@ -1,0 +1,394 @@
+# The N-Flux Theory {#sec-chpt-mat-vs-nf}
+
+{{< include macros.qmd >}}
+
+As discussed in @sec-chpt-mat-vs-rte-rte, the general RTE is difficult to solve, and there are two general strategies.
+@sec-chpt-mat-vs-rte-vre discusses one strategy that numerically approximates the solution using Monte Carlo methods.
+Another strategy is to make some simplified assumptions and/or apply additional constraints, which would allow us to derive analytical solutions.
+The most common form of this strategy is called the N-flux or N-stream theory.
+This chapter will start from the case where $N=2$, which gives us the Kubelka–Munk Model (@sec-chpt-mat-vs-km), and then extend the theory to the general case (@sec-chpt-mat-vs-km-nflux).
+
+## The Kubelka–Munk Model {#sec-chpt-mat-vs-km}
+
+Kubelka and Munk, two Czechoslovakian chemists, built a phenomenological model that estimates the spectral reflectance/transmittance of a material [@kubelka1931beitrag; @kubelka1931article; @kubelka1948new].
+Their model cares only about the hemispherical-hemispherical reflectance (@sec-chpt-mat-ss-reflectance), i.e., the ratio of total flux scattered upward to the hemisphere to the total toward flux incident from the hemisphere.
+The K-M model also considers that the material under modeling is in immediate contact with a *Lambertian* substrate that reflects light uniformly over all directions.
+<!-- This is a common scenario in scenarios such as paints on a canvas, dyes on textiles, printer inks on paper, coatings on films, etc. -->
+The K-M model is the most aggressive form of simplification to the RTE that, nevertheless, is very widely used, especially in the printing, painting, and dye industry (and to some extent in graphics).
+
+<!-- %\fixme{diffuse assumption is technically wrong; use Fig. 2.5 in Bohren and the light absorption into a tube.} -->
+
+We will go through an excruciatingly long derivation, but the intuitions behind the derivation are exactly the same as that of the RTE, because the K-M model is a simplification of the RTE.
+The derivation allows us to make clear what simplifications we have made and, thus, when the model is and is not applicable.
+
+### Deriving the Model {#sec-chpt-mat-vs-km-derivation}
+
+@fig-km_model illustrates the setup that we will use to derive the model.
+The first important assumption that the K-M model makes is that the every point on the material surface receives exactly the same irradiance and that the material itself is homogeneous, consisting of particles that are statistically randomly distributed and oriented.
+As a result, there is no difference between different positions at the same depth anywhere inside the material.
+Of course the radiation fields at different depths are different; at the very least, the deeper you go, the fewer photons there are due to absorption.
+Another way to think of this is that we are intentionally limiting our consideration to only a small area where there is no spatial difference at the same depth, so we can analyze information only at different depths rather than different positions at the same depth.
+
+![The setup of deriving the K-M model. We focus on the change of downward irradiance ($E_{\downarrow}$) and upward irradiance ($E_{\uparrow}$) as they travel a thin layer $\D x$. We make the assumption that the material is an isotropic medium and is homogeneous spatially.](figs/km_model){#fig-km_model width="70%"}
+
+We focus on a very thin layer $\D x$; since there are no differences between horizontal positions, we can arbitrarily pick a point at depth $0 \leq x \leq X$ for analysis, where $X$ is the total depth (the material surface has $x=0$ and the material bottom has $x=X$).
+The point at $x$ receives photons from all directions.
+Let's say all the downward photons (going to the lower hemisphere) have a total irradiance of $E_{\downarrow}(x)$ and all the upward photons (going to the upper hemisphere) have a total irradiance of $E_{\uparrow}(x)$.
+The (hemispherical-hemispherical) reflectance at $x$ is then the ratio of the two:
+
+$$
+    R(x) = \frac{E_{\uparrow}(x)}{E_{\downarrow}(x)},
+$$
+
+and the reflectance at the material surface (which is what the K-M model is interested in calculating) is $R(0)$.
+
+How do we express $E_{\downarrow}(x)$?
+As usual, we set a differential equation to describe the change of $E_{\downarrow}(x)$.
+Consider the following conservation of energy when $E_{\downarrow}(x)$ goes through the thin layer $\D x$:
+
+$$
+\begin{aligned}
+    E_{\downarrow}(x + \D x) - E_{\downarrow}(x) = & - \int^{S^2_+}\sigma_a(x, \omega) \D x L(x, \omega) \do \\
+    & - \int^{S^2_+}\int^{S^2_+}\sigma_s(x, \omega) f_p(x, \omega', \omega) \D x L(x, \omega) \do' \do \\
+    & + \int^{S^2_-}\int^{S^2_-}\sigma_s(x + \D x, \omega) f_p(x + \D x, \omega', \omega) \D x L(x + \D x, \omega) \do' \do,
+\end{aligned}
+$$ {#eq-km_raw}
+
+where $S^2_+$ and $S^2_-$ represent the upper and lower hemispheres, respectively; $L(x, \omega)$ is the radiance coming from direction $\omega$ incident on a point of depth $x$, $f_p(x, \omega', \omega)$ is the phase function between the incident direction $\omega$ and outgoing direction $\omega'$, and $\sigma_s(x, \omega)$ is the scattering coefficient at $x$ for an incident direction $\omega$ (@sec-chpt-mat-vs-sca-single).
+
+The interpretation of this equation is exactly the same as that of the RTE.
+The equation essentially says that the downward irradiance after traveling $\D x$ is (omitting emission):
+
+* reduced by absorption (the first negative term in @eq-km_raw), which is the absorption component in the RTE;
+* reduced by upward scattering (the second negative term in @eq-km_raw), which is the out-scattering component in the RTE;
+* increased by the downward-scattering of upward irradiance reaching the bottom of the thin layer (the positive term in @eq-km_raw), which is the in-scattering component in RTE.
+
+Now let's take a closer look at the absorption term in @eq-km_raw and re-write it:
+
+$$
+    \int^{S^2_+}\sigma_a(x, \omega) \D x L(x, \omega) \do = \sigma_a(x, \bar{\omega}) \D x \int^{S^2_+} L(x, \omega) \do.
+$$  {#eq-km_s_2}
+
+@eq-km_s_2 is derived based on the **mean-value theorem**^[which says that there exists $c\in [a, b]$ such that $\int_a^b f(x)g(x)\d x = f(c)\int_a^b g(x)\d x$, if $g(x)$ is integrable and does not change its sign in $[a, b]$.] in integral calculus, which says that there exists *some* value of $\bar{\omega}\in S^2_+$ that would allow us to take the $\sigma_a$ term out of the integral.
+Once we do that, the integral on the right-hand side of @eq-km_s_2 is simply the total downward irradiance, which we denote $E_{\downarrow}(x)$.
+
+If we further assume that the material absorption is isotropic, then $\sigma_a(x, \bar{\omega})$ is independent of $\bar{\omega}$ and is simply a function of $x$, so we write it as $K_{\downarrow}(x)$, which allows us to re-write @eq-km_s_2 as:
+
+$$
+    \int^{S^2_+}\sigma_a(x, \omega) \D x L(x, \omega) \do = K_{\downarrow}(x) \D x E_{\downarrow}(x).
+$$  {#eq-km_s_3}
+
+$K_{\downarrow}(x)$ is a phenomenological coefficient, but it is related to the fundamental absorption coefficient $\sigma_a$ and, thus, carries physical meanings.
+This is clear from @eq-km_s_4:
+
+$$
+    K_{\downarrow}(x) = \frac{\int^{S^2_+}\sigma_a(x, \omega) L(x, \omega) \do}{\D x E_{\downarrow}(x)}.
+$$  {#eq-km_s_4}
+
+$K_{\downarrow}(x)$, by definition, represents the fraction of downward irradiance that is absorbed per unit length.
+Therefore, $K_{\downarrow}(x)$ can be intuitively interpreted as the effective *downward absorption coefficient* at depth $x$.
+Note that while the mean-value theorem tells us that *some* $\bar{\omega}\in S^2_+$ exists, it does not tell us what its values is.
+In reality, $K_{\downarrow}(x)$ will very much depend on $L(x, \omega)$.
+
+Similarly, we can rewrite the upward scattering term in @eq-km_raw by first rearranging the terms:
+
+$$
+\begin{aligned}
+    &\int^{S^2_+}\int^{S^2_+}\sigma_s(x, \omega) f_p(x, \omega', \omega) \D x L(x, \omega) \do' \do \\
+    = &\int^{S^2_+}\Big(\int^{S^2_+}\sigma_s(x, \omega) f_p(x, \omega', \omega) \do'\Big) \D x L(x, \omega) \do.
+\end{aligned}
+$$ {#eq-km_ku_1b}
+
+We then invoke the mean-value theorem again, which says that there exists $\bar{\omega}\in S^2_+$ that allows us to write the upward scattering term as:
+
+$$
+    (\int^{S^2_+}\sigma_s(x, \bar{\omega}) f_p(x, \omega', \bar{\omega}) \do' \D x) \int^{S^2_+}L(x, \omega) \do.
+$$ {#eq-km_ku_2}
+
+We use $S_{\downarrow\uparrow}(x)$ to denote the first integral in @eq-km_ku_2: $S_{\downarrow\uparrow}(x) = \int^{S^2_+}\sigma_s(x, \bar{\omega}) f_p(x, \omega', \bar{\omega}) \do'$, which means the upward scattering term can be simplied to:
+
+$$
+    S_{\downarrow\uparrow}(x) \D x E_{\downarrow}(x).
+$$ {#eq-km_ku_3}
+
+Combining @eq-km_ku_1b and @eq-km_ku_3, we get:
+$$
+    S_{\downarrow\uparrow}(x) = \frac{\int^{S^2_+}\int^{S^2_+}\sigma_s(x, \omega) f_p(x, \omega', \omega) L(x, \omega) \do' \do}{\D x E_{\downarrow}(x)}.
+$$  {#eq-km_ku_4}
+
+$S_{\downarrow\uparrow}(x)$ is again a phenomenological coefficient that is related to the fundamental scattering coefficient.
+Its physical interpretation is clear from @eq-km_ku_4: it is the fraction of the downward irradiance that is scattered upward per unit length.
+We can think of it as the effective "upward scattering coefficient of the downward irradiance".
+
+Finally, we can do the same thing to the downward scattering term in @eq-km_raw:
+
+$$
+    \int^{S^2_-}\int^{S^2_-}\sigma_s(x + \D x, \omega) f_p(x + \D x, \omega', \omega) \D x L(x + \D x, \omega) \do' \do
+$$ {#eq-km_kd_1}
+
+by first invoking the mean-value theorem and re-express it as:
+
+$$
+    (\int^{S^2_-}\sigma_s(x + \D x, \hat{\omega}) f_p(x + \D x, \omega', \hat{\omega}) \do' \D x) \int^{S^2_-}L(x + \D x, \omega) \do.
+$$ {#eq-km_kd_2}
+
+We use $S_{\uparrow\downarrow}(x)$ to denote the first integral in @eq-km_kd_2.
+The second integral in @eq-km_kd_2 is essentially the total upward irradiance at the depth $x+\D x$, which we denote $E_{\uparrow}(x + \D x)$.
+Therefore, the downward scattering term becomes:
+
+$$
+    S_{\uparrow\downarrow}(x + \D x) \D x E_{\uparrow}(x + \D x).
+$$ {#eq-km_kd_3}
+
+Combining @eq-km_kd_1 and @eq-km_kd_3, we have:
+
+$$
+\begin{aligned}
+    S_{\uparrow\downarrow}(x + \D x) = & \frac{\int^{S^2_-}\int^{S^2_-}\sigma_s(x + \D x, \omega) f_p(x + \D x, \omega', \omega) \D x L(x + \D x, \omega) \do' \do}{\D x E_{\uparrow}(x + \D x)},\\
+    S_{\uparrow\downarrow}(x) = & \frac{\int^{S^2_-}\int^{S^2_-}\sigma_s(x, \omega) f_p(x, \omega', \omega) \D x L(x, \omega) \do' \do}{\D x E_{\uparrow}(x)}.
+\end{aligned}
+$$ {#eq-km_kd_5}
+
+Now plug @eq-km_s_3, @eq-km_ku_3, and @eq-km_kd_3 back into @eq-km_raw, we get:
+
+$$
+    E_{\downarrow}(x + \D x) = E_{\downarrow}(x) - K_{\downarrow}(x) \D x E_{\downarrow}(x) - S_{\downarrow\uparrow}(x) \D x E_{\downarrow}(x) + S_{\uparrow\downarrow}(x + \D x) \D x E_{\uparrow}(x + \D x).
+$$
+
+Rewrite it and take the limit as $\D x \rightarrow 0$:
+
+$$
+\begin{aligned}
+    \frac{E_{\downarrow}(x + \D x) - E_{\downarrow}(x)}{\D x} &= - K_{\downarrow}(x) E_{\downarrow}(x) - S_{\downarrow\uparrow}(x) E_{\downarrow}(x) + S_{\uparrow\downarrow}(x + \D x) E_{\uparrow}(x + \D x),\\
+    \frac{\d E_{\downarrow}(x)}{\d x} &= - K_{\downarrow}(x) E_{\downarrow}(x) - S_{\downarrow\uparrow}(x) E_{\downarrow}(x) + S_{\uparrow\downarrow}(x) E_{\uparrow}(x).
+\end{aligned}
+$$ {#eq-km_down}
+
+Similarly we can express the rate of change of the upward irradiance $E_{\uparrow}(x)$ based on the same energy conservation constraint:
+
+$$
+    \frac{\d E_{\uparrow}(x)}{\d x} = K_{\uparrow}(x) E_{\uparrow}(x) + S_{\uparrow\downarrow}(x) E_{\uparrow}(x) - S_{\downarrow\uparrow}(x) E_{\downarrow}(x),
+$$ {#eq-km_up}
+
+where the three terms on the right-hand side, again, represent the absorption, out-scattering, and in-scattering in the original RTE.
+
+Now a few more assumptions.
+If we assume that the material absorption is isotropic (the total absorption per unit length is invariant to incident light direction over the entire sphere), we have $K_{\uparrow}(x) = K_{\downarrow}(x)$ because:
+
+$$
+    K_{\uparrow}(x) = \sigma_a(x, \hat{\omega}) = \sigma_a(x, \bar{\omega}) = K_{\downarrow}(x),
+$$ {#eq-km_abs_approx}
+
+for some $\hat{\omega} \in S^2_-$ and $\bar{\omega} \in S^2_+$.
+
+If we further assume that 1) the material is an isotropic scattering medium, then $\sigma_s(x, \omega)$ is invariant to $\omega$ (the total amount of scattering per unit length does not change with the incident light direction over the entire sphere), and 2) the particles are also isotropic scatters (which theoretically do not exist), then $f_p(x, \omega', \omega)$ is a constant ($\frac{1}{4\pi}$).
+Therefore, $S_{\uparrow\downarrow}(x) = S_{\downarrow\uparrow}(x)$, because:
+
+$$
+\begin{aligned}
+    S_{\uparrow\downarrow}(x) &= \int^{S^2_-}\sigma_s(x, \hat{\omega}) f_p(x, \omega', \hat{\omega}) \do' \\
+    &= \sigma_s(x, \hat{\omega}) \int^{S^2_-}f_p(x, \omega', \hat{\omega}) \do' = \sigma_s(x, \hat{\omega})/2 \\
+    &= \sigma_s(x, \bar{\omega}) \int^{S^2_-}f_p(x, \omega', \bar{\omega}) \do' = \sigma_s(x, \bar{\omega})/2 \\
+    &= S_{\downarrow\uparrow}(x),
+\end{aligned}
+$$ {#eq-km_sca_approx}
+
+for some $\hat{\omega} \in S^2_-$ and $\bar{\omega} \in S^2_+$.
+
+A few notes on the assumptions here:
+
+* The assumption of isotropic scatters is important; assuming only an isotropic medium is not enough.
+This is because the integrals in @eq-km_sca_approx integrate only the upper (or lower) hemisphere rather than the entire sphere, so if the phase function itself is not a constant, the integral result will still depend on $\bar{\omega}$ or $\hat{\omega}$.
+See the distinction between an isotropic medium and an isotropic scatter on @sec-chpt-mat-vs-sca-single-pf-iso.
+* Alternatively, if the particles are not isotropic scatters, $S_{\uparrow\downarrow}(x) = S_{\downarrow\uparrow}(x)$ can still hold if we assume that the upward and downward irradiance are both diffuse, i.e., the radiance $L(x, \omega)$ is invariant to $\omega$.
+The isotropic medium assumption still needs to hold.
+This can be proven by going back to the respective definitions of $S_{\uparrow\downarrow}(x)$ and $S_{\downarrow\uparrow}(x)$ in @eq-km_ku_4 and @eq-km_kd_5^[If $L(x, \omega)$ is invariant to $\omega$ and $f_p(x, \omega', \hat{\omega})$, under the isotropic medium assumption, is reduced to $f_p(x, \theta)$, where $\theta$ is the angle subtended by $\omega$ and $\omega'$, both $S_{\uparrow\downarrow}(x)$ and $S_{\downarrow\uparrow}(x)$ are essentially calculating $\int^{\pi}\int^{\pi}c~\d \theta\d \theta'$.].
+Interestingly, if the particles are isotropic scatters, the outgoing irradiance will necessarily be diffuse.
+* Yet another way for $S_{\uparrow\downarrow}(x) = S_{\downarrow\uparrow}(x)$ to hold is if we are considering a very idealized scenario where photons travel and are scattered only upward or downward [@bohren2006fundamentals, chap. 5.2].
+If the medium is also isotropic (but does not have to consist of isotropic scatters), the fraction of the upward irradiance turned downward would be the same as the fraction of the downward irradiance turned upward, so $S_{\uparrow\downarrow}(x) = S_{\downarrow\uparrow}(x)$.
+
+Finally, given the assumption that the material is spatially homogeneous, both $\sigma_a$, $\sigma_s$, and $f_p$ are all independent of $x$.
+Therefore, we can denote $K = K_{\uparrow}(x) = K_{\downarrow}(x)$ and $S = S_{\uparrow\downarrow}(x) = S_{\downarrow\uparrow}(x)$.
+$K$ and $S$ are simply called the absorption and scattering coefficients, respectively, of the medium, but we now should know that they are of the phenomenological nature and, with all the simplifications above, are derived from the fundamental optical absorption/scattering properties of the medium (see @eq-km_abs_approx and @eq-km_sca_approx).
+
+Now we combine @eq-km_down and @eq-km_up and get to the famous pair of differential equations underlying the K-M model:
+
+$$
+\begin{aligned}
+    \frac{\d E_{\downarrow}(x)}{\d x} &= - (K +S)E_{\downarrow}(x) + S E_{\uparrow}(x), \\
+    \frac{\d E_{\uparrow}(x)}{\d x} &= (K + S)E_{\uparrow}(x) - S E_{\downarrow}(x).
+\end{aligned}
+$$ {#eq-km_diff}
+
+### The Model and Its Interpretation {#sec-chpt-mat-vs-km-model}
+
+@eq-km_diff gives us a pair of linear differential equations.
+What we are interested in solving for is $R(0) = \frac{E_{\uparrow}(0)}{E_{\downarrow}(0)}$.
+The boundary condition is that $R(X) = R_g$, which is the (assumed-to-be) known reflectance of the substrate.
+Solving the differential equations gives us:
+
+$$
+\begin{aligned}
+    & R(0) = \frac{E_{\uparrow}(0)}{E_{\downarrow}(0)} = \frac{1-R_g[a-b\coth(bSX)]}{a-R_g+b\coth(bSX)},\\
+    & T(X) = \frac{E_{\downarrow}(X)}{E_{\downarrow}(0)} = \frac{b}{a\sinh(bSX)+b\cosh(bSX)},\\
+    & a = \frac{K+S}{S},\\
+    & b = \sqrt{a^2-1},
+\end{aligned}
+$$ {#eq-km}
+
+where $R(0)$ is the hemispherical-hemispherical reflectance at the material surface and $T(X)$ is the hemispherical-hemispherical transmittance at the bottom of the material^[You can see that $T(X)$ does not involve $R_g$: when we calculate the transmittance of the material, we assume that there is no substrate.]; $\coth(\cdot)$ is the hyperbolic cotangent function, $\sinh(\cdot)$ is the hyperbolic sine function, and $\cosh(\cdot)$ is the hyperbolic cosine function.
+Note that we omit $\lambda$ for simplicity but keep in mind that $R(0), T(X), S, K, R_g, a, b$ are all spectral quantities.
+
+@eq-km is the famous K-M model.
+Consider the case where the material is purely absorptive and scatters little (e.g., dyes on textiles or fabrics), so $S$ is close to 0 and the reflectance is simplified to:
+
+$$
+    R(0) = R_g e^{-2KX} = e^{-KX} R_g e^{-KX}.
+$$ {#eq-kmabs}
+
+We can understand $R_X$ by decomposing it into the product of three terms, each representing a step in the overall, observed reflection.
+First, photons go through the material from the top down, being absorbed as they go.
+The percentage of photons that are still left (i.e., unabsorbed) just before they hit the substrate is $e^{-KX}$, which is consistent with the Beer-Lambert law.
+Second, the substrate reflects $R_g$ amount of light back toward the material.
+Finally, as the photons make their way back to the surface, they go through another round of absorption governed by the same Beer-Lambert law (@sec-chpt-mat-vs-abs-simple).
+
+Now consider the case where there is no substrate or when the substrate is a perfect black substrate; in both cases $R_g = 0$.
+Reflectance is now:
+
+$$
+    R_{black} = \frac{1}{a+b\coth(bSX)}.
+$$ {#eq-black}
+
+Finally, consider the case where the material is so thick that no photon reaches the substrate.
+In this case, the reflectance is not affected by the substrate and can be simplified to (by letting $X$ approach infinity):
+
+$$
+    \lim_{X \rightarrow \infty} = R_{\infty} = \frac{1}{a+b} = 1 + \frac{K}{S} - \sqrt{\Big(\frac{K}{S}\Big)^2 + 2 \frac{K}{S}}.
+$$ {#eq-hide}
+
+In the painting industry, we say the paint's "hiding is complete" when the substrate does not influence the material color.
+We can quantify the "hiding power" of a paint by $H = \frac{R_{white}}{R_{black}}$, i.e., the ratio of reflectance between when the substrate is black (absorbs everything) and white (reflects everything back).
+If the hiding is complete, $H$ would be 1.
+
+You might be wondering how we know $K$ and $S$ of a material --- we measure them.
+For instance, observe @eq-black and @eq-hide; we can measure the reflectance $R_{black}$ when the substrate is nearly black and the reflectance $R_{\infty}$ when the hiding is near complete.
+We can then solve the system of equations to estimate $K$ and $S$.
+
+You can see that we are not actually taking a very thin layer of particles, illuminating it, and then measuring how much of the light is scattered vs. absorbed.
+Instead, we estimate $K$ and $S$ macroscopically.
+We have in mind a model (a set of equations or functions, if you will) that is parameterized by unknown variables.
+We then probe the model by giving it different inputs and measuring the outputs.
+From the input-output pairs, we can then estimate the unknown parameters.
+This is why a model so defined and derived is called a phenomenological model and the parameters (e.g., the $K$ and $S$ coefficients) are called the phenomenological parameters --- because all we do is to observe the phenomena.
+
+### K-M Model for Mixture of Materials {#sec-chpt-mat-vs-km-mix}
+
+The basic K-M model can be extended to account for materials that consist of a mixture of materials, each with different absorption/scattering behaviors.
+This is done by first expressing the overall absorption and scattering coefficients of the mixture and then plugging them into the K-M model.
+
+Specifically, if we are mixing $N$ materials, each with a phenomenological absorption and scattering coefficient $K_i$ and $S_i$, the overall absorption and scattering coefficient of the material is:
+
+$$
+\begin{aligned}
+    K &= \sum_{i=1}^N \eta_i K_i, \\
+    S &= \sum_{i=1}^N \eta_i S_i,
+\end{aligned}
+$$ {#eq-ks_mix}
+
+where $\eta_i$ is the *volume concentration* of the $i^{th}$ material in the overall material mixture and is defined as:
+
+$$
+    \eta_i = \frac{V_i}{\sum_{j=1}^N V_j},
+$$
+
+where $V_j$ is the volume of the $j^{th}$ material.
+Once we have the $K$ and $S$ coefficients, we simply invoke @eq-km to calculate the reflectance/transmittance of the material mixture.
+
+Why would it make sense to calculate the overall $K$ and $S$ using the volume-weighting method in @eq-ks_mix?
+Let's derive it using absorption as an example.
+The overall absorption coefficient $K$ of the material mixture is also the optical absorption coefficient $\sigma_a$ of the mixture (given the set of assumptions we have made so far; see @eq-km_abs_approx), which is given by @eq-absorbances_add as:
+
+$$
+    K = \sigma_a = \sum_i^N c^i\epsilon^i,
+$$
+
+where $c^i$ and $\epsilon^i$ are the number concentration and the absorption cross section of the $i^{th}$ material in the material mixture.
+Specifically, $c^i$ is defined as:
+
+$$
+    c^i = \frac{n_i}{\sum_{j=1}^N V_j} = \frac{V_i}{\sum_{j=1}^N V_j} \frac{n_i}{V_i},
+$$ {#eq-num_conc}
+
+where $n_i$ is the number of particles of the $i^{th}$ material in the mixture.
+We assume that when we mix $N$ materials, their volumes add.
+That is, the volume of the mixture is the sum of that of the individual materials.
+This is in general true if different materials do not chemically react and if materials do not dissolve into each other.
+Therefore:
+
+$$
+    K = \sum_i^N c^i\epsilon^i = \sum_i^N \frac{V_i}{\sum_{j=1}^N V_j} \frac{n_i}{V_i} \epsilon^i = \sum_i^N \eta_i \frac{n_i}{V_i} \epsilon^i.
+$$ {#eq-k_mix_2}
+
+We then, again, use the fact (@eq-km_abs_approx) that the phenomenological absorption coefficient of the $i^{th}$ material $K_i$ is the same as its optical absorption coefficient $\sigma_{a, i} = c_i \epsilon_i$, where:
+
+* $c_i = \frac{n_i}{V_i}$ is the number concentration of the $i^{th}$ material *on its own* (note the subtle difference of $c_i$ here and $c^i$ in @eq-num_conc, which is the number concentration of the $i^{th}$ material in a mixture), and
+* $\epsilon_i$ is just $\epsilon^i$: they both refer to absorption cross section of the $i^{th}$ material, which does not change whether the material is in a mixture or not.
+
+Therefore:
+$$
+    K = \sum_i^N \eta_i c_i \epsilon_i = \sum_i^N \eta_i K_i,
+$$ {#eq-k_mix_3}
+
+which is exactly @eq-ks_mix.
+
+### Correction for Surface Reflection {#sec-chpt-mat-vs-km-cor}
+
+One thing that is ignored in the K-M model is the surface reflection/refraction yet.
+Part of the photons will be reflected away at the air/material interface before they enter the material.
+Similarly, when we consider the transmittance, we have ignored the reflection/refraction at the other side of the material.
+So the reflectance and transmittance calculated by the K-M model are defined at the point when the photons are just about to leave the material.
+
+To account for the surface phenomena, we can apply what is called the Saunderson correction, derived by @saunderson1942calculation.
+See @sharma2003color[chap. 3.6.3] for a derivation, but briefly, if the illumination is diffuse, the corrected surface reflectance is:
+
+$$
+    R = r_s + \frac{(1-r_s)(1-r_i)~R(0)}{1-r_i~R(0)},
+$$
+
+where $R(0)$ is the reflectance given by the K-M model, $r_s$ is the fraction of incident irradiance scattered by the air-material surface, and $r_i$ is the fraction of the internal irradiance approaching the air-material interface that is scattered back by the interface.
+Assuming a smooth surface, both $r_s$ and $r_i$ can be calculated by the Fresnel equations given the refractive index of the material (@sec-chpt-mat-ss-mat).
+
+## The N-Flux Model {#sec-chpt-mat-vs-km-nflux}
+
+The basic K-M model is called the two-stream or two-flux model, because it considers only the total upward irradiance and total downward irradiance.
+We basically have divided all the directions possible in the space into only two solid angles, the upper hemisphere and the lower hemisphere.
+What if we want to know the irradiance at a finer granularity (i.e., over a smaller solid angle)?
+We divide all the directions into more solid angles and analyze the irradiance change in them using a similar method.
+
+For instance, if we now consider irradiance in four directions: $E_{\nwarrow}(x)$, $E_{\nearrow}(x)$, $E_{\searrow}(x)$, and $E_{\swarrow}(x)$, we can write the change of the irradiance in $E_{\searrow}(x)$ as:
+
+$$
+\begin{aligned}
+    \frac{\d E_{\searrow}(x)}{\d x} = & - K_{\searrow}(x) E_{\searrow}(x) \nonumber \\
+    & + S_{\nwarrow\searrow}(x) E_{\nwarrow}(x) + S_{\nearrow\searrow}(x) E_{\nearrow}(x) + S_{\swarrow\searrow}(x) E_{\swarrow}(x) \nonumber \\
+    & - S_{\searrow\nwarrow}(x) E_{\searrow}(x) - S_{\searrow\nearrow}(x) E_{\searrow}(x) - S_{\searrow\swarrow}(x) E_{\searrow}(x),
+\end{aligned}
+$$ {#eq-n_stream_se}
+
+where $S_{\nwarrow\searrow}$ is the scattering coefficient of from the northwest irradiance to the southeast direction, and so on.
+We can express the changes of the other three directions similarly.
+In general, if we divide the space into $N$ "channels", each representing a set of directions (a finite solid angle), we can extend the two-flux model to a "N-flux" model.
+
+![The setup for the N-flux model. All the possible directions (consider all the arrows that can possibly go out from the origin) are divided into "channels" or "streams", each of which represents a finite solid angle within which an irradiance travels. The N-flux model models the changes of each of these irradiances. Adapted from @li2003ink[Fig. 4.1].](figs/n_flux){#fig-n_flux width="50%"}
+
+@fig-n_flux shows the setup for deriving the N-flux model, where all the possible directions (consider all the arrows that can possibly go out from the origin) are divided into "channels" or "streams", each of which represents a finite solid angle within which an irradiance travels.
+The figure visualizes eight such channels.
+The change of each channel is modeled by taking away from each channel photons that are absorbed and scattered to all other channels and by adding photons scattered into the channel from all other channels.
+In the end, we get $N$ linear differential equations.
+@eq-n_stream_se is one such equation when $N=4$.
+The channels are usually rotationally symmetric about the $z$-axis, assuming that the material is rotationally symmetric about the $z$-axis.
+
+Comparing against the RTE in @eq-rte_2, which has an integral term $L_s$ given in @eq-source_term_em.
+What the N-flux model does is to essentially approximate that integral with a finite sum.
+In general, the larger the $N$ the better the approximation but also the more computationally intensive to solve.
+We will omit a formal treatment but refer you to @bohren2006fundamentals[chap. 6.1], @volz2001industrial[chap. 3.1.2], and @klein2010industrial[chap. 5.5] for details.

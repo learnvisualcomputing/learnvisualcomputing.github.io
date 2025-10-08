@@ -1,0 +1,21 @@
+# Visual Adaptations and Constancy {#sec-chpt-hvs-adaptations}
+
+Humans adapt to all sorts of sensory input, including heat, pain, smell.
+In all cases we care about two things: 1) the behavior after full adaptation and 2) the time course of adaptation.
+Before this chapter is fully developed, check out our [lecture slides](https://cs.rochester.edu/courses/259/fall2025/decks/lect8-adaptation.pdf) on adaptation.
+
+## Light Adaptation {#sec-chpt-hvs-adaptations-light}
+
+light adaptation
+
+## Dark Adaptation {#sec-chpt-hvs-adaptations-dark}
+
+dark adaptation
+
+## Chromatic Adaptation {#sec-chpt-hvs-adaptations-chroma}
+
+chromatic adaptation, which is concerned with sensitivity scaling and is a direct result of light adaptation.
+
+## Color Constancy {#sec-chpt-hvs-adaptations-cc}
+
+color constancy goes beyond sensitivity scaling and involves higher-order visual functions, i.e., surface reflectance estimation.
