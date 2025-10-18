@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Overview – Foundations of Visual Computing</title>
+<title>7&nbsp; Light-Matter Interactions – Foundations of Visual Computing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,7 +137,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-overview.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Overview</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-overview.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Light-Matter Interactions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -254,7 +254,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-overview.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Light-Matter Interactions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -381,7 +381,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-chpt-mat-basics-ov" id="toc-sec-chpt-mat-basics-ov" class="nav-link active" data-scroll-target="#sec-chpt-mat-basics-ov"><span class="header-section-number">7.1</span> Light-Matter Interactions</a></li>
+  <li><a href="#sec-chpt-mat-basics-ov" id="toc-sec-chpt-mat-basics-ov" class="nav-link active" data-scroll-target="#sec-chpt-mat-basics-ov"><span class="header-section-number">7.1</span> Overview</a></li>
   <li><a href="#sec-chpt-mat-vs-ov" id="toc-sec-chpt-mat-vs-ov" class="nav-link" data-scroll-target="#sec-chpt-mat-vs-ov"><span class="header-section-number">7.2</span> Building Intuition</a>
   <ul class="collapse">
   <li><a href="#material-types" id="toc-material-types" class="nav-link" data-scroll-target="#material-types"><span class="header-section-number">7.2.1</span> Material Types</a></li>
@@ -394,9 +394,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-overview.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Overview</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rendering.html">Rendering</a></li><li class="breadcrumb-item"><a href="./rendering-overview.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Light-Matter Interactions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-chpt-mat-basics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Overview</span></span></h1>
+<h1 class="title"><span id="sec-chpt-mat-basics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Light-Matter Interactions</span></span></h1>
 </div>
 
 
@@ -434,7 +434,7 @@ window.Quarto = {
 </div>
 <p>This chapter first lays the land for physically modeling light-matter interactions in rendering, discussing the different levels at which the modeling can occur (<a href="#sec-chpt-mat-basics-ov" class="quarto-xref"><span>Section 7.1</span></a>) and building intuitions using a toy example (<a href="#sec-chpt-mat-vs-ov" class="quarto-xref"><span>Section 7.2</span></a>). We will conclude the chapter by introducing an extremely high-level model that abstracts away almost all the underlying physics and models an object as its <em>apparent</em> reflection and transmission spectra (<a href="#sec-chpt-mat-basics-model" class="quarto-xref"><span>Section 7.3</span></a>). This simple modeling is very commonly used in practice and serves as a curious teaser for the remaining rendering chapters: how and when can this simple model be a good approximation of the sophisticated light-matter interactions?</p>
 <section id="sec-chpt-mat-basics-ov" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-ov"><span class="header-section-number">7.1</span> Light-Matter Interactions</h2>
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-chpt-mat-basics-ov"><span class="header-section-number">7.1</span> Overview</h2>
 <p>By and large, we will treat light as a collection of photons, each traveling in a particular direction and carrying a specific amount of energy. When a beam of photons hits a material surface, some of the photons will be scattered directly back to your eyes, and others will penetrate into the material. These surface phenomena are governed by <strong>surface scattering</strong>. We use the word “scattering” here to generally refer to lights coming back from the surface. Depending on the material, some of the scattered photons are along the perfect mirror-reflection directions, and others might be more diffuse. You might sometimes see the word “reflection” used. Reflection is sometimes used in the same way as scattering, which will be our use, but other times is reserved for the perfect, mirror-like reflection. Usually what the word means is self-evident given the context, but we will err on the side of verbosity when we want to mean a specific form of reflection.</p>
 <p>Photons that penetrate the surface will further interact with particles in the material, which absorb, scatter, or might even emit photons. This is called <strong>subsurface scattering</strong> (SSS) in computer graphics. Even though we use the term “scattering”, you should know that the actual SSS processes involve not only photon scattering but also absorption and emission. We will, however, generally ignore emission in our discussion unless otherwise noted, but just note that emission does happen and is correlated with absorption, since emission is the result of absorbed photons having (e.g., chemical) reactions with the particles.</p>
 <p>It turns out that the principles that govern SSS are exactly the same as those that govern the interactions between photons and particles in the so-called <strong>participating media</strong>, such as clouds, fogs, and smokes. In computer graphics, light-matter interactions in participating media are called <strong>volume scattering</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. SSS is, instead, more commonly used to refer to light-matter interactions in <em>solids</em> (which have a clear definition of “surface”) where subsurface-scattered photons contribute to their observed colors, such as skin, jade, and wax.</p>

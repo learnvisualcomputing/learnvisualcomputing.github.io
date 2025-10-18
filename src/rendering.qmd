@@ -1,15 +1,30 @@
 # Rendering
 
 So far in the book, our focus has been on how our visual system encodes light spectrum coming from the scene into perception.
-We have, however, not cared much about how an object in the scene could produce light in the first place.
+We have, however, not cared much about how an object in the scene could produce light (and, thus, color) in the first place.
+The wonderful book by @nassau2001physics describes 15 causes of color.
+By and large, there are two main causes.
 An object could, of course, emit light itself.
+These objects can either be incandescent, which emit light when heated, or be luminescent, which emit light without thermal radiation.
+Black-body radiation that we have discussed before in Chapter @sec-chpt-hvs-cori is an ideal form of the former, while displays and lighting systems that we will discuss in Chapter @sec-disp-optics are electroluminescent, an example of the latter category.
+
 In the real world, however, the vast majority of objects have colors not because they emit light but because they interact with light that impinges upon them.
 The light-matter interaction modifies the energy spectrum of the incident light, and the modified light is scattered back to our eyes, giving rise to (color) vision.
+This is the focus of this part of the book.
 
 A great deal of computer graphics is concerned with *rendering* the color of objects, and the name of the game is to model the light-matter interactions in a physically accurate manner so that the colors in the generated imagery look real.
 This part of the book focuses on the physical principles that govern light-matter interactions insofar as they are used in rendering photorealistic color images.
 We will not cover implementation-specific topics such as how these principles are supported in modern graphics programming models (e.g., OpenGL, Vulkan, and OptiX);
 nor will we cover how these programming models are supported on modern GPU hardware correctly and efficiently.
+
+We will start with an overview of the forms of light-matter interactions while building, along the way, a very high-level model that is practical useful (Chapter @sec-chpt-mat-basics).
+The more detailed modeling will be based mostly on radiometry and, more specifically, the radiative transfer theory.
+We will first introduce a few key concepts in radiometry (Chapter @sec-chpt-mat-basics-radiometry), which will then allow us to understand light field, a notion central to rendering and image synthesis (Chapter @sec-chpt-mat-basics-lf).
+
+With these basics, we can then start talking about the two major forms of light-matter interactions that are particularly relevant to graphics and rendering: surface scattering and subsurface/volume scattering.
+The former is governed by the rendering equation (Chapter @sec-chpt-mat-ss) and the surface properties (Chapter @sec-chpt-mat-ssmodel).
+The latter is governed by the volume rendering equation (Chapter @sec-chpt-mat-vs-rte), which models the various volume scattering processes (Chapter @sec-chpt-mat-vs).
+We will end this part by looking at a particular solution to the general volume rendering equation given ideal assumptions that are nevertheless quite useful in practice (Chapter @sec-chpt-mat-vs-nf).
 
 Any coverage of physics in rendering is necessarily an approximation --- based on phenomenological models that abstract away unimportant details of the underlying physics while maintaining what is relevant for image synthesis.
 Deep learning and AI techniques push this kind of approximation to the extreme.

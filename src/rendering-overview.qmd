@@ -1,4 +1,4 @@
-# Overview {#sec-chpt-mat-basics}
+# Light-Matter Interactions {#sec-chpt-mat-basics}
 
 {{< include macros.qmd >}}
 
@@ -6,7 +6,7 @@ This chapter first lays the land for physically modeling light-matter interactio
 We will conclude the chapter by introducing an extremely high-level model that abstracts away almost all the underlying physics and models an object as its *apparent* reflection and transmission spectra (@sec-chpt-mat-basics-model).
 This simple modeling is very commonly used in practice and serves as a curious teaser for the remaining rendering chapters: how and when can this simple model be a good approximation of the sophisticated light-matter interactions?
 
-## Light-Matter Interactions {#sec-chpt-mat-basics-ov}
+## Overview {#sec-chpt-mat-basics-ov}
 
 By and large, we will treat light as a collection of photons, each traveling in a particular direction and carrying a specific amount of energy.
 When a beam of photons hits a material surface, some of the photons will be scattered directly back to your eyes, and others will penetrate into the material.

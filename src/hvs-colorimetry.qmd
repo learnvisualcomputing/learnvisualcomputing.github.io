@@ -75,7 +75,7 @@ Of course we can do the same if a color is defined in the XYZ space or the LMS c
 The left panel in @fig-xy_chromaticity shows the xy-chromaticity diagram.
 It is obtained by first converting from the XYZ space to the xyz space and then plotting only the x and y axes (z is implicit in that $x+y+z=1$).
 The horseshoe curve is the spectral locus.
-For the reference, we also show the three primary lights and the white point of the CIE 1931 RGB color space as well as the Planckian locus, which shows the chromaticities of the black-body radiation at different temperatures (@fig-blackbody_colors).
+For the reference, we also show the three primary lights and the white point of the CIE 1931 RGB color space as well as the Planckian locus, which is the path of chromaticities that an ideal black-body radiation would take at different temperatures (@fig-blackbody_colors).
 
 ![Left: The gamut and spectral locus of the CIE 1931 RGB space visualized in the xy-chromaticity diagram; adapted from @plankianlocus. The Planckian locus is shown for the reference too. A point outside the (convex) spectral locus is an imaginary color.  Right: comparison of different color spaces in the xy-chromaticity diagram; from @csinxy. A color space's chromaticity gamut is a triangle; a color outside the triangle cannot be physically produced in that color space.](figs/xy_chromaticity){#fig-xy_chromaticity width="100%"}
 

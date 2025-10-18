@@ -6,8 +6,11 @@ It is therefore essential to understand how the human visual system processes an
 Second, although not the focus of this book, machine vision systems are still, in many ways, striving to match the capabilities of human vision.
 A deeper understanding of human vision may help inform and inspire better machine vision designs.
 
-Our discussion will primarily focus on the eye’s optics and retinal processing while touching only lightly on cortical processing --- for three reasons.
+Our discussion will primarily focus on the early visual system, including the eye optics and the retinal processing, while touching only lightly on cortical processing --- for two reasons.
 First, eye optics and retinal processing are *relatively* better understood in the scientific community compared to cortical processing.
-Second, many visual behavioral characteristics—such as spatial and temporal resolution, contrast sensitivity, and visual adaptation—can be largely explained by the eye’s optics and retinal function.
-These characteristics are frequently exploited in engineering optimizations aimed at improving efficiency. 
-Finally, the computer science and engineering community is already relatively attuned to cortical processing, thanks to the substantial body of work on spiking neural networks. For further exploration of cortical mechanisms, we refer readers to those specialized texts.
+Second, many aspects of perceptual performance, such as spatial and temporal resolution, contrast sensitivity, and visual adaptation, can be largely explained by the eye’s optics and retinal function.
+These characteristics are frequently exploited in engineered systems such as AR glasses, where the main consideration is whether an object is visible/detectable, which the early visual system is concerned with, rather than higher-order visual functions such as object recognition, motion and depth perception, etc.
+
+We will start from an overview of the human visual system (Chapter @sec-chpt-hvs-percept), followed by a closer look at phototransduction at the photoreceptors, the first step in seeing (Chapter @sec-chpt-hvs-receptor).
+We will then move onto color vision (Chapter @sec-chpt-hvs-color) and colorimetry (Chapter @sec-chpt-hvs-cori), the quantitative study of color.
+We will then turn to adaptation (Chapter @sec-chpt-hvs-adaptations), understanding how our visual system adjusts its sensitivity according to the ambient environment.
