@@ -147,10 +147,16 @@ In contrast, sRGB [@anderson1996proposal; @srgbweb; @srgbiec] and Display P3 are
 sRGB shares the same primaries and white point chromaticities as Rec. 709 but uses a different OETF.
 Display P3 offers a wider gamut than sRGB while using the same OETF.
 
-All of the standards above, except Rec. 2100, use relative luminance as input, where L=1 is given by some form of maximum luminance measure manually determined for a particular setting and, therefore, usually does *not* correspond to a fixed, absolute luminance level.
-That maximum luminance could be, for instance, the absolute luminance that just saturates the sensor in the imaging system.
+All of the standards above, except Rec. 2100, use a gamma-based, power-law function OETF that takes relative luminance as input, where L=1 is given by some form of maximum luminance manually determined for a particular setting (e.g., the absolute luminance that just saturates the sensor in the imaging system).
+Therefore, an input L=1 usually does *not* correspond to a fixed, absolute luminance level.
 In theory, though, the brightness-vs-luminance model should take absolute luminance into account.
 The sRGB standard does specify a *recommended* display luminance of 80 nits, but that is just a recommendation and nothing prevents you from displaying an sRGB on a dimmer or brighter display, in which case the brightness model underlying the OETF in sRGB technically would not apply.
+We have discussed this in @sec-chpt-hvs-cori-cube-step2.
+
+In contrast, the OETF used in Rec. 2100 is based on absolute luminance information and, interestingly, is not a gamma-based, power-law function.
+Rather, it is based on modeling the peak contrast sensitivity across luminance levels [@miller2013perceptual; @iturbt2100-3], and the function is fit using a modified Naka-Rushton equation [@naka1966s; @whittle1986increments] originally used to model photoreceptor response to light, which we have seen in @sec-hvs-receptor-intensity-model^[There are actually two OETFs defined in Rec. 2100. What we are describing here is the Perceptual Quantizer (PQ) version, whose OETF supports up to 10,000 nits. The other version, called Hybrid Log-Gamma (HLG), uses a different parameterization and supports up to 1,000 nits.].
+It is believed that the gamma-based, power-law function is a good representation of brightness perception under 100 nits, but fails at higher luminance levels.
+Rec. 2100 had to address this limitation since it was designed to encoding signals meant for high-dynamic range displays that can go as high as thousands of nits.
 
 In practice, the OETF is applied after a color space conversion (CSC) from the raw camera space to a standard color space such as sRGB or Display P3 (which we cover in @zhu2022cam), each of which specifies a reference OETF.
 The OETF is applied to each of the three color channels.

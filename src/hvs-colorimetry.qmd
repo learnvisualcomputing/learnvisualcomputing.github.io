@@ -196,17 +196,23 @@ Note that the gamma-based OETF does not model the actual relationship between pe
 The behavioral brightness perception is largely accounted for by the photoreceptor/RGC response to light intensity.
 As we discussed in @sec-hvs-receptor-intensity-model, the relationship between the electrical response of a photoreceptor and the light intensity is usually modeled by a (generalized) Michaelis equation, which incrementally saturates and exhibits a diminishing return, the same characteristic that the power-law function also possess.
 <!-- %\footnote{Behavioral brightness perception is usually quantified by the amount of incremental intensity needed to evoke a just noticeable brightness change. The incremental intensity is linearly related to the current intensity. This relationship is called the Weber's law, and is the natural result if the photoreceptor response to light intensity is modeled by the Michaelis equation. We will discuss this in detail in the adaptation lecture.}.
-% there is no way to directly measure brightness vs. luminance, so we can only measure TVI. see my note on Weber’s Law and Sensitivity in Psychophysics vs. Physiology.
+% there is no way to directly measure brightness vs. luminance, so we can only measure TVI. see my google docs note on "Weber’s Law and Sensitivity in Psychophysics vs. Physiology".
 %https://analyticsartist.wordpress.com/2015/03/08/advertising-diminishing-returns-saturation/ -->
 
 There are two caveats here.
 First, $v$ is *proportional* to luminance $L$, but is *not* exactly $L$, so the same $v$ will result in different $L$s on different displays that differ in their peak luminance.
+In addition, the ambient light and the resulting flare from the display in the viewing environment also affect how a digital value $v$ actually translates to luminance $L$ entering our visual system.
 So encoding $B$ as a power-law function of $v$ does not mean the OETF actually models the correct relationship between $B$ and $L$.
-That is why the sRGB standard specifies the peak luminance of the display (white point) as 80 cd/m$^2$.
-Presumably this means that at this particular luminance range (0 to 80 cd/m$^2$), the relationship between $B$ and $L$ roughly follows the power law.
-Second, light adaptation (@sec-chpt-hvs-adaptations-light) will also play a role, since the HVS responds to contrasts over the mean illuminance, rather than absolute illuminance, and the mean illuminance varies largely across viewing environments.
-The sRGB standard also specifies that the mean illuminance level of the viewing environment to be 64 lux.
-When actually viewing an sRGB image, both conditions are rarely met, so take all these with a huge grain of salt.
+That is why the sRGB standard specifies the peak luminance of the display (white point) as 80 cd/m$^2$ and that the mean illuminance level of the viewing environment to be 64 lux.
+Presumably this means that at this particular luminance range (0 to 80 cd/m$^2$ plus whatever we get from flare), the relationship between $B$ and $L$ roughly follows the power law.
+When actually viewing an sRGB image, both conditions are rarely met, so take all these with a huge grain of salt [@srgbweb].
+
+ITU-R Rec. 2100 addresses the first issue by defining OETFs that are based on absolute luminance  [@miller2013perceptual; @iturbt2100-3] and are, thus, more perceptually relevant (especially at high luminance levels), but still, it needs to say things like "avoid light falling on the screen" in the standard to constrain the ambient lighting in the viewing environment.
+We discuss Rec. 2100 in more detail in @sec-disp-sp-proc.
+
+Second, light adaptation [@sec-chpt-hvs-adaptations-light] also plays a role as the sensitivity of our visual system depends on the luminance levels that we are adapted to.
+Therefore, both sRGB and Rec. 2100 have specified the *recommended* luminance level of the immediate surround of the display (and in the case of Rec. 2100, the luminance level of the rest of the viewing environment), which affects the adaptation state of the observer.
+Again, these are rarely met in practice.
 
 ### RGB Color Spaces are Linearly Related in Luminance
 
