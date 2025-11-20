@@ -587,12 +587,13 @@ We will explicitly use *hardware-intrinsic OETF* when referring specifically to 
 <ul>
 <li><span class="math inline">\(T_{XYZ\_to\_P3}\)</span> is the transformation from the XYZ space to the linear Display P3 space; the matrix is usually normalized such that [1, 1, 1] in the linear P3 space translates to an XYZ value where Y=1.</li>
 <li><span class="math inline">\(P_{P3\_linear}\)</span> is the color in the linear P3 space.</li>
-<li><span class="math inline">\(P_{P3}\)</span> (<span class="math inline">\(\mathbb{Z}^3 \in [0, 1023]^3\)</span>) is the color in the P3 space, assuming 10-bit encoding.</li>
+<li><span class="math inline">\(P_{P3}\)</span> (<span class="math inline">\(\mathbb{Z}^3 \in [0, 1023]^3\)</span>) is the color in the P3 space, assuming 10-bit encoding (assuming <span class="math inline">\(\text{diag}(1024)\)</span> is defined to also perform quantization.).</li>
 </ul>
-<p>Even though the TMO in <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a> operates completely within the sRGB space, by cascading <a href="#eq-eetf" class="quarto-xref">Equation&nbsp;<span>21.3</span></a> and <a href="#eq-eotf" class="quarto-xref">Equation&nbsp;<span>21.4</span></a> we can see that the TMO effectively maps pixels from the color space where the input image is encoded (<span class="math inline">\(P_{sRGB}\)</span> here) to the color space where the tone-mapped image is to be displayed (<span class="math inline">\(P_{P3}\)</span> here), so the TMO can also be thought of as:</p>
-<p><span class="math display">\[
+<!-- Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that the TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
+
+$$
     \mathcal{M}_{sRGB \rightarrow P3}: P_{sRGB\_linear} \mapsto P_{P3\_linear},
-\]</span></p>
+$$ -->
 </section>
 <section id="display-intrinsic-transfer-function" class="level3" data-number="21.2.5">
 <h3 data-number="21.2.5" class="anchored" data-anchor-id="display-intrinsic-transfer-function"><span class="header-section-number">21.2.5</span> Display-Intrinsic Transfer Function</h3>

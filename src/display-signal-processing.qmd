@@ -255,13 +255,13 @@ where:
 
 * $T_{XYZ\_to\_P3}$ is the transformation from the XYZ space to the linear Display P3 space; the matrix is usually normalized such that [1, 1, 1] in the linear P3 space translates to an XYZ value where Y=1.
 * $P_{P3\_linear}$ is the color in the linear P3 space.
-* $P_{P3}$ ($\mathbb{Z}^3 \in [0, 1023]^3$) is the color in the P3 space, assuming 10-bit encoding.
+* $P_{P3}$ ($\mathbb{Z}^3 \in [0, 1023]^3$) is the color in the P3 space, assuming 10-bit encoding (assuming $\text{diag}(1024)$ is defined to also perform quantization.).
 
-Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that the TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
+<!-- Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that the TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
 
 $$
     \mathcal{M}_{sRGB \rightarrow P3}: P_{sRGB\_linear} \mapsto P_{P3\_linear},
-$$
+$$ -->
 
 ### Display-Intrinsic Transfer Function
 
