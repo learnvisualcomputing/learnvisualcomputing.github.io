@@ -61,10 +61,7 @@ To achieve this, the knob we have is the mapping of the intended luminance of ea
 
 The mapping from scene luminance to displayed luminance is the OOTF in @fig-ootf, and is the central task of **tone mapping**.
 As noted earlier, the OOTF is not directly controlled; instead, it emerges from a cascade of transfer functions within the signal processing chain.
-Some of these transfer functions are determined by the design of the imaging and display hardware (&#9313; and &#9321;), others by image encoding and decoding format (e.g., &#9314;, &#9315; &#9317;, &#9318;), and the remainder by the image processing algorithm (&#9316;) abstracted as Electro-Electrical Transfer Function (**EETF**).
-
-EETF is the component over which we have the greatest (or sometimes the only) control and, thus, where tone mapping/OOTF can be practically influenced.
-For that reason, the entire EETF can also be thought of as a tone mapping operator (TMO).
+Some of these transfer functions are determined by the design of the imaging and display hardware (&#9313; and &#9321;), others by image encoding and decoding format (e.g., &#9314;, &#9315; &#9317;, &#9318;), and the remainder by the image processing algorithm (&#9316;), which is the component over which we have the greatest (or sometimes the only) control and, thus, where the tone mapping operator is implemented.
 
 The key to tone mapping is to **preserve contrast**.
 Recall that the human visual system has a contrast sensitivity function (@sec-chpt-hvs-percept-retinafunc-contrast), which tells us the minimal contrast necessary at each frequency for the pattern to be detectable.
@@ -87,8 +84,8 @@ If the vast majority of the scene is limited to a relatively a narrow luminance 
 The contrast sensitivity reduces as the mean background level reduces [@wandell1995foundations, Fig. 5.26; @barten2003formula, Fig. 7; @ashraf2024castlecsf, Fig. 8, 9, 10].
 This means we could need to increase, not just maintain, the contrast to make up for the sensitivity loss.
 
-In practice, another challenge in implementing a good TMO is that the EETF has limited visibility of the end-to-end workflow: it receives information only from &#9325; rather than the scene directly and sends information only to &#9327; rather than directly to the display.
-So any information loss before or after the EETF would hurt the tone mapping quality.
+In practice, another challenge in implementing a good TMO is that it has limited visibility of the end-to-end workflow: it receives information only from &#9325; rather than the scene directly and sends information only to &#9327; rather than directly to the display.
+So any information loss before or after the TMO would hurt the tone mapping quality.
 We will refer you to @reinhard2010high and @mantiuk2015high for surveys of tone mapping techniques.
 @sec-disp-sp-tm discusses challenges and solutions of tone mapping in practice.
 
@@ -96,27 +93,26 @@ We will refer you to @reinhard2010high and @mantiuk2015high for surveys of tone 
 
 Let's now walk through the chain of processing from luminance in the scene to the luminance emitted from a display.
 
-### Hardware-Intrinsic OETF
+### Camera-Intrinsic Transfer Function
 
 An imaging system fundamentally performs a signal transduction from the optical domain to the electrical domain.
 This transduction can be abstracted as @eq-mono_model, where the scene power is converted to RAW pixels.
-@eq-mono_model can be thought of as the intrinsic Opto-Electrical Transfer Function (**OETF**) of the imaging system (&#9313; in @fig-ootf).
+@eq-mono_model can be thought of as the intrinsic transfer of the imaging system (&#9313; in @fig-ootf).
 Barring noise and ADC quantization errors, the RAW pixel values are roughly proportional to the scene luminance.
 A RAW pixel value can be expressed as:
 
 $$
     P_{cam} = 
     \begin{bmatrix}
-        hOETF_R(\Phi_s(\lambda)) \\
-        hOETF_G(\Phi_s(\lambda)) \\
-        hOETF_B(\Phi_s(\lambda))
+        T_{cam-R}(\Phi_s(\lambda)) \\
+        T_{cam-G}(\Phi_s(\lambda)) \\
+        T_{cam-B}(\Phi_s(\lambda))
     \end{bmatrix},
 $$ {#eq-hoetf}
 
-where $P_{cam}$ is the pixel color in the camera RAW space, $hOETF_R(\cdot)$, $hOETF_G(\cdot)$, and $hOETF_B(\cdot)$ represent the hardware-intrinsic OETF for the red, green, and blue channel, respectively, and $\Phi_s(\lambda)$ represents the SPD of the incident light in the scene.
-We have three OETFs here because there are three different spectral sensitivity functions (@sec-chpt-imaging-sensor-color-goal).
-If using a 10-bit encoding, each channel in $P_{RAW}$ is bounded between 0 and 1023.
-The $hEOTF$s are defined accordingly.
+where $P_{cam}$ is the pixel color in the camera RAW space, $T_{cam-R}(\cdot)$, $T_{cam-G}(\cdot)$, and $T_{cam-B}(\cdot)$ represent the camera transfer functions for the red, green, and blue channel, respectively, and $\Phi_s(\lambda)$ represents the SPD of the incident light in the scene.
+We have three transfer functions here because there are three different spectral sensitivity functions (@sec-chpt-imaging-sensor-color-goal).
+The $T_{cam}$s are defined to account for quantization: if using a 10-bit encoding, each channel in $P_{RAW}$ is bounded between 0 and 1023.
 
 In a rendering system, the image pixel values are rendered/simulated rather than captured, but the same principle applies, where the rendered pixels should ideally be proportional to or, ideally, directly encode the absolute luminance information of the rendered scene.
 Two main differences exist between rendering and imaging.
@@ -125,22 +121,25 @@ Second, numerically solving the (volume) rendering equation leads to inaccuracie
 Of course, we still pay the ADC quantization error in rendering.
 Therefore, the rendered pixels are usually not perfectly proportional to luminance.
 
-### Reference OETF
+### OETF
 
 When savings RAW pixels as an image file (such as JPEG and PNG), we usually have a low bit budget.
 For instance, RAW pixels are typically encoded using 10 or 12 bits, but usual RGB images use 8 bits per color channel.
 Recall from @sec-chpt-hvs-cori-cube-step2 that when quantizing luminance-linear signals into digital values, we use a gamma-based encoding strategy, which attempts to encode the perceived brightness, rather than the physical luminance, uniformly.
-Gamma encoding makes better use of the limited bit budget by reducing the perceptual quantiztion errors for the low luminance range.
+Gamma encoding makes better use of the limited bit budget by reducing the perceptual quantization errors for the low luminance range.
 
-The encoding function $f_{L \mapsto V}$ that maps a luminance-linear signal $L$ to a digital value $V$ that is actually saved in an image file is also called the OETF (&#9314; in @fig-ootf).
-This OETF, however, purely represents an encoding strategy, and is clearly different from the hardware-intrinsic OETF of the imaging system.
+The encoding function $f_{L \mapsto V}$ that maps a luminance-linear signal $L$ to a digital value $V$ that is actually saved in an image file is also called the Opto-Electro Transfer Function, or **OETF** (&#9314; in @fig-ootf).
+Note, however, the information being manipulated technically live only in the electrical domain: both $L$ and $V$ are electrical signals (i.e., variables modified by a computer program).
+After $f_{L \mapsto V}$, pixel values are roughly proportional to perceived brightness.
+
+
+<!-- This OETF, however, purely represents an encoding strategy, and is clearly different from the hardware-intrinsic OETF of the imaging system.
 
 * The hardware-intrinsic OETF represents an actual signal transduction, but the encoding OETF here purely manipulates information, both $L$ and $V$, in the electrical domain, except $L$ represents luminance information and $V$ represents a digital value.
 * The two need not be, and mostly will not be, the same.
 When people say OETF without any qualifier, what they refer to is the encoding OETF $f_{L \mapsto V}$, a convention we will follow.
-We will explicitly use *hardware-intrinsic OETF* when referring specifically to the transfer function intrinsic to the signal transduction process.
+We will explicitly use *hardware-intrinsic OETF* when referring specifically to the transfer function intrinsic to the signal transduction process. -->
 
-After $f_{L \mapsto V}$, pixel values are roughly proportional to perceived brightness.
 A good OETF should be designed based on models of human brightness perception.
 Over the years, many reference OETFs have been defined in TV/broadcast standards, such as Rec. 601 [@iturbt601-7], Rec. 709 [@iturbt709-6], and, more recently, Rec. 2020 [@iturbt2020-2] and Rec. 2100 [@iturbt2100-3]---all published by ITU-R^[ITU-R refers to the Radiocommunication Sector of the International Telecommunication Union; these standards are formally designated with names such as ITU-R BT.2100, commonly shortened to Rec. 2100.].
 In contrast, sRGB [@anderson1996proposal; @srgbweb; @srgbiec] and Display P3 are color space standards (not defined by ITU-R).
@@ -183,15 +182,16 @@ where:
 * $T_{XYZ\_to\_sRGB}$ is the transformation from the XYZ space to a color space, say sRGB, used to encode the image file; the matrix is usually normalized such that [1, 1, 1] in the linear sRGB space translates to Y=1.
 * $P_{sRGB\_linear}$ ($\mathbb{R}^3 \in [0, 1]^3$) is the color in the linear sRGB space.
 * $OETF(\cdot)$ is the OETF of the encoding space (the OETF for sRGB in this example is @eq-srgb_oetf).
-* $P_{sRGB}$ ($\mathbb{Z}^3 \in [0, 255]^3$) is the color in the sRGB space.
+* $P_{sRGB}$ ($\mathbb{Z}^3 \in [0, 255]^3$) is the color in the sRGB space. $\text{diag}(255)$ implicitly performs a quantization step, which is omitted here for simplicity.
 
-### EETF
+### Tone-Mapping Operator: the Controllable OOTF
 
-When an OETF-encoded image is later processed, we can use OETF^-1^ to recover the original luminance (&#9315; in @fig-ootf).
+When an OETF-encoded image is later processed, we usually use OETF^-1^ to recover the original luminance (&#9315; in @fig-ootf).
 This is important because any further image processing should ideally be operating in the luminance-linear space, where operates correspond to physical units; forgetting this can lead to many subtle bugs in code [@chen2024coolerspace]!
 
-The image processing pipeline can be abstracted as Electro-Electrical Transfer Function (**EETF**), as it processes digital pixels (&#9316; in @fig-ootf).
-EETF is usually the part of the entire processing pipeline that we get to control, so it is where we can impact the overall tone mapping and OOTF.
+The image processing pipeline can be abstracted as a custom OOTF, as it processes information linear to luminance (&#9316; in @fig-ootf).
+This OOTF is usually the part of the entire processing pipeline that we get to control, so it is where we implement our TMO to influence the overall OOTF.
+Sometimes, the TMO is also called the artistic OOTF [@iturbt2100-3].
 Mathematically:
 $$
 \begin{aligned}
@@ -207,16 +207,16 @@ If $\mathcal{M}$ depends only on the value of $P_{sRGB}$, the TMO is a global op
 In contrast, local TMOs can apply different transformations to pixels that share the same color but appear at different spatial locations.
 
 Even though ideally we would want to manipulate absolute luminance, as discussed in @sec-disp-sp-ov, the tone mapping operator here has to work to *relative* luminance.
-This is because usually the processing stages before EETF do not keep the absolute luminance information because of all the normalizations.
-@sec-disp-sp-tm discusses challenges facing implementing a good EETF and typical solutions.
+This is because usually the processing stages before the TMO do not keep the absolute luminance information because of all the normalizations.
+@sec-disp-sp-tm discusses challenges facing implementing a good TMO and typical solutions.
 
 @eq-eetf assumes that we are given a digital image to begin with.
 In reality, we can also implement tone mapping at the end of an rendering pipeline or a camera signal processing pipeline before a digital image is saved (@sec-chpt-imaging-isp).
 At this stage, we have direct access to analog or high-precision (e.g., 10 bits) luminane before it is quantized to a lower (e.g., 8) bit depth in an image.
 
-### Reference EOTF
+### EOTF
 
-After EETF, each image pixel is mapped to an intended (relative) luminance.
+After the TMO OOTF, each image pixel is mapped to an intended (relative) luminance.
 Now comes the time to display the image.
 We have to again turn luminance back to digital values^[We encode luminance into digital values because the raw luminance data are continuous and would require floating-point representation, which cannot be sent directly to the display. Encoding reduces bandwidth demands and ensures compatibility with nearly all existing interface protocols.].
 Minimizing perceptual quantization error is still the key, since these digital values will eventually be decoded back to luminance.
@@ -229,16 +229,12 @@ Mathematically, this is somewhat a moot point because the function is constructe
 In practice, we use EOTF, rather than OETF, on the display side simply to signify the fact that a display converts electrical signals to optical signals.
 
 Over the years, there have been a set of reference EOTFs defined in various standards.
-Rec. 1886 [@iturbt1886] is meant to give a good approximation of the hardware-intrinsic EOTF of CRT displays, and Rec. 2100 is meant to be used for HDR workflows, where absolute luminance is tracked.
-Rec. 709, Rec. 2100, sRGB, and Display P3 define both an OETF and an EOTF, which are inversions of each other.
-Note that OETF and EOTF need not be an inversion of each other.
-Both are designed with a good model of human brightness perception in mind.
-The difference in the underlying model is that at the imaging side the luminance is dictated by the scene whereas as the display side the luminance is dictated by the display hardware; the two do not match, which, in turn, impacts the EOTF and OETF design.
-Therefore, while we use OETF to encode scene luminance to a file (and OETF^-1^ to recover the scene luminance from the file), the display EOTF might not necessarily be OETF^-1^.
+Rec. 1886 [@iturbt1886] defines an EOTF that is meant to give a good approximation of the hardware-intrinsic transfer function of CRT displays, and Rec. 2100 defines EOTFs that are meant for HDR workflows, where absolute luminance is tracked.
+Rec. 601, Rec. 709, Rec. 2020, sRGB, and Display P3 technically define only the OETF but not the EOTF, since they are meant to be used on the image encoding side, rather than for display.
 
 Given an intended luminance $L$ we want to display, we use EOTF^-1^ to obtain the corresponding digital value $V$ to be sent to the display (&#9317; in @fig-ootf).
 This is usually carried out in a CSC.
-For example, if the input image is encoded in sRGB, the pixels remain in the sRGB space after applying the EETF. If the display operates in the Display P3 color space, a CSC must be performed from linear sRGB to linear Display P3, after which the P3 EOTF is applied to obtain the digital pixel values.
+For example, if the input image is encoded in sRGB, the pixels remain in the sRGB space after applying the TMO. If the display operates in the Display P3 color space, a CSC must be performed from linear sRGB to linear Display P3, after which the P3 EOTF is applied to obtain the digital pixel values.
 These EOTF-encoded digital pixels will then be transmitted through the MIPI DSI interface to the driver IC, as discussed in @sec-disp-dic.
 Mathematically, the sequence of processing is:
 
@@ -261,13 +257,13 @@ where:
 * $P_{P3\_linear}$ is the color in the linear P3 space.
 * $P_{P3}$ ($\mathbb{Z}^3 \in [0, 1023]^3$) is the color in the P3 space, assuming 10-bit encoding.
 
-Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that an EETF-based TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
+Even though the TMO in @eq-eetf operates completely within the sRGB space, by cascading @eq-eetf and @eq-eotf we can see that the TMO effectively maps pixels from the color space where the input image is encoded ($P_{sRGB}$ here) to the color space where the tone-mapped image is to be displayed ($P_{P3}$ here), so the TMO can also be thought of as:
 
 $$
     \mathcal{M}_{sRGB \rightarrow P3}: P_{sRGB\_linear} \mapsto P_{P3\_linear},
 $$
 
-### Hardware-Intrinsic EOTF
+### Display-Intrinsic Transfer Function
 
 The driver IC will then turn the P3-encoded pixel values to the DAC inputs.
 Can we directly use the former for the latter?
@@ -297,25 +293,25 @@ $$ {#eq-heotf3}
 
 where $[V_{min}, V_{max}]$ is the DAC output range and $N$ is the resolution.
 
-The relationship between the digital value $D$ and the emitted power spectrum $\Phi_d(\lambda)$ or the corresponding luminance is what we call the *display-intrinsic EOTF*.
+The relationship between the digital value $D$ and the emitted power spectrum $\Phi_d(\lambda)$ or the corresponding luminance is what we call the display-intrinsic transfer function $T_{disp}$.
 From the theoretical analysis we can see that the relationship is non-linear.
 @fig-eotf shows examples for four inorganic LEDs.
-In practice, the hardware-intrinsic EOTF is affeced by many factors (such as variation in manufacturing, the particular driving circuit design, etc.), and is usually measured offline rather than modeled analytically.
+In practice, $T_{disp}$ is affeced by many factors (such as variation in manufacturing, the particular driving circuit design, etc.), and is usually measured offline rather than modeled analytically.
 
-![Hardware-intrinsic EOTFs for four inorganic LEDs (R, G, B, and W). From @miller2019color[Fig. 7.2].](figs/eotf){#fig-eotf width="50%"}
+![The display-intrinsic transfer function of four inorganic LEDs (R, G, B, and W). From @miller2019color[Fig. 7.2].](figs/eotf){#fig-eotf width="50%"}
 
-We want to unequivocally differentiate between the display-intrinsic EOTF and the reference EOTF defined in a standard.
+<!-- We want to unequivocally differentiate between the display-intrinsic EOTF and the reference EOTF defined in a standard.
 
 * The former maps digital values sent to the DAC to the luminance emitted: it is an inherent property of the display hardware (both the driving circuits and the emissive devices) and represents an actual signal transduction.
 The latter is purely a theoretical construction that is meant for efficient and effective digital encoding (based on human brightness perception); it operates completely within the electrical domain, except the input $V$ represents a digital value and the output $L$ represents (relative) luminance.
 * The two EOTFs do not have to match and most definitely do not match^[except maybe in the CRT case where its EOTF^-1^ roughly matches human luminance-to-brightness perception.].
 When people say EOTF without any qualifier, they mean $f_{V \mapsto L}$.
-We will specifically use *display-intrinsic EOTF* to refer to the actual EOTF that maps DAC values to emitted luminance.
+We will specifically use *display-intrinsic EOTF* to refer to the actual EOTF that maps DAC values to emitted luminance. -->
 
-Given the display-intrinsic EOTF, converting from P3-encoded pixels to DAC inputs requires two steps.
+Given the display-intrinsic transfer function $T_{disp}$, converting from P3-encoded pixels to DAC inputs requires two steps.
 
-* First, we use the reference EOTF (in this case part of the Display P3 standard) to decode the actual luminance intended to be displayed (&#9318; in @fig-ootf).
-* Second, we perform a CSC from the Display P3 space to the display native space, after which we invert the display-intrinsic EOFT to obtain the digital value to send to the DACs (&#9319; in @fig-ootf).
+* First, we use the EOTF (in this case part of the Display P3 standard) to decode the actual luminance intended to be displayed (&#9318; in @fig-ootf).
+* Second, we perform a CSC from the Display P3 space to the display native space, after which we invert $T_{disp}$ to obtain the digital value to send to the DACs (&#9319; in @fig-ootf).
 This CSC is necessary because it is unlikely that the display primaries and white point exactly matches that of a color space standard (e.g., Display P3), but we can measure them offline and construct a transformation matrix from the P3 space to the display native.
 
 Mathematically, this is:
@@ -326,9 +322,9 @@ $$
     P_{disp} &= T_{P3\_to\_disp} \times P_{P3\_linear}, \\
     D &= 
     \begin{bmatrix}
-        hEOTF^{-1}_R(P_{disp}(R)) \\
-        hEOTF^{-1}_G(P_{disp}(G)) \\
-        hEOTF^{-1}_B(P_{disp}(B))
+        T_{disp-R}^{-1}(P_{disp}(R)) \\
+        T_{disp-G}^{-1}(P_{disp}(G)) \\
+        T_{disp-G}^{-1}(P_{disp}(B))
     \end{bmatrix}, \\
     \Phi_d(\lambda) &= \frac{k h \eta(\lambda) (V_{DD} - (D\Delta + V_{min}) - V_{th})^2}{e\lambda},
 \end{aligned}
@@ -338,27 +334,49 @@ where:
 
 * $T_{P3\_to\_disp}$ is the transformation matrix from the linear Display P3 space to the display native space.
 * $P_{disp}$ is the pixel color in the display native space.
-* $D$ is the DAC inputs, one for each channel since each sub-pixel might have a different hardware-intrinsic OETF.
+* $D$ is the DAC inputs, one for each channel since each sub-pixel might have a different hardware-intrinsic transfer function.
 * $\Phi_d(\lambda)$ is the emission power spectrum (derived from @eq-heotf1 and @eq-heotf3).
 
 In reality, we could calibrate, offline, three look-up tables (LUTs), each of which maps each digital level in a $P_{P3}$ channel to a corresponding DAC input (&#9320; in @fig-ootf).
-In this way, after going through the display-intrinsic EOTF (&#9321; in @fig-ootf) the luminance emitted by the display matches the intended luminance.
+In this way, after going through $T_{disp}$ (&#9321; in @fig-ootf) the luminance emitted by the display matches the intended luminance.
 The LUTs can be constructed by, at each P3 digital level, repeatedly changing the DAC input and measure the actual emitted luminance from the display until it matches that of the indended luminance.
 If the LUT size of concern, we could measure just a few digital values and interpolate between them in hardware.
 
-Cascading all the equations from @eq-hoetf to @eq-heotf, we can see that the TMO we implement as the EETF (@eq-eetf) eventually dictates the mapping from the scene SPD to the displayed SPD, so the ultimately TMO can be thought of as:
+Cascading all the equations from @eq-hoetf to @eq-heotf, we can see that the TMO we implement (@eq-eetf) eventually dictates the mapping from the scene SPD to the displayed SPD, so the overall OOTF (or end-to-end TMO) can be thought of as:
 
 $$
-    \mathcal{M}: \int\Phi_s(\lambda)V(\lambda)\text{d}\lambda \mapsto \int\Phi_d(\lambda)V(\lambda)\text{d}\lambda,
+    OOTF_{Overall}: \int\Phi_s(\lambda)V(\lambda)\text{d}\lambda \mapsto \int\Phi_d(\lambda)V(\lambda)\text{d}\lambda,
 $$
 
 where $V(\lambda)$ is the luminous efficiency function.
 
+### Putting It Together
+
+Both the OETF on the imaging side and the EOTF on the display side are both meant to transform, back and forth, between continuous luminance-linear values and quantized/digital values non-linear to luminance.
+We use OETF to encode scene luminance to a file and later use OETF^-1^ to recover the scene luminance from the file.
+We can then manipulate the luminance-linear information to, e.g., implement an TMO.
+The tone-mapped luminance information is then encoded in digital values using EOTF^-1^.
+The encoded values will later be processed by EOTF to recover the intended luminance information.
+So the general processing pipeline looks like:
+
+$$
+    OOTF_{Overall} = T_{cam} \circ OETF \circ OETF^{-1} \circ OOTF_{TMO} \circ EOTF^{-1} \circ EOTF \circ T_{disp},
+$$
+
+where $T_{cam}$ and $T_{disp}$ are intrinsic transfer functions of the camera and display, respectively, and they, again, perform the actual signal transduction between the electrical and optical domains, whereas all other transfer functions manipulate electrical signals.
+The "O"s and the "E"s of the transfer functions on the right-hand side of the equation refer to electrical signals that are linearly and non-linearly proportional to luminance, respectively.
+The "O"s in $OOTF_{Overall}$ refer to actual optical signals.
+Sometimes people refer to $OETF^{-1} \circ OOTF_{TMO} \circ EOTF^{-1}$ as the Electro-Electro Transfer Function (**EETF**), since this composite operation takes a non-linear value as input and generates another non-linear value.
+
+Importantly, OETF and EOTF need not be an inversion of each other.
+That is, $OETF$ does not have to be $EOTF^{-1}$ and $EOTF$ does not have to be $OETF^{-1}$, either.
+Both are designed with a good model of human brightness perception in mind.
+The difference in the underlying model is that at the imaging side the luminance is dictated by the scene whereas as the display side the luminance is dictated by the display hardware; the two do not match, which, in turn, impacts the EOTF and OETF design.
+
 ## Practical Tone Mapping {#sec-disp-sp-tm}
 
 Tone mapping ultimately controls the OOTF of the end-to-end system, so ideally a TMO should manipulate *absolute* luminance information.
-As seen above, however, TMOs are implemented as the EETF.
-While the EETF ultimately determines the OOTF, it has no access to the absolute luminance information.
+As seen above, however, TMOs are usually implemented without access to the absolute luminance information.
 
 * For instance, if we are given an sRGB image to display, an image pixel [10, 20, 30] in the sRGB space tells us nothing about the absolute luminance of each channel.
 * Even if an image is captured through an HDR imaging workflow and encoded in an HDR format, e.g., OpenEXR [@openxer], which has a very high bit depth (even allows for floating point numbers!), the absolute luminance information is usually still not encoded.
@@ -370,11 +388,11 @@ Absent absolute luminance information, the TMO has to operate in normalized, lum
 Some guesswork and heuristics are involved when implementing a good TMO.
 For instance, if the input image is encoded using sRGB, one fair assumption to make is that the image is to be displayed on a display with a peak luminance of 80 nits, which is the recommended luminance in the sRGB standard (that is rarely followed!).
 The recent ITU-R Rec. 2100 standard [@iturbt2100-3] defines a reference EOTF and OETF using *absolute* luminance (and specifies that the peak display luminance must be at least 1,000 nits).
-This allows us to directly control the output luminance within EETF, assuming we encode image using Rec. 2100 and the viewing display supports it.
+This allows us to directly control the output luminance within the TMO, assuming we encode image using Rec. 2100 and the viewing display supports it.
 
 <!-- If the image is to be displayed on a display that supports the Rec. 2100 standard, we can assume that the display will have a peak luminance of at least 1,000 nits and can go up to 10,000 nits. -->
 
-Another way we can control the absolute luminance is through software that allow us to interactively adjust the EETF, such as the famous Curves tool in Photoshop and Lightroom.
+Another way we can control the absolute luminance is through software that allow us to interactively adjust the TMO, such as the famous Curves tool in Photoshop and Lightroom.
 With these tools, even though we are not explicitly told of the display luminance range, the absolute output luminance information is directly seen on the display, enabling us to judge for ourselves whether the result is satisfactory.
 
 @fig-tone_mapping_examples shows three such examples in Lightroom, each of which has a tonal adjustment curve that maps an input pixel value in the normalized, luminance-linear input range (x-axis) to an output pixel value in the same range and color space (y-axis).
@@ -474,6 +492,7 @@ That is, $P_{P3\_linear}$ in @eq-eotf might be outside the [0, 1] bound.
 The best thing we can do is to approximate an out-of-gamut color with an in-gamut color to minimize the color error.
 This is called **gamut mapping**.
 @morovivc2008color and @glassner1995principles[Chap. 3.6] describe the basic algorithms, with the former being more recent and comprehensive.
+The gamut mapping algorithm is usually implemented in &#9317; in @fig-ootf after the CSC before applying the EOTF^-1^.
 
 The simplest strategy would be to simply clamp out-of-range values, so a color of [12, 200, 300] would become [12, 200, 255].
 Clearly, other than being extremely simple to implement, this strategy would introduce large color reproduction errors.
