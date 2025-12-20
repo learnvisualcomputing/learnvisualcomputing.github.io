@@ -34,7 +34,7 @@ The differences lie in how the charges are arranged in space and in relation to 
 In the classical regime, the laws that govern how photons interact with the charges are described by the electromagnetic theory.
 In fact, using the electromagnetic theory, we can show that surface reflection/refraction is nothing more than the coherent scattering of incident light waves by the surface particles.
 In the quantum regime, light-matter interactions are governed by the quantum electrodynamics (QED)^[The electromagnetic theory does not explain everything in light-matter interactions.
-Famously, they do not explain how the interference pattern in the double-slit experiment still arises even if the photons are delivered sequentially.].
+Famously, it does not explain how the interference pattern in the double-slit experiment still arises even if the photons are delivered sequentially, nor does it explain why the interference pattern goes away if we put a detector on the other side.].
 
 Since there is no fundamental differences in the underlying physics, the only meaningful distinction is one between different phenomenological approximations, or "models", of the same underlying physics.
 We totally could invoke the electromagnetic theories or QED, and if we did, we would have one single unified model that explains both surface scattering (reflection and refraction) and volume scattering.
