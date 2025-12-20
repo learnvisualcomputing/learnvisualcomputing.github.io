@@ -1,5 +1,9 @@
 # Visual Adaptations and Constancy {#sec-chpt-hvs-adaptations}
 
+::: {.callout-warning}
+This chapter is under active development.
+:::
+
 Humans adapt to all sorts of sensory input, including heat, pain, smell.
 In all cases we care about two things: 1) the behavior after full adaptation and 2) the time course of adaptation.
 Before this chapter is fully developed, check out our [lecture slides](https://cs.rochester.edu/courses/259/fall2025/decks/lect8-adaptation.pdf) on adaptation.

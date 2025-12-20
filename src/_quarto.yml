@@ -22,8 +22,8 @@ book:
         - hvs-receptor.qmd
         - hvs-color.qmd
         - hvs-colorimetry.qmd
-        # - hvs-retinalmodel.qmd
         - hvs-adaptation.qmd
+        - hvs-retinalmodel.qmd
     - part: rendering.qmd
       chapters:
         - rendering-overview.qmd

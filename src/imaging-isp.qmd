@@ -1,5 +1,10 @@
 # Camera Signal Processing {#sec-chpt-imaging-isp}
 
+::: {.callout-warning}
+This chapter is under active development.
+We will add mathematical and implementation details to each ISP stage.
+:::
+
 This chapter reviews basics camera signal processing algorithms.
 The output of an image sensor is what we usually call the raw pixels.
 The raw pixels are not the usual RGB images we are used to see.
