@@ -873,7 +873,7 @@ The job of demosaicing is then to reconstruct the full signal responses from the
 
 The final approach does away with optical color filters altogether.
 Instead, we will use three photodiodes vertically stacked for each pixel.
-@fig-foveon_x3_pixel illustrates a pixel in the Foveon X3 sensor, which is perhaps the most famous sensor that uses this architecture.
+@fig-foveon_x3_pixel illustrates a pixel in the Foveon X3 sensor, which is perhaps the most famous sensor that uses this architecture [@lyon2002eyeing].
 
 ![Illustration of the Foveon X3 pixel, which has three PDs made of the same material (silicon) vertically stacked; adapted from @foveon_x3. Each PD receives a different light spectrum (due to the depth-varying absorption), effectively creating three different responses of the same light incident on the pixel surface.](figs/foveon_x3_pixel){#fig-foveon_x3_pixel width="100%"}
 
@@ -886,7 +886,7 @@ As a result, each PD actually receives a different light spectrum, effectively c
 Let's assume that the three PDs have a depth of $d_B$, $d_G$, and $d_R$, respectively.
 The incident light impinging on the pixel (i.e., the first PD surface) has a SPD $\Phi(\lambda)$.
 The light impinging on the second PD then has a spectrum $\Phi(\lambda)e^{-\sigma(\lambda)d_B}$, where $\sigma(\lambda)$ is the silicon's absorption coefficient spectrum.
-This is easily derived from the fact that pure absorption (no scattering and emission) leads to an exponential decay of the input signal (@eq-abs_4).
+This is easily derived from the fact that pure absorption (no scattering or emission) leads to an exponential decay of the input signal (@eq-abs_4).
 Similarly, the light impinging on the third PD then has a spectrum $\Phi(\lambda)e^{-\sigma(\lambda)(d_B+d_G)}$.
 The responses produced by the three PDs are thus (in the order of R, G, and G):
 
@@ -894,9 +894,13 @@ $$
     [\int_{\lambda}\Phi(\lambda)\eta_R(\lambda)e^{-\sigma(\lambda)(d_B+d_G)}, \int_{\lambda}\Phi(\lambda)\eta_G(\lambda)e^{-\sigma(\lambda)(d_B)}, \int_{\lambda}\Phi(\lambda)\eta_B(\lambda)],
 $$
 
-where $\eta_R(\lambda)$, $\eta_G(\lambda)$, and $\eta_B(\lambda)$ are QE spectra of the three PDs (where we consider only photons that reach a PD as the denominator in @eq-qe while ignoring photons that are reflected/absorbed before the photons hit the PD), respectively, and $\Phi(\lambda)$ is the SPD of the light incident on the pixel surface.
+where $\eta_R(\lambda)$, $\eta_G(\lambda)$, and $\eta_B(\lambda)$ are QE spectra of the three PDs^[The QE is so defined that 1) we consider only photons that reach a PD as the denominator in @eq-qe while ignoring photons that are reflected/absorbed before the photons hit the PD, and 2) the QE inherently considers the depth of each layer so that the photon absorption within each layer is accounted for; see @chen2023bioinspired[eq. 1-3].], respectively, and $\Phi(\lambda)$ is the SPD of the light incident on the pixel surface.
 The three PDs use identical material (so they share the same silicon absorption spectrum) but can still have different $\eta(\lambda)$s because of the thickness differences --- due to the differences in the lengths of the depletion and neutral regions in the PD p-n junctions.
 Can you guess why the thickness tends to increase for deeper PDs in @fig-foveon_x3_pixel (right)?
 
 Compared to using the CFA, the vertical PD stacking approach is much more complicated to fabricate and more costly, so it is much less commonly used.
-It avoids color sampling (and the resulting aliasing) and the need for demosaicing, and in theory could also have a higher overall quantum efficiency (and signal-to-noise ratio) since there are no color filters, so it might find uses in scientific imaging [@chen2023bioinspired].
+It avoids color sampling (and the resulting aliasing) and the need for demosaicing, and in theory could also have a higher overall quantum efficiency (and signal-to-noise ratio) since there are no color filters.
+
+More recently, researchers are exploiting the stacked idea using a different material than silicon --- lead halide perovskite.
+Without color filters, silicon-based sensors have to exclusively rely on the thickness of each layer to create three effective PDs.
+Instead, one can tune the chemical composition of the lead halide perovskite to create PDs that actually differ in their spectral sensitivity [@nie2025light; @chen2023bioinspired; @tsarev2025vertically].
