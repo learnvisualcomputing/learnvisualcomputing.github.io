@@ -275,13 +275,13 @@ Of course we know why: 1) @eq-vre_4 applies two further approximations (low albe
 
 What is the benefit of this new discrete form, comparing @eq-vre2_front and @eq-vre4_front?
 Both equations can be interpreted as a form of weighted sum, where $C_i$ is weighted by a weight $w_i$, which is $\prod_{j=0}^{i-1}t_j$ in the first case and $\alpha_i\prod_{j=0}^{i-1}t_j$ in the second case.
-The most obvious difference is that the weights in the first case are correlated but less so in the second case.
-The weights are strictly decreasing as $i$ increases in the first case, since $t_i < 1$.
+The most obvious difference is that the weights in the first case are correlated but less so in the second case:
+the weights are strictly decreasing as $i$ increases in the first case, since $t_i < 1$.
 
 In the second case, the weights are technically independent.
-One way to understand this is to observe, in the second case, that $w_0 = \alpha_0$ and $w_{i+1} = w_i \frac{\alpha_{i+1}(1-\alpha_i)}{\alpha_i}$, so there is generally a unique assignment of the $\alpha$ values for a given weight combination.
+Observe, in the second case, that $w_0 = \alpha_0$ and $w_{i+1} = w_i \frac{\alpha_{i+1}(1-\alpha_i)}{\alpha_i}$, so there is generally a unique assignment of the $\alpha$ values for a given weight combination.
 This "flexibility" will come in handy when we can manually assign (@sec-chpt-mat-vs-rte-vis-vis) or learn the weights (@sec-chpt-mat-vs-rte-nr).
-Note, however, that if we impose the constraint that $\alpha\in[0, 1]$, we are effectively constraining the weights too.
+Note, however, that if we impose the constraint that $\alpha\in[0, 1]$, we are effectively constraining the weights in the second case, too.
 
 ### Visualization is Not (Necessarily) Physically-Based Rendering! {#sec-chpt-mat-vs-rte-vis-vis}
 

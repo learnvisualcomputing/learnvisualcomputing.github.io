@@ -894,7 +894,7 @@ $$
     [\int_{\lambda}\Phi(\lambda)\eta_R(\lambda)e^{-\sigma(\lambda)(d_B+d_G)}, \int_{\lambda}\Phi(\lambda)\eta_G(\lambda)e^{-\sigma(\lambda)(d_B)}, \int_{\lambda}\Phi(\lambda)\eta_B(\lambda)],
 $$
 
-where $\eta_R(\lambda)$, $\eta_G(\lambda)$, and $\eta_B(\lambda)$ are QE spectra of the three PDs^[The QE is so defined that 1) we consider only photons that reach a PD as the denominator in @eq-qe while ignoring photons that are reflected/absorbed before the photons hit the PD, and 2) the QE inherently considers the depth of each layer so that the photon absorption within each layer is accounted for; see @chen2023bioinspired[eq. 1-3].], respectively, and $\Phi(\lambda)$ is the SPD of the light incident on the pixel surface.
+where $\eta_R(\lambda)$, $\eta_G(\lambda)$, and $\eta_B(\lambda)$ are QE spectra of the three PDs^[$\eta(\lambda)$ is so defined that 1) we consider only photons that reach a PD as the denominator in @eq-qe while ignoring photons that are reflected/absorbed before the photons hit the PD, and 2) it inherently considers the depth of each layer so that the photon absorption within each layer is accounted for; see @chen2023bioinspired[eq. 1-3].], respectively, and $\Phi(\lambda)$ is the SPD of the light incident on the pixel surface.
 The three PDs use identical material (so they share the same silicon absorption spectrum) but can still have different $\eta(\lambda)$s because of the thickness differences --- due to the differences in the lengths of the depletion and neutral regions in the PD p-n junctions.
 Can you guess why the thickness tends to increase for deeper PDs in @fig-foveon_x3_pixel (right)?
 
@@ -902,5 +902,5 @@ Compared to using the CFA, the vertical PD stacking approach is much more compli
 It avoids color sampling (and the resulting aliasing) and the need for demosaicing, and in theory could also have a higher overall quantum efficiency (and signal-to-noise ratio) since there are no color filters.
 
 More recently, researchers are exploiting the stacked idea using a different material than silicon --- lead halide perovskite.
-Without color filters, silicon-based sensors have to exclusively rely on the thickness of each layer to create three effective PDs.
+Without color filters, silicon-based Foveon sensors have to rely exclusively on the thickness of each layer to create three effective PDs.
 Instead, one can tune the chemical composition of the lead halide perovskite to create PDs that actually differ in their spectral sensitivity [@nie2025light; @chen2023bioinspired; @tsarev2025vertically].
