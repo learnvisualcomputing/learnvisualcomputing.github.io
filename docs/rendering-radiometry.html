@@ -284,7 +284,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rendering-surface.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling Material Surface</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modeling and Measuring Material Surface</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -581,7 +581,8 @@ Figure&nbsp;9.3: Comparison between the radiance distribution (constant w.r.t. v
 <li>the photometric counterpart of radiance is <strong>luminance</strong>, which has a unit of <span class="math inline">\(\text{lm}/(\text{m}^2\text{sr}) = \text{cd}/(\text{m}^2)\)</span>, which is also called the <strong>nit</strong>.</li>
 </ul>
 <p>Sometimes radiometric vs.&nbsp;photometric quantities are also called the radiant vs.&nbsp;luminous quantities. The way to interpret the photometric quantities is that they take into account the spectral sensitivity of a particular photodetector, which in our discussion above is the photoreceptors on the retina, so the spectral sensitivity function of the detector is the LEF. If we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different. We will study the spectral sensitivity of image sensors in <a href="imaging-sensor.html#sec-chpt-imaging-sensor-optics-monomodel" class="quarto-xref"><span>Section 17.5</span></a>.</p>
-<p>A <strong>radiometer</strong> measures the absolute radiometric quantities, whereas a <strong>photometer</strong> reports photometric quantities. An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination.</p>
+<p>A <strong>radiometer</strong> is a device that measures the absolute radiometric quantities (e.g., spectral power distribution) of emissive sources, such as a light bulb. Of course, what a radiometer actually obtains the necessarily photometric quantities, but as long as we know the spectral sensitivities of the detector, we can calculate the radiometric quantities. Very confusingly, a <strong>photometer</strong> is <em>not</em> a device that measures photometric quantities (any device necessarily measures photometric quantities); instead, it is a device that measures material reflectance. See <a href="rendering-surface.html#sec-chpt-mat-rt-ref" class="quarto-xref"><span>Section 12.3.1</span></a> for a more detailed discussion.</p>
+<!-- An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination. -->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

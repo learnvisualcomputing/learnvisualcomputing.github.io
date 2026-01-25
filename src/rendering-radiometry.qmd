@@ -237,5 +237,9 @@ The way to interpret the photometric quantities is that they take into account t
 If we use other detectors, such as an image sensor, we will have a different spectral sensitivity, and the corresponding photometric measurements will be different.
 We will study the spectral sensitivity of image sensors in @sec-chpt-imaging-sensor-optics-monomodel.
 
-A **radiometer** measures the absolute radiometric quantities, whereas a **photometer** reports photometric quantities.
-An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination.
+A **radiometer** is a device that measures the absolute radiometric quantities (e.g., spectral power distribution) of emissive sources, such as a light bulb.
+Of course, what a radiometer actually obtains the necessarily photometric quantities, but as long as we know the spectral sensitivities of the detector, we can calculate the radiometric quantities.
+Very confusingly, a **photometer** is *not* a device that measures photometric quantities (any device necessarily measures photometric quantities); instead, it is a device that measures material reflectance.
+See @sec-chpt-mat-rt-ref for a more detailed discussion.
+
+<!-- An image sensor and our retina can both be thought of as a photometer but the spectral sensitivities in the two cases are different, so the raw pixel readings and the photoreceptor responses are different even under an identical illumination. -->

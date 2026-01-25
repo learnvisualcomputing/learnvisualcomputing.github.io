@@ -1,4 +1,4 @@
-# Modeling Material Surface {#sec-chpt-mat-ssmodel}
+# Modeling and Measuring Material Surface {#sec-chpt-mat-ssmodel}
 
 {{< include macros.qmd >}}
 
