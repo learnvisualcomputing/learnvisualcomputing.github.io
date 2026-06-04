@@ -177,7 +177,7 @@ The FD is connected to the NMOS **Source Follower** (SF) transistor `M-SF`, wher
 
 The sequence of operation goes roughly like the following, and @fig-4taps (b) shows the corresponding timing diagram:
 
-* Before the exposure, we turn on the `M-RST` switch *and* the `M-TX` to drain the charges (electrons) at the PD, which will also, as a byproduct, drain the charges in the FD, resetting their voltage potentials both to $V_{RST}$.
+* Before the exposure, we turn on the `M-RST` switch *and* the `M-TX` to drain the charges (electrons) at the PD, which will also, as a byproduct, drain the charges in the FD, resetting their voltage potentials both to $V_{rst}$.
 Resetting the FD voltage at this step is of no functional use, as we will shortly see.
 * We then turn off `M-RST` and `M-TX`, and the exposure begins, during which the charges are collected inside the PD.
 We can see from @eq-charge_measure that in order to measure the charges we need to measure the voltage difference *at the FD node* before and after the charges are transferred.
@@ -331,7 +331,7 @@ A common strategy for HDR is called **exposure bracketing**, which can be implem
 
 Either way, the issue with exposure bracketing is the longer capturing time, which makes the resulting image more susceptible to motion blur.
 We ideally would like "single-shot" HDR.
-There are multiple methods, and they usually require co-designing the image sensor/pixel with the post-processing algorithms (aside from modern deep learning approaches that rely semantics information, which we will not discuss).
+There are multiple methods, and they usually require co-designing the image sensor/pixel with the post-processing algorithms (aside from modern deep learning approaches that rely on semantics information and prior information, which we will not discuss).
 
 One strategy is to use **split pixels** or dual PDs, an emerging technology that sensor companies are exploring.
 The idea is to use split a pixel into two PDs, each with a different "sensitivity" to light [@iida20180; @solhusvik20191280; @willassen20151280; @xu2022analysis].
@@ -345,7 +345,7 @@ The LPD, with a FWC of $S_3$, saturates at a low luminance level $L_1$, so only 
 In contrast, the SPD, with a lower intrinsic FWC of $S_2$, saturate at a high luminance level $L_2$, so SPDs provide a good sampling for high-luminance information in the scene.
 Note that even though the SPD has a smaller intrinsic FWC than that of the LPD, the SPD's sensitivity to light is even lower^[For instance in @solhusvik20191280, the sensitivity ratio between the LPD and SPD is over 100$\times$, but the FWC of the SPD is less than three times smaller than that of the LPD.], so the SPD still saturates at a higher intensity level.
 
-If we increase the FWC of the small pixels, they take even longer/higher luminance to saturate.
+Better, if we could somehow increase the FWC of the small pixels, they could take even longer to saturate and be able to capture even higher luminance.
 The way we increase the FWC is by adding a lateral overflow integration capacitor (**LOFIC**), which holds the overflow charges from the PD during exposure [@sugawa2005100; @akahane2006sensitivity; @takayanagi2019120; @ikeno20224].
 In almost all cases, the FD itself participates in collecting the overflow charges, too.
 In this way, the FWC of the small pixels, $S_4$, is effectively the total capacity of the photodiode, the LOFIC, and the FD.
