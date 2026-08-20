@@ -177,7 +177,7 @@ Without going into the details, we will refer you to @pharr2023physically[chap. 
 
 <!-- show the Cook–Torrance with GGX parameterization and point out how albedo is used, connecting back to the albedo section. -->
 
-### Nature of Microfacets Models {#sec-chpt-mat-ss-para-model}
+### Nature of Microfacet Models {#sec-chpt-mat-ss-para-model}
 
 If the microfacet theory does not sound weird to you, it should!
 In a microfacet model,
