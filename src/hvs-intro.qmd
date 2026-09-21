@@ -397,7 +397,26 @@ This is captured by the fact that $S_1$ and $S_2$ have the same CPD.
 In contrast, if we move $S_2$ closer to our eye, we get another signal $S_3$ that has as an identical ordinary spatial frequency as that of $S_2$ but whose pattern is more easily detected.
 This is adequately captured by the lower CPD in $S_3$.
 
-The CSF in @fig-csf allows us to study the joint effect of spatial frequency and contrast in detecting a patterned signal.
+The CSF in @fig-csf characterizes a single RGC.
+We can also measure the behavioral CSF through psychophysics.
+The most famous such experiment was done by @campbell1968application.
+@fig-csf_behavioral (left) shows the results.
+We can see that the behavioral CSF also has a bandpass shape.
+The chart in @fig-csf_behavioral (right) varies spatial frequency horizontally and contrast vertically.
+By tracing the boundary between visible and invisible gratings^[Note that the boundary is *not* the CSF.], you can see that your sensitivity is generally highest at intermediate spatial frequencies.
+Visibility also depends strongly on viewing distance: moving the display toward or away from your eyes changes the spatial frequency of the grating on your retina.
+
+![Left: behavioral CSF, where squares correspond to square-wave gratings, and circles correspond to sine-wave gratings; empty and solid markers represent two different luminance levels that differ by four orders of magnitude; from @campbell1968application[Fig. 4]. Right: a chart that simultaneously varies frequency (horizontally) and contrast (vertically).](figs/csf_behavioral){#fig-csf_behavioral width="100%"}
+
+The empty and solid markers represent two different luminance levels that differ by four orders of magnitude.
+The sensitivity, however, varies by less than one order of magnitude.
+This has to do with light adaptation, which we will discuss shortly.
+
+The behavioral CSF is generally wider than that of individual RGCs (compare, for instance, @campbell1968application[Fig. 15] for cat RGC CSFs and @pasternak1981luminance[Fig. 2] for behavioral CSFs on cats).
+@campbell1968application hypothesized that the behavioral CSF is determined by the collective contributions of different groups of RGCs, each of which has a different CSF that peaks at a particular frequency.
+The existence of these spatial frequency channels has also been supported by later experiments on *contrast adaptation*, where the sensitivity toward a particular frequency (and its adjacent frequencies) reduces as one stars at gratings of that frequency long enough, showing that different frequency channels are modulated independently.
+
+CSF allows us to study the joint effect of spatial frequency and contrast in detecting a patterned signal.
 In general, the ability of pattern detection depends on a number of other factors, such as the spatial frequency, eccentricity, color, and temporal frequency (if the stimulus is time-varying) [@mantiuk2022stelacsf; @ashraf2024castlecsf].
 Customarily, this high-dimensional data is plotted as a set of different CSFs, each quantifying the contrast sensitivity as a function of other factors.
 

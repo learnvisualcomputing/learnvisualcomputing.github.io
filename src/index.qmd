@@ -35,7 +35,7 @@ We will not cover computer vision --- a field central to, and is arguably the mo
 There are simply too many excellent texts.
 
 In human vision, our focus will be on the early visual system, particularly the retina.
-This is where the first steps of seeing occur, setting the limits of our vision and representing the most thoroughly studied part of the visual system.
+This is where the first steps of seeing occur, setting the limits of our vision, and representing the most thoroughly studied part of the visual system.
 
 In imaging and display, we review basic principles (optical-electrical signal transductions) while being intentionally light on implementation details --- these evolve quickly and are often proprietary.
 
