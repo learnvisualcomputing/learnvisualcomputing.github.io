@@ -67,7 +67,7 @@ This is necessarily an incomplete list, because I can mention only books that I 
 
 For human vision, the monumental book by @wandell1995foundations is a must read; it is [freely available](https://wandell.github.io/FOV-1995/), and a second version is in the works.
 The same author is developing another book [@wandell2026foundations] that covers not only human vision, but also imaging and display --- a similar set of topics covered in this book.
-It is interesting to see how different people sometimes approach similar topics in different angles.
+It is interesting to see how different people sometimes can approach similar topics from quite different angles.
 @cornsweet1970visual, while slightly dated, is an all-time classic that has inspired a whole generation of vision scientists.
 @rodieck1998first is a breathtaking walk-through of the early stages in vision (eye optics and retinal processing), where every step is described *operationally* rather than conceptually.
 In the end, you get the feeling that *there is no magic*.
