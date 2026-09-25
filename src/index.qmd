@@ -23,7 +23,7 @@ Every so often I ask myself: why write this book at all, when none of the materi
 Then I remind myself that most textbooks contain no new results; by the time knowledge reaches a textbook, it is already established.
 What books do is to *offer perspectives*, and that always reveals the idiosyncrasies of the author.
 
-The perspective I most want to convey is this: every conclusion is drawn based on a set of precisely defined terms and assumptions, which, unfortunately, are not always announced.
+The perspective I most want to offer is this: every conclusion is drawn based on a set of precisely defined terms and assumptions, which, unfortunately, are not always explicitly spelt out.
 By taking a first-principles approach, I hope to make those definitions and assumptions explicit, so it is always clear when each conclusion applies and when it does not.
 
 ## What Do We Not Cover
