@@ -329,9 +329,10 @@ A common strategy for HDR is called **exposure bracketing**, which can be implem
 * Each shot has the same, short exposure time so no pixel is over-exposed, but pixels for low-luminance regions are noisy.  We then average multiple shots; averaging is a form denoising (@sec-chpt-imaging-noise).  This is the approach that Google's HDR+ system takes [@hasinoff2016burst].
 * Each shot has a different exposure time.  Long-exposure shots are used to capture details in low-luminance regions, and short-exposure shots capture details in high-luminance regions.
 
-Either way, the issue with exposure bracketing is the longer capturing time, which makes the resulting image more susceptible to motion blur.
-We ideally would like "single-shot" HDR.
-There are multiple methods, and they usually require co-designing the image sensor/pixel with the post-processing algorithms (aside from modern deep learning approaches that rely on semantics information and prior information, which we will not discuss).
+Either way, exposure bracketing requires aligning multiple images, which become difficult when objects move during the multiple exposures.
+Ideally, we would like to capture HDR images in a single shot. Several methods enable such “single-shot” HDR capture, typically through specialized sensor or pixel designs coupled with post-processing algorithms [@miyauchi2026development], which we discuss here.
+A recent trend is to use deep learning to reconstruct HDR images from images captured by conventional sensors.
+These algorithms exploit semantic cues and priors learned from large datasets and are beyond the scope of our discussion.
 
 One strategy is to use **split pixels** or dual PDs, an emerging technology that sensor companies are exploring.
 The idea is to use split a pixel into two PDs, each with a different "sensitivity" to light [@iida20180; @solhusvik20191280; @willassen20151280; @xu2022analysis].
@@ -351,8 +352,8 @@ In almost all cases, the FD itself participates in collecting the overflow charg
 In this way, the FWC of the small pixels, $S_4$, is effectively the total capacity of the photodiode, the LOFIC, and the FD.
 This further extends the small pixel's saturation level to $L_3$, shown in @fig-sp_dcg_dr.
 
-LOFIC can be used in conjunction with DCG.
-For instance, in the HCG read-out we would use only the FD as the measurement node, and in the LCG read-out we would use both the FD and LOFIC [@takayanagi2019120].
+LOFIC can be used to implement DCG.
+For instance, HCG read-out would use only the FD as the measurement node, and LCG read-out would use both the FD and LOFIC [@takayanagi2019120].
 Of course we can also add additional FDs to lower the conversion gain even more [@iida20180].
 <!-- Fig. 2 in @takayanagi2019120 has a good timing diagram for how FD and LOFIC are used. -->
 
