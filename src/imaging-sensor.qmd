@@ -305,7 +305,7 @@ $$
 We discuss noise in detail in @sec-chpt-imaging-noise and will not get into it too much here, but briefly, the noise floor is dominated by "dark noise", which is caused by the thermally dislodged electrons, and the "read noise", which is the noise introduced by the read-out circuitry.
 
 Not only can saturation occur at a PD's well, it can also occur when transferring the charges from the PD to the FD during read-out.
-As we have briefly alluded to when discussing the conversion gain (CG) in @sec-chpt-imaging-sensor-pixel-charge, when the CG is low, the SNR is high but we need to use a small FD, whose capacity could sometimes be smaller than that of the PD, in which case the charge transfer might saturate the FD.
+As we have briefly alluded to when discussing the conversion gain (CG) in @sec-chpt-imaging-sensor-pixel-charge, when the CG is high , the SNR is also high but we need to use a small FD, whose capacity could sometimes be smaller than that of the PD, in which case the charge transfer might saturate the FD.
 Alternatively, a large FD will not saturate (during charge transfer) but will lead to a low CG and, thus, lower SNR.
 
 A technique that many image sensors use is called dual conversion gain (**DCG**), where a pixel's charges can be read-out twice, once with a high conversion gain (HCG) and the second time with a low conversion gain (LCG) [@solhusvik20191280; @willassen20151280; @huggett2009dual; @miyauchi2020stacked; @takayanagi2018over].
@@ -351,6 +351,7 @@ The way we increase the FWC is by adding a lateral overflow integration capacito
 In almost all cases, the FD itself participates in collecting the overflow charges, too.
 In this way, the FWC of the small pixels, $S_4$, is effectively the total capacity of the photodiode, the LOFIC, and the FD.
 This further extends the small pixel's saturation level to $L_3$, shown in @fig-sp_dcg_dr.
+Note that the transfer gate `M-TX` can remain closed during overflow.
 
 LOFIC can be used to implement DCG.
 For instance, HCG read-out would use only the FD as the measurement node, and LCG read-out would use both the FD and LOFIC [@takayanagi2019120].
@@ -361,14 +362,18 @@ We could also combine the split-pixel architecture with DCG [@iida20180; @solhus
 This is shown in @fig-sp_dcg_dr, where $S_1$ is the capacity of the LPD's FD node, which saturates at a lower intensity than $L_1$ and is the measurement node in the HCG read-out.
 The LCG read-out can read all the charges in the FWC (with the help of an additional FD) at the cost of a lower conversion gain.
 
-Another approach is the **time-to-saturation** (TTS) technology [@stoppa2002novel], which uses a counter to measure the time it takes for each pixel to saturate and use that time to extrapolate the information given the actual exposure time:
-
+Another approach is **time-to-saturation** (TTS) technology [@stoppa2002novel], which uses a counter to measure how long each pixel takes to saturate.
+The counter increments at regular intervals while the voltage at the PD^[if no LOFIC is used; if LOFIC is used, TTS architecture would continuously sense the voltage at the combined FD and LOFIC node; see @miyauchi2026development[Fig. 14].] is continuously compared with a predefined reference voltage corresponding to saturation.
+When the PD voltage reaches this threshold, the counter value is latched into in-pixel memory.
+This value represents the time to saturation and is used to extrapolate the voltage that would have been measured over the full exposure time had the pixel not saturated:
 $$
-    Q_{\text{act}} = Q_{\text{sat}} \frac{T_{\text{exp}}}{T_{\text{sat}}},
+    \Delta V_{\text{act}} = \Delta V_{\text{sat}} \frac{T_{\text{exp}}}{T_{\text{sat}}},
 $$
 
-where $Q_{\text{act}}$ is the actual number of charges a pixel would have collected without saturation, $Q_{\text{sat}}$ is the FWC, $T_{\text{exp}}$ is the exposure time, and $T_{\text{sat}}$ is the saturation time.
-One could combine TTS with DCG and LOFIC [@ikeno20224; @liu20204; @liu2022augmented].
+where $\Delta V_{\text{act}}$ is the voltage reading the pixel would have produced without saturation, $\Delta V_{\text{sat}}$ is the voltage reading at saturation, $T_{\text{exp}}$ is the exposure time, and $T_{\text{sat}}$ is the time to saturation measured by the counter.
+
+One also could combine TTS with DCG to form what is called a triple-quantization (3Q) HDR sensor [@ikeno20224; @liu20204; @liu2022augmented].
+The idea is that the two read-outs in DCG provide data for low-light and mid-light regions, while the TTS read-out provides data for high-light regions that saturate even the FWC at LCG read-out.
 
 ## Global Architecture {#sec-chpt-imaging-sensor-arch}
 
